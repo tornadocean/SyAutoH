@@ -15,7 +15,7 @@
   initialiseSingleton( type ); \
   type the##type
 
-template < class type > class Singleton
+template < class type > class SERVER_DECL Singleton
 {
 	public:
 		/// Constructor
