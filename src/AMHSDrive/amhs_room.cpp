@@ -479,6 +479,28 @@ void amhs_room::Handle_STK_FoupEvent(amhs_participant_ptr participants, AMHSPack
 
 				nAuthAck = 1;
 			}
+			amhs_foup_map::iterator itFoupTotal = foup_map_.find(foupBarCode);
+			if(itFoupTotal != foup_map_.end())
+			{
+				if(1 == nChaned && (5 == nInput || 6 == nInput || 7 == nInput || 8 == nInput))
+				{
+					foup_map_.erase(itFoupTotal);
+				}
+			}
+			else
+			{
+				if(0 == nChaned)
+				{
+				amhs_foup_ptr pFoup = amhs_foup_ptr(new amhs_Foup());
+				pFoup->nChaned=nChaned;
+				pFoup->nfoupRoom=foupRoom;
+				pFoup->nLot=foupLot;
+				pFoup->nBarCode=foupBarCode;
+				pFoup->nInput=nInput;
+				pFoup->p_participant = participants;
+				foup_map_.insert(std::make_pair(foupBarCode, pFoup));
+				}
+			}
 		}
 	}
 

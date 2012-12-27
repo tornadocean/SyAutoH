@@ -156,6 +156,7 @@ private:
 	amhs_message_queue recent_msgs_;
 	amhs_oht_map oht_map_;
 	amhs_stocker_map stocker_map_;
+	amhs_foup_map foup_map_;
 	rwmutex rwLock_oht_map_;
 	rwmutex rwLock_stocker_map_;
 	rwmutex rwLock_foup_map_;

@@ -1,0 +1,1 @@
+msbuild /t:%1 ..\src\SiaMCS.sln /p:Configuration=%2 /p:Platform="Mixed Platforms"
