@@ -13,4 +13,5 @@ sqlserver 2012 express
 ice3.4.2
 boost 1.51.0
 
-add forks
+Note:
+new changes add to develop branch
