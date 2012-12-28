@@ -315,7 +315,7 @@ ItemFoup CVirtualAMHS::STK_GetChangedFoup(int nStockerID)
 		
 		item.nID = it->second->CFoup.nID;
 		item.nBatchID = it->second->CFoup.nBatchID;
-		item.nLocation = it->second->CFoup.nRoomID;
+		item.nRoomID = it->second->CFoup.nRoomID;
 		item.nProcessStatus = 0;
 		return item;
 	}
@@ -335,6 +335,18 @@ int CVirtualAMHS::STK_History(int nStocker)
 	return 0;
 }
 
+int CVirtualAMHS::STK_AuthFoup(int nStocker)
+{
+	MAP_VSTK::iterator it;
+	it = m_mapSTK->find(nStocker);
+	if(it != m_mapSTK->end())
+	{
+		VirtualStocker* stocker = it->second;
+		stocker->UpdateFoupInfo();
+	}
+	return 0;
+}
+
 int CVirtualAMHS::Stocker_ManualInputFoup(int nStocker,const TCHAR* sFoupID,int nBatchID)
 {
 	MAP_VSTK::iterator it;
@@ -342,7 +354,8 @@ int CVirtualAMHS::Stocker_ManualInputFoup(int nStocker,const TCHAR* sFoupID,int 
 	if (it != m_mapSTK->end())
 	{
 		VirtualStocker* stocker = it->second;
-		stocker->ManualInputFoup(sFoupID,nBatchID);
+		int nFoupID = _wtoi(sFoupID);
+		stocker->ManualInputFoup(nFoupID,nBatchID);
 	}
 	else
 	{
@@ -359,7 +372,8 @@ int CVirtualAMHS::Stocker_ManualOutputFoup(int nStocker,const TCHAR* sFoupID)
 	if (it != m_mapSTK->end())
 	{
 		VirtualStocker* stocker = it->second;
-		stocker->ManualOutputFoup(sFoupID);
+		int nFoupID = _wtoi(sFoupID);
+		stocker->ManualOutputFoup(nFoupID);
 	}
 	else
 	{
@@ -368,13 +382,15 @@ int CVirtualAMHS::Stocker_ManualOutputFoup(int nStocker,const TCHAR* sFoupID)
 	}
 	return 0;
 }
+
 int CVirtualAMHS::STK_FoupInitRoom(int nStockerID,ItemFoup *pFoup)
 {
 	MAP_VSTK::iterator it;
 	it = m_mapSTK->find(nStockerID);
 	if(it != m_mapSTK->end())
 	{
-		it->second->InitRoom(pFoup->nID,pFoup->nBatchID,pFoup->nLocation);
+		it->second->InitRoom(pFoup->nID,pFoup->nBatchID,pFoup->nRoomID);
+		it->second->AuthFoup(pFoup->nID,0);
 	}
 	return 0;
 }

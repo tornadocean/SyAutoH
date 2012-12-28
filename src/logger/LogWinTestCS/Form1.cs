@@ -10,7 +10,7 @@ using Gemma;
 
 namespace LogWinTestCS
 {
-  
+
     public partial class Form1 : Form
     {
         private LogWinClientCS.LogWinClient logClient = new LogWinClientCS.LogWinClient();
@@ -23,8 +23,8 @@ namespace LogWinTestCS
         private const int m_nOfflinePageLimit = 100;
         private int m_nPageStart = 0;
         private int m_nOfflineCount = 0;
-  
-       
+
+
         public Form1()
         {
             InitializeComponent();
@@ -37,10 +37,10 @@ namespace LogWinTestCS
         {
             lock (this)
             {
-               // if (bBusy == true)
-               // {
-               //     return;
-               // }
+                // if (bBusy == true)
+                // {
+                //     return;
+                // }
                 try
                 {
                     //bBusy = true;
@@ -55,25 +55,25 @@ namespace LogWinTestCS
                     }
                     m_nPageNowID = nNow;
                 }
-                catch (System.Exception )
+                catch (System.Exception)
                 {
-                	
+
                 }
 
-               // bBusy = false;
+                // bBusy = false;
             }
         }
 
         private void EvUpdate(object ob, EventArgs args)
         {
-            lock(this)
+            lock (this)
             {
-               // if (bBusyList == true)
-               // {
-               //     return;
-               // }
+                // if (bBusyList == true)
+                // {
+                //     return;
+                // }
 
-               // bBusyList = true;
+                // bBusyList = true;
                 try
                 {
                     InfoCall info = ob as InfoCall;
@@ -114,20 +114,20 @@ namespace LogWinTestCS
 
                     RefreshAlarmView();
                 }
-                catch (System.Exception )
+                catch (System.Exception)
                 {
-                	
+
                 }
 
-            //bBusyList = false;
+                //bBusyList = false;
             }
-          
+
         }
 
         private void bnPrev_Click(object sender, EventArgs e)
         {
             timer1.Enabled = false;
-            AddMsgList(m_nPageEndID-1, 10);
+            AddMsgList(m_nPageEndID - 1, 10);
         }
 
         private void bnNext_Click(object sender, EventArgs e)
@@ -194,7 +194,7 @@ namespace LogWinTestCS
 
         private void bnQuickSend_Click(object sender, EventArgs e)
         {
-           // int n = logClient.GetNowID();
+            // int n = logClient.GetNowID();
             logClient.Log(100, 1, "logclient", "default log message");
         }
 
@@ -318,7 +318,7 @@ namespace LogWinTestCS
 
             }
 
-           return  listIDS.ToArray();
+            return listIDS.ToArray();
         }
 
         private void GetOfflineCount()
@@ -363,7 +363,7 @@ namespace LogWinTestCS
 
             int[] nIDFilter = GetIDFilter(tBQueryIDS.Text);
             int[] nTypeFilter = GetIDFilter(tBTypes.Text);
-           
+
             int nCount = logClient.GetOfflineCount(llTimeEnd, llTimeBegin, nTypeFilter, nIDFilter, strKey);
             m_nOfflineCount = nCount;
 
@@ -435,7 +435,7 @@ namespace LogWinTestCS
                 m_nPageStart = 0;
             }
             GetOfflineLog();
-           
+
         }
 
         private void bnEnd_Click(object sender, EventArgs e)
@@ -473,12 +473,12 @@ namespace LogWinTestCS
 
             checkBoxAll.Checked = bCheckAll;
             m_nPageNowID = 0;
-        
+
         }
 
         private void checkBoxInfo_CheckedChanged(object sender, EventArgs e)
         {
-           CanCheckedAll();
+            CanCheckedAll();
         }
 
         private void checkBoxWarning_CheckedChanged(object sender, EventArgs e)
@@ -488,20 +488,20 @@ namespace LogWinTestCS
 
         private void checkBoxError_CheckedChanged(object sender, EventArgs e)
         {
-           CanCheckedAll();
+            CanCheckedAll();
         }
 
         private void checkBoxDebug_CheckedChanged(object sender, EventArgs e)
         {
-           CanCheckedAll();
+            CanCheckedAll();
         }
-    }
 
-    class InfoCall
-    {
-        public int nStart = 0;
-        public int nCount = 0;
-        public int[] types = null;
-        public int[] ids = null;
-    };
+        class InfoCall
+        {
+            public int nStart = 0;
+            public int nCount = 0;
+            public int[] types = null;
+            public int[] ids = null;
+        };
+    }
 }

@@ -240,8 +240,6 @@ int CLogger::End(void)
 		msg = Pop();
 		delete msg;
 	}
-
-
 	EndICE();
 
 	return 0;

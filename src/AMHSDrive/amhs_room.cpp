@@ -668,7 +668,6 @@ void amhs_room::Handle_OHT_Auth(amhs_participant_ptr participants, AMHSPacket& P
 		}
 	}
 
-
 	AMHSPacket ack(OHT_MCS_ACK_AUTH, 2);
 	ack << uint8(ohtID);
 	ack << nAuthAck;
@@ -751,7 +750,6 @@ void amhs_room::Handle_OHT_Pos(amhs_participant_ptr participants, AMHSPacket& Pa
 			it->second->nPOS = ohtPosition;
 		}
 	}
-
 }
 
 int amhs_room::DecodePacket(amhs_participant_ptr participants, AMHSPacket& Packet)

@@ -101,9 +101,8 @@ int VirtualStocker::UpdateFoupInfo()
 	return 0;
 }
 
-int VirtualStocker::ManualInputFoup(const TCHAR* sFoupID,int nBatchID)
+int VirtualStocker::ManualInputFoup(int nFoupID,int nBatchID)
 {
-	int nFoupID = _wtoi(sFoupID);
 	MAP_VFOUP::iterator it;
 	it = m_mapFoups.find(nFoupID);
 	if (it == m_mapFoups.end())
@@ -119,11 +118,30 @@ int VirtualStocker::ManualInputFoup(const TCHAR* sFoupID,int nBatchID)
 		Packet << uint8(DeviceID());
 		Packet << uint8(0); // input
 		Packet << uint8(GetRoomID(nFoupID)); // slot ID
-		Packet << uint16(0); // lot ID
+		Packet << uint16(nBatchID); // lot ID
 		Packet << uint16(nFoupID); // foup ID
 		Packet << uint8(5); // manual input 1
 
 		SendPacket(Packet);
+	}
+	return 0;
+}
+
+int VirtualStocker::AuthFoup(int nFoupID,int nMode)
+{
+	MAP_VFOUP::iterator it;
+	it = m_mapFoups.find(nFoupID);
+	if(it != m_mapFoups.end())
+	{
+			AMHSPacket Packet(STK_FOUP_EVENT,8);
+	        Packet << uint8(DeviceID());
+	        Packet << uint8(nMode); // input
+	        Packet << uint8(GetRoomID(nFoupID)); // slot ID
+	        Packet << uint16(it->second.nBatchID); // lot ID
+	        Packet << uint16(nFoupID); // foup ID
+	        Packet << uint8(5); // manual input 1
+	        SendPacket(Packet);
+	        return 0;
 	}
 	return 0;
 }
@@ -142,15 +160,20 @@ int VirtualStocker::History()
 	return 0;
 }
 
-int VirtualStocker::ManualOutputFoup(const TCHAR* sFoupID)
+int VirtualStocker::ManualOutputFoup(int nFoupID)
 {
-	int nFoupID = _wtoi(sFoupID);
-
+	MAP_VFOUP::iterator it;
+	it = m_mapFoups.find(nFoupID);
+	VirtualFoup pFoup;
+	if(it != m_mapFoups.end())
+	{
+		pFoup = it->second;
+	}
 	AMHSPacket Packet(STK_FOUP_EVENT, 8);
 	Packet << uint8(DeviceID());
 	Packet << uint8(1); // output
 	Packet << uint8(GetRoomID(nFoupID));
-	Packet << uint16(23); // lot
+	Packet << uint16(pFoup.nBatchID); // lot
 	Packet << uint16(nFoupID); // foup
 	Packet << uint8(5); // manual input 1
 
@@ -203,7 +226,6 @@ void VirtualStocker::Handle_FoupOperate(AMHSPacket& packet)
 				int nID = 0;
 				for(it = m_mapFoups.begin();it != m_mapFoups.end();it++)
 				{
-					
 					if(nID <= it->first)
 					{
 						nID = it->first;
@@ -222,6 +244,8 @@ void VirtualStocker::Handle_FoupOperate(AMHSPacket& packet)
 			    FoupPacket << (uint8)(DeviceID());
 			    FoupPacket << (uint8)(0);
 			    SendPacket(FoupPacket);
+				AuthFoup(CFoup.nID,0);
+				
 			}
 		    else
 			{
@@ -251,6 +275,7 @@ void VirtualStocker::Handle_FoupOperate(AMHSPacket& packet)
 			    FoupPacket << (uint8)(DeviceID());
 			    FoupPacket << (uint8)(0);
 			    SendPacket(FoupPacket);
+				AuthFoup(CFoup.nID,0);
 			}
 			else
 			{
@@ -282,6 +307,7 @@ void VirtualStocker::Handle_FoupOperate(AMHSPacket& packet)
 				int nID = ite->second.nFoupID;
 				it = m_mapFoups.find(nID);
 				CFoup = it->second;
+				AuthFoup(CFoup.nID,1);
 		        if(it != m_mapFoups.end())
 		        {
 					ite->second.nStatus = 0;
@@ -291,6 +317,7 @@ void VirtualStocker::Handle_FoupOperate(AMHSPacket& packet)
 			        FoupPacket << (uint8)(DeviceID());
 			        FoupPacket << (uint8)(0);
 			        SendPacket(FoupPacket);
+					
 				    return ;
 			    }
 		     }
@@ -309,6 +336,7 @@ void VirtualStocker::Handle_FoupOperate(AMHSPacket& packet)
 			if(it != m_mapFoups.end())
 			{
 				CFoup = it->second;
+				AuthFoup(CFoup.nID,1);
 				m_nFoupChange = 2;
 				m_nContain--;
 				int nRoomID = it->second.nRoomID;
@@ -320,6 +348,7 @@ void VirtualStocker::Handle_FoupOperate(AMHSPacket& packet)
 			    FoupPacket << (uint8)(DeviceID());
 			    FoupPacket << (uint8)(0);
 			    SendPacket(FoupPacket);
+				
 				return ;
 			}
 		}
@@ -573,7 +602,10 @@ int VirtualStocker::InitRoom(int nFoupID,int nBatchID,int nRoomID)
 		item.nStatus = 1;
 		MAP_VROOM::iterator ite;
 		ite = m_mapRooms.find(nRoomID);
-		ite->second = item;
+		if(ite != m_mapRooms.end())
+		{
+			ite->second = item;
+		}
 	}
 	return 0;
 }
@@ -632,7 +664,8 @@ int VirtualStocker::FoupIntoRoom(int nID,int nBatchID)
 		ItemRoom item;
 		item.nFoupID = nID;
 		item.nStatus = 1;
-		for(it = m_mapRooms.begin();it != m_mapRooms.end();it++)
+		for(it = m_mapRooms.begin(); 
+		    it != m_mapRooms.end();it++)
 		{
 			if(it->second.nStatus == 0)
 			{

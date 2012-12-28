@@ -45,7 +45,7 @@ typedef struct
 	//TCHAR FoupID[256];
 	int nID;
 	int nProcessStatus;
-	int nLocation;
+	int nRoomID;
 	int nBatchID;
 } ItemFoup;
 typedef std::list<ItemFoup> LIST_FOUP;
@@ -72,6 +72,7 @@ public:
 	int Stocker_ManualOutputFoup(int nStocker,const TCHAR* nFoupID);
 	int STK_FoupInitRoom(int nStockerID,ItemFoup *pFoup);
 	int STK_History(int nStocker);
+	int STK_AuthFoup(int nStocker);
 	//int STK_SetFoupNum(int nIndex,int nContain);
 	//int STK_GetFoup(int nSTK_ID,int nFoupID,int nBatchID);
 	int STK_GetRoomID(int nSTK_ID,int nFoupID);
