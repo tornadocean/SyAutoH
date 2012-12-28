@@ -21,6 +21,9 @@ namespace MCSControlLib
         private const string TKey_Status = "Status";
 
         private DataTable m_tableFoupsInfo = null;
+        private List<int> listFoupBarCode = new List<int>();
+        private List<int> listFoupRoom = new List<int>();
+        private List<int> listFoupLot = new List<int>();
 
         formSTKAlarmHistory hisAlarm;
 
@@ -48,6 +51,7 @@ namespace MCSControlLib
             m_dictProcess.Add(PushData.upStkLastOptFoup, ProcessLastOptFoup);
             m_dictProcess.Add(PushData.upStkStatus, ProcessStkStatus);
             m_dictProcess.Add(PushData.upStkInputStatus, ProcessStkInputStatus);
+            m_dictProcess.Add(PushData.upStkFoupInSys, ProcessFoupInSys);
         }
 
         private void InitFoupsInfoTable()
@@ -233,6 +237,16 @@ namespace MCSControlLib
             }
         }
 
+        private void ProcessFoupInSys(ArrayList item)
+        {
+            int nBarCode = TryConver.ToInt32(item[0].ToString());
+            int nFoupRoom = TryConver.ToInt32(item[1].ToString());
+            int nLot = TryConver.ToInt32(item[2].ToString());
+            listFoupBarCode.Add(nBarCode);
+            listFoupRoom.Add(nFoupRoom);
+            listFoupLot.Add(nLot);
+        }
+
         private void textBox14_TextChanged(object sender, EventArgs e)
         {
 
@@ -306,12 +320,64 @@ namespace MCSControlLib
             Button btn = sender as Button;
             byte nID = stockorId;
             byte nOpt = 2;
-            if (btn.Name == "btnFoupMoveIn")
-                nOpt = 0;
-            else if (btn.Name == "btnFoupMoveOut")
-                nOpt = 1;
             byte nMode = TryConver.ToByte(cBFoupMove.SelectedIndex.ToString());
-            int nData =TryConver.ToInt32(tBFoupMove.Text);
+            int nData = TryConver.ToInt32(tBFoupMove.Text);
+            if (btn.Name == "btnFoupMoveIn")
+            {
+                nOpt = 0;
+                if (0 == nMode)
+                {
+                    if (listFoupRoom.Contains(nData))
+                    {
+                        MessageBox.Show("there is one in stocker");
+                        return;
+                    }
+                }
+                else if (1 == nMode)
+                {
+                    if (listFoupLot.Contains(nData))
+                    {
+                        MessageBox.Show("there is one in stocker");
+                        return;
+                    }
+                }
+                else if (2 == nMode)
+                {
+                    if (listFoupBarCode.Contains(nData))
+                    {
+                        MessageBox.Show("there is one in stocker");
+                        return;
+                    }
+                }
+            }
+            else if (btn.Name == "btnFoupMoveOut")
+            {
+                nOpt = 1;
+                if (0 == nMode)
+                {
+                    if (!listFoupRoom.Contains(nData))
+                    {
+                        MessageBox.Show("there is no one in stocker");
+                        return;
+                    }
+                }
+                else if (1 == nMode)
+                {
+                    if (!listFoupLot.Contains(nData))
+                    {
+                        MessageBox.Show("there is no one in stocker");
+                        return;
+                    }
+                }
+                else if (2 == nMode)
+                {
+                    if (!listFoupBarCode.Contains(nData))
+                    {
+                        MessageBox.Show("there is no one in stocker");
+                        return;
+                    }
+                }
+            }
             string strVal;
             strVal = string.Format("<{0},{1},{2},{3}>", nID, nOpt, nMode, nData);
 
@@ -338,6 +404,20 @@ namespace MCSControlLib
                 tBSelLot.Text = row.Cells[2].Value.ToString();
                 tBSelStatus.Text = row.Cells[3].Value.ToString();
             }
+        }
+
+        private void tBFoupMove_VisibleChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void tBFoupMove_TextChanged(object sender, EventArgs e)
+        {
+            listFoupBarCode.Clear();
+            listFoupRoom.Clear();
+            listFoupLot.Clear();
+            m_dataHub.Async_WriteData(GuiCommand.StkGetFoupInSys, "");
+            byte nMode = TryConver.ToByte(cBFoupMove.SelectedIndex.ToString());
         }
 
         

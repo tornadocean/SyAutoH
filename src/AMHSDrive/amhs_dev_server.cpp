@@ -60,6 +60,11 @@ amhs_foup_vec amhs_dev_server::STK_GetLastOptFoup(int nID)
 	return room_.GetStkLastOptFoup(nID);
 }
 
+amhs_foup_vec amhs_dev_server::STK_GetFoupInSys()
+{
+	return room_.GetStkFoupInSys();
+}
+
 void amhs_dev_server::OHT_Set_StatusBackTime(int nID, int ms)
 {
 	AMHSPacket packet(OHT_MCS_STATUS_BACK_TIME, 2);

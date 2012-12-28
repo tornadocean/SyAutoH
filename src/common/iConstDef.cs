@@ -48,7 +48,8 @@ namespace MCS
             StkFoupHistory,
             StkAlarmHistory,
             StkStatusTime,
-            StkSetFoupInfoBackTime
+            StkSetFoupInfoBackTime,
+            StkGetFoupInSys
         }
 
         [_System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.4.2")]
@@ -63,7 +64,8 @@ namespace MCS
             upStkStockerStatus,
             upStkLastOptFoup,
             upStkStatus,
-            upStkInputStatus
+            upStkInputStatus,
+            upStkFoupInSys
         }
     }
 }
@@ -93,7 +95,7 @@ namespace MCS
                     os__.writeSize(v__.Length);
                     for(int ix__ = 0; ix__ < v__.Length; ++ix__)
                     {
-                        os__.writeByte((byte)v__[ix__], 10);
+                        os__.writeByte((byte)v__[ix__], 11);
                     }
                 }
             }
@@ -106,7 +108,7 @@ namespace MCS
                     v__ = new MCS.GuiHub.PushData[szx__];
                     for(int ix__ = 0; ix__ < szx__; ++ix__)
                     {
-                        v__[ix__] = (MCS.GuiHub.PushData)is__.readByte(10);
+                        v__[ix__] = (MCS.GuiHub.PushData)is__.readByte(11);
                     }
                 }
                 return v__;

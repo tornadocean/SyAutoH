@@ -125,6 +125,7 @@ public:
 	amhs_foup_vec GetStkFoupDataSet(int nID);
 	amhs_foup_vec GetStkEraseFoupDataSet(int nID);
 	amhs_foup_vec GetStkLastOptFoup(int nID);
+	amhs_foup_vec GetStkFoupInSys();
 
 private:
 	void Handle_OHT_AckStatusBackTime(amhs_participant_ptr, AMHSPacket&);
@@ -215,6 +216,7 @@ public:
 	amhs_foup_vec STK_GetFoupDataSet(int nID);
 	amhs_foup_vec STK_GetEraseFoupDataSet(int nID);
 	amhs_foup_vec STK_GetLastOptFoup(int nID);
+	amhs_foup_vec STK_GetFoupInSys();
 
 	void STK_FOUP(int nID, int nMode, int nPick, int nFoupData);
 	void STK_Status(int nID);

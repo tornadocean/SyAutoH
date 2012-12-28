@@ -99,6 +99,20 @@ amhs_stocker_vec amhs_room::GetStkDataSet()
 	return stk_vec;
 }
 
+amhs_foup_vec amhs_room::GetStkFoupInSys()
+{
+	amhs_foup_vec foup_vec;
+	RLock(rwLock_foup_map_)
+	{
+		for(amhs_foup_map::iterator it = foup_map_.begin();
+			it != foup_map_.end(); ++it)
+		{
+			foup_vec.push_back(it->second);
+		}
+	}
+	return foup_vec;
+}
+
 amhs_oht_vec amhs_room::GetOhtDataSet()
 {
 	amhs_oht_vec oht_vec;

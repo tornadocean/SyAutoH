@@ -37,6 +37,8 @@ module MCS
 				StkAlarmHistory,
 				StkStatusTime, 
 				StkSetFoupInfoBackTime,
+
+				StkGetFoupInSys,
 				
 			};
 			
@@ -53,7 +55,9 @@ module MCS
 				upStkStockerStatus,
 				upStkLastOptFoup,
 				upStkStatus,
-				upStkInputStatus
+				upStkInputStatus,
+
+				upStkFoupInSys
 			};
 			sequence<PushData> GuiPushDataList;
 		

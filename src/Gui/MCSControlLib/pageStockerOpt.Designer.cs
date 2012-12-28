@@ -311,6 +311,8 @@
             this.tBFoupMove.Name = "tBFoupMove";
             this.tBFoupMove.Size = new System.Drawing.Size(100, 21);
             this.tBFoupMove.TabIndex = 8;
+            this.tBFoupMove.TextChanged += new System.EventHandler(this.tBFoupMove_TextChanged);
+            this.tBFoupMove.VisibleChanged += new System.EventHandler(this.tBFoupMove_VisibleChanged);
             // 
             // label8
             // 

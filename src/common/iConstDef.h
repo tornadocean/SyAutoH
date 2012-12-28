@@ -66,7 +66,8 @@ enum GuiCommand
     StkFoupHistory,
     StkAlarmHistory,
     StkStatusTime,
-    StkSetFoupInfoBackTime
+    StkSetFoupInfoBackTime,
+    StkGetFoupInSys
 };
 
 void __write(::IceInternal::BasicStream*, GuiCommand);
@@ -83,7 +84,8 @@ enum PushData
     upStkStockerStatus,
     upStkLastOptFoup,
     upStkStatus,
-    upStkInputStatus
+    upStkInputStatus,
+    upStkFoupInSys
 };
 
 void __write(::IceInternal::BasicStream*, PushData);
