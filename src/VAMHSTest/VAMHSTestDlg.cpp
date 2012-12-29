@@ -354,7 +354,10 @@ void CVAMHSTestDlg::OnBnClickedBnStkIn()
 	it = g_mapFoups.find(Foup_ID);
 	if(it != g_mapFoups.end())
 	{
-		MessageBox(_T("Foup 已存在！"));
+		if(it->second->nDisabled == 1)
+			MessageBox(_T("This Foup is disabled!"));
+		else
+			MessageBox(_T("Foup 已存在！"));
 		return ;
 	}
 	else 
@@ -372,6 +375,7 @@ void CVAMHSTestDlg::OnBnClickedBnStkIn()
 		    item->nRoomID = nRoomID;
 		    item->nProcessStatus = 0;
 			item->nBatchID = 0;
+			item->nStockerID = selectSTK;
 		    g_mapFoups.insert(std::make_pair(Foup_ID,item));
 		    CString str;
 		    m_listCtrlFOUP.InsertItem(0,str);
@@ -699,6 +703,7 @@ void CVAMHSTestDlg::ReadFOUPXML(int STK_ID)
 			    item->nRoomID = nRoomID;
 			    item->nProcessStatus = nStatus;
 				item->nBatchID = nBatchID;
+				item->nStockerID = STK_ID;
 			    g_mapFoups.insert(std::make_pair(nID,item));
 				g_pVDev->STK_FoupInitRoom(STK_ID,item);
 			    CString str;
@@ -1345,16 +1350,45 @@ void CVAMHSTestDlg::OnBnClickedAddStockerButton()
 	else
 	{
 		// add
+		selectSTK = nStocker_ID;
+		CString stocker_select;
+		stocker_select.Format(_T("%d"),nStocker_ID);
+		SetDlgItemText(IDC_SELECT_STK_EDIT,stocker_select);
+		m_listCtrlFOUP.DeleteAllItems();
 		ItemStocker* pStocker = new ItemStocker;
 		g_mapStockers.insert(std::make_pair(nStocker_ID, pStocker));
 		pStocker->nID = nStocker_ID;
 		pStocker->nStatus = 0;
 		pStocker->nContain = 0;
 		pStocker->nOnline = 0;
+		SaveSTKXML();
+		MAP_ItemFoup::iterator ite;
+		int nFoupCount = 0;
+		for(ite = g_mapFoups.begin();ite != g_mapFoups.end();ite++)
+		{
+			if(ite->second->nStockerID == nStocker_ID)
+			{
+				nFoupCount++;
+				ite->second->nDisabled = 0;
+				ItemFoup* item;
+				item = ite->second;
+				CString str;
+		        m_listCtrlFOUP.InsertItem(0,str);
+		        SetFOUPListItemData(item,0);
+				AddFoupXMLElem(nStocker_ID,item->nID,item);
+			}
+		}
+
+		pStocker->nContain = nFoupCount;
+		pStocker->nID = nStocker_ID;
+		pStocker->nStatus = 0;
+		//pStocker->nContain = 0;
+		pStocker->nOnline = 0;
 
 		CString str;
 		m_listCtrlSTOCKER.InsertItem(0, str);
 		SetStockerListItemData(pStocker, 0);
+
 	}
 }
 
@@ -1429,4 +1463,12 @@ void CVAMHSTestDlg::OnBnClickedDeleteStkButton()
 	g_mapStockers.erase(it);
 	DeleteSTKXML(nSTK_ID);
 	m_listCtrlFOUP.DeleteAllItems();
+	MAP_ItemFoup::iterator ite;
+	for(ite = g_mapFoups.begin();ite != g_mapFoups.end();ite++)
+	{
+		if(ite->second->nStockerID == nSTK_ID)
+		{
+			ite->second->nDisabled = 1;
+		}
+	}
 }

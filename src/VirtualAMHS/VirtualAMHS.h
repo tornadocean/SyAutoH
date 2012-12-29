@@ -43,10 +43,12 @@ typedef std::map<int, ItemOHT*> MAP_ItemOHT;
 typedef struct
 {
 	//TCHAR FoupID[256];
+	int nStockerID;
 	int nID;
 	int nProcessStatus;
 	int nRoomID;
 	int nBatchID;
+	int nDisabled;
 } ItemFoup;
 typedef std::list<ItemFoup> LIST_FOUP;
 //zhang add the code in 2012.10.24

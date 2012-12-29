@@ -664,7 +664,7 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "Logger";
             this.Text = "Logger";
-            this.Load += new System.EventHandler(this.Logger_Load);
+            //this.Load += new System.EventHandler(this.Logger_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
