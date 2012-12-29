@@ -87,4 +87,5 @@ public:
 	afx_msg void OnBnClickedBnAddstk2();
 	afx_msg void OnBnClickedStkAllOnlineButton();
 	afx_msg void OnBnClickedDeleteStkButton();
+	afx_msg void OnBnClickedClearFoupsButton();
 };

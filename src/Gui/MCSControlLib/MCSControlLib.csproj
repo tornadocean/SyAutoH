@@ -84,6 +84,12 @@
     <Compile Include="MCSMessageBox.Designer.cs">
       <DependentUpon>MCSMessageBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="PageLoggerInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PageLoggerInfo.Designer.cs">
+      <DependentUpon>PageLoggerInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="pageMesCommand.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -133,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MCSMessageBox.resx">
       <DependentUpon>MCSMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PageLoggerInfo.resx">
+      <DependentUpon>PageLoggerInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pageMesCommand.resx">
       <DependentUpon>pageMesCommand.cs</DependentUpon>
