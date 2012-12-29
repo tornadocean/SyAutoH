@@ -88,6 +88,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Path", "Path", "{8B1EFD6D-7B7D-43CE-8BE6-36DBD0766A86}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PathFinder", "PathFinder\PathFinder.vcxproj", "{F8DAACF3-18A0-4606-BB4E-BB90C0D44AC3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3A4280FB-0DA9-45D0-B645-F05071BAC2BD} = {3A4280FB-0DA9-45D0-B645-F05071BAC2BD}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VirtualAMHS", "VirtualAMHS\VirualAMHS.vcxproj", "{D4A59A3C-5786-4FC5-8FC3-7C4308B75A3F}"
 	ProjectSection(ProjectDependencies) = postProject
