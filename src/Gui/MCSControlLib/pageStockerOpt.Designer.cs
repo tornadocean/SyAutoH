@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridViewFoupsInStocker = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -51,7 +52,7 @@
             this.tBFoupMove = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.listViewPageStkRoom = new System.Windows.Forms.ListView();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btnGetPortStatus = new System.Windows.Forms.Button();
             this.tBPortStatusManu = new System.Windows.Forms.TextBox();
@@ -82,12 +83,13 @@
             this.lLastBarCode = new System.Windows.Forms.Label();
             this.tBLastFoupID = new System.Windows.Forms.TextBox();
             this.lLastLot = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label22 = new System.Windows.Forms.Label();
+            this.imageListPageStkRoom = new System.Windows.Forms.ImageList(this.components);
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFoupsInStocker)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -95,9 +97,9 @@
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -279,7 +281,7 @@
             this.btnFoupMoveOut.TabIndex = 11;
             this.btnFoupMoveOut.Text = "Out";
             this.btnFoupMoveOut.UseVisualStyleBackColor = true;
-            this.btnFoupMoveOut.Click += new System.EventHandler(this.btnFoupMoveIn_Click);
+            this.btnFoupMoveOut.Click += new System.EventHandler(this.btnFoupMoveInOut_Click);
             // 
             // btnFoupMoveIn
             // 
@@ -289,7 +291,7 @@
             this.btnFoupMoveIn.TabIndex = 10;
             this.btnFoupMoveIn.Text = "In";
             this.btnFoupMoveIn.UseVisualStyleBackColor = true;
-            this.btnFoupMoveIn.Click += new System.EventHandler(this.btnFoupMoveIn_Click);
+            this.btnFoupMoveIn.Click += new System.EventHandler(this.btnFoupMoveInOut_Click);
             // 
             // cBFoupMove
             // 
@@ -333,16 +335,17 @@
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "Refresh";
             // 
-            // listView1
+            // listViewPageStkRoom
             // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.listViewPageStkRoom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.listView1.Location = new System.Drawing.Point(560, 54);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(278, 272);
-            this.listView1.TabIndex = 10;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.SmallIcon;
+            this.listViewPageStkRoom.Location = new System.Drawing.Point(560, 54);
+            this.listViewPageStkRoom.Name = "listViewPageStkRoom";
+            this.listViewPageStkRoom.Size = new System.Drawing.Size(278, 272);
+            this.listViewPageStkRoom.SmallImageList = this.imageListPageStkRoom;
+            this.listViewPageStkRoom.TabIndex = 10;
+            this.listViewPageStkRoom.UseCompatibleStateImageBehavior = false;
+            this.listViewPageStkRoom.View = System.Windows.Forms.View.SmallIcon;
             // 
             // groupBox4
             // 
@@ -629,15 +632,6 @@
             this.lLastLot.TabIndex = 10;
             this.lLastLot.Text = "Lot";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Lime;
-            this.pictureBox1.Location = new System.Drawing.Point(560, 27);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(23, 21);
-            this.pictureBox1.TabIndex = 15;
-            this.pictureBox1.TabStop = false;
-            // 
             // label20
             // 
             this.label20.AutoSize = true;
@@ -656,15 +650,6 @@
             this.label21.TabIndex = 18;
             this.label21.Text = "Storage";
             // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.Color.Blue;
-            this.pictureBox2.Location = new System.Drawing.Point(657, 27);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(23, 21);
-            this.pictureBox2.TabIndex = 17;
-            this.pictureBox2.TabStop = false;
-            // 
             // label22
             // 
             this.label22.AutoSize = true;
@@ -674,6 +659,12 @@
             this.label22.TabIndex = 20;
             this.label22.Text = "Error";
             // 
+            // imageListPageStkRoom
+            // 
+            this.imageListPageStkRoom.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageListPageStkRoom.ImageSize = new System.Drawing.Size(16, 16);
+            this.imageListPageStkRoom.TransparentColor = System.Drawing.Color.Transparent;
+            // 
             // pictureBox3
             // 
             this.pictureBox3.BackColor = System.Drawing.Color.Red;
@@ -682,6 +673,24 @@
             this.pictureBox3.Size = new System.Drawing.Size(23, 21);
             this.pictureBox3.TabIndex = 19;
             this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.Blue;
+            this.pictureBox2.Location = new System.Drawing.Point(657, 27);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(23, 21);
+            this.pictureBox2.TabIndex = 17;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Lime;
+            this.pictureBox1.Location = new System.Drawing.Point(560, 27);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(23, 21);
+            this.pictureBox1.TabIndex = 15;
+            this.pictureBox1.TabStop = false;
             // 
             // pageStockerOpt
             // 
@@ -698,7 +707,7 @@
             this.Controls.Add(this.bnFoupHistory);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.listViewPageStkRoom);
             this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.groupBox3);
@@ -724,9 +733,9 @@
             this.groupBox5.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -757,7 +766,7 @@
         private System.Windows.Forms.TextBox tBFoupMove;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.LinkLabel linkLabel2;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView listViewPageStkRoom;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button btnGetPortStatus;
         private System.Windows.Forms.TextBox tBPortStatusManu;
@@ -794,5 +803,6 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.ImageList imageListPageStkRoom;
     }
 }

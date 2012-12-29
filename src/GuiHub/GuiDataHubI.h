@@ -97,6 +97,7 @@ private:
 	void STK_History(const std::string&, const ::Ice::Current&);
 	void STK_Alarms(const std::string&, const ::Ice::Current&);
 	void STK_GetFoupInSys(const std::string&, const ::Ice::Current&);
+	void STK_AckRoomStatus(const std::string&, const ::Ice::Current&);
 
 private:
 	GuiDataItem Push_OHT_DevInfo();

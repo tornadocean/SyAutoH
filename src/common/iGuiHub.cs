@@ -148,14 +148,14 @@ namespace MCS
         [_System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.4.2")]
         public void write__(IceInternal.BasicStream os__)
         {
-            os__.writeByte((byte)enumTag, 11);
+            os__.writeByte((byte)enumTag, 12);
             os__.writeString(sVal);
         }
 
         [_System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.4.2")]
         public void read__(IceInternal.BasicStream is__)
         {
-            enumTag = (MCS.GuiHub.PushData)is__.readByte(11);
+            enumTag = (MCS.GuiHub.PushData)is__.readByte(12);
             sVal = is__.readString();
         }
 
@@ -1473,7 +1473,7 @@ namespace MCS
                     os__.writeSize(list.Length);
                     for(int ix__ = 0; ix__ < list.Length; ++ix__)
                     {
-                        os__.writeByte((byte)list[ix__], 11);
+                        os__.writeByte((byte)list[ix__], 12);
                     }
                 }
                 os__.writeInt(session);
@@ -3338,7 +3338,7 @@ namespace MCS
                         os__.writeSize(list.Length);
                         for(int ix__ = 0; ix__ < list.Length; ++ix__)
                         {
-                            os__.writeByte((byte)list[ix__], 11);
+                            os__.writeByte((byte)list[ix__], 12);
                         }
                     }
                     os__.writeInt(session);
@@ -4806,7 +4806,7 @@ namespace MCS
                 list = new MCS.GuiHub.PushData[szx__];
                 for(int ix__ = 0; ix__ < szx__; ++ix__)
                 {
-                    list[ix__] = (MCS.GuiHub.PushData)is__.readByte(11);
+                    list[ix__] = (MCS.GuiHub.PushData)is__.readByte(12);
                 }
             }
             int session;

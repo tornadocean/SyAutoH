@@ -250,22 +250,29 @@ void GuiDataHubI::STK_Alarms(const std::string& strVal, const ::Ice::Current&)
 
 void GuiDataHubI::STK_GetFoupInSys(const std::string&, const ::Ice::Current& current)
 {
+	//string strVal = "";
+	//char buf[100] = "";
+	//DR_FOUP_LIST foup_list=m_pAMHSDrive->GetFoupInSys();
+	//for(DR_FOUP_LIST::iterator it = foup_list.begin();
+	//	it != foup_list.end(); ++it)
+	//{
+	//	strVal += "<";
+	//	strVal += itoa(it->nBarCode,buf,10);
+	//	strVal += ",";
+	//	strVal += itoa(it->nfoupRoom,buf,10);
+	//	strVal += ",";
+	//	strVal += itoa(it->nLot,buf,10);
+	//	strVal += ">";
+	//}
+	//UpdateDataOne(current.con, GuiHub::upStkFoupInSys, strVal);
+}
+
+void GuiDataHubI::STK_AckRoomStatus(const std::string&, const ::Ice::Current& current)
+{
 	string strVal = "";
 	char buf[100] = "";
-	DR_FOUP_LIST foup_list=m_pAMHSDrive->GetFoupInSys();
-	for(DR_FOUP_LIST::iterator it = foup_list.begin();
-		it != foup_list.end(); ++it)
-	{
-		strVal += "<";
-		strVal += itoa(it->nBarCode,buf,10);
-		strVal += ",";
-		strVal += itoa(it->nfoupRoom,buf,10);
-		strVal += ",";
-		strVal += itoa(it->nLot,buf,10);
-		strVal += ">";
-	}
-	UpdateDataOne(current.con, GuiHub::upStkFoupInSys, strVal);
 }
+
 
 SYSTEMTIME GuiDataHubI::ToTime(std::string& strVal)
 {

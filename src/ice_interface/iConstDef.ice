@@ -57,7 +57,8 @@ module MCS
 				upStkStatus,
 				upStkInputStatus,
 
-				upStkFoupInSys
+				upStkFoupInSys,
+				upStkRoomStatus
 			};
 			sequence<PushData> GuiPushDataList;
 		
