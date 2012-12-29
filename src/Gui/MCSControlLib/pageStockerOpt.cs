@@ -35,7 +35,13 @@ namespace MCSControlLib
 
         public override void PageInit()
         {
-            PushData[] cmds = new PushData[] { PushData.upStkFoupsInfo, PushData.upStkLastOptFoup, PushData.upStkStatus, PushData.upStkInputStatus };
+            PushData[] cmds = new PushData[] 
+            { 
+                PushData.upStkFoupsInfo, 
+                PushData.upStkLastOptFoup, 
+                PushData.upStkStatus, 
+                PushData.upStkInputStatus 
+            };
             m_dataHub.Async_SetPushCmdList(cmds);
         }
 

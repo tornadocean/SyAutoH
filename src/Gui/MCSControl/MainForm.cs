@@ -98,6 +98,9 @@ namespace MCSControl
             m_dictMcsControl.Add("nodeOHTInfo", new pageOHTInfo() );
             m_dictMcsControl.Add("nodeMesCommand", new pageMesCommand() );
             m_dictMcsControl.Add("nodeSTKInfo", new pageSTKInfo());
+            m_dictMcsControl.Add("nodeLogOffline", new pageLogOffline());
+            m_dictMcsControl.Add("nodeLogOnline", new pageLogOnline());
+            m_dictMcsControl.Add("nodeAlarm", new pageAlarm());
         }
 
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)

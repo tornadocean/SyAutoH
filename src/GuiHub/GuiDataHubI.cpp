@@ -196,6 +196,10 @@ void GuiDataHubI::SetDataUpdater(const ::MCS::GuiDataUpdaterPrx& updater, const 
 		MAP_UPDATER::iterator it = m_mapUpdater.find(updater);
 		if (it != m_mapUpdater.end())
 		{
+			if (it->second->m_ptrCon.get() != current.con.get())
+			{
+				it->second->m_ptrCon = current.con;
+			}
 			return;
 		}
 
