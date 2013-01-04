@@ -21,5 +21,10 @@ namespace MCSControlLib
         {
             MessageBox.Show("MesCommand Test");
         }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+        }
     }
 }
