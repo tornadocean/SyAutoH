@@ -15,7 +15,6 @@ namespace WinFormElement
     public class FormShowRegion
     {
         public List<RailEle> railInfoEleList = new List<RailEle>();
-        public List<RailEle> railCodingEleList = new List<RailEle>();
 
         public float xScale = 1;
         public float yScale = 1;
@@ -286,7 +285,7 @@ namespace WinFormElement
                // if (obj.VehiclePosCoding != -1)
                 {
                     Pen pen = new Pen(Color.Red, 1);
-                    Point carrierCoor = ComputeCoordinates(railCodingEleList, Convert.ToUInt32(oht.PosCode));
+                    Point carrierCoor = ComputeCoordinates(railInfoEleList, Convert.ToUInt32(oht.PosCode));
                     oht.ShowInScreen(canvas, carrierCoor);
                     pen.Dispose();
                 }
@@ -522,8 +521,8 @@ namespace WinFormElement
             }
             int railWidth = ptMaxX.X - ptMinX.X;
             int railHeight = ptMaxY.Y - ptMinY.Y;
-            xScale = Convert.ToSingle((showPicSz.Width - 20) * 1.0 / railWidth);
-            yScale = Convert.ToSingle((showPicSz.Height - 20) * 1.0 / railHeight);
+            xScale = Convert.ToSingle((showPicSz.Width - 40) * 1.0 / railWidth);
+            yScale = Convert.ToSingle((showPicSz.Height - 40) * 1.0 / railHeight);
             if (xScale < yScale)
             {
                 yScale = xScale;

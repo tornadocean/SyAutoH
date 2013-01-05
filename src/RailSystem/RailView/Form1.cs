@@ -92,7 +92,7 @@ namespace RailView
                     if (strOht.Length > 0)
                     {
                         string[] strParams = strOht.Split(',');
-                        if (strParams.Length == 3)
+                        if (strParams.Length > 1)   //???
                         {
                             OhtPos oht = new OhtPos();
                             oht.nID = Convert.ToByte(strParams[0]);
