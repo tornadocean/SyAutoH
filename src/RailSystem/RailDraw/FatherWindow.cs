@@ -31,9 +31,9 @@ namespace RailDraw
         private const Int16 CONST_MULTI_FACTOR = 1;
         private Int16 multiFactor = 1;
         private Point workSize = Point.Empty;
-        private Int16 lineNumber = 0;
-        private Int16 curveNumber = 0;
-        private Int16 CrossNumber = 0;
+        private Int16 lineNumber = 100;
+        private Int16 curveNumber = 200;
+        private Int16 CrossNumber = 300;
 
         //using for test
         SaveCodingRail saveCodingRail = new SaveCodingRail();
@@ -556,6 +556,12 @@ namespace RailDraw
                                         case "PenWidth":
                                             strTemp.PenWidth = Convert.ToSingle(dt.Rows[i][j]);
                                             break;
+                                        case "CodingBegin":
+                                            strTemp.CodingBegin = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "CodingEnd":
+                                            strTemp.CodingEnd = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
                                     }
                                 }
                                 AddElement(strTemp);
@@ -628,11 +634,11 @@ namespace RailDraw
                                             ptcur = new Point() { X = int.Parse(strPointArrayCur[0].Substring(2)), Y = int.Parse(strPointArrayCur[1].Substring(2)) };
                                             curTemp.EndPoint = ptcur;
                                             break;
-                                        case "startCoding":
-                                            curTemp.StartCoding = Convert.ToInt32(dt.Rows[i][j]);
+                                        case "CodingBegin":
+                                            curTemp.CodingBegin = Convert.ToInt32(dt.Rows[i][j]);
                                             break;
-                                        case "endCoding":
-                                            curTemp.EndCoding = Convert.ToInt32(dt.Rows[i][j]);
+                                        case "CodingEnd":
+                                            curTemp.CodingEnd = Convert.ToInt32(dt.Rows[i][j]);
                                             break;
                                         case "railText":
                                             curTemp.railText = dt.Rows[i][j].ToString();
@@ -755,11 +761,11 @@ namespace RailDraw
                                             ptcro = new Point() { X = int.Parse(strPointArrayCro[0].Substring(2)), Y = int.Parse(strPointArrayCro[1].Substring(2)) };
                                             croTemp.EndPoint = ptcro;
                                             break;
-                                        case "startCoding":
-                                            croTemp.StartCoding = Convert.ToInt32(dt.Rows[i][j]);
+                                        case "CodingBegin":
+                                            croTemp.CodingBegin = Convert.ToInt32(dt.Rows[i][j]);
                                             break;
-                                        case "endCoding":
-                                            croTemp.EndCoding = Convert.ToInt32(dt.Rows[i][j]);
+                                        case "CodingEnd":
+                                            croTemp.CodingEnd = Convert.ToInt32(dt.Rows[i][j]);
                                             break;
                                         case "railText":
                                             croTemp.railText = dt.Rows[i][j].ToString();
@@ -833,14 +839,8 @@ namespace RailDraw
             {
                 case "Line":
                     BaseRailElement.StraightRailEle strRailEle = new BaseRailElement.StraightRailEle();
-                    if (++lineNumber < 10)
-                    {
-                        str += "_" + "00" + lineNumber.ToString();
-                    }
-                    else if (++lineNumber < 100 && ++lineNumber >= 10)
-                    {
-                        str += "_" + "0" + lineNumber.ToString();
-                    }
+                    ++lineNumber;
+                    str += "_" + lineNumber.ToString();
                     strRailEle.CreateEle(mousePt, workRegionSize, multiFactor, str);
                     AddElement(strRailEle);
                     drawDoc.SelectOne(strRailEle);
@@ -850,14 +850,8 @@ namespace RailDraw
                     break;
                 case "Curve":
                     BaseRailElement.CurvedRailEle curRailEle = new BaseRailElement.CurvedRailEle();
-                    if (++curveNumber < 10)
-                    {
-                        str += "_" + "00" + curveNumber.ToString();
-                    }
-                    else if (++curveNumber < 100 && ++curveNumber >= 10)
-                    {
-                        str += "_" + "0" + curveNumber.ToString();
-                    }
+                    ++curveNumber;
+                    str += "_" + curveNumber.ToString();
                     curRailEle.CreateEle(mousePt, workRegionSize, multiFactor, str);
                     AddElement(curRailEle);
                     drawDoc.SelectOne(curRailEle);
@@ -867,14 +861,8 @@ namespace RailDraw
                     break;
                 case "Cross":
                     BaseRailElement.CrossEle croRailEle = new BaseRailElement.CrossEle();
-                    if (++CrossNumber < 10)
-                    {
-                        str += "_" + "00" + CrossNumber.ToString();
-                    }
-                    else if (++CrossNumber < 100 && ++CrossNumber >= 10)
-                    {
-                        str += "_" + "0" + CrossNumber.ToString();
-                    }
+                    ++CrossNumber;
+                    str += "_" + CrossNumber.ToString();
                     croRailEle.CreateEle(mousePt, workRegionSize, multiFactor, str);
                     AddElement(croRailEle);
                     drawDoc.SelectOne(croRailEle);
@@ -949,8 +937,29 @@ namespace RailDraw
         {
             for (Int16 i = 0; i < drawDoc.CutAndCopyObjectList.Count; )
             {
-                this.proRegion.AddElementNode(this.workRegion.Text, drawDoc.CutAndCopyObjectList[0].railText);
-                this.drawDoc.Paste();
+                string str = drawDoc.CutAndCopyObjectList[0].railText;
+                int lenght = str.IndexOf('_');
+                if (-1 != lenght)
+                {
+                    str = str.Substring(0, lenght);
+                }
+                if (str == "Line")
+                {
+                    lineNumber++;
+                    str += "_" + lineNumber.ToString();
+                }
+                else if (str == "Curve")
+                {
+                    curveNumber++;
+                    str += "_" + curveNumber.ToString();
+                }
+                else if (str == "Cross")
+                {
+                    CrossNumber++;
+                    str += "_" + CrossNumber.ToString();
+                }
+                this.proRegion.AddElementNode(this.workRegion.Text, str);
+                this.drawDoc.Paste(str);
                 this.workRegion.pictureBox1.Invalidate();
             }
         }

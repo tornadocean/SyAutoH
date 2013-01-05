@@ -29,6 +29,8 @@ namespace BaseRailElement
         private Int32 nextCoding = -1;
         private Int32 prevCoding = -1;
         private Int32 thirdDotCoding = -1;
+        private Int32 codingBegin = -1;
+        private Int32 codingEnd = -1;
         private string startDot = "first dot";
         private DirectionCross directionOfCross = DirectionCross.NULL;
         public DataTable dt = new DataTable();
@@ -80,6 +82,18 @@ namespace BaseRailElement
         public List<Point> PointList
         {
             get { return objectCrossOp.PointList; }
+        }
+        [Description("条形码起始"), Category("轨道段信息")]
+        public Int32 CodingBegin
+        {
+            get { return codingBegin; }
+            set { codingBegin = value; }
+        }
+        [Description("条形码终止"), Category("轨道段信息")]
+        public Int32 CodingEnd
+        {
+            get { return codingEnd; }
+            set { codingEnd = value; }
         }
         [Browsable(false)]
         public int StartAngle
@@ -379,7 +393,7 @@ namespace BaseRailElement
             }
         }
 
-        public object Clone()
+        public object Clone(string str)
         {
             CrossEle cl = new CrossEle();
             Point[] pts = new Point[8];
@@ -400,7 +414,7 @@ namespace BaseRailElement
             cl.ThPart = thPart;
             cl.FourPart = fourPart;
             cl.mirror = mirror;
-            cl.railText = railText;
+            cl.railText = str;
             cl.pen = pen;
             return cl;
         }
@@ -581,8 +595,8 @@ namespace BaseRailElement
             dr["drawMultiFactor"] = DrawMultiFactor;
             dr["startPoint"] = StartPoint.ToString();
             dr["endPoint"] = EndPoint.ToString();
-            dr["startCoding"] = StartCoding;
-            dr["endCoding"] = EndCoding;
+            dr["CodingBegin"] = CodingBegin;
+            dr["CodingEnd"] = CodingEnd;
             dr["railText"] = railText;
             dr["lenghtOfStrai"] = lenghtOfStrai;
             dr["nextCoding"] = nextCoding;

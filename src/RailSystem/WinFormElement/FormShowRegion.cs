@@ -84,6 +84,12 @@ namespace WinFormElement
                                             strTemp.pointList.Add(ptTemp);
                                         }
                                         break;
+                                    case "CodingBegin":
+                                        strTemp.codingBegin = Convert.ToInt32(dt.Rows[i][j]);
+                                        break;
+                                    case "CodingEnd":
+                                        strTemp.codingEnd = Convert.ToInt32(dt.Rows[i][j]);
+                                        break;
                                 }
                             }
                             railInfoEleList.Add(strTemp);
@@ -138,6 +144,12 @@ namespace WinFormElement
                                         strPointArrayCur = strcur.Split(',');
                                         ptcur = new Point() { X = int.Parse(strPointArrayCur[0].Substring(2)), Y = int.Parse(strPointArrayCur[1].Substring(2)) };
                                         curTemp.secDot = ptcur;
+                                        break;
+                                    case "CodingBegin":
+                                        curTemp.codingBegin = Convert.ToInt32(dt.Rows[i][j]);
+                                        break;
+                                    case "CodingEnd":
+                                        curTemp.codingEnd = Convert.ToInt32(dt.Rows[i][j]);
                                         break;
                                 }
                             }
@@ -198,6 +210,12 @@ namespace WinFormElement
                                             croTemp.pointList.Add(ptcro);
                                         }
                                         break;
+                                    case "CodingBegin":
+                                        croTemp.codingBegin = Convert.ToInt32(dt.Rows[i][j]);
+                                        break;
+                                    case "CodingEnd":
+                                        croTemp.codingEnd = Convert.ToInt32(dt.Rows[i][j]);
+                                        break;
                                 }
                             }
                             railInfoEleList.Add(croTemp);
@@ -210,8 +228,7 @@ namespace WinFormElement
 
         public void InitRailList()
         {
-            List<RailEle> tempList = GetStrEle(railInfoEleList);
-            railCodingEleList = ArrangeStrEle(tempList);
+            SetEleStartDot(railInfoEleList);
         }
 
         public void DrawRailInfo(Graphics canvas)
@@ -284,45 +301,50 @@ namespace WinFormElement
                 return Point.Empty;
             }
             Int32 offsetTemp = 0;
-            Int16 section = 0;
             StraightEle strTemp = new StraightEle();
             CurvedEle curTemp = new CurvedEle();
             CrossEle croTemp = new CrossEle();
-//            ComputeOffset(locationValue);
-            section = ComputeSegmentNumber(locationValue, tempList);
-            if (section < 0)
+            Int32 listCount = tempList.Count;
+            for (int i = 0; i < listCount; i++)
             {
-                return Point.Empty;
+                switch (tempList[i].graphType)
+                {
+                    case 1:
+                        strTemp = (StraightEle)tempList[i];
+                        if (locationValue > strTemp.codingBegin && locationValue <= strTemp.codingEnd)
+                        {
+                            offsetTemp = ((int)locationValue - strTemp.codingBegin) * strTemp.lenght / (strTemp.codingEnd - strTemp.codingBegin);
+                            returnPt = strTemp.startPoint;
+                            if (Math.Abs(strTemp.pointList[0].Y - strTemp.pointList[1].Y) < 3)
+                            {
+                                if (strTemp.startPoint.X < strTemp.endPoint.X)
+                                    returnPt.X = strTemp.startPoint.X + offsetTemp;
+                                else if (strTemp.startPoint.X > strTemp.endPoint.X)
+                                    returnPt.X = strTemp.startPoint.X - offsetTemp;
+                            }
+                            else
+                            {
+                                if (strTemp.startPoint.Y < strTemp.endPoint.Y)
+                                    returnPt.Y = strTemp.startPoint.Y + offsetTemp;
+                                else if (strTemp.startPoint.Y > strTemp.endPoint.Y)
+                                    returnPt.Y = strTemp.startPoint.Y - offsetTemp;
+                            }
+                            i = listCount;
+                        }
+                        break;
+                    case 2:
+                        curTemp = (CurvedEle)tempList[i];
+                        break;
+                    case 3:
+                        croTemp = (CrossEle)tempList[i];
+                        break;
+                }
             }
-            offsetTemp = ComputeSegmentOffset(locationValue, tempList, section);
-            switch (tempList[section].graphType)
-            {
-                case 1:
-                    strTemp = (StraightEle)tempList[section];
-                    offsetTemp = offsetTemp * strTemp.lenght / strTemp.tagNumber;
-                    returnPt = strTemp.startPoint;
-                    if (Math.Abs(strTemp.pointList[0].Y - strTemp.pointList[1].Y) < 3)
-                    {
-                        if (strTemp.startPoint.X < strTemp.endPoint.X)
-                            returnPt.X = strTemp.startPoint.X + offsetTemp;
-                        else if (strTemp.startPoint.X > strTemp.endPoint.X)
-                            returnPt.X = strTemp.startPoint.X - offsetTemp;
-                    }
-                    else
-                    {
-                        if (strTemp.startPoint.Y < strTemp.endPoint.Y)
-                            returnPt.Y = strTemp.startPoint.Y + offsetTemp;
-                        else if (strTemp.startPoint.Y > strTemp.endPoint.Y)
-                            returnPt.Y = strTemp.startPoint.Y - offsetTemp;
-                    }
-                    break;
-                default:
-                    break;
-            }
-            return returnPt;
+
+            return returnPt;  
         }
 
-        private List<RailEle> GetStrEle(List<RailEle> paraList)
+        private void SetEleStartDot(List<RailEle> paraList)
         {
             List<RailEle> tempList = new List<RailEle>();
             StraightEle strTemp = new StraightEle();
@@ -345,53 +367,6 @@ namespace WinFormElement
                     tempList.Add(paraList[i]);
                 }
             }
-            return tempList;
-        }
-
-        private List<RailEle> ArrangeStrEle(List<RailEle> paraList)
-        {
-            List<RailEle> tempList = new List<RailEle>();
-            StraightEle strTemp = new StraightEle();
-            Int16 num = Convert.ToInt16(paraList.Count);
-            for (Int16 i = 0; i < num; i++)
-            {
-                for (Int16 j = 0; j < num; j++)
-                {
-                    strTemp = (StraightEle)paraList[j];
-                    if (strTemp.segmentNumber == (i + 1))
-                    {
-                        tempList.Add(paraList[j]);
-                        break;
-                    }
-                }
-            }
-            return tempList;
-        }
-
-        private Int16 ComputeSegmentNumber(uint value, List<RailEle> paraList)
-        {
-            Int16 temp = Convert.ToInt16(value);
-            Int16 segNum = -1;
-            for (Int16 i = 0; i < paraList.Count; i++)
-            {
-                if (paraList[i].segmentNumber != 0 && temp < paraList[i].tagNumber)
-                {
-                    segNum = Convert.ToInt16(i);
-                    i = Convert.ToInt16(paraList.Count - 1);
-                }
-                temp -= paraList[i].tagNumber;
-            }
-            return segNum;
-        }
-
-        private Int16 ComputeSegmentOffset(uint value, List<RailEle> tempList, Int16 segNum)
-        {
-            Int16 temp = Convert.ToInt16(value);
-            for (Int16 i = 0; i < segNum; i++)
-            {
-                temp -= tempList[i].tagNumber;
-            }
-            return temp;
         }
 
         public void AdjustRailSize(Size showPicSz)
@@ -620,6 +595,8 @@ namespace WinFormElement
         public int startAngle = 0;
         public string startDot = "";
         public List<Point> pointList = new List<Point>();
+        public Int32 codingBegin = -1;
+        public Int32 codingEnd = -1;
     }
 
     public class CurvedEle : RailEle
@@ -630,6 +607,8 @@ namespace WinFormElement
         public Point center = Point.Empty;
         public Point firstDot = Point.Empty;
         public Point secDot = Point.Empty;
+        public Int32 codingBegin = -1;
+        public Int32 codingEnd = -1;
     }
 
     public class CrossEle : RailEle
@@ -641,5 +620,7 @@ namespace WinFormElement
         public int startAngle = 0;
         public int rotateAngle = 0;
         public List<Point> pointList = new List<Point>();
+        public Int32 codingBegin = -1;
+        public Int32 codingEnd = -1;
     }
 }
