@@ -53,28 +53,28 @@ MCS::dbcli::__read(::IceInternal::BasicStream* __is, ::MCS::dbcli::LoctionType& 
 void
 MCS::GuiHub::__write(::IceInternal::BasicStream* __os, ::MCS::GuiHub::GuiCommand v)
 {
-    __os->write(static_cast< ::Ice::Byte>(v), 21);
+    __os->write(static_cast< ::Ice::Byte>(v), 22);
 }
 
 void
 MCS::GuiHub::__read(::IceInternal::BasicStream* __is, ::MCS::GuiHub::GuiCommand& v)
 {
     ::Ice::Byte val;
-    __is->read(val, 21);
+    __is->read(val, 22);
     v = static_cast< ::MCS::GuiHub::GuiCommand>(val);
 }
 
 void
 MCS::GuiHub::__write(::IceInternal::BasicStream* __os, ::MCS::GuiHub::PushData v)
 {
-    __os->write(static_cast< ::Ice::Byte>(v), 14);
+    __os->write(static_cast< ::Ice::Byte>(v), 13);
 }
 
 void
 MCS::GuiHub::__read(::IceInternal::BasicStream* __is, ::MCS::GuiHub::PushData& v)
 {
     ::Ice::Byte val;
-    __is->read(val, 14);
+    __is->read(val, 13);
     v = static_cast< ::MCS::GuiHub::PushData>(val);
 }
 

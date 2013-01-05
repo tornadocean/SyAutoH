@@ -51,8 +51,9 @@
             this.cBFoupMove = new System.Windows.Forms.ComboBox();
             this.tBFoupMove = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.linkLabelRoomStatus = new System.Windows.Forms.LinkLabel();
             this.listViewPageStkRoom = new System.Windows.Forms.ListView();
+            this.imageListPageStkRoom = new System.Windows.Forms.ImageList(this.components);
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btnGetPortStatus = new System.Windows.Forms.Button();
             this.tBPortStatusManu = new System.Windows.Forms.TextBox();
@@ -69,6 +70,7 @@
             this.bnFoupHistory = new System.Windows.Forms.Button();
             this.bnAlarmHistory = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.tBLastEventTime = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.labelLastFoupManu = new System.Windows.Forms.Label();
@@ -86,7 +88,6 @@
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.imageListPageStkRoom = new System.Windows.Forms.ImageList(this.components);
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -325,27 +326,32 @@
             this.label8.TabIndex = 8;
             this.label8.Text = "Status for Shelf:";
             // 
-            // linkLabel2
+            // linkLabelRoomStatus
             // 
-            this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(791, 0);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(47, 12);
-            this.linkLabel2.TabIndex = 9;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "Refresh";
+            this.linkLabelRoomStatus.AutoSize = true;
+            this.linkLabelRoomStatus.Location = new System.Drawing.Point(791, 0);
+            this.linkLabelRoomStatus.Name = "linkLabelRoomStatus";
+            this.linkLabelRoomStatus.Size = new System.Drawing.Size(47, 12);
+            this.linkLabelRoomStatus.TabIndex = 9;
+            this.linkLabelRoomStatus.TabStop = true;
+            this.linkLabelRoomStatus.Text = "Refresh";
+            this.linkLabelRoomStatus.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelRoomStatus_LinkClicked);
             // 
             // listViewPageStkRoom
             // 
-            this.listViewPageStkRoom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.listViewPageStkRoom.LargeImageList = this.imageListPageStkRoom;
             this.listViewPageStkRoom.Location = new System.Drawing.Point(560, 54);
             this.listViewPageStkRoom.Name = "listViewPageStkRoom";
             this.listViewPageStkRoom.Size = new System.Drawing.Size(278, 272);
             this.listViewPageStkRoom.SmallImageList = this.imageListPageStkRoom;
             this.listViewPageStkRoom.TabIndex = 10;
             this.listViewPageStkRoom.UseCompatibleStateImageBehavior = false;
-            this.listViewPageStkRoom.View = System.Windows.Forms.View.SmallIcon;
+            // 
+            // imageListPageStkRoom
+            // 
+            this.imageListPageStkRoom.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageListPageStkRoom.ImageSize = new System.Drawing.Size(16, 16);
+            this.imageListPageStkRoom.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // groupBox4
             // 
@@ -496,6 +502,7 @@
             // groupBox6
             // 
             this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox6.Controls.Add(this.tBLastEventTime);
             this.groupBox6.Controls.Add(this.label19);
             this.groupBox6.Controls.Add(this.label18);
             this.groupBox6.Controls.Add(this.labelLastFoupManu);
@@ -516,6 +523,13 @@
             this.groupBox6.TabIndex = 14;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Foup Event";
+            // 
+            // tBLastEventTime
+            // 
+            this.tBLastEventTime.Location = new System.Drawing.Point(215, 76);
+            this.tBLastEventTime.Name = "tBLastEventTime";
+            this.tBLastEventTime.Size = new System.Drawing.Size(110, 21);
+            this.tBLastEventTime.TabIndex = 21;
             // 
             // label19
             // 
@@ -659,12 +673,6 @@
             this.label22.TabIndex = 20;
             this.label22.Text = "Error";
             // 
-            // imageListPageStkRoom
-            // 
-            this.imageListPageStkRoom.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageListPageStkRoom.ImageSize = new System.Drawing.Size(16, 16);
-            this.imageListPageStkRoom.TransparentColor = System.Drawing.Color.Transparent;
-            // 
             // pictureBox3
             // 
             this.pictureBox3.BackColor = System.Drawing.Color.Red;
@@ -708,7 +716,7 @@
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.listViewPageStkRoom);
-            this.Controls.Add(this.linkLabel2);
+            this.Controls.Add(this.linkLabelRoomStatus);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.label6);
@@ -765,7 +773,7 @@
         private System.Windows.Forms.ComboBox cBFoupMove;
         private System.Windows.Forms.TextBox tBFoupMove;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.LinkLabel linkLabelRoomStatus;
         private System.Windows.Forms.ListView listViewPageStkRoom;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button btnGetPortStatus;
@@ -804,5 +812,6 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.ImageList imageListPageStkRoom;
+        private System.Windows.Forms.TextBox tBLastEventTime;
     }
 }

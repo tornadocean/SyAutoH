@@ -167,6 +167,20 @@ amhs_foup_vec amhs_room::STK_GetLastEventFoup(int nID)
 	return foup_vec;
 }
 
+vector<int> amhs_room::STK_GetRoom(int nID)
+{
+	vector<int> room_vec;
+	RLock(rwLock_stocker_map_)
+	{
+		amhs_stocker_map::iterator itStocker=stocker_map_.find(nID);
+		for(int i=0; i<141; i++)
+		{
+			room_vec.push_back(itStocker->second->room[i]);
+		}
+	}
+	return room_vec;
+}
+
 void amhs_room::SendPacket(int nID, int nType, AMHSPacket& packet)
 {
 	amhs_participant_ptr pClient;
@@ -351,23 +365,39 @@ void amhs_room::Handle_STK_AckRoom(amhs_participant_ptr, AMHSPacket& Packet)
 	LOG_DEBUG("Packet Size: %d", pkSize);
 	Packet >> nID;
 	Packet >> nStats;
-	for (int i=0; i<140; i++)
-	{
-		uint8 uItem = 0;
-		Packet >> uItem;
-		item[i] = uItem;
-	}
 
-	LOG_DEBUG("ID:%d, STATUS: %d", nID, nStats);
-	for (int i=0; i<141; i++)
+	WLock(rwLock_stocker_map_)
 	{
-		printf("%d ", item[i]);
-		if (i % 16 == 0)
+		amhs_stocker_map::iterator it=stocker_map_.find(nID);
+		if(it==stocker_map_.end())
 		{
-			printf("\r\n");
 		}
+		else
+		{
+			for (int i=0; i<140; i++)		//??? 140
+			{
+				uint8 uItem = 0;
+				Packet >> uItem;
+				item[i] = uItem;
+
+				it->second->room[i]=uItem;
+			}
+	
+
+			LOG_DEBUG("ID:%d, STATUS: %d", nID, nStats);
+			for (int i=0; i<141; i++)
+			{
+				printf("%d ", item[i]);
+				if ((i+1) % 16 == 0 && i>0)
+				{
+					printf("\r\n");
+				}
+			}
+			printf("\r\n");
+			LOG_DEBUG("Room end");
+		}
+
 	}
-	LOG_DEBUG("Room end");
 }
 void amhs_room::Handle_STK_AckStorage(amhs_participant_ptr, AMHSPacket& Packet)
 {
@@ -513,6 +543,7 @@ void amhs_room::Handle_STK_FoupEvent(amhs_participant_ptr participants, AMHSPack
 			pFoup->nfoupRoom = foupRoom;
 			pFoup->nInput = nInput;
 			itStocker->second->last_opt_foup_vec.push_back(pFoup);
+			GetLocalTime(&itStocker->second->last_opt_foup_time);
 		}
 	}
 
