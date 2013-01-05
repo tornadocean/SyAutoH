@@ -167,6 +167,20 @@ amhs_foup_vec amhs_room::STK_GetLastEventFoup(int nID)
 	return foup_vec;
 }
 
+vector<int> amhs_room::GetStkRoom(int nID)
+{
+	vector<int> room_vec;
+	RLock(rwLock_stocker_map_)
+	{
+		amhs_stocker_map::iterator itStocker=stocker_map_.find(nID);
+		for(int i=0; i<141; i++)
+		{
+			room_vec.push_back(itStocker->second->room[i]);
+		}
+	}
+	return room_vec;
+}
+
 void amhs_room::SendPacket(int nID, int nType, AMHSPacket& packet)
 {
 	amhs_participant_ptr pClient;
@@ -351,23 +365,38 @@ void amhs_room::Handle_STK_AckRoom(amhs_participant_ptr, AMHSPacket& Packet)
 	LOG_DEBUG("Packet Size: %d", pkSize);
 	Packet >> nID;
 	Packet >> nStats;
-	for (int i=0; i<140; i++)
-	{
-		uint8 uItem = 0;
-		Packet >> uItem;
-		item[i] = uItem;
-	}
 
-	LOG_DEBUG("ID:%d, STATUS: %d", nID, nStats);
-	for (int i=0; i<141; i++)
+	WLock(rwLock_stocker_map_)
 	{
-		printf("%d ", item[i]);
-		if (i % 16 == 0)
+		amhs_stocker_map::iterator it=stocker_map_.find(nID);
+		if(it==stocker_map_.end())
 		{
-			printf("\r\n");
 		}
+		else
+		{
+			for (int i=0; i<140; i++)		//??? 140
+			{
+				uint8 uItem = 0;
+				Packet >> uItem;
+				item[i] = uItem;
+
+				it->second->room[i]=uItem;
+			}
+	
+
+			LOG_DEBUG("ID:%d, STATUS: %d", nID, nStats);
+			for (int i=0; i<141; i++)
+			{
+				printf("%d ", item[i]);
+				if (i % 16 == 0)
+				{
+					printf("\r\n");
+				}
+			}
+			LOG_DEBUG("Room end");
+		}
+
 	}
-	LOG_DEBUG("Room end");
 }
 void amhs_room::Handle_STK_AckStorage(amhs_participant_ptr, AMHSPacket& Packet)
 {
@@ -513,6 +542,64 @@ void amhs_room::Handle_STK_FoupEvent(amhs_participant_ptr participants, AMHSPack
 			pFoup->nfoupRoom = foupRoom;
 			pFoup->nInput = nInput;
 			itStocker->second->last_opt_foup_vec.push_back(pFoup);
+		}
+		else
+		{
+			amhs_foup_map::iterator itFoup=itStocker->second->foup_map.find(foupBarCode);
+			if(itFoup != itStocker->second->foup_map.end())
+			{
+				if(1 == nChaned)
+				{
+					itFoup->second->nChaned = nChaned;
+					itFoup->second->nfoupRoom = foupRoom;
+					itFoup->second->nInput = nInput;
+					itFoup->second->nLot = foupLot;
+					itStocker->second->last_opt_foup_vec.clear();
+					itStocker->second->last_opt_foup_vec.push_back(itFoup->second);
+					GetLocalTime(&itStocker->second->last_opt_foup_time);
+					itStocker->second->foup_erase_vec.push_back(itFoup->second);
+					itStocker->second->foup_map.erase(foupBarCode);
+				}
+				nAuthAck=0;
+			}
+			else
+			{		
+				amhs_foup_ptr pFoup = amhs_foup_ptr(new amhs_Foup());
+				pFoup->nChaned=nChaned;
+				pFoup->nfoupRoom=foupRoom;
+				pFoup->nLot=foupLot;
+				pFoup->nBarCode=foupBarCode;
+				pFoup->nInput=nInput;
+				pFoup->p_participant = participants;
+				itStocker->second->foup_map.insert(std::make_pair(foupBarCode, pFoup));
+				itStocker->second->last_opt_foup_vec.clear();
+				itStocker->second->last_opt_foup_vec.push_back(pFoup);
+				GetLocalTime(&itStocker->second->last_opt_foup_time);
+
+				nAuthAck = 1;
+			}
+			amhs_foup_map::iterator itFoupTotal = foup_map_.find(foupBarCode);
+			if(itFoupTotal != foup_map_.end())
+			{
+				if(1 == nChaned && (5 == nInput || 6 == nInput || 7 == nInput || 8 == nInput))
+				{
+					foup_map_.erase(itFoupTotal);
+				}
+			}
+			else
+			{
+				if(0 == nChaned)
+				{
+				amhs_foup_ptr pFoup = amhs_foup_ptr(new amhs_Foup());
+				pFoup->nChaned=nChaned;
+				pFoup->nfoupRoom=foupRoom;
+				pFoup->nLot=foupLot;
+				pFoup->nBarCode=foupBarCode;
+				pFoup->nInput=nInput;
+				pFoup->p_participant = participants;
+				foup_map_.insert(std::make_pair(foupBarCode, pFoup));
+				}
+			}
 		}
 	}
 

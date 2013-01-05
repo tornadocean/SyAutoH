@@ -49,6 +49,8 @@ module MCS
 				StkStatusTime, 
 				StkSetFoupInfoBackTime,
 
+				StkGetRoomStatus,
+
 				StkGetFoupInSys,
 				
 				MesGetFoupTable,
@@ -66,7 +68,6 @@ module MCS
 				
 				upStkInfo,
 				upStkFoupsInfo,
-				upStkStockerStatus,
 				upStkLastOptFoup,
 				upStkStatus,
 				upStkInputStatus,

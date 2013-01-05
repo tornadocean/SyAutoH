@@ -38,6 +38,12 @@ void CopySTKStruct(driveSTK& target, amhs_stocker_ptr& src)
 	target.nStatus = src->nStatus;
 	target.nAuto = src->nAuto;
 	target.nManu = src->nManu;
+	target.last_opt_foup_time.wYear=src->last_opt_foup_time.wYear;
+	target.last_opt_foup_time.wMonth=src->last_opt_foup_time.wMonth;
+	target.last_opt_foup_time.wDay=src->last_opt_foup_time.wDay;
+	target.last_opt_foup_time.wHour=src->last_opt_foup_time.wHour;
+	target.last_opt_foup_time.wMinute=src->last_opt_foup_time.wMinute;
+	target.last_opt_foup_time.wSecond=src->last_opt_foup_time.wSecond;
 }
 
 void CopyFOUPStruct(driveFOUP& target, amhs_foup_ptr& src)
@@ -112,6 +118,28 @@ DR_FOUP_LIST CAMHSDrive::GetStkLastOptFoup(int nID)
 	}
 
 	return list;
+}
+
+DR_FOUP_LIST CAMHSDrive::GetFoupInSys()
+{
+	DR_FOUP_LIST list;
+	amhs_foup_vec foup_vec = sAmhsServer.GetServer()->STK_GetFoupInSys();
+	for(amhs_foup_vec::iterator it = foup_vec.begin();
+		it != foup_vec.end(); ++it)
+	{
+		amhs_foup_ptr sp_foup= *it;
+		driveFOUP dFoup;
+		CopyFOUPStruct(dFoup, sp_foup);
+		list.push_back(dFoup);
+	}
+	return list;
+}
+
+vector<int> CAMHSDrive::GetStkRoom(int nID)
+{
+	vector<int> room_vec;
+	room_vec=sAmhsServer.GetServer()->STK_GetRoom(nID);
+	return room_vec;
 }
 
 DR_OHT_LIST CAMHSDrive::GetOhtList()

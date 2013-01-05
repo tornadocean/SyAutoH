@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Timers;
 using MCS.GuiHub;
 
 namespace MCSControlLib
@@ -21,9 +22,6 @@ namespace MCSControlLib
         private const string TKey_Status = "Status";
 
         private DataTable m_tableFoupsInfo = null;
-        private List<int> listFoupBarCode = new List<int>();
-        private List<int> listFoupRoom = new List<int>();
-        private List<int> listFoupLot = new List<int>();
         private List<Int32> listStkRoom = new List<Int32>(141);
 
         formSTKAlarmHistory hisAlarm;
@@ -41,7 +39,8 @@ namespace MCSControlLib
                 PushData.upStkFoupsInfo, 
                 PushData.upStkLastOptFoup, 
                 PushData.upStkStatus, 
-                PushData.upStkInputStatus 
+                PushData.upStkInputStatus, 
+   //             PushData.upStkRoomStatus,
             };
             m_dataHub.Async_SetPushCmdList(cmds);
         }
@@ -49,6 +48,7 @@ namespace MCSControlLib
         private void pageStockerOpt_Load(object sender, EventArgs e)
         {
             InitFoupsInfoTable();
+            InitImageListRoom();
             dataGridViewFoupsInStocker.DataSource = m_tableFoupsInfo;
         }
 
@@ -58,7 +58,6 @@ namespace MCSControlLib
             m_dictProcess.Add(PushData.upStkLastOptFoup, ProcessLastOptFoup);
             m_dictProcess.Add(PushData.upStkStatus, ProcessStkStatus);
             m_dictProcess.Add(PushData.upStkInputStatus, ProcessStkInputStatus);
-            m_dictProcess.Add(PushData.upStkFoupInSys, ProcessFoupInSys);
             m_dictProcess.Add(PushData.upStkRoomStatus, ProcessStkRoomStatus);
         }
 
@@ -180,6 +179,10 @@ namespace MCSControlLib
                         tBLastFoupAuto.Text = "0";
                         tBLastFoupManu.Text = "4";
                     }
+                    DateTime dt = new DateTime(Convert.ToInt32(item[6].ToString()), Convert.ToInt32(item[7].ToString()), Convert.ToInt32(item[8].ToString()),
+                        Convert.ToInt32(item[9].ToString()), Convert.ToInt32(item[10].ToString()), Convert.ToInt32(item[11].ToString()));
+                    string lastEventTime = dt.ToString();
+                    tBLastEventTime.Text = lastEventTime;
                 }
             }
         }
@@ -252,35 +255,35 @@ namespace MCSControlLib
             }
         }
 
-        private void ProcessFoupInSys(ArrayList item)
-        {
-            int nBarCode = TryConver.ToInt32(item[0].ToString());
-            int nFoupRoom = TryConver.ToInt32(item[1].ToString());
-            int nLot = TryConver.ToInt32(item[2].ToString());
-            listFoupBarCode.Add(nBarCode);
-            listFoupRoom.Add(nFoupRoom);
-            listFoupLot.Add(nLot);
-        }
-
         private void ProcessStkRoomStatus(ArrayList item)
         {
-            string nID=item[0].ToString();
-            Int32 nStatus=TryConver.ToInt32(item[1].ToString());
-            ListViewItem listItem = new ListViewItem();
-            listItem.Text = nID;
-            switch(nStatus)
+            if (item.Count > 1)
             {
-                case 0:
-                    listItem.ImageKey = "green";
-                    break;
-                case 1:
-                    listItem.ImageKey = "blue";
-                    break;
-                case 2:
-                    listItem.ImageKey = "red";
-                    break;
+                byte nID = TryConver.ToByte(item[0].ToString());
+                if (nID == stockorId)
+                {
+                    listViewPageStkRoom.Clear();
+                    for (int i = 1; i < 142; i++)
+                    {
+                        Int32 nStatus = TryConver.ToInt32(item[i].ToString());
+                        ListViewItem listItem = new ListViewItem();
+                        switch (nStatus)
+                        {
+                            case 0:
+                                listItem.ImageKey = "green";
+                                break;
+                            case 1:
+                                listItem.ImageKey = "blue";
+                                break;
+                            case 2:
+                                listItem.ImageKey = "red";
+                                break;
+                        }
+                        listItem.Text = i.ToString();
+                        listViewPageStkRoom.Items.Add(listItem);
+                    }
+                }
             }
-            listViewPageStkRoom.Items.Add(listItem);
         }
 
         private void textBox14_TextChanged(object sender, EventArgs e)
@@ -403,6 +406,23 @@ namespace MCSControlLib
         {
         }
 
-        
+        private void linkLabelRoomStatus_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            byte nID = stockorId;
+            string strVal = string.Format("<{0}>", nID);
+
+            int nWRet = m_dataHub.WriteData(GuiCommand.StkInquiryRoom, strVal);
+
+            System.Timers.Timer timeRoom = new System.Timers.Timer();
+            timeRoom.Elapsed += new ElapsedEventHandler(TimerGetRoom);
+            timeRoom.Interval = 3000;
+            timeRoom.AutoReset = false;
+            timeRoom.Enabled = true;
+        }
+
+        private void TimerGetRoom(object source, System.Timers.ElapsedEventArgs e)
+        {
+            int nWRet = m_dataHub.WriteData(GuiCommand.StkGetRoomStatus, "");
+        }
     }
 }

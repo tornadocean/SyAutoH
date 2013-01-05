@@ -53,6 +53,7 @@ typedef struct sVec_STK
 	int nStatus;
 	int nAuto;
 	int nManu;
+	SYSTEMTIME last_opt_foup_time;
 } driveSTK;
 
 typedef std::vector<driveSTK> DR_STK_LIST;
@@ -85,6 +86,8 @@ public:
 	DR_STK_LIST GetStkList();
 	DR_FOUP_LIST GetStkFoupList(int nID);
 	DR_FOUP_LIST GetStkLastOptFoup(int nID);
+	//void GetStkRoom(int nID, int room[141]);
+	vector<int> GetStkRoom(int nID);
 	void STKFoupHand(int nID, int nOpt, int nMode, int nData);
 	void STKStockerStatus(int nID);
 	void STKStockerRoom(int nID);

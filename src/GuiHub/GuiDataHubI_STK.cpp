@@ -46,6 +46,14 @@ GuiDataItem GuiDataHubI::Push_STK_FoupInfo()
 				it->nID,itFoup->nBarCode, itFoup->nfoupRoom, itFoup->nLot, itFoup->nChaned, 0);
 			strGuiData += buf;
 		}
+		DR_FOUP_LIST foup_erase_list = m_pAMHSDrive->GetStkFoupEraseList(it->nID);
+		for(DR_FOUP_LIST::iterator itFoup = foup_erase_list.begin();
+			itFoup != foup_erase_list.end(); ++itFoup)
+		{
+			sprintf_s(buf, 256, "<%d,%d,%d,%d,%d,%d>",
+				it->nID,itFoup->nBarCode, itFoup->nfoupRoom, itFoup->nLot, itFoup->nChaned, 1);
+			strGuiData += buf;
+		}
 	}
 	item.sVal=strGuiData;
 	return item;
@@ -66,8 +74,10 @@ GuiDataItem GuiDataHubI::Push_STK_LastOptFoup()
 		for(DR_FOUP_LIST::iterator itFoup = foup_list.begin();
 			itFoup != foup_list.end(); ++itFoup)
 		{
-			sprintf_s(buf, 256, "<%d,%d,%d,%d,%d,%d>",
-				it->nID,itFoup->nBarCode, itFoup->nfoupRoom, itFoup->nLot, itFoup->nChaned, itFoup->nInput);
+			sprintf_s(buf, 256, "<%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d>",
+				it->nID,itFoup->nBarCode, itFoup->nfoupRoom, itFoup->nLot, itFoup->nChaned, itFoup->nInput, 
+				it->last_opt_foup_time.wYear, it->last_opt_foup_time.wMonth, it->last_opt_foup_time.wDay, 
+				it->last_opt_foup_time.wHour, it->last_opt_foup_time.wMinute, it->last_opt_foup_time.wSecond);
 			strGuiData += buf;
 		}
 	}
@@ -108,6 +118,32 @@ GuiDataItem GuiDataHubI::Push_STK_InputStatus()
 		strGuiData += buf;
 	}
 	item.sVal = strGuiData;
+	return item;
+}
+
+GuiDataItem GuiDataHubI::Push_STK_GetRoom()
+{
+	GuiDataItem item;
+	item.enumTag=GuiHub::upStkRoomStatus;
+	string strGuiData="";
+	char buf[100]="";
+
+	DR_STK_LIST stk_list = m_pAMHSDrive->GetStkList();
+	for (DR_STK_LIST::iterator it = stk_list.begin(); 
+		it != stk_list.end(); ++it)
+	{
+		vector<int> room_vec=m_pAMHSDrive->GetStkRoom(it->nID);
+		strGuiData += "<";
+		strGuiData += itoa(it->nID,buf,10);
+		for(vector<int>::iterator it_vec=room_vec.begin();
+			it_vec!=room_vec.end(); ++it_vec)
+		{
+			strGuiData += ",";
+			strGuiData += itoa(*it_vec,buf,10);
+		}
+		strGuiData += ">";
+	}
+	item.sVal += strGuiData;
 	return item;
 }
 
@@ -240,12 +276,49 @@ void GuiDataHubI::STK_Alarms(const std::string& strVal, const ::Ice::Current&)
 	}
 }
 
-void GuiDataHubI::STK_AckRoomStatus(const std::string&, const ::Ice::Current& current)
+void GuiDataHubI::STK_GetFoupInSys(const std::string&, const ::Ice::Current& current)
 {
-	string strVal = "";
-	char buf[100] = "";
+	//string strVal = "";
+	//char buf[100] = "";
+	//DR_FOUP_LIST foup_list=m_pAMHSDrive->GetFoupInSys();
+	//for(DR_FOUP_LIST::iterator it = foup_list.begin();
+	//	it != foup_list.end(); ++it)
+	//{
+	//	strVal += "<";
+	//	strVal += itoa(it->nBarCode,buf,10);
+	//	strVal += ",";
+	//	strVal += itoa(it->nfoupRoom,buf,10);
+	//	strVal += ",";
+	//	strVal += itoa(it->nLot,buf,10);
+	//	strVal += ">";
+	//}
+	//UpdateDataOne(current.con, GuiHub::upStkFoupInSys, strVal);
 }
 
+void GuiDataHubI::STK_GetRoomStatus(const std::string&, const ::Ice::Current& current)
+{
+	string strVal = "";
+	char buf[100]="";
+
+	DR_STK_LIST stk_list = m_pAMHSDrive->GetStkList();
+	for (DR_STK_LIST::iterator it = stk_list.begin(); 
+		it != stk_list.end(); ++it)
+	{
+		vector<int> room_vec=m_pAMHSDrive->GetStkRoom(it->nID);
+		
+		strVal += "<";
+		strVal += itoa(it->nID,buf,10);
+		for(vector<int>::iterator it_vec=room_vec.begin();
+			it_vec!=room_vec.end(); ++it_vec)
+		{
+			strVal += ",";
+			strVal += itoa(*it_vec,buf,10);
+		}
+		strVal += ">";
+	}
+
+	UpdateDataOne(current.con, GuiHub::upStkRoomStatus, strVal);
+}
 
 SYSTEMTIME GuiDataHubI::ToTime(std::string& strVal)
 {

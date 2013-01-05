@@ -148,14 +148,14 @@ namespace MCS
         [_System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.4.2")]
         public void write__(IceInternal.BasicStream os__)
         {
-            os__.writeByte((byte)enumTag, 14);
+            os__.writeByte((byte)enumTag, 13);
             os__.writeString(sVal);
         }
 
         [_System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.4.2")]
         public void read__(IceInternal.BasicStream is__)
         {
-            enumTag = (MCS.GuiHub.PushData)is__.readByte(14);
+            enumTag = (MCS.GuiHub.PushData)is__.readByte(13);
             sVal = is__.readString();
         }
 
@@ -1316,7 +1316,7 @@ namespace MCS
             {
                 result__.prepare__(__ReadData_name, Ice.OperationMode.Idempotent, ctx__, explicitContext__);
                 IceInternal.BasicStream os__ = result__.ostr__;
-                os__.writeByte((byte)Tag, 21);
+                os__.writeByte((byte)Tag, 22);
                 os__.writeInt(session);
                 os__.endWriteEncaps();
                 result__.send__(true);
@@ -1473,7 +1473,7 @@ namespace MCS
                     os__.writeSize(list.Length);
                     for(int ix__ = 0; ix__ < list.Length; ++ix__)
                     {
-                        os__.writeByte((byte)list[ix__], 14);
+                        os__.writeByte((byte)list[ix__], 13);
                     }
                 }
                 os__.writeInt(session);
@@ -1655,7 +1655,7 @@ namespace MCS
             {
                 result__.prepare__(__WriteData_name, Ice.OperationMode.Idempotent, ctx__, explicitContext__);
                 IceInternal.BasicStream os__ = result__.ostr__;
-                os__.writeByte((byte)Tag, 21);
+                os__.writeByte((byte)Tag, 22);
                 os__.writeString(Val);
                 os__.writeInt(session);
                 os__.endWriteEncaps();
@@ -3237,7 +3237,7 @@ namespace MCS
                 try
                 {
                     IceInternal.BasicStream os__ = og__.ostr();
-                    os__.writeByte((byte)Tag, 21);
+                    os__.writeByte((byte)Tag, 22);
                     os__.writeInt(session);
                 }
                 catch(Ice.LocalException ex__)
@@ -3338,7 +3338,7 @@ namespace MCS
                         os__.writeSize(list.Length);
                         for(int ix__ = 0; ix__ < list.Length; ++ix__)
                         {
-                            os__.writeByte((byte)list[ix__], 14);
+                            os__.writeByte((byte)list[ix__], 13);
                         }
                     }
                     os__.writeInt(session);
@@ -3434,7 +3434,7 @@ namespace MCS
                 try
                 {
                     IceInternal.BasicStream os__ = og__.ostr();
-                    os__.writeByte((byte)Tag, 21);
+                    os__.writeByte((byte)Tag, 22);
                     os__.writeString(Val);
                     os__.writeInt(session);
                 }
@@ -4806,7 +4806,7 @@ namespace MCS
                 list = new MCS.GuiHub.PushData[szx__];
                 for(int ix__ = 0; ix__ < szx__; ++ix__)
                 {
-                    list[ix__] = (MCS.GuiHub.PushData)is__.readByte(14);
+                    list[ix__] = (MCS.GuiHub.PushData)is__.readByte(13);
                 }
             }
             int session;
@@ -4842,7 +4842,7 @@ namespace MCS
             IceInternal.BasicStream is__ = inS__.istr();
             is__.startReadEncaps();
             MCS.GuiHub.GuiCommand Tag;
-            Tag = (MCS.GuiHub.GuiCommand)is__.readByte(21);
+            Tag = (MCS.GuiHub.GuiCommand)is__.readByte(22);
             int session;
             session = is__.readInt();
             is__.endReadEncaps();
@@ -4859,7 +4859,7 @@ namespace MCS
             IceInternal.BasicStream is__ = inS__.istr();
             is__.startReadEncaps();
             MCS.GuiHub.GuiCommand Tag;
-            Tag = (MCS.GuiHub.GuiCommand)is__.readByte(21);
+            Tag = (MCS.GuiHub.GuiCommand)is__.readByte(22);
             string Val;
             Val = is__.readString();
             int session;
