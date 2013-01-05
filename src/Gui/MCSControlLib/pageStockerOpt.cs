@@ -179,10 +179,23 @@ namespace MCSControlLib
                         tBLastFoupAuto.Text = "0";
                         tBLastFoupManu.Text = "4";
                     }
-                    DateTime dt = new DateTime(Convert.ToInt32(item[6].ToString()), Convert.ToInt32(item[7].ToString()), Convert.ToInt32(item[8].ToString()),
-                        Convert.ToInt32(item[9].ToString()), Convert.ToInt32(item[10].ToString()), Convert.ToInt32(item[11].ToString()));
-                    string lastEventTime = dt.ToString();
-                    tBLastEventTime.Text = lastEventTime;
+
+                    try
+                    {
+                        DateTime dt = new DateTime(TryConver.ToInt32(item[6].ToString()),
+                           TryConver.ToInt32(item[7].ToString()),
+                           TryConver.ToInt32(item[8].ToString()),
+                           TryConver.ToInt32(item[9].ToString()),
+                           TryConver.ToInt32(item[10].ToString()),
+                           TryConver.ToInt32(item[11].ToString()));
+                        string lastEventTime = dt.ToString();
+                        tBLastEventTime.Text = lastEventTime;
+                    }
+                    catch (System.Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    
                 }
             }
         }

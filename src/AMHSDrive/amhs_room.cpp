@@ -167,7 +167,7 @@ amhs_foup_vec amhs_room::STK_GetLastEventFoup(int nID)
 	return foup_vec;
 }
 
-vector<int> amhs_room::GetStkRoom(int nID)
+vector<int> amhs_room::STK_GetRoom(int nID)
 {
 	vector<int> room_vec;
 	RLock(rwLock_stocker_map_)
@@ -388,11 +388,12 @@ void amhs_room::Handle_STK_AckRoom(amhs_participant_ptr, AMHSPacket& Packet)
 			for (int i=0; i<141; i++)
 			{
 				printf("%d ", item[i]);
-				if (i % 16 == 0)
+				if ((i+1) % 16 == 0 && i>0)
 				{
 					printf("\r\n");
 				}
 			}
+			printf("\r\n");
 			LOG_DEBUG("Room end");
 		}
 
@@ -542,64 +543,7 @@ void amhs_room::Handle_STK_FoupEvent(amhs_participant_ptr participants, AMHSPack
 			pFoup->nfoupRoom = foupRoom;
 			pFoup->nInput = nInput;
 			itStocker->second->last_opt_foup_vec.push_back(pFoup);
-		}
-		else
-		{
-			amhs_foup_map::iterator itFoup=itStocker->second->foup_map.find(foupBarCode);
-			if(itFoup != itStocker->second->foup_map.end())
-			{
-				if(1 == nChaned)
-				{
-					itFoup->second->nChaned = nChaned;
-					itFoup->second->nfoupRoom = foupRoom;
-					itFoup->second->nInput = nInput;
-					itFoup->second->nLot = foupLot;
-					itStocker->second->last_opt_foup_vec.clear();
-					itStocker->second->last_opt_foup_vec.push_back(itFoup->second);
-					GetLocalTime(&itStocker->second->last_opt_foup_time);
-					itStocker->second->foup_erase_vec.push_back(itFoup->second);
-					itStocker->second->foup_map.erase(foupBarCode);
-				}
-				nAuthAck=0;
-			}
-			else
-			{		
-				amhs_foup_ptr pFoup = amhs_foup_ptr(new amhs_Foup());
-				pFoup->nChaned=nChaned;
-				pFoup->nfoupRoom=foupRoom;
-				pFoup->nLot=foupLot;
-				pFoup->nBarCode=foupBarCode;
-				pFoup->nInput=nInput;
-				pFoup->p_participant = participants;
-				itStocker->second->foup_map.insert(std::make_pair(foupBarCode, pFoup));
-				itStocker->second->last_opt_foup_vec.clear();
-				itStocker->second->last_opt_foup_vec.push_back(pFoup);
-				GetLocalTime(&itStocker->second->last_opt_foup_time);
-
-				nAuthAck = 1;
-			}
-			amhs_foup_map::iterator itFoupTotal = foup_map_.find(foupBarCode);
-			if(itFoupTotal != foup_map_.end())
-			{
-				if(1 == nChaned && (5 == nInput || 6 == nInput || 7 == nInput || 8 == nInput))
-				{
-					foup_map_.erase(itFoupTotal);
-				}
-			}
-			else
-			{
-				if(0 == nChaned)
-				{
-				amhs_foup_ptr pFoup = amhs_foup_ptr(new amhs_Foup());
-				pFoup->nChaned=nChaned;
-				pFoup->nfoupRoom=foupRoom;
-				pFoup->nLot=foupLot;
-				pFoup->nBarCode=foupBarCode;
-				pFoup->nInput=nInput;
-				pFoup->p_participant = participants;
-				foup_map_.insert(std::make_pair(foupBarCode, pFoup));
-				}
-			}
+			GetLocalTime(&itStocker->second->last_opt_foup_time);
 		}
 	}
 
