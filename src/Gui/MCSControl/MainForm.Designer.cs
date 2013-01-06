@@ -31,14 +31,15 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("OHT Info");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Stocker Info");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Mes Command");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Online Log");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Offine Log");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Alarm");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("System Log", new System.Windows.Forms.TreeNode[] {
-            treeNode4,
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Fork Info");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Mes Command");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Online Log");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Offine Log");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Alarm");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("System Log", new System.Windows.Forms.TreeNode[] {
             treeNode5,
-            treeNode6});
+            treeNode6,
+            treeNode7});
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLable_Status = new System.Windows.Forms.ToolStripStatusLabel();
@@ -154,21 +155,24 @@
             treeNode1.Text = "OHT Info";
             treeNode2.Name = "nodeSTKInfo";
             treeNode2.Text = "Stocker Info";
-            treeNode3.Name = "nodeMesCommand";
-            treeNode3.Text = "Mes Command";
-            treeNode4.Name = "nodeLogOnline";
-            treeNode4.Text = "Online Log";
-            treeNode5.Name = "nodeLogOffline";
-            treeNode5.Text = "Offine Log";
-            treeNode6.Name = "nodeAlarm";
-            treeNode6.Text = "Alarm";
-            treeNode7.Name = "nodeLogSystem";
-            treeNode7.Text = "System Log";
+            treeNode3.Name = "nodeForkInfo";
+            treeNode3.Text = "Fork Info";
+            treeNode4.Name = "nodeMesCommand";
+            treeNode4.Text = "Mes Command";
+            treeNode5.Name = "nodeLogOnline";
+            treeNode5.Text = "Online Log";
+            treeNode6.Name = "nodeLogOffline";
+            treeNode6.Text = "Offine Log";
+            treeNode7.Name = "nodeAlarm";
+            treeNode7.Text = "Alarm";
+            treeNode8.Name = "nodeLogSystem";
+            treeNode8.Text = "System Log";
             this.treeViewPage.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2,
             treeNode3,
-            treeNode7});
+            treeNode4,
+            treeNode8});
             this.treeViewPage.Size = new System.Drawing.Size(169, 499);
             this.treeViewPage.TabIndex = 0;
             this.treeViewPage.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
