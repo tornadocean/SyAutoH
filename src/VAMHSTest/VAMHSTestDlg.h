@@ -66,6 +66,7 @@ public:
 	void SetOHTListItemData(ItemOHT* pOHT, int nListIndex);
 	void SetStockerListItemData(ItemStocker* pStocker,int nListIndex);
 	void SetFOUPListItemData(ItemFoup* pFoup,int nListIndex);
+	void SetStockerInputStatus(int nHandType,int nPosition);
 	void DeleteElem(int nID);
 	int GetElemData(CMarkup xml,CString tag);
 	int GetSelectOhtID(void);
@@ -88,4 +89,5 @@ public:
 	afx_msg void OnBnClickedStkAllOnlineButton();
 	afx_msg void OnBnClickedDeleteStkButton();
 	afx_msg void OnBnClickedClearFoupsButton();
+	afx_msg void OnBnClickedSetStkposButton();
 };

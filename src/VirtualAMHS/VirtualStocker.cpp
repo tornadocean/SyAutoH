@@ -16,6 +16,7 @@ VirtualStocker::VirtualStocker(void)
 	ItemRoom InitRoom;
 	InitRoom.nFoupID = 0;
 	InitRoom.nStatus = 0;
+	m_nInputStatus = 0;
 	for(int i = 0;i < 142;i++)
 	{
 		m_mapRooms.insert(std::make_pair(i,InitRoom));
@@ -107,7 +108,12 @@ int VirtualStocker::ManualInputFoup(int nFoupID,int nBatchID)
 	it = m_mapFoups.find(nFoupID);
 	if (it == m_mapFoups.end())
 	{
-		FoupIntoRoom(nFoupID,nBatchID);
+		int nIn = FoupIntoRoom(nFoupID,nBatchID);
+		if(nIn == 0)
+		{
+			printf("%s","Input the foup failed !");
+			return 0;
+		}
 		/*
 		VirtualFoup foup;
 		foup.nID = nFoupID;
@@ -123,6 +129,7 @@ int VirtualStocker::ManualInputFoup(int nFoupID,int nBatchID)
 		Packet << uint8(5); // manual input 1
 
 		SendPacket(Packet);
+		m_nInputStatus = 0;
 	}
 	return 0;
 }
@@ -179,6 +186,7 @@ int VirtualStocker::ManualOutputFoup(int nFoupID)
 
 	SendPacket(Packet);
 	FoupOutRoom(nFoupID);
+	m_nInputStatus = 1;
 	return 0;
 }
 
@@ -217,7 +225,7 @@ void VirtualStocker::Handle_FoupOperate(AMHSPacket& packet)
 		MAP_VROOM::iterator ite;
 		if(nPick == 0)
 		{
-			ite = m_mapRooms.find(nFoupData1);
+			ite = m_mapRooms.find((int)nFoupData1);
 			if(ite->second.nStatus == 0)
 			{
 				m_nContain++;
@@ -233,7 +241,7 @@ void VirtualStocker::Handle_FoupOperate(AMHSPacket& packet)
 				}
 				CFoup.nBatchID = pFoup.nBatchID = 0;
 			    CFoup.nID = pFoup.nID = nID + 1;
-			    CFoup.nRoomID = pFoup.nRoomID = nFoupData1;
+			    CFoup.nRoomID = pFoup.nRoomID = (int)nFoupData1;
 			    CFoup.nStatus = pFoup.nStatus = 0;
 			    m_mapFoups.insert(std::make_pair(nID + 1,pFoup));
 			    ItemRoom item;
@@ -245,6 +253,7 @@ void VirtualStocker::Handle_FoupOperate(AMHSPacket& packet)
 			    FoupPacket << (uint8)(0);
 			    SendPacket(FoupPacket);
 				FoupEvent(CFoup.nID,0, 1);
+				m_nInputStatus = 0;
 				
 			}
 		    else
@@ -264,18 +273,23 @@ void VirtualStocker::Handle_FoupOperate(AMHSPacket& packet)
 		}
 		else if(nPick == 2)
 		{
-			it = m_mapFoups.find(nFoupData1);
+			it = m_mapFoups.find((int)nFoupData1);
 			if(it == m_mapFoups.end())
 			{
 				m_nFoupChange = 1;
-				FoupIntoRoom(nFoupData1,0);
-				it = m_mapFoups.find(nFoupData1);
+				int nIn = FoupIntoRoom((int)nFoupData1,0);
+				if(nIn == 0)
+				{
+					printf("%s","Input the foup failed!");
+				}
+				it = m_mapFoups.find((int)nFoupData1);
 				CFoup = it->second;
 				AMHSPacket FoupPacket(STK_ACK_FOUP,2);
 			    FoupPacket << (uint8)(DeviceID());
 			    FoupPacket << (uint8)(0);
 			    SendPacket(FoupPacket);
 				FoupEvent(CFoup.nID, 0, 1);
+				m_nInputStatus = 0;
 			}
 			else
 			{
@@ -299,7 +313,7 @@ void VirtualStocker::Handle_FoupOperate(AMHSPacket& packet)
 		MAP_VROOM::iterator ite;
 		if(nPick == 0)
 		{
-			ite = m_mapRooms.find(nFoupData1);
+			ite = m_mapRooms.find((int)nFoupData1);
 			if(ite != m_mapRooms.end())
 			{
 				m_nContain--;
@@ -317,7 +331,7 @@ void VirtualStocker::Handle_FoupOperate(AMHSPacket& packet)
 			        FoupPacket << (uint8)(DeviceID());
 			        FoupPacket << (uint8)(0);
 			        SendPacket(FoupPacket);
-					
+					m_nInputStatus = 1;
 				    return ;
 			    }
 		     }
@@ -332,7 +346,7 @@ void VirtualStocker::Handle_FoupOperate(AMHSPacket& packet)
 		}
 		else if(nPick == 2)
 		{
-			it = m_mapFoups.find(nFoupData1);
+			it = m_mapFoups.find((int)nFoupData1);
 			if(it != m_mapFoups.end())
 			{
 				CFoup = it->second;
@@ -348,7 +362,7 @@ void VirtualStocker::Handle_FoupOperate(AMHSPacket& packet)
 			    FoupPacket << (uint8)(DeviceID());
 			    FoupPacket << (uint8)(0);
 			    SendPacket(FoupPacket);
-				
+				m_nInputStatus = 1;
 				return ;
 			}
 		}
@@ -399,7 +413,7 @@ void VirtualStocker::Handle_InputStatus(AMHSPacket& packet)
 	AMHSPacket InputPacket(STK_ACK_INPUT_STATUS,3);
 	InputPacket << (uint8)(DeviceID());
 	InputPacket << (uint8)(0);
-	InputPacket << (uint8)(0);
+	InputPacket << (uint8)(m_nInputStatus);
 
 	SendPacket(InputPacket);
 	return ;
@@ -653,9 +667,14 @@ int VirtualStocker::FoupIntoRoom(int nID,int nBatchID)
 		item.nStatus = 1;
 		MAP_VROOM::iterator it;
 		it = m_mapRooms.find(0);
-		it->second = item;
-		m_nContain++;
-		return 1;
+		if(it != m_mapRooms.end())
+		{
+			it->second = item;
+		    m_nContain++;
+			return 1;
+		}
+		else 
+			return 0;
 	}
 	else
 	{

@@ -11,6 +11,8 @@
 #endif
 
 #pragma once
+#define OHT 0
+#define STOCKER 1
 
 class VirtualOHT;
 class VirtualStocker;
@@ -34,6 +36,7 @@ typedef struct
 	int nOnline;
 	int nStatus;
 	int nContain;
+	int nPosition;
 } ItemStocker;
 typedef std::list<ItemOHT> LIST_OHT;
 typedef std::list<ItemStocker> LIST_STOCKER;
@@ -43,7 +46,8 @@ typedef std::map<int, ItemOHT*> MAP_ItemOHT;
 typedef struct
 {
 	//TCHAR FoupID[256];
-	int nStockerID;
+	int nPosition;
+	int nDeviceID;
 	int nID;
 	int nProcessStatus;
 	int nRoomID;
@@ -64,8 +68,11 @@ public:
     int OHT_Init(int nIndex,int posTime,int statusTime);
 	int Stocker_Auth(int nIndex, const char* sIP);
 	int OHT_SetConstSpeed(int nSpeed,int nIdex = -1);
+	int OHT_GetHandChangeID();
 
 	int OHT_Offline(int nIndex);
+	ItemOHT OHT_GetHandOHT(int nOHT_ID);
+	int OHT_GetHandChangeType(int nOHT_ID);
 	int Stocker_Offline(int nIndex);
 
 	// for Stocker
@@ -75,6 +82,7 @@ public:
 	int STK_FoupInitRoom(int nStockerID,ItemFoup *pFoup);
 	int STK_History(int nStocker);
 	int STK_AuthFoup(int nStocker);
+	int STK_SetInputStatus(int nStocker,int nType);
 	//int STK_SetFoupNum(int nIndex,int nContain);
 	//int STK_GetFoup(int nSTK_ID,int nFoupID,int nBatchID);
 	int STK_GetRoomID(int nSTK_ID,int nFoupID);
@@ -86,6 +94,7 @@ public:
 	LIST_OHT OHT_GetStatus();
 	LIST_STOCKER Stocker_GetInfo();
 	int SetTeachPosition(int nID, int nPos, int nType, int nSpeedRate);
+	int m_nInputStatus;
 	//LIST_OHTTime OHT_GetTimes();
 
 private:

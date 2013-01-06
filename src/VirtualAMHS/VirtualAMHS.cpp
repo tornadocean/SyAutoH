@@ -292,6 +292,16 @@ int CVirtualAMHS::STK_GetRoomID(int nSTK_ID,int nFoupID)
 		return -1;
 }
 
+int CVirtualAMHS::STK_SetInputStatus(int nStocker,int nType)
+{
+	MAP_VSTK::iterator it;
+	it = m_mapSTK->find(nStocker);
+	if(it != m_mapSTK->end())
+	{
+		it->second->m_nInputStatus = nType;
+	}
+	return 0;
+}
 int CVirtualAMHS::STK_FoupChangeType(int nStockerID)
 {
 	MAP_VSTK::iterator it;
@@ -344,6 +354,45 @@ ItemFoup CVirtualAMHS::STK_GetChangedFoup(int nStockerID)
 	}
 	item.nBatchID = 0;
 	return item;
+}
+ItemOHT CVirtualAMHS::OHT_GetHandOHT(int nOHT_ID)
+{
+	MAP_VOHT::iterator it;
+	it = m_mapOHT->find(nOHT_ID);
+	ItemOHT item;
+	if(it != m_mapOHT->end())
+	{
+		item.nID = it->second->m_nOHT.nOHT_ID;
+		item.nPosition = it->second->m_nOHT.nPosition;
+		return item;
+	}
+	item.nID = -1;
+	return item;
+}
+
+int CVirtualAMHS::OHT_GetHandChangeType(int nOHT_ID)
+{
+	MAP_VOHT::iterator it;
+	it = m_mapOHT->find(nOHT_ID);
+	if(it != m_mapOHT->end())
+	{
+		int nType = it->second->m_nHandChange;
+		it->second->m_nHandChange = -1;
+		return nType;
+	}
+	return -1;
+}
+
+int CVirtualAMHS::OHT_GetHandChangeID()
+{
+	MAP_VOHT::iterator it;
+	for(it = m_mapOHT->begin();it != m_mapOHT->end();it++)
+	{
+		if(it->second->m_nHandChange != -1)
+			return (int)it->second->DeviceID();
+	}
+
+	return -1;
 }
 
 int CVirtualAMHS::STK_History(int nStocker)
