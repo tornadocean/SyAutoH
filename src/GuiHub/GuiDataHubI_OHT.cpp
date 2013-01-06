@@ -33,8 +33,9 @@ string GuiDataHubI::_GetKeyPointsTable(vector<int> nTypes)
 
 void GuiDataHubI::OHT_GetPositionTable(const std::string&, const ::Ice::Current& current)
 {
-	vector<int> nTypes;
+	vector<int> nTypes; // 0 length means all type
 	string strVal = _GetKeyPointsTable(nTypes);
+	//Sleep(20000);
 
 	UpdateDataOne(current.con, GuiHub::upOhtPosTable, strVal);
 }
