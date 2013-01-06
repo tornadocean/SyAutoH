@@ -165,6 +165,13 @@ namespace RailDraw.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap mirror {
+            get {
+                object obj = ResourceManager.GetObject("mirror", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap newfile {
             get {
                 object obj = ResourceManager.GetObject("newfile", resourceCulture);

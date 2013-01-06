@@ -28,8 +28,6 @@ namespace BaseRailElement
         private Int16 drawMultiFactor = 1;
         private Point startPoint = Point.Empty;
         private Point endPoint = Point.Empty;
-        private Int32 startCoding = 0;
-        private Int32 endCoding = 0;
         public string railText = "";
 
         [Browsable(false)]
@@ -94,18 +92,6 @@ namespace BaseRailElement
         {
             get { return endPoint; }
             set { endPoint = value; }
-        }
-        [Browsable(false)]
-        public Int32 StartCoding
-        {
-            get { return startCoding; }
-            set { startCoding = value; }
-        }
-        [Browsable(false)]
-        public Int32 EndCoding
-        {
-            get { return endCoding; }
-            set { endCoding = value; }
         }
 
         public void Move(Point start, Point end)

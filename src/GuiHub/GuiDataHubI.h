@@ -112,7 +112,6 @@ private:
 	GuiDataItem Push_STK_LastOptFoup();
 	GuiDataItem Push_STK_Status();
 	GuiDataItem Push_STK_InputStatus();
-	GuiDataItem Push_STK_GetRoom();
 
 private:
 	string _GetKeyPointsTable(vector<int> nTypes);
