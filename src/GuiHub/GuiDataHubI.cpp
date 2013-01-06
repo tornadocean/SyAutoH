@@ -8,7 +8,6 @@
 #include "iConstDef.h"
 #include <MMSystem.h>
 #pragma comment(lib, "winmm.lib")
-#include "boost/thread.hpp"
 
 GuiDataHubI::GuiDataHubI(void)
 	: m_nTimerPeriord(300),
@@ -108,7 +107,7 @@ Ice::Int GuiDataHubI::WriteData(MCS::GuiHub::GuiCommand enumCmd,
 	HANDLE_MAP::iterator it = m_mapHandles.find(enumCmd);
 	if (it != m_mapHandles.end())
 	{
-		boost::thread threadHandler(boost::bind((this->*it->second), strVal, current));
+		(this->*it->second)(strVal, current);
 		return 0;
 	}
 	else
