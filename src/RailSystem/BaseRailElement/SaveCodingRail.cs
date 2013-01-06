@@ -104,94 +104,95 @@ namespace BaseRailElement
             {
                 if (railCodingEleList[i].GraphType == 1)
                 {
-                    railCodingEleList[i].StartCoding = tempTagNum + 1;
-                    tempTagNum = railCodingEleList[i].StartCoding;
-                    railCodingEleList[i].EndCoding = tempTagNum + railCodingEleList[i].TagNumber;
-                    tempTagNum = railCodingEleList[i].EndCoding;
+                    BaseRailElement.StraightRailEle str = (BaseRailElement.StraightRailEle)railCodingEleList[i];
+                    str.CodingBegin = tempTagNum + 1;
+                    tempTagNum = str.CodingBegin;
+                    str.CodingEnd = tempTagNum + railCodingEleList[i].TagNumber;
+                    tempTagNum = str.CodingEnd;
                 }
             }
         }
 
         private void CreateCodingEleXml()
         {
-            XmlDocument xmlDoc = new XmlDocument();
-            XmlDeclaration xmlDecl = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", "yes");
-            xmlDoc.AppendChild(xmlDecl);
+            //XmlDocument xmlDoc = new XmlDocument();
+            //XmlDeclaration xmlDecl = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", "yes");
+            //xmlDoc.AppendChild(xmlDecl);
 
-            XmlElement xmlEle;
-            xmlEle = xmlDoc.CreateElement("CodingEle");
-            xmlDoc.AppendChild(xmlEle);
+            //XmlElement xmlEle;
+            //xmlEle = xmlDoc.CreateElement("CodingEle");
+            //xmlDoc.AppendChild(xmlEle);
 
-            Int16 num = Convert.ToInt16(railCodingEleList.Count());
-            for (Int16 i = 0; i < num; i++)
-            {
-                XmlElement xmlName = xmlDoc.CreateElement("element");
-                xmlEle.AppendChild(xmlName);
-                if (railCodingEleList[i].GraphType == 1)
-                {
-                    XmlElement xmlStrai = xmlDoc.CreateElement("类型标识符");
-                    XmlElement xmlSeg = xmlDoc.CreateElement("段号");
-                    XmlElement xmlStartCoding = xmlDoc.CreateElement("起点值");
-                    XmlElement xmlEndCoding = xmlDoc.CreateElement("终点值");
-                    XmlElement xmlNext = xmlDoc.CreateElement("next");
-                    XmlElement xmlprev = xmlDoc.CreateElement("prev");
+            //Int16 num = Convert.ToInt16(railCodingEleList.Count());
+            //for (Int16 i = 0; i < num; i++)
+            //{
+            //    XmlElement xmlName = xmlDoc.CreateElement("element");
+            //    xmlEle.AppendChild(xmlName);
+            //    if (railCodingEleList[i].GraphType == 1)
+            //    {
+            //        XmlElement xmlStrai = xmlDoc.CreateElement("类型标识符");
+            //        XmlElement xmlSeg = xmlDoc.CreateElement("段号");
+            //        XmlElement xmlStartCoding = xmlDoc.CreateElement("起点值");
+            //        XmlElement xmlEndCoding = xmlDoc.CreateElement("终点值");
+            //        XmlElement xmlNext = xmlDoc.CreateElement("next");
+            //        XmlElement xmlprev = xmlDoc.CreateElement("prev");
 
-                    xmlStrai.InnerText = "0";
-                    xmlSeg.InnerText = railCodingEleList[i].SegmentNumber.ToString();
-                    xmlStartCoding.InnerText = railCodingEleList[i].StartCoding.ToString();
-                    xmlEndCoding.InnerText = railCodingEleList[i].EndCoding.ToString();
-                    if (i != (num - 1))
-                    {
-                        xmlNext.InnerText = railCodingEleList[i + 1].StartCoding.ToString();
-                    }
-                    if (i != 0)
-                    {
-                        xmlprev.InnerText = railCodingEleList[i - 1].EndCoding.ToString();
-                    }
+            //        xmlStrai.InnerText = "0";
+            //        xmlSeg.InnerText = railCodingEleList[i].SegmentNumber.ToString();
+            //        xmlStartCoding.InnerText = railCodingEleList[i].StartCoding.ToString();
+            //        xmlEndCoding.InnerText = railCodingEleList[i].EndCoding.ToString();
+            //        if (i != (num - 1))
+            //        {
+            //            xmlNext.InnerText = railCodingEleList[i + 1].StartCoding.ToString();
+            //        }
+            //        if (i != 0)
+            //        {
+            //            xmlprev.InnerText = railCodingEleList[i - 1].EndCoding.ToString();
+            //        }
 
-                    xmlName.AppendChild(xmlStrai);
-                    xmlName.AppendChild(xmlSeg);
-                    xmlName.AppendChild(xmlStartCoding);
-                    xmlName.AppendChild(xmlEndCoding);
-                    xmlName.AppendChild(xmlNext);
-                    xmlName.AppendChild(xmlprev);
-                }
-                else if (railCodingEleList[i].GraphType == 3)
-                {
-                    XmlElement xmlStrai = xmlDoc.CreateElement("类型标识符");
-                    XmlElement xmlSeg = xmlDoc.CreateElement("段号");
-                    XmlElement xmlStartCoding = xmlDoc.CreateElement("起点值");
-                    XmlElement xmlEndCoding = xmlDoc.CreateElement("终点值");
-                    XmlElement xmlThirdCoding = xmlDoc.CreateElement("第三点");
-                    XmlElement xmlNext = xmlDoc.CreateElement("next");
-                    XmlElement xmlprev = xmlDoc.CreateElement("prev");
+            //        xmlName.AppendChild(xmlStrai);
+            //        xmlName.AppendChild(xmlSeg);
+            //        xmlName.AppendChild(xmlStartCoding);
+            //        xmlName.AppendChild(xmlEndCoding);
+            //        xmlName.AppendChild(xmlNext);
+            //        xmlName.AppendChild(xmlprev);
+            //    }
+            //    else if (railCodingEleList[i].GraphType == 3)
+            //    {
+            //        XmlElement xmlStrai = xmlDoc.CreateElement("类型标识符");
+            //        XmlElement xmlSeg = xmlDoc.CreateElement("段号");
+            //        XmlElement xmlStartCoding = xmlDoc.CreateElement("起点值");
+            //        XmlElement xmlEndCoding = xmlDoc.CreateElement("终点值");
+            //        XmlElement xmlThirdCoding = xmlDoc.CreateElement("第三点");
+            //        XmlElement xmlNext = xmlDoc.CreateElement("next");
+            //        XmlElement xmlprev = xmlDoc.CreateElement("prev");
 
-                    xmlStrai.InnerText = "1";
-                    xmlSeg.InnerText = railCodingEleList[i].SegmentNumber.ToString();
-                    xmlStartCoding.InnerText = xmlStrai.InnerText + xmlSeg.InnerText + "1";
-                    xmlEndCoding.InnerText = xmlStrai.InnerText + xmlSeg.InnerText + "2";
-                    xmlThirdCoding.InnerText = xmlStrai.InnerText + xmlSeg.InnerText + "3";
-                    if (i != (num - 1))
-                    {
-                        xmlNext.InnerText = railCodingEleList[i + 1].StartCoding.ToString();
-                    }
-                    if (i != 0)
-                    {
-                        xmlprev.InnerText = railCodingEleList[i - 1].EndCoding.ToString();
-                    }
+            //        xmlStrai.InnerText = "1";
+            //        xmlSeg.InnerText = railCodingEleList[i].SegmentNumber.ToString();
+            //        xmlStartCoding.InnerText = xmlStrai.InnerText + xmlSeg.InnerText + "1";
+            //        xmlEndCoding.InnerText = xmlStrai.InnerText + xmlSeg.InnerText + "2";
+            //        xmlThirdCoding.InnerText = xmlStrai.InnerText + xmlSeg.InnerText + "3";
+            //        if (i != (num - 1))
+            //        {
+            //            xmlNext.InnerText = railCodingEleList[i + 1].StartCoding.ToString();
+            //        }
+            //        if (i != 0)
+            //        {
+            //            xmlprev.InnerText = railCodingEleList[i - 1].EndCoding.ToString();
+            //        }
 
-                    xmlName.AppendChild(xmlStrai);
-                    xmlName.AppendChild(xmlSeg);
-                    xmlName.AppendChild(xmlStartCoding);
-                    xmlName.AppendChild(xmlEndCoding);
-                    xmlName.AppendChild(xmlThirdCoding);
-                    xmlName.AppendChild(xmlNext);
-                    xmlName.AppendChild(xmlprev);
-                }
-            }
+            //        xmlName.AppendChild(xmlStrai);
+            //        xmlName.AppendChild(xmlSeg);
+            //        xmlName.AppendChild(xmlStartCoding);
+            //        xmlName.AppendChild(xmlEndCoding);
+            //        xmlName.AppendChild(xmlThirdCoding);
+            //        xmlName.AppendChild(xmlNext);
+            //        xmlName.AppendChild(xmlprev);
+            //    }
+            //}
 
-            xmlDoc.Save(@"..\..\..\..\..\bin\config\rails_coding.xml");
-            xmlDoc = null;
+            //xmlDoc.Save(@"..\..\..\..\..\bin\config\rails_coding.xml");
+            //xmlDoc = null;
         }
     }
 }

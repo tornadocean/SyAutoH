@@ -14,10 +14,10 @@ namespace RailDraw
             switch (str)
             {
                 case "drap":
-                    newCursor = new Cursor(@"..\\..\\resources\drap.cur");
+                    newCursor = new Cursor(@"..\\..\\src\RailSystem\RailDraw\resources\drap.cur");
                     break;
                 case "draw":
-                    newCursor = new Cursor(@"..\\..\\resources\draw.cur");
+                    newCursor = new Cursor(@"..\\..\\src\RailSystem\RailDraw\resources\draw.cur");
                     break;
             }
             return newCursor;

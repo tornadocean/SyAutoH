@@ -6,12 +6,12 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>9</SegmentNumber>
-    <TagNumber>1000</TagNumber>
+    <SegmentNumber>0</SegmentNumber>
+    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>直轨</railText>
-    <StartCoding>0</StartCoding>
-    <EndCoding>0</EndCoding>
+    <railText>Line_101</railText>
+    <CodingBegin>5400</CodingBegin>
+    <CodingEnd>6400</CodingEnd>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>0</StartAngle>
@@ -21,8 +21,11 @@
     <prevCoding>-1</prevCoding>
     <Lenght>360</Lenght>
     <PointListVol>2</PointListVol>
-    <PointList0>{X=306,Y=85}</PointList0>
-    <PointList1>{X=666,Y=85}</PointList1>
+    <PointList0>{X=484,Y=192}</PointList0>
+    <PointList1>{X=844,Y=192}</PointList1>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
   </RailEleTable>
   <RailEleTable>
     <GraphType>2</GraphType>
@@ -30,26 +33,89 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>8</SegmentNumber>
-    <TagNumber>90</TagNumber>
+    <SegmentNumber>0</SegmentNumber>
+    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>弯轨</railText>
-    <StartCoding>0</StartCoding>
-    <EndCoding>0</EndCoding>
+    <railText>Curve_201</railText>
+    <CodingBegin>6700</CodingBegin>
+    <CodingEnd>6700</CodingEnd>
+    <startPoint>{X=0,Y=0}</startPoint>
+    <endPoint>{X=0,Y=0}</endPoint>
+    <StartAngle>0</StartAngle>
+    <SweepAngle>90</SweepAngle>
+    <rotateAngle>90</rotateAngle>
+    <Radiu>10</Radiu>
+    <Center>{X=844,Y=232}</Center>
+    <FirstDot>{X=854,Y=232}</FirstDot>
+    <SecDot>{X=844,Y=242}</SecDot>
+    <oldRadiu>10</oldRadiu>
+    <oldCenter>{X=844,Y=232}</oldCenter>
+    <oldFirstDot>{X=854,Y=232}</oldFirstDot>
+    <oldSecDot>{X=844,Y=242}</oldSecDot>
+    <DirectionCurvedAttribute>0</DirectionCurvedAttribute>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
+  </RailEleTable>
+  <RailEleTable>
+    <GraphType>2</GraphType>
+    <LocationLock>false</LocationLock>
+    <SizeLock>false</SizeLock>
+    <Selectable>true</Selectable>
+    <Speed>0</Speed>
+    <SegmentNumber>0</SegmentNumber>
+    <TagNumber>0</TagNumber>
+    <DrawMultiFactor>1</DrawMultiFactor>
+    <railText>Curve_202</railText>
+    <CodingBegin>5100</CodingBegin>
+    <CodingEnd>5100</CodingEnd>
+    <startPoint>{X=0,Y=0}</startPoint>
+    <endPoint>{X=0,Y=0}</endPoint>
+    <StartAngle>90</StartAngle>
+    <SweepAngle>90</SweepAngle>
+    <rotateAngle>90</rotateAngle>
+    <Radiu>10</Radiu>
+    <Center>{X=484,Y=232}</Center>
+    <FirstDot>{X=484,Y=242}</FirstDot>
+    <SecDot>{X=474,Y=232}</SecDot>
+    <oldRadiu>10</oldRadiu>
+    <oldCenter>{X=484,Y=232}</oldCenter>
+    <oldFirstDot>{X=484,Y=242}</oldFirstDot>
+    <oldSecDot>{X=474,Y=232}</oldSecDot>
+    <DirectionCurvedAttribute>1</DirectionCurvedAttribute>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
+  </RailEleTable>
+  <RailEleTable>
+    <GraphType>2</GraphType>
+    <LocationLock>false</LocationLock>
+    <SizeLock>false</SizeLock>
+    <Selectable>true</Selectable>
+    <Speed>0</Speed>
+    <SegmentNumber>0</SegmentNumber>
+    <TagNumber>0</TagNumber>
+    <DrawMultiFactor>1</DrawMultiFactor>
+    <railText>Curve_203</railText>
+    <CodingBegin>5400</CodingBegin>
+    <CodingEnd>5400</CodingEnd>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>180</StartAngle>
     <SweepAngle>90</SweepAngle>
     <rotateAngle>90</rotateAngle>
     <Radiu>10</Radiu>
-    <Center>{X=306,Y=95}</Center>
-    <FirstDot>{X=296,Y=95}</FirstDot>
-    <SecDot>{X=306,Y=85}</SecDot>
+    <Center>{X=484,Y=202}</Center>
+    <FirstDot>{X=474,Y=202}</FirstDot>
+    <SecDot>{X=484,Y=192}</SecDot>
     <oldRadiu>10</oldRadiu>
-    <oldCenter>{X=306,Y=95}</oldCenter>
-    <oldFirstDot>{X=296,Y=95}</oldFirstDot>
-    <oldSecDot>{X=306,Y=85}</oldSecDot>
+    <oldCenter>{X=484,Y=202}</oldCenter>
+    <oldFirstDot>{X=474,Y=202}</oldFirstDot>
+    <oldSecDot>{X=484,Y=192}</oldSecDot>
     <DirectionCurvedAttribute>2</DirectionCurvedAttribute>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
   </RailEleTable>
   <RailEleTable>
     <GraphType>2</GraphType>
@@ -57,26 +123,29 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>10</SegmentNumber>
-    <TagNumber>90</TagNumber>
+    <SegmentNumber>0</SegmentNumber>
+    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>弯轨</railText>
-    <StartCoding>0</StartCoding>
-    <EndCoding>0</EndCoding>
+    <railText>Curve_204</railText>
+    <CodingBegin>6400</CodingBegin>
+    <CodingEnd>6400</CodingEnd>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
-    <StartAngle>-90</StartAngle>
+    <StartAngle>270</StartAngle>
     <SweepAngle>90</SweepAngle>
-    <rotateAngle>-90</rotateAngle>
+    <rotateAngle>90</rotateAngle>
     <Radiu>10</Radiu>
-    <Center>{X=666,Y=95}</Center>
-    <FirstDot>{X=666,Y=85}</FirstDot>
-    <SecDot>{X=676,Y=95}</SecDot>
+    <Center>{X=844,Y=202}</Center>
+    <FirstDot>{X=844,Y=192}</FirstDot>
+    <SecDot>{X=854,Y=202}</SecDot>
     <oldRadiu>10</oldRadiu>
-    <oldCenter>{X=666,Y=95}</oldCenter>
-    <oldFirstDot>{X=666,Y=85}</oldFirstDot>
-    <oldSecDot>{X=676,Y=95}</oldSecDot>
+    <oldCenter>{X=844,Y=202}</oldCenter>
+    <oldFirstDot>{X=844,Y=192}</oldFirstDot>
+    <oldSecDot>{X=854,Y=202}</oldSecDot>
     <DirectionCurvedAttribute>3</DirectionCurvedAttribute>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
   </RailEleTable>
   <RailEleTable>
     <GraphType>1</GraphType>
@@ -84,12 +153,12 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>7</SegmentNumber>
-    <TagNumber>300</TagNumber>
+    <SegmentNumber>0</SegmentNumber>
+    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>直轨</railText>
-    <StartCoding>0</StartCoding>
-    <EndCoding>0</EndCoding>
+    <railText>Line_102</railText>
+    <CodingBegin>6400</CodingBegin>
+    <CodingEnd>6700</CodingEnd>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>90</StartAngle>
@@ -99,8 +168,11 @@
     <prevCoding>-1</prevCoding>
     <Lenght>30</Lenght>
     <PointListVol>2</PointListVol>
-    <PointList0>{X=296,Y=95}</PointList0>
-    <PointList1>{X=296,Y=125}</PointList1>
+    <PointList0>{X=854,Y=202}</PointList0>
+    <PointList1>{X=854,Y=232}</PointList1>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
   </RailEleTable>
   <RailEleTable>
     <GraphType>1</GraphType>
@@ -108,77 +180,26 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>1</SegmentNumber>
-    <TagNumber>500</TagNumber>
+    <SegmentNumber>0</SegmentNumber>
+    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>直轨</railText>
-    <StartCoding>0</StartCoding>
-    <EndCoding>0</EndCoding>
+    <railText>Line_103</railText>
+    <CodingBegin>5100</CodingBegin>
+    <CodingEnd>5400</CodingEnd>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
-    <StartAngle>0</StartAngle>
+    <StartAngle>180</StartAngle>
     <rotateAngle>90</rotateAngle>
     <StartDot>first dot</StartDot>
     <nextCoding>-1</nextCoding>
     <prevCoding>-1</prevCoding>
     <Lenght>30</Lenght>
     <PointListVol>2</PointListVol>
-    <PointList0>{X=676,Y=95}</PointList0>
-    <PointList1>{X=676,Y=125}</PointList1>
-  </RailEleTable>
-  <RailEleTable>
-    <GraphType>2</GraphType>
-    <LocationLock>false</LocationLock>
-    <SizeLock>false</SizeLock>
-    <Selectable>true</Selectable>
-    <Speed>0</Speed>
-    <SegmentNumber>2</SegmentNumber>
-    <TagNumber>90</TagNumber>
-    <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>弯轨</railText>
-    <StartCoding>0</StartCoding>
-    <EndCoding>0</EndCoding>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
-    <StartAngle>0</StartAngle>
-    <SweepAngle>90</SweepAngle>
-    <rotateAngle>90</rotateAngle>
-    <Radiu>10</Radiu>
-    <Center>{X=666,Y=125}</Center>
-    <FirstDot>{X=676,Y=125}</FirstDot>
-    <SecDot>{X=666,Y=135}</SecDot>
-    <oldRadiu>10</oldRadiu>
-    <oldCenter>{X=666,Y=125}</oldCenter>
-    <oldFirstDot>{X=676,Y=125}</oldFirstDot>
-    <oldSecDot>{X=666,Y=135}</oldSecDot>
-    <DirectionCurvedAttribute>0</DirectionCurvedAttribute>
-  </RailEleTable>
-  <RailEleTable>
-    <GraphType>2</GraphType>
-    <LocationLock>false</LocationLock>
-    <SizeLock>false</SizeLock>
-    <Selectable>true</Selectable>
-    <Speed>0</Speed>
-    <SegmentNumber>6</SegmentNumber>
-    <TagNumber>90</TagNumber>
-    <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>弯轨</railText>
-    <StartCoding>0</StartCoding>
-    <EndCoding>0</EndCoding>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
-    <StartAngle>90</StartAngle>
-    <SweepAngle>90</SweepAngle>
-    <rotateAngle>90</rotateAngle>
-    <Radiu>10</Radiu>
-    <Center>{X=306,Y=125}</Center>
-    <FirstDot>{X=306,Y=135}</FirstDot>
-    <SecDot>{X=296,Y=125}</SecDot>
-    <oldRadiu>10</oldRadiu>
-    <oldCenter>{X=306,Y=125}</oldCenter>
-    <oldFirstDot>{X=306,Y=135}</oldFirstDot>
-    <oldSecDot>{X=296,Y=125}</oldSecDot>
-    <DirectionCurvedAttribute>1</DirectionCurvedAttribute>
+    <PointList0>{X=474,Y=232}</PointList0>
+    <PointList1>{X=474,Y=202}</PointList1>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
   </RailEleTable>
   <RailEleTable>
     <GraphType>3</GraphType>
@@ -186,29 +207,29 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>5</SegmentNumber>
-    <TagNumber>50</TagNumber>
+    <SegmentNumber>0</SegmentNumber>
+    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>叉轨</railText>
-    <StartCoding>0</StartCoding>
-    <EndCoding>0</EndCoding>
+    <railText>Cross_301</railText>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>180</StartAngle>
     <rotateAngle>90</rotateAngle>
-    <StartDot>sec dot</StartDot>
+    <StartDot>first dot</StartDot>
     <nextCoding>-1</nextCoding>
     <prevCoding>-1</prevCoding>
     <thirdDotCoding>-1</thirdDotCoding>
     <PointListVol>8</PointListVol>
-    <PointList0>{X=306,Y=135}</PointList0>
-    <PointList1>{X=316,Y=135}</PointList1>
-    <PointList2>{X=316,Y=130}</PointList2>
-    <PointList3>{X=331,Y=130}</PointList3>
-    <PointList4>{X=331,Y=135}</PointList4>
-    <PointList5>{X=341,Y=135}</PointList5>
-    <PointList6>{X=316,Y=140}</PointList6>
-    <PointList7>{X=322,Y=146}</PointList7>
+    <PointList0>{X=484,Y=242}</PointList0>
+    <PointList1>{X=494,Y=242}</PointList1>
+    <PointList2>{X=494,Y=237}</PointList2>
+    <PointList3>{X=509,Y=237}</PointList3>
+    <PointList4>{X=509,Y=242}</PointList4>
+    <PointList5>{X=519,Y=242}</PointList5>
+    <PointList6>{X=494,Y=247}</PointList6>
+    <PointList7>{X=500,Y=253}</PointList7>
     <Mirror>true</Mirror>
     <FirstPart>10</FirstPart>
     <SecPart>15</SecPart>
@@ -216,6 +237,9 @@
     <FourPart>{X=6,Y=6}</FourPart>
     <lenghtOfStrai>100</lenghtOfStrai>
     <DirectionOfCross>2</DirectionOfCross>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
   </RailEleTable>
   <RailEleTable>
     <GraphType>3</GraphType>
@@ -223,12 +247,12 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>4</SegmentNumber>
-    <TagNumber>500</TagNumber>
+    <SegmentNumber>0</SegmentNumber>
+    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>叉轨</railText>
-    <StartCoding>0</StartCoding>
-    <EndCoding>0</EndCoding>
+    <railText>Cross_302</railText>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>180</StartAngle>
@@ -238,14 +262,14 @@
     <prevCoding>-1</prevCoding>
     <thirdDotCoding>-1</thirdDotCoding>
     <PointListVol>8</PointListVol>
-    <PointList0>{X=376,Y=135}</PointList0>
-    <PointList1>{X=366,Y=135}</PointList1>
-    <PointList2>{X=366,Y=130}</PointList2>
-    <PointList3>{X=351,Y=130}</PointList3>
-    <PointList4>{X=351,Y=135}</PointList4>
-    <PointList5>{X=341,Y=135}</PointList5>
-    <PointList6>{X=366,Y=140}</PointList6>
-    <PointList7>{X=360,Y=146}</PointList7>
+    <PointList0>{X=554,Y=242}</PointList0>
+    <PointList1>{X=544,Y=242}</PointList1>
+    <PointList2>{X=544,Y=237}</PointList2>
+    <PointList3>{X=529,Y=237}</PointList3>
+    <PointList4>{X=529,Y=242}</PointList4>
+    <PointList5>{X=519,Y=242}</PointList5>
+    <PointList6>{X=544,Y=247}</PointList6>
+    <PointList7>{X=538,Y=253}</PointList7>
     <Mirror>false</Mirror>
     <FirstPart>10</FirstPart>
     <SecPart>15</SecPart>
@@ -253,6 +277,9 @@
     <FourPart>{X=6,Y=6}</FourPart>
     <lenghtOfStrai>100</lenghtOfStrai>
     <DirectionOfCross>2</DirectionOfCross>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
   </RailEleTable>
   <RailEleTable>
     <GraphType>1</GraphType>
@@ -260,23 +287,26 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>3</SegmentNumber>
-    <TagNumber>800</TagNumber>
+    <SegmentNumber>0</SegmentNumber>
+    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>直轨</railText>
-    <StartCoding>0</StartCoding>
-    <EndCoding>0</EndCoding>
+    <railText>Line_104</railText>
+    <CodingBegin>6700</CodingBegin>
+    <CodingEnd>7900</CodingEnd>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
-    <StartAngle>0</StartAngle>
+    <StartAngle>180</StartAngle>
     <rotateAngle>90</rotateAngle>
-    <StartDot>sec dot</StartDot>
+    <StartDot>first dot</StartDot>
     <nextCoding>-1</nextCoding>
     <prevCoding>-1</prevCoding>
     <Lenght>290</Lenght>
     <PointListVol>2</PointListVol>
-    <PointList0>{X=376,Y=135}</PointList0>
-    <PointList1>{X=666,Y=135}</PointList1>
+    <PointList0>{X=844,Y=242}</PointList0>
+    <PointList1>{X=554,Y=242}</PointList1>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
   </RailEleTable>
   <RailEleTable>
     <GraphType>3</GraphType>
@@ -284,29 +314,29 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>17</SegmentNumber>
-    <TagNumber>50</TagNumber>
+    <SegmentNumber>0</SegmentNumber>
+    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>叉轨</railText>
-    <StartCoding>0</StartCoding>
-    <EndCoding>0</EndCoding>
+    <railText>Cross_303</railText>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>90</StartAngle>
     <rotateAngle>90</rotateAngle>
-    <StartDot>sec dot</StartDot>
+    <StartDot>first dot</StartDot>
     <nextCoding>-1</nextCoding>
     <prevCoding>-1</prevCoding>
     <thirdDotCoding>-1</thirdDotCoding>
     <PointListVol>8</PointListVol>
-    <PointList0>{X=322,Y=178}</PointList0>
-    <PointList1>{X=322,Y=168}</PointList1>
-    <PointList2>{X=317,Y=168}</PointList2>
-    <PointList3>{X=317,Y=153}</PointList3>
-    <PointList4>{X=322,Y=153}</PointList4>
-    <PointList5>{X=322,Y=143}</PointList5>
-    <PointList6>{X=327,Y=168}</PointList6>
-    <PointList7>{X=342,Y=153}</PointList7>
+    <PointList0>{X=500,Y=285}</PointList0>
+    <PointList1>{X=500,Y=275}</PointList1>
+    <PointList2>{X=495,Y=275}</PointList2>
+    <PointList3>{X=495,Y=260}</PointList3>
+    <PointList4>{X=500,Y=260}</PointList4>
+    <PointList5>{X=500,Y=250}</PointList5>
+    <PointList6>{X=505,Y=275}</PointList6>
+    <PointList7>{X=520,Y=260}</PointList7>
     <Mirror>true</Mirror>
     <FirstPart>10</FirstPart>
     <SecPart>15</SecPart>
@@ -314,6 +344,9 @@
     <FourPart>{X=15,Y=15}</FourPart>
     <lenghtOfStrai>100</lenghtOfStrai>
     <DirectionOfCross>1</DirectionOfCross>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
   </RailEleTable>
   <RailEleTable>
     <GraphType>3</GraphType>
@@ -321,29 +354,29 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>11</SegmentNumber>
+    <SegmentNumber>0</SegmentNumber>
     <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>叉轨</railText>
-    <StartCoding>0</StartCoding>
-    <EndCoding>0</EndCoding>
+    <railText>Cross_304</railText>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>-90</StartAngle>
-    <rotateAngle>-90</rotateAngle>
-    <StartDot>sec dot</StartDot>
+    <rotateAngle>90</rotateAngle>
+    <StartDot>first dot</StartDot>
     <nextCoding>-1</nextCoding>
     <prevCoding>-1</prevCoding>
     <thirdDotCoding>-1</thirdDotCoding>
     <PointListVol>8</PointListVol>
-    <PointList0>{X=360,Y=178}</PointList0>
-    <PointList1>{X=360,Y=168}</PointList1>
-    <PointList2>{X=365,Y=168}</PointList2>
-    <PointList3>{X=365,Y=153}</PointList3>
-    <PointList4>{X=360,Y=153}</PointList4>
-    <PointList5>{X=360,Y=143}</PointList5>
-    <PointList6>{X=355,Y=168}</PointList6>
-    <PointList7>{X=340,Y=153}</PointList7>
+    <PointList0>{X=538,Y=285}</PointList0>
+    <PointList1>{X=538,Y=275}</PointList1>
+    <PointList2>{X=543,Y=275}</PointList2>
+    <PointList3>{X=543,Y=260}</PointList3>
+    <PointList4>{X=538,Y=260}</PointList4>
+    <PointList5>{X=538,Y=250}</PointList5>
+    <PointList6>{X=533,Y=275}</PointList6>
+    <PointList7>{X=518,Y=260}</PointList7>
     <Mirror>false</Mirror>
     <FirstPart>10</FirstPart>
     <SecPart>15</SecPart>
@@ -351,6 +384,9 @@
     <FourPart>{X=15,Y=15}</FourPart>
     <lenghtOfStrai>100</lenghtOfStrai>
     <DirectionOfCross>3</DirectionOfCross>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
   </RailEleTable>
   <RailEleTable>
     <GraphType>1</GraphType>
@@ -358,12 +394,12 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>16</SegmentNumber>
-    <TagNumber>300</TagNumber>
+    <SegmentNumber>0</SegmentNumber>
+    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>直轨</railText>
-    <StartCoding>0</StartCoding>
-    <EndCoding>0</EndCoding>
+    <railText>Line_105</railText>
+    <CodingBegin>2800</CodingBegin>
+    <CodingEnd>5100</CodingEnd>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>90</StartAngle>
@@ -373,8 +409,11 @@
     <prevCoding>-1</prevCoding>
     <Lenght>300</Lenght>
     <PointListVol>2</PointListVol>
-    <PointList0>{X=322,Y=478}</PointList0>
-    <PointList1>{X=322,Y=178}</PointList1>
+    <PointList0>{X=500,Y=585}</PointList0>
+    <PointList1>{X=500,Y=285}</PointList1>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
   </RailEleTable>
   <RailEleTable>
     <GraphType>1</GraphType>
@@ -382,23 +421,26 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>12</SegmentNumber>
-    <TagNumber>300</TagNumber>
+    <SegmentNumber>0</SegmentNumber>
+    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>直轨</railText>
-    <StartCoding>0</StartCoding>
-    <EndCoding>0</EndCoding>
+    <railText>Line_106</railText>
+    <CodingBegin>0</CodingBegin>
+    <CodingEnd>2300</CodingEnd>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>90</StartAngle>
-    <rotateAngle>-90</rotateAngle>
+    <rotateAngle>90</rotateAngle>
     <StartDot>first dot</StartDot>
     <nextCoding>-1</nextCoding>
     <prevCoding>-1</prevCoding>
     <Lenght>300</Lenght>
     <PointListVol>2</PointListVol>
-    <PointList0>{X=360,Y=478}</PointList0>
-    <PointList1>{X=360,Y=178}</PointList1>
+    <PointList0>{X=538,Y=285}</PointList0>
+    <PointList1>{X=538,Y=585}</PointList1>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
   </RailEleTable>
   <RailEleTable>
     <GraphType>2</GraphType>
@@ -406,26 +448,29 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>13</SegmentNumber>
-    <TagNumber>90</TagNumber>
+    <SegmentNumber>0</SegmentNumber>
+    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>弯轨</railText>
-    <StartCoding>0</StartCoding>
-    <EndCoding>0</EndCoding>
+    <railText>Curve_205</railText>
+    <CodingBegin>2300</CodingBegin>
+    <CodingEnd>2300</CodingEnd>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>0</StartAngle>
     <SweepAngle>90</SweepAngle>
     <rotateAngle>90</rotateAngle>
     <Radiu>10</Radiu>
-    <Center>{X=350,Y=478}</Center>
-    <FirstDot>{X=360,Y=478}</FirstDot>
-    <SecDot>{X=350,Y=488}</SecDot>
+    <Center>{X=528,Y=585}</Center>
+    <FirstDot>{X=538,Y=585}</FirstDot>
+    <SecDot>{X=528,Y=595}</SecDot>
     <oldRadiu>10</oldRadiu>
-    <oldCenter>{X=350,Y=478}</oldCenter>
-    <oldFirstDot>{X=360,Y=478}</oldFirstDot>
-    <oldSecDot>{X=350,Y=488}</oldSecDot>
+    <oldCenter>{X=528,Y=585}</oldCenter>
+    <oldFirstDot>{X=538,Y=585}</oldFirstDot>
+    <oldSecDot>{X=528,Y=595}</oldSecDot>
     <DirectionCurvedAttribute>0</DirectionCurvedAttribute>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
   </RailEleTable>
   <RailEleTable>
     <GraphType>2</GraphType>
@@ -433,26 +478,29 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>15</SegmentNumber>
-    <TagNumber>90</TagNumber>
+    <SegmentNumber>0</SegmentNumber>
+    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>弯轨</railText>
-    <StartCoding>0</StartCoding>
-    <EndCoding>0</EndCoding>
+    <railText>Curve_206</railText>
+    <CodingBegin>2800</CodingBegin>
+    <CodingEnd>2800</CodingEnd>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>90</StartAngle>
     <SweepAngle>90</SweepAngle>
     <rotateAngle>90</rotateAngle>
     <Radiu>10</Radiu>
-    <Center>{X=332,Y=478}</Center>
-    <FirstDot>{X=332,Y=488}</FirstDot>
-    <SecDot>{X=322,Y=478}</SecDot>
+    <Center>{X=510,Y=585}</Center>
+    <FirstDot>{X=510,Y=595}</FirstDot>
+    <SecDot>{X=500,Y=585}</SecDot>
     <oldRadiu>10</oldRadiu>
-    <oldCenter>{X=332,Y=478}</oldCenter>
-    <oldFirstDot>{X=332,Y=488}</oldFirstDot>
-    <oldSecDot>{X=322,Y=478}</oldSecDot>
+    <oldCenter>{X=510,Y=585}</oldCenter>
+    <oldFirstDot>{X=510,Y=595}</oldFirstDot>
+    <oldSecDot>{X=500,Y=585}</oldSecDot>
     <DirectionCurvedAttribute>1</DirectionCurvedAttribute>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
   </RailEleTable>
   <RailEleTable>
     <GraphType>1</GraphType>
@@ -460,22 +508,25 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>14</SegmentNumber>
-    <TagNumber>200</TagNumber>
+    <SegmentNumber>0</SegmentNumber>
+    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>直轨</railText>
-    <StartCoding>0</StartCoding>
-    <EndCoding>0</EndCoding>
+    <railText>Line_107</railText>
+    <CodingBegin>2300</CodingBegin>
+    <CodingEnd>2800</CodingEnd>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
-    <StartAngle>0</StartAngle>
+    <StartAngle>180</StartAngle>
     <rotateAngle>90</rotateAngle>
-    <StartDot>sec dot</StartDot>
+    <StartDot>first dot</StartDot>
     <nextCoding>-1</nextCoding>
     <prevCoding>-1</prevCoding>
     <Lenght>18</Lenght>
     <PointListVol>2</PointListVol>
-    <PointList0>{X=332,Y=488}</PointList0>
-    <PointList1>{X=350,Y=488}</PointList1>
+    <PointList0>{X=528,Y=595}</PointList0>
+    <PointList1>{X=510,Y=595}</PointList1>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
   </RailEleTable>
 </NewDataSet>

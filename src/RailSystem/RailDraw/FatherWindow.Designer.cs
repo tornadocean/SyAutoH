@@ -31,7 +31,6 @@ namespace RailDraw
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FatherWindow));
             WeifenLuo.WinFormsUI.Docking.DockPanelSkin dockPanelSkin1 = new WeifenLuo.WinFormsUI.Docking.DockPanelSkin();
             WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin autoHideStripSkin1 = new WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin();
             WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
@@ -478,7 +477,7 @@ namespace RailDraw
             // mirror
             // 
             this.mirror.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mirror.Image = ((System.Drawing.Image)(resources.GetObject("mirror.Image")));
+            this.mirror.Image = global::RailDraw.Properties.Resources.mirror;
             this.mirror.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mirror.Name = "mirror";
             this.mirror.Size = new System.Drawing.Size(23, 22);

@@ -84,8 +84,8 @@ namespace BaseRailElement
             dt.Columns.Add("TagNumber", typeof(int));
             dt.Columns.Add("DrawMultiFactor", typeof(Int16));
             dt.Columns.Add("railText", typeof(string));
-            dt.Columns.Add("StartCoding", typeof(int));
-            dt.Columns.Add("EndCoding", typeof(int));
+            dt.Columns.Add("CodingBegin", typeof(int));
+            dt.Columns.Add("CodingEnd", typeof(int));
             dt.Columns.Add("startPoint", typeof(string));
             dt.Columns.Add("endPoint", typeof(string));
             dt.Columns.Add("StartAngle", typeof(int));
@@ -227,7 +227,7 @@ namespace BaseRailElement
             }
         }
 
-        public void Paste()
+        public void Paste(string str)
         {
             if (CutAndCopyObjectList.Count > 0)
             {
@@ -245,21 +245,21 @@ namespace BaseRailElement
                     if (1 == o.GraphType)
                     {
                         StraightRailEle cl = (StraightRailEle)o;
-                        StraightRailEle n = (StraightRailEle)cl.Clone();
+                        StraightRailEle n = (StraightRailEle)cl.Clone(str);
                         drawObjectList.Add(n);
                         SelectOne(n);
                     }
                     else if (2 == o.GraphType)
                     {
                         CurvedRailEle cl = (CurvedRailEle)o;
-                        CurvedRailEle n = (CurvedRailEle)cl.Clone();
+                        CurvedRailEle n = (CurvedRailEle)cl.Clone(str);
                         drawObjectList.Add(n);
                         SelectOne(n);
                     }
                     else if (3 == o.GraphType)
                     {
                         CrossEle cl = (CrossEle)o;
-                        CrossEle n = (CrossEle)cl.Clone();
+                        CrossEle n = (CrossEle)cl.Clone(str);
                         drawObjectList.Add(n);
                         SelectOne(n);
                     }

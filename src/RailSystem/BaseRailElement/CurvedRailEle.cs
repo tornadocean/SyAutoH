@@ -27,6 +27,8 @@ namespace BaseRailElement
         private Point firstDot = Point.Empty;
         public Point oldSecDot = Point.Empty;
         private Point secDot = Point.Empty;
+        private Int32 codingBegin = -1;
+        private Int32 codingEnd = -1;
         private DirectonCurved directionCurved = DirectonCurved.NULL;
         public DataTable dt = new DataTable();
         private PenStyle curvePen = new PenStyle();
@@ -78,6 +80,18 @@ namespace BaseRailElement
         {
             get { return secDot; }
             set { oldSecDot = secDot; secDot = value; }
+        }
+        [Description("条形码起始"), Category("轨道段信息")]
+        public Int32 CodingBegin
+        {
+            get { return codingBegin; }
+            set { codingBegin = value; }
+        }
+        [Description("条形码终止"), Category("轨道段信息")]
+        public Int32 CodingEnd
+        {
+            get { return codingEnd; }
+            set { codingEnd = value; }
         }
         [Browsable(false)]
         public DirectonCurved DirectionCurvedAttribute
@@ -320,7 +334,7 @@ namespace BaseRailElement
             oldSecDot = pts[2];
         }
 
-        public object Clone()
+        public object Clone(string str)
         {
             CurvedRailEle cl = new CurvedRailEle();
             Point pt = new Point();
@@ -344,7 +358,7 @@ namespace BaseRailElement
             cl.DrawMultiFactor = DrawMultiFactor;
             cl.directionCurved = directionCurved;
             cl.objectCurvedOp.DrawMultiFactor = DrawMultiFactor;
-            cl.railText = railText;
+            cl.railText = str;
             return cl;
         }
 
@@ -466,9 +480,9 @@ namespace BaseRailElement
 
             dr["drawMultiFactor"] = DrawMultiFactor;
             dr["startPoint"] = StartPoint.ToString(); 
-            dr["endPoint"] = EndPoint.ToString(); 
-            dr["startCoding"] = StartCoding;
-            dr["endCoding"] = EndCoding;
+            dr["endPoint"] = EndPoint.ToString();
+            dr["CodingBegin"] = CodingBegin;
+            dr["CodingEnd"] = CodingEnd;
             dr["railText"] = railText;
             dr["rotateAngle"] = rotateAngle;
             dr["oldRadiu"] = oldRadiu;

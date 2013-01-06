@@ -22,6 +22,8 @@ namespace BaseRailElement
         private Int32 nextCoding = -1;
         private Int32 prevCoding = -1;
         private string startDot = "first dot";
+        private Int32 codingBegin = -1;
+        private Int32 codingEnd = -1;
         public DataTable dt = new DataTable();
         private PenStyle linePen = new PenStyle();
         private Pen pen = new Pen(Color.Black, 3);
@@ -90,6 +92,18 @@ namespace BaseRailElement
         {
             get { return prevCoding; }
             set { prevCoding = value; }
+        }
+        [Description("条形码起始"), Category("轨道段信息")]
+        public Int32 CodingBegin
+        {
+            get { return codingBegin; }
+            set { codingBegin = value; }
+        }
+        [Description("条形码终止"), Category("轨道段信息")]
+        public Int32 CodingEnd
+        {
+            get { return codingEnd; }
+            set { codingEnd = value; }
         }
         [Category("线属性")]
         public Color PenColor
@@ -267,7 +281,7 @@ namespace BaseRailElement
             base.ChangePropertyValue();
         }
 
-        public object Clone()
+        public object Clone(string str)
         {
             StraightRailEle cl = new StraightRailEle();
             cl.pen = pen;
@@ -275,7 +289,7 @@ namespace BaseRailElement
             cl.lenght = lenght;
             cl.DrawMultiFactor = DrawMultiFactor;
             cl.objectStaightOp.DrawMultiFactor = DrawMultiFactor;
-            cl.railText = railText;
+            cl.railText = str;
             return cl;
         }
 
@@ -294,8 +308,8 @@ namespace BaseRailElement
             dr["Speed"] = Speed;
             dr["SegmentNumber"] = SegmentNumber;
             dr["TagNumber"] = TagNumber;
-            dr["StartCoding"] = StartCoding;
-            dr["EndCoding"] = EndCoding;
+            dr["CodingBegin"] = CodingBegin;
+            dr["CodingEnd"] = CodingEnd;
             dr["Lenght"] = lenght;
             dr["StartAngle"] = startAngle;
             dr["StartDot"] = startDot;
