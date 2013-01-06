@@ -353,16 +353,8 @@ namespace WinFormElement
                 if (paraList[i].graphType == 1)
                 {
                     strTemp = (StraightEle)paraList[i];
-                    if (strTemp.startDot == "first dot")
-                    {
-                        paraList[i].startPoint = strTemp.pointList[0];
-                        paraList[i].endPoint = strTemp.pointList[1];
-                    }
-                    else if (strTemp.startDot == "sec dot")
-                    {
-                        paraList[i].startPoint = strTemp.pointList[1];
-                        paraList[i].endPoint = strTemp.pointList[0];
-                    }
+                    paraList[i].startPoint = strTemp.pointList[0];
+                    paraList[i].endPoint = strTemp.pointList[1];
                     tempList.Add(paraList[i]);
                 }
             }

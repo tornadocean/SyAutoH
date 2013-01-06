@@ -26,12 +26,13 @@ namespace BaseRailElement
         private Point fourPart = new Point(40, 40);
         private int startAngle = 0;
         private int rotateAngle = 90;
-        private Int32 nextCoding = -1;
-        private Int32 prevCoding = -1;
-        private Int32 thirdDotCoding = -1;
         private Int32 codingBegin = -1;
         private Int32 codingEnd = -1;
-        private string startDot = "first dot";
+        private Int32 codingEndS = -1;
+        private Int32 codingPrev = -1;
+        private Int32 codingNext = -1;
+        private Int32 codingNextS = -1;
+        //private string startDot = "first dot";
         private DirectionCross directionOfCross = DirectionCross.NULL;
         public DataTable dt = new DataTable();
         private PenStyle crossPen = new PenStyle();
@@ -95,6 +96,30 @@ namespace BaseRailElement
             get { return codingEnd; }
             set { codingEnd = value; }
         }
+        [Description("条形码终止"), Category("轨道段信息")]
+        public Int32 CodingEndS
+        {
+            get { return codingEndS; }
+            set { codingEndS = value; }
+        }
+        [Description("条形码终止"), Category("轨道段信息")]
+        public Int32 CodingPrev
+        {
+            get { return codingPrev; }
+            set { codingPrev = value; }
+        }
+        [Description("条形码终止"), Category("轨道段信息")]
+        public Int32 CodingNext
+        {
+            get { return codingNext; }
+            set { codingNext = value; }
+        }
+        [Description("条形码终止"), Category("轨道段信息")]
+        public Int32 CodingNextS
+        {
+            get { return codingNextS; }
+            set { codingNextS = value; }
+        }
         [Browsable(false)]
         public int StartAngle
         {
@@ -107,25 +132,25 @@ namespace BaseRailElement
             get { return rotateAngle; }
             set { rotateAngle = value; }
         }
-        public class StartDotConverter : TypeConverter
-        {
-            public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
-            {
-                return true;
-            }
+        //public class StartDotConverter : TypeConverter
+        //{
+        //    public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
+        //    {
+        //        return true;
+        //    }
 
-            public override TypeConverter.StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
-            {
-                return new StandardValuesCollection(new string[] { "first dot", "sec dot" });
-            }
-        }
-        [XmlIgnore]
-        [TypeConverter(typeof(StartDotConverter)), Category("轨道段信息"), Description("二维码起始端")]
-        public string StartDot
-        {
-            get { return startDot; }
-            set { startDot = value; }
-        }
+        //    public override TypeConverter.StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
+        //    {
+        //        return new StandardValuesCollection(new string[] { "first dot", "sec dot" });
+        //    }
+        //}
+        //[XmlIgnore]
+        //[TypeConverter(typeof(StartDotConverter)), Category("轨道段信息"), Description("二维码起始端")]
+        //public string StartDot
+        //{
+        //    get { return startDot; }
+        //    set { startDot = value; }
+        //}
         [XmlIgnore]
         [ReadOnly(true), Category("端点坐标")]
         public Point FirstDot
@@ -143,27 +168,6 @@ namespace BaseRailElement
         public Point ThirdDot
         {
             get { return PointList[7]; }
-        }
-        [XmlIgnore]
-        [Browsable(false)]
-        public Int32 NextCoding
-        {
-            get { return nextCoding; }
-            set { nextCoding = value; }
-        }
-        [XmlIgnore]
-        [Browsable(false)]
-        public Int32 PrevCoding
-        {
-            get { return prevCoding; }
-            set { prevCoding = value; }
-        }
-        [XmlIgnore]
-        [Browsable(false)]
-        public Int32 ThirdDotCoding
-        {
-            get { return thirdDotCoding; }
-            set { thirdDotCoding = value; }
         }
         [Browsable(false)]
         public DirectionCross DirectionOfCross
@@ -576,8 +580,8 @@ namespace BaseRailElement
             dr["SizeLock"] = sizeLock;
             dr["Selectable"] = Selectable;
             dr["Speed"] = Speed;
-            dr["SegmentNumber"] = SegmentNumber;
-            dr["TagNumber"] = TagNumber;
+            //dr["SegmentNumber"] = SegmentNumber;
+            //dr["TagNumber"] = TagNumber;
             dr["Mirror"] = mirror;
             dr["FirstPart"] = firstPart;
             dr["SecPart"] = secPart;
@@ -595,20 +599,38 @@ namespace BaseRailElement
             dr["drawMultiFactor"] = DrawMultiFactor;
             dr["startPoint"] = StartPoint.ToString();
             dr["endPoint"] = EndPoint.ToString();
-            dr["CodingBegin"] = CodingBegin;
-            dr["CodingEnd"] = CodingEnd;
+            dr["CodingBegin"] = codingBegin;
+            dr["CodingEnd"] = codingEnd;
+            dr["CodingEndS"] = codingEndS;
+            dr["CodingPrev"] = codingPrev;
+            dr["CodingNext"] = codingNext;
+            dr["CodingNextS"] = codingNextS;
             dr["railText"] = railText;
             dr["lenghtOfStrai"] = lenghtOfStrai;
-            dr["nextCoding"] = nextCoding;
-            dr["prevCoding"] = prevCoding;
-            dr["thirdDotCoding"] = thirdDotCoding;
-            dr["startDot"] = startDot;
+            
+            //dr["startDot"] = startDot;
 
             dr["Color"] = ColorTranslator.ToHtml(pen.Color);
             dr["DashStyle"] = pen.DashStyle;
             dr["PenWidth"] = pen.Width;
 
            dt.Rows.Add(dr);
+            return dr;
+        }
+
+        public DataRow SaveCodingDataTable(DataTable dt)
+        {
+            DataRow dr = dt.NewRow();
+
+            dr["GraphType"] = GraphType;
+            dr["CodingBegin"] = codingBegin;
+            dr["CodingEnd"] = codingEnd;
+            dr["CodingEndS"] = codingEndS;
+            dr["CodingPrev"] = codingPrev;
+            dr["CodingNext"] = codingNext;
+            dr["CodingNextS"] = codingNextS;
+
+            dt.Rows.Add(dr);
             return dr;
         }
     }
