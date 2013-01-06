@@ -158,7 +158,11 @@ namespace RailView
             dataHubLink.ConnectServer();
             dataHubLink.DataUpdater += new DataUpdaterHander(GuiDataUpdate);
             dataHubLink.Async_SetCallBack();
-            MCS.GuiHub.PushData[] cmds = new MCS.GuiHub.PushData[] { MCS.GuiHub.PushData.upOhtPos };
+            MCS.GuiHub.PushData[] cmds = 
+                new MCS.GuiHub.PushData[] 
+                { 
+                    MCS.GuiHub.PushData.upOhtPos
+                };
             dataHubLink.Async_SetPushCmdList(cmds);
         }
 

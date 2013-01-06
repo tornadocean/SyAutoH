@@ -153,8 +153,11 @@ void GuiDataHubI::OHT_SetPath(const std::string& strVal, const ::Ice::Current&)
 
 	int nStart = 0;
 	int nEnd = 0;
-	nStart = list.begin()->nPos;
-	nEnd = list.rbegin()->nPos;
+	if (list.size() > 0)
+	{
+		nStart = list.begin()->nPos;
+		nEnd = list.rbegin()->nPos;
+	}
 
 	m_pAMHSDrive->OHTSetPath(uID, uType, nStart, nEnd, list);
 }
