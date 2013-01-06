@@ -70,8 +70,8 @@ namespace RailDraw
             drawregOrigSize.Height = this.workRegion.pictureBox1.Height;
         }
 
-        #region
-        //workRegion Operation
+        #region  workRegion Operation
+
         public void PicMouseDown(object sender, MouseEventArgs e)
         {
             switch (e.Button)
@@ -324,8 +324,10 @@ namespace RailDraw
                 try
                 {
                     string projectpath = sProjectPath;
+                    string projectcodingpath = projectpath.Substring(0, projectpath.Length - 4) + "_coding.xml";
                     drawDoc.DataXmlSave();
-                    drawDoc.ds.WriteXml(projectpath);
+                    drawDoc.dsEle.WriteXml(projectpath);
+                    drawDoc.dsEleCoding.WriteXml(projectcodingpath);
                 }
                 catch(Exception ex)
                 {
@@ -452,8 +454,10 @@ namespace RailDraw
                 try
                 {
                     string projectpath = sFile.FileName;
+                    string projectcodingpath = projectpath.Substring(0, projectpath.Length - 4) + "_coding.xml";
                     drawDoc.DataXmlSave();
-                    drawDoc.ds.WriteXml(projectpath);
+                    drawDoc.dsEle.WriteXml(projectpath);
+                    drawDoc.dsEleCoding.WriteXml(projectcodingpath);
                     sProjectPath = projectpath;
                     UpdateFormTitle();
                 }
@@ -492,21 +496,21 @@ namespace RailDraw
                                         case "Speed":
                                             strTemp.Speed = Convert.ToSingle(dt.Rows[i][j]);
                                             break;
-                                        case "SegmentNumber":
-                                            strTemp.SegmentNumber = Convert.ToInt16(dt.Rows[i][j]);
-                                            break;
-                                        case "TagNumber":
-                                            strTemp.TagNumber = Convert.ToInt16(dt.Rows[i][j]);
-                                            break;
+                                        //case "SegmentNumber":
+                                        //    strTemp.SegmentNumber = Convert.ToInt16(dt.Rows[i][j]);
+                                        //    break;
+                                        //case "TagNumber":
+                                        //    strTemp.TagNumber = Convert.ToInt16(dt.Rows[i][j]);
+                                        //    break;
                                         case "Lenght":
                                             strTemp.Lenght = Convert.ToInt32(dt.Rows[i][j]);
                                             break;
                                         case "StartAngle":
                                             strTemp.StartAngle = Convert.ToInt32(dt.Rows[i][j]);
                                             break;
-                                        case "StartDot":
-                                            strTemp.StartDot = Convert.ToString(dt.Rows[i][j]);
-                                            break;
+                                        //case "StartDot":
+                                        //    strTemp.StartDot = Convert.ToString(dt.Rows[i][j]);
+                                        //    break;
                                         case "PointListVol":
                                             pointListVolStr = Convert.ToInt16(dt.Rows[i][j]);
                                             for (int k = 0; k < pointListVolStr; k++)
@@ -541,11 +545,17 @@ namespace RailDraw
                                         case "rotateAngle":
                                             strTemp.RotateAngle = Convert.ToInt32(dt.Rows[i][j]);
                                             break;
-                                        case "nextCoding":
-                                            strTemp.NextCoding = Convert.ToInt32(dt.Rows[i][j]);
+                                        case "CodingBegin":
+                                            strTemp.CodingBegin = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "CodingEnd":
+                                            strTemp.CodingEnd = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "CodingNext":
+                                            strTemp.CodingNext = Convert.ToInt32(dt.Rows[i][j]);
                                             break;
                                         case "prevCoding":
-                                            strTemp.PrevCoding = Convert.ToInt32(dt.Rows[i][j]);
+                                            strTemp.CodingPrev = Convert.ToInt32(dt.Rows[i][j]);
                                             break;
                                         case "Color":
                                             strTemp.PenColor = ColorTranslator.FromHtml(dt.Rows[i][j].ToString());
@@ -555,12 +565,6 @@ namespace RailDraw
                                             break;
                                         case "PenWidth":
                                             strTemp.PenWidth = Convert.ToSingle(dt.Rows[i][j]);
-                                            break;
-                                        case "CodingBegin":
-                                            strTemp.CodingBegin = Convert.ToInt32(dt.Rows[i][j]);
-                                            break;
-                                        case "CodingEnd":
-                                            strTemp.CodingEnd = Convert.ToInt32(dt.Rows[i][j]);
                                             break;
                                     }
                                 }
@@ -581,12 +585,12 @@ namespace RailDraw
                                         case "Speed":
                                             curTemp.Speed = Convert.ToSingle(dt.Rows[i][j]);
                                             break;
-                                        case "SegmentNumber":
-                                            curTemp.SegmentNumber = Convert.ToInt16(dt.Rows[i][j]);
-                                            break;
-                                        case "TagNumber":
-                                            curTemp.TagNumber = Convert.ToInt16(dt.Rows[i][j]);
-                                            break;
+                                        //case "SegmentNumber":
+                                        //    curTemp.SegmentNumber = Convert.ToInt16(dt.Rows[i][j]);
+                                        //    break;
+                                        //case "TagNumber":
+                                        //    curTemp.TagNumber = Convert.ToInt16(dt.Rows[i][j]);
+                                        //    break;
                                         case "StartAngle":
                                             curTemp.StartAngle = Convert.ToInt32(dt.Rows[i][j]);
                                             break;
@@ -639,6 +643,12 @@ namespace RailDraw
                                             break;
                                         case "CodingEnd":
                                             curTemp.CodingEnd = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "CodingNext":
+                                            curTemp.CodingNext = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "CodingPrev":
+                                            curTemp.CodingPrev = Convert.ToInt32(dt.Rows[i][j]);
                                             break;
                                         case "railText":
                                             curTemp.railText = dt.Rows[i][j].ToString();
@@ -699,12 +709,12 @@ namespace RailDraw
                                         case "Speed":
                                             croTemp.Speed = Convert.ToSingle(dt.Rows[i][j]);
                                             break;
-                                        case "SegmentNumber":
-                                            croTemp.SegmentNumber = Convert.ToInt16(dt.Rows[i][j]);
-                                            break;
-                                        case "TagNumber":
-                                            croTemp.TagNumber = Convert.ToInt16(dt.Rows[i][j]);
-                                            break;
+                                        //case "SegmentNumber":
+                                        //    croTemp.SegmentNumber = Convert.ToInt16(dt.Rows[i][j]);
+                                        //    break;
+                                        //case "TagNumber":
+                                        //    croTemp.TagNumber = Convert.ToInt16(dt.Rows[i][j]);
+                                        //    break;
                                         case "Mirror":
                                             croTemp.Mirror = Convert.ToBoolean(dt.Rows[i][j]);
                                             break;
@@ -767,23 +777,26 @@ namespace RailDraw
                                         case "CodingEnd":
                                             croTemp.CodingEnd = Convert.ToInt32(dt.Rows[i][j]);
                                             break;
+                                        case "CodingEndS":
+                                            croTemp.CodingEndS = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "CodingNext":
+                                            croTemp.CodingNext = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "CodingPrev":
+                                            croTemp.CodingPrev = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "CodingNextS":
+                                            croTemp.CodingNextS = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        //case "startDot":
+                                        //    croTemp.StartDot = dt.Rows[i][j].ToString();
+                                        //    break;
                                         case "railText":
                                             croTemp.railText = dt.Rows[i][j].ToString();
                                             break;
                                         case "lenghtOfStrai":
                                             croTemp.LenghtOfStrai = Convert.ToInt32(dt.Rows[i][j]);
-                                            break;
-                                        case "nextCoding":
-                                            croTemp.NextCoding = Convert.ToInt32(dt.Rows[i][j]);
-                                            break;
-                                        case "prevCoding":
-                                            croTemp.PrevCoding = Convert.ToInt32(dt.Rows[i][j]);
-                                            break;
-                                        case "thirdDotCoding":
-                                            croTemp.ThirdDotCoding = Convert.ToInt32(dt.Rows[i][j]);
-                                            break;
-                                        case "startDot":
-                                            croTemp.StartDot = dt.Rows[i][j].ToString();
                                             break;
                                         case "Color":
                                             croTemp.PenColor = ColorTranslator.FromHtml(dt.Rows[i][j].ToString());

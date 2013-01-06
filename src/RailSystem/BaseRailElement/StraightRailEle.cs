@@ -19,11 +19,11 @@ namespace BaseRailElement
         private int lenght = 100;
         private int startAngle = 0;
         private int rotateAngle = 90;
-        private Int32 nextCoding = -1;
-        private Int32 prevCoding = -1;
-        private string startDot = "first dot";
+        //private string startDot = "first dot";
         private Int32 codingBegin = -1;
         private Int32 codingEnd = -1;
+        private Int32 codingNext = -1;
+        private Int32 codingPrev = -1;
         public DataTable dt = new DataTable();
         private PenStyle linePen = new PenStyle();
         private Pen pen = new Pen(Color.Black, 3);
@@ -55,43 +55,29 @@ namespace BaseRailElement
         {
             get { return PointList[1]; }
         }
-        public class StartDotConverter : TypeConverter
-        {
-            public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
-            {
-                return true;
-            }
+        //public class StartDotConverter : TypeConverter
+        //{
+        //    public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
+        //    {
+        //        return true;
+        //    }
 
-            public override TypeConverter.StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
-            {
-                return new StandardValuesCollection(new string[] { "first dot", "sec dot" });
-            }
-        }
-        [TypeConverter(typeof(StartDotConverter)), Category("轨道段信息"), Description("二维码起始端")]
-        public string StartDot
-        {
-            get { return startDot; }
-            set { startDot = value; }
-        }
+        //    public override TypeConverter.StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
+        //    {
+        //        return new StandardValuesCollection(new string[] { "first dot", "sec dot" });
+        //    }
+        //}
+        //[TypeConverter(typeof(StartDotConverter)), Category("轨道段信息"), Description("二维码起始端")]
+        //public string StartDot
+        //{
+        //    get { return startDot; }
+        //    set { startDot = value; }
+        //}
         [Browsable(false)]
         public Int32 RotateAngle
         {
             get { return rotateAngle; }
             set { rotateAngle = value; }
-        }
-        [XmlIgnore]
-        [Browsable(false)]
-        public Int32 NextCoding
-        {
-            get { return nextCoding; }
-            set { nextCoding = value; }
-        }
-        [XmlIgnore]
-        [Browsable(false)]
-        public Int32 PrevCoding
-        {
-            get { return prevCoding; }
-            set { prevCoding = value; }
         }
         [Description("条形码起始"), Category("轨道段信息")]
         public Int32 CodingBegin
@@ -104,6 +90,18 @@ namespace BaseRailElement
         {
             get { return codingEnd; }
             set { codingEnd = value; }
+        }
+        [Description("条形码起始"), Category("轨道段信息")]
+        public Int32 CodingNext
+        {
+            get { return codingNext; }
+            set { codingNext = value; }
+        }
+        [Description("条形码起始"), Category("轨道段信息")]
+        public Int32 CodingPrev
+        {
+            get { return codingPrev; }
+            set { codingPrev = value; }
         }
         [Category("线属性")]
         public Color PenColor
@@ -306,13 +304,15 @@ namespace BaseRailElement
             dr["SizeLock"] = sizeLock;
             dr["Selectable"] = Selectable;
             dr["Speed"] = Speed;
-            dr["SegmentNumber"] = SegmentNumber;
-            dr["TagNumber"] = TagNumber;
+            //dr["SegmentNumber"] = SegmentNumber;
+            //dr["TagNumber"] = TagNumber;
             dr["CodingBegin"] = CodingBegin;
             dr["CodingEnd"] = CodingEnd;
+            dr["CodingNext"] = codingNext;
+            dr["CodingPrev"] = codingPrev;
             dr["Lenght"] = lenght;
             dr["StartAngle"] = startAngle;
-            dr["StartDot"] = startDot;
+            //dr["StartDot"] = startDot;
             dr["PointListVol"] = PointList.Count;
             for (int i = 0; i < PointList.Count; i++)
             {
@@ -324,12 +324,24 @@ namespace BaseRailElement
             dr["endPoint"] = EndPoint.ToString(); 
             dr["railText"] = railText;
             dr["rotateAngle"] = rotateAngle;
-            dr["nextCoding"] = nextCoding;
-            dr["prevCoding"] = prevCoding;
 
             dr["Color"] = ColorTranslator.ToHtml(pen.Color);
             dr["DashStyle"] = pen.DashStyle;
             dr["PenWidth"] = pen.Width;
+
+            dt.Rows.Add(dr);
+            return dr;
+        }
+
+        public DataRow SaveCodingDataTable(DataTable dt)
+        {
+            DataRow dr = dt.NewRow();
+
+            dr["GraphType"] = GraphType;
+            dr["CodingBegin"] = CodingBegin;
+            dr["CodingEnd"] = CodingEnd;
+            dr["CodingNext"] = codingNext;
+            dr["CodingPrev"] = codingPrev;
 
             dt.Rows.Add(dr);
             return dr;
