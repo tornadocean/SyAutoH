@@ -23,8 +23,8 @@ namespace BaseRailElement
         private bool selectable = true;
         private float speed = 0;
         
-        private Int16 segmentNumber = 0;
-        private Int32 tagNumber = 0;
+        //private Int16 segmentNumber = 0;
+        //private Int32 tagNumber = 0;
         private Int16 drawMultiFactor = 1;
         private Point startPoint = Point.Empty;
         private Point endPoint = Point.Empty;
@@ -60,18 +60,18 @@ namespace BaseRailElement
             get { return speed; }
             set { speed = value; }
         }
-        [Description("段号,请按顺时针方向编号，弯轨编号为0"), Category("轨道段信息")]
-        public Int16 SegmentNumber
-        {
-            get { return segmentNumber; }
-            set { segmentNumber = value; }
-        }
-        [Description("条形码数量"), Category("轨道段信息")]
-        public Int32 TagNumber
-        {
-            get { return tagNumber; }
-            set { tagNumber = value; }
-        }
+        //[Description("段号,请按顺时针方向编号，弯轨编号为0"), Category("轨道段信息")]
+        //public Int16 SegmentNumber
+        //{
+        //    get { return segmentNumber; }
+        //    set { segmentNumber = value; }
+        //}
+        //[Description("条形码数量"), Category("轨道段信息")]
+        //public Int32 TagNumber
+        //{
+        //    get { return tagNumber; }
+        //    set { tagNumber = value; }
+        //}
         [XmlIgnore]
         [Browsable(false)]
         public Int16 DrawMultiFactor

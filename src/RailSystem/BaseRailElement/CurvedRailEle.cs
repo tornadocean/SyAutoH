@@ -29,6 +29,8 @@ namespace BaseRailElement
         private Point secDot = Point.Empty;
         private Int32 codingBegin = -1;
         private Int32 codingEnd = -1;
+        private Int32 codingNext = -1;
+        private Int32 codingPrev = -1;
         private DirectonCurved directionCurved = DirectonCurved.NULL;
         public DataTable dt = new DataTable();
         private PenStyle curvePen = new PenStyle();
@@ -92,6 +94,18 @@ namespace BaseRailElement
         {
             get { return codingEnd; }
             set { codingEnd = value; }
+        }
+        [Description("条形码起始"), Category("轨道段信息")]
+        public Int32 CodingNext
+        {
+            get { return codingNext; }
+            set { codingNext = value; }
+        }
+        [Description("条形码起始"), Category("轨道段信息")]
+        public Int32 CodingPrev
+        {
+            get { return codingPrev; }
+            set { codingPrev = value; }
         }
         [Browsable(false)]
         public DirectonCurved DirectionCurvedAttribute
@@ -468,8 +482,8 @@ namespace BaseRailElement
             dr["SizeLock"] = sizeLock;
             dr["Selectable"] = Selectable;
             dr["Speed"] = Speed;
-            dr["SegmentNumber"] = SegmentNumber;
-            dr["TagNumber"] = TagNumber;
+            //dr["SegmentNumber"] = SegmentNumber;
+            //dr["TagNumber"] = TagNumber;
             dr["StartAngle"] = startAngle;
             dr["SweepAngle"] = sweepAngle;
             dr["Radiu"] = radiu;
@@ -483,6 +497,8 @@ namespace BaseRailElement
             dr["endPoint"] = EndPoint.ToString();
             dr["CodingBegin"] = CodingBegin;
             dr["CodingEnd"] = CodingEnd;
+            dr["CodingNext"] = codingNext;
+            dr["CodingPrev"] = codingPrev;
             dr["railText"] = railText;
             dr["rotateAngle"] = rotateAngle;
             dr["oldRadiu"] = oldRadiu;
@@ -493,6 +509,20 @@ namespace BaseRailElement
             dr["Color"] = ColorTranslator.ToHtml(pen.Color);
             dr["DashStyle"] = pen.DashStyle;
             dr["PenWidth"] = pen.Width;
+
+            dt.Rows.Add(dr);
+            return dr;
+        }
+
+        public DataRow SaveCodingDataTable(DataTable dt)
+        {
+            DataRow dr = dt.NewRow();
+
+            dr["GraphType"] = GraphType;
+            dr["CodingBegin"] = CodingBegin;
+            dr["CodingEnd"] = CodingEnd;
+            dr["CodingNext"] = codingNext;
+            dr["CodingPrev"] = codingPrev;
 
             dt.Rows.Add(dr);
             return dr;

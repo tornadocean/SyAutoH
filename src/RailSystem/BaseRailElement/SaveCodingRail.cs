@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
+using System.Data;
 
 namespace BaseRailElement
 {
@@ -13,14 +14,28 @@ namespace BaseRailElement
         public List<BaseRailEle> railInfoEleList = new List<BaseRailEle>();
         public List<BaseRailEle> railCodingEleList = new List<BaseRailEle>();
 
+        public DataSet ds = new DataSet();
+        public DataTable dt = new DataTable("RailCodingEleTable");
+
         public void InitRailList(List<BaseRailEle> drawEleList)
         {
-            railInfoEleList.Clear();
-            railInfoEleList.AddRange(drawEleList);
-            List<BaseRailEle> tempList = GetStrEle(railInfoEleList);
-            railCodingEleList = ArrangeStrEle(tempList);
-            ComputerTagNumber();
+            //railInfoEleList.Clear();
+            //railInfoEleList.AddRange(drawEleList);
+            //List<BaseRailEle> tempList = GetStrEle(railInfoEleList);
+            //railCodingEleList = ArrangeStrEle(tempList);
+            //ComputerTagNumber();
             CreateCodingEleXml();
+        }
+
+        private void InitDataTable()
+        {
+            dt.Columns.Add("GraphType", typeof(int));
+            dt.Columns.Add("CodingBegin", typeof(int));
+            dt.Columns.Add("CodingEnd", typeof(int));
+            dt.Columns.Add("CodingEndS", typeof(int));
+            dt.Columns.Add("CodingNext", typeof(int));
+            dt.Columns.Add("CodingNextS", typeof(int));
+            dt.Columns.Add("CodingPrev", typeof(int));
         }
 
         private List<BaseRailEle> GetStrEle(List<BaseRailEle> paraList)
@@ -34,31 +49,35 @@ namespace BaseRailElement
                 if (paraList[i].GraphType == 1)
                 {
                     strTemp = (StraightRailEle)paraList[i];
-                    if (strTemp.StartDot == "first dot")
-                    {
-                        paraList[i].StartPoint = strTemp.PointList[0];
-                        paraList[i].EndPoint = strTemp.PointList[1];
-                    }
-                    else if (strTemp.StartDot == "sec dot")
-                    {
-                        paraList[i].StartPoint = strTemp.PointList[1];
-                        paraList[i].EndPoint = strTemp.PointList[0];
-                    }
+                    //if (strTemp.StartDot == "first dot")
+                    //{
+                    //    paraList[i].StartPoint = strTemp.PointList[0];
+                    //    paraList[i].EndPoint = strTemp.PointList[1];
+                    //}
+                    //else if (strTemp.StartDot == "sec dot")
+                    //{
+                    //    paraList[i].StartPoint = strTemp.PointList[1];
+                    //    paraList[i].EndPoint = strTemp.PointList[0];
+                    //}
+                    paraList[i].StartPoint = strTemp.PointList[0];
+                    paraList[i].EndPoint = strTemp.PointList[1];
                     tempList.Add(paraList[i]);
                 }
                 else if (paraList[i].GraphType == 3)
                 {
                     crossTemp = (CrossEle)paraList[i];
-                    if (crossTemp.StartDot == "first dot")
-                    {
-                        paraList[i].StartPoint = crossTemp.PointList[0];
-                        paraList[i].EndPoint = crossTemp.PointList[5];
-                    }
-                    else if (crossTemp.StartDot == "sec dot")
-                    {
-                        paraList[i].StartPoint = crossTemp.PointList[5];
-                        paraList[i].EndPoint = crossTemp.PointList[0];
-                    }
+                    //if (crossTemp.StartDot == "first dot")
+                    //{
+                    //    paraList[i].StartPoint = crossTemp.PointList[0];
+                    //    paraList[i].EndPoint = crossTemp.PointList[5];
+                    //}
+                    //else if (crossTemp.StartDot == "sec dot")
+                    //{
+                    //    paraList[i].StartPoint = crossTemp.PointList[5];
+                    //    paraList[i].EndPoint = crossTemp.PointList[0];
+                    //}
+                    paraList[i].StartPoint = crossTemp.PointList[0];
+                    paraList[i].EndPoint = crossTemp.PointList[5];
                 }
             }
             return tempList;
@@ -67,50 +86,50 @@ namespace BaseRailElement
         private List<BaseRailEle> ArrangeStrEle(List<BaseRailEle> paraList)
         {
             List<BaseRailEle> tempList = new List<BaseRailEle>();
-            StraightRailEle strTemp = new StraightRailEle();
-            CrossEle crossTemp = new CrossEle();
-            Int16 num = Convert.ToInt16(paraList.Count);
-            for (Int16 i = 0; i < num; i++)
-            {
-                for (Int16 j = 0; j < num; j++)
-                {
-                    if (paraList[j].GraphType == 1)
-                    {
-                        strTemp = (StraightRailEle)paraList[j];
-                        if (strTemp.SegmentNumber == (i + 1))
-                        {
-                            tempList.Add(paraList[j]);
-                            break;
-                        }
-                    }
-                    else if (paraList[j].GraphType == 3)
-                    {
-                        crossTemp = (CrossEle)paraList[j];
-                        if (crossTemp.SegmentNumber == (i + 1))
-                        {
-                            tempList.Add(paraList[j]);
-                            break;
-                        }
-                    }
-                }
-            }
+            //StraightRailEle strTemp = new StraightRailEle();
+            //CrossEle crossTemp = new CrossEle();
+            //Int16 num = Convert.ToInt16(paraList.Count);
+            //for (Int16 i = 0; i < num; i++)
+            //{
+            //    for (Int16 j = 0; j < num; j++)
+            //    {
+            //        if (paraList[j].GraphType == 1)
+            //        {
+            //            strTemp = (StraightRailEle)paraList[j];
+            //            if (strTemp.SegmentNumber == (i + 1))
+            //            {
+            //                tempList.Add(paraList[j]);
+            //                break;
+            //            }
+            //        }
+            //        else if (paraList[j].GraphType == 3)
+            //        {
+            //            crossTemp = (CrossEle)paraList[j];
+            //            if (crossTemp.SegmentNumber == (i + 1))
+            //            {
+            //                tempList.Add(paraList[j]);
+            //                break;
+            //            }
+            //        }
+            //    }
+            //}
             return tempList;
         }
         private void ComputerTagNumber()
         {
-            Int16 num =Convert.ToInt16(railCodingEleList.Count);
-            Int32 tempTagNum = -1;
-            for (Int16 i = 0; i < num; i++)
-            {
-                if (railCodingEleList[i].GraphType == 1)
-                {
-                    BaseRailElement.StraightRailEle str = (BaseRailElement.StraightRailEle)railCodingEleList[i];
-                    str.CodingBegin = tempTagNum + 1;
-                    tempTagNum = str.CodingBegin;
-                    str.CodingEnd = tempTagNum + railCodingEleList[i].TagNumber;
-                    tempTagNum = str.CodingEnd;
-                }
-            }
+            //Int16 num =Convert.ToInt16(railCodingEleList.Count);
+            //Int32 tempTagNum = -1;
+            //for (Int16 i = 0; i < num; i++)
+            //{
+            //    if (railCodingEleList[i].GraphType == 1)
+            //    {
+            //        BaseRailElement.StraightRailEle str = (BaseRailElement.StraightRailEle)railCodingEleList[i];
+            //        str.CodingBegin = tempTagNum + 1;
+            //        tempTagNum = str.CodingBegin;
+            //        str.CodingEnd = tempTagNum + railCodingEleList[i].TagNumber;
+            //        tempTagNum = str.CodingEnd;
+            //    }
+            //}
         }
 
         private void CreateCodingEleXml()
