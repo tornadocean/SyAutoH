@@ -21,7 +21,7 @@ namespace BaseRailElement
 
         public Device()
         {
-            GraphType = 1;
+            GraphType = 5;
         }
 
         public Device CreateEle(Point pt, Size size, Int16 multiFactor, string text)
@@ -35,7 +35,9 @@ namespace BaseRailElement
 
         public override void Draw(Graphics canvas)
         {
-   //         canvas.DrawImage(
+        //    Image image;
+            
+        //    canvas.DrawImage(
         }
 
         public override void DrawTracker(Graphics canvas) 

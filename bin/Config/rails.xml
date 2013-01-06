@@ -6,19 +6,16 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>0</SegmentNumber>
-    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Line_101</railText>
     <CodingBegin>5400</CodingBegin>
     <CodingEnd>6400</CodingEnd>
+    <CodingNext>-1</CodingNext>
+    <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>0</StartAngle>
     <rotateAngle>90</rotateAngle>
-    <StartDot>first dot</StartDot>
-    <nextCoding>-1</nextCoding>
-    <prevCoding>-1</prevCoding>
     <Lenght>360</Lenght>
     <PointListVol>2</PointListVol>
     <PointList0>{X=484,Y=192}</PointList0>
@@ -33,12 +30,12 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>0</SegmentNumber>
-    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Curve_201</railText>
     <CodingBegin>6700</CodingBegin>
     <CodingEnd>6700</CodingEnd>
+    <CodingNext>-1</CodingNext>
+    <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>0</StartAngle>
@@ -63,12 +60,12 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>0</SegmentNumber>
-    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Curve_202</railText>
     <CodingBegin>5100</CodingBegin>
     <CodingEnd>5100</CodingEnd>
+    <CodingNext>-1</CodingNext>
+    <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>90</StartAngle>
@@ -93,12 +90,12 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>0</SegmentNumber>
-    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Curve_203</railText>
     <CodingBegin>5400</CodingBegin>
     <CodingEnd>5400</CodingEnd>
+    <CodingNext>-1</CodingNext>
+    <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>180</StartAngle>
@@ -123,12 +120,12 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>0</SegmentNumber>
-    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Curve_204</railText>
     <CodingBegin>6400</CodingBegin>
     <CodingEnd>6400</CodingEnd>
+    <CodingNext>-1</CodingNext>
+    <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>270</StartAngle>
@@ -153,19 +150,16 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>0</SegmentNumber>
-    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Line_102</railText>
     <CodingBegin>6400</CodingBegin>
     <CodingEnd>6700</CodingEnd>
+    <CodingNext>-1</CodingNext>
+    <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>90</StartAngle>
     <rotateAngle>90</rotateAngle>
-    <StartDot>first dot</StartDot>
-    <nextCoding>-1</nextCoding>
-    <prevCoding>-1</prevCoding>
     <Lenght>30</Lenght>
     <PointListVol>2</PointListVol>
     <PointList0>{X=854,Y=202}</PointList0>
@@ -180,19 +174,16 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>0</SegmentNumber>
-    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Line_103</railText>
     <CodingBegin>5100</CodingBegin>
     <CodingEnd>5400</CodingEnd>
+    <CodingNext>-1</CodingNext>
+    <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>180</StartAngle>
     <rotateAngle>90</rotateAngle>
-    <StartDot>first dot</StartDot>
-    <nextCoding>-1</nextCoding>
-    <prevCoding>-1</prevCoding>
     <Lenght>30</Lenght>
     <PointListVol>2</PointListVol>
     <PointList0>{X=474,Y=232}</PointList0>
@@ -207,20 +198,18 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>0</SegmentNumber>
-    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Cross_301</railText>
     <CodingBegin>-1</CodingBegin>
     <CodingEnd>-1</CodingEnd>
+    <CodingEndS>-1</CodingEndS>
+    <CodingNext>-1</CodingNext>
+    <CodingNextS>-1</CodingNextS>
+    <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>180</StartAngle>
     <rotateAngle>90</rotateAngle>
-    <StartDot>first dot</StartDot>
-    <nextCoding>-1</nextCoding>
-    <prevCoding>-1</prevCoding>
-    <thirdDotCoding>-1</thirdDotCoding>
     <PointListVol>8</PointListVol>
     <PointList0>{X=484,Y=242}</PointList0>
     <PointList1>{X=494,Y=242}</PointList1>
@@ -247,20 +236,18 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>0</SegmentNumber>
-    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Cross_302</railText>
     <CodingBegin>-1</CodingBegin>
     <CodingEnd>-1</CodingEnd>
+    <CodingEndS>-1</CodingEndS>
+    <CodingNext>-1</CodingNext>
+    <CodingNextS>-1</CodingNextS>
+    <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>180</StartAngle>
     <rotateAngle>90</rotateAngle>
-    <StartDot>first dot</StartDot>
-    <nextCoding>-1</nextCoding>
-    <prevCoding>-1</prevCoding>
-    <thirdDotCoding>-1</thirdDotCoding>
     <PointListVol>8</PointListVol>
     <PointList0>{X=554,Y=242}</PointList0>
     <PointList1>{X=544,Y=242}</PointList1>
@@ -287,19 +274,16 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>0</SegmentNumber>
-    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Line_104</railText>
     <CodingBegin>6700</CodingBegin>
     <CodingEnd>7900</CodingEnd>
+    <CodingNext>-1</CodingNext>
+    <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>180</StartAngle>
     <rotateAngle>90</rotateAngle>
-    <StartDot>first dot</StartDot>
-    <nextCoding>-1</nextCoding>
-    <prevCoding>-1</prevCoding>
     <Lenght>290</Lenght>
     <PointListVol>2</PointListVol>
     <PointList0>{X=844,Y=242}</PointList0>
@@ -314,20 +298,18 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>0</SegmentNumber>
-    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Cross_303</railText>
     <CodingBegin>-1</CodingBegin>
     <CodingEnd>-1</CodingEnd>
+    <CodingEndS>-1</CodingEndS>
+    <CodingNext>-1</CodingNext>
+    <CodingNextS>-1</CodingNextS>
+    <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>90</StartAngle>
     <rotateAngle>90</rotateAngle>
-    <StartDot>first dot</StartDot>
-    <nextCoding>-1</nextCoding>
-    <prevCoding>-1</prevCoding>
-    <thirdDotCoding>-1</thirdDotCoding>
     <PointListVol>8</PointListVol>
     <PointList0>{X=500,Y=285}</PointList0>
     <PointList1>{X=500,Y=275}</PointList1>
@@ -354,20 +336,18 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>0</SegmentNumber>
-    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Cross_304</railText>
     <CodingBegin>-1</CodingBegin>
     <CodingEnd>-1</CodingEnd>
+    <CodingEndS>-1</CodingEndS>
+    <CodingNext>-1</CodingNext>
+    <CodingNextS>-1</CodingNextS>
+    <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>-90</StartAngle>
     <rotateAngle>90</rotateAngle>
-    <StartDot>first dot</StartDot>
-    <nextCoding>-1</nextCoding>
-    <prevCoding>-1</prevCoding>
-    <thirdDotCoding>-1</thirdDotCoding>
     <PointListVol>8</PointListVol>
     <PointList0>{X=538,Y=285}</PointList0>
     <PointList1>{X=538,Y=275}</PointList1>
@@ -394,19 +374,16 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>0</SegmentNumber>
-    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Line_105</railText>
     <CodingBegin>2800</CodingBegin>
     <CodingEnd>5100</CodingEnd>
+    <CodingNext>-1</CodingNext>
+    <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>90</StartAngle>
     <rotateAngle>-90</rotateAngle>
-    <StartDot>first dot</StartDot>
-    <nextCoding>-1</nextCoding>
-    <prevCoding>-1</prevCoding>
     <Lenght>300</Lenght>
     <PointListVol>2</PointListVol>
     <PointList0>{X=500,Y=585}</PointList0>
@@ -421,19 +398,16 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>0</SegmentNumber>
-    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Line_106</railText>
     <CodingBegin>0</CodingBegin>
     <CodingEnd>2300</CodingEnd>
+    <CodingNext>2300</CodingNext>
+    <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>90</StartAngle>
     <rotateAngle>90</rotateAngle>
-    <StartDot>first dot</StartDot>
-    <nextCoding>-1</nextCoding>
-    <prevCoding>-1</prevCoding>
     <Lenght>300</Lenght>
     <PointListVol>2</PointListVol>
     <PointList0>{X=538,Y=285}</PointList0>
@@ -448,12 +422,12 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>0</SegmentNumber>
-    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Curve_205</railText>
     <CodingBegin>2300</CodingBegin>
     <CodingEnd>2300</CodingEnd>
+    <CodingNext>2300</CodingNext>
+    <CodingPrev>2300</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>0</StartAngle>
@@ -478,12 +452,12 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>0</SegmentNumber>
-    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Curve_206</railText>
     <CodingBegin>2800</CodingBegin>
     <CodingEnd>2800</CodingEnd>
+    <CodingNext>-1</CodingNext>
+    <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>90</StartAngle>
@@ -508,19 +482,16 @@
     <SizeLock>false</SizeLock>
     <Selectable>true</Selectable>
     <Speed>0</Speed>
-    <SegmentNumber>0</SegmentNumber>
-    <TagNumber>0</TagNumber>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Line_107</railText>
     <CodingBegin>2300</CodingBegin>
     <CodingEnd>2800</CodingEnd>
+    <CodingNext>-1</CodingNext>
+    <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>180</StartAngle>
     <rotateAngle>90</rotateAngle>
-    <StartDot>first dot</StartDot>
-    <nextCoding>-1</nextCoding>
-    <prevCoding>-1</prevCoding>
     <Lenght>18</Lenght>
     <PointListVol>2</PointListVol>
     <PointList0>{X=528,Y=595}</PointList0>

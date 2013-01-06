@@ -299,11 +299,6 @@ namespace MCSControlLib
             }
         }
 
-        private void textBox14_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void bnAlarmHistory_Click(object sender, EventArgs e)
         {
             hisAlarm = new formSTKAlarmHistory();
@@ -408,15 +403,6 @@ namespace MCSControlLib
                 tBSelLot.Text = row.Cells[2].Value.ToString();
                 tBSelStatus.Text = row.Cells[3].Value.ToString();
             }
-        }
-
-        private void tBFoupMove_VisibleChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void tBFoupMove_TextChanged(object sender, EventArgs e)
-        {
         }
 
         private void linkLabelRoomStatus_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
