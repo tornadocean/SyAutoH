@@ -164,7 +164,7 @@ namespace MCSControl
 
             DateTime dtNow = DateTime.Now;
             TimeSpan span = dtNow - m_dataHub.UpdateTime;
-            if (span.TotalSeconds > 5)
+            if (span.TotalSeconds > 2)
             {
                 m_dataHub.Async_SetCallBack();
             }
