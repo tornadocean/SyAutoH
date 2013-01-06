@@ -108,7 +108,8 @@ Ice::Int GuiDataHubI::WriteData(MCS::GuiHub::GuiCommand enumCmd,
 	if (it != m_mapHandles.end())
 	{
 		m_tpWriteHandler.schedule(boost::bind(it->second, this, strVal, current));
-		LOG_DEBUG("Thread pool Active Size: %d", m_tpWriteHandler.active());
+		LOG_DEBUG("Thread pool:   Size: %d, Active: %d, Pending: %d", 
+			m_tpWriteHandler.size(), m_tpWriteHandler.active(), m_tpWriteHandler.pending());
 		return 0;
 	}
 	else
