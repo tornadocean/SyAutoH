@@ -17,10 +17,6 @@ namespace WinFormElement
     
     public class Vehicle
     {
-        //using for test
-        public TestPoint tempTest = new TestPoint();
-        //using for test
-
         private byte nID;
         private byte nHandStatus;
         private uint nPosCode;

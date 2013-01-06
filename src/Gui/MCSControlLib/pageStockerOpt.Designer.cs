@@ -314,8 +314,6 @@
             this.tBFoupMove.Name = "tBFoupMove";
             this.tBFoupMove.Size = new System.Drawing.Size(100, 21);
             this.tBFoupMove.TabIndex = 8;
-            this.tBFoupMove.TextChanged += new System.EventHandler(this.tBFoupMove_TextChanged);
-            this.tBFoupMove.VisibleChanged += new System.EventHandler(this.tBFoupMove_VisibleChanged);
             // 
             // label8
             // 
@@ -596,7 +594,6 @@
             this.tBLastFoupEventDir.Name = "tBLastFoupEventDir";
             this.tBLastFoupEventDir.Size = new System.Drawing.Size(48, 21);
             this.tBLastFoupEventDir.TabIndex = 15;
-            this.tBLastFoupEventDir.TextChanged += new System.EventHandler(this.textBox14_TextChanged);
             // 
             // tBLastLot
             // 
