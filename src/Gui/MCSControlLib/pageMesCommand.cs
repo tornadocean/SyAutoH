@@ -175,9 +175,41 @@ namespace MCSControlLib
                 tbFoupBarCode.Text = row.Cells[0].Value.ToString();
                 tbFoupLot.Text = row.Cells[1].Value.ToString();
                 tbFoupStatus.Text = row.Cells[4].Value.ToString();
-                tbFoupLocType.Text = row.Cells[3].Value.ToString();
+                MCS.dbcli.LoctionType nLocType = (MCS.dbcli.LoctionType)TryConver.ToInt32(row.Cells[5].Value.ToString());
+                switch(nLocType)
+                {
+                    case MCS.dbcli.LoctionType.loctypeStocker:
+                        tbFoupLocType.Text = "Stocker";
+                        break;
+                    case MCS.dbcli.LoctionType.loctypeOHT:
+                        tbFoupLocType.Text = "OHT";
+                        break;
+                    default:
+                        tbFoupLocType.Text = "Unknown";
+                        break;
+                }
                 tbFoupLocation.Text = row.Cells[2].Value.ToString();
             }
+        }
+
+        private void bnFoupMove_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bnFoupMovePause_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bnFoupMoveContinue_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bnFoupMoveStop_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
