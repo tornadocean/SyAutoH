@@ -46,7 +46,7 @@
     <Compile Include="baseControlPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Common.cs" />
     <Compile Include="formSTKAlarmHistory.cs">
       <SubType>Form</SubType>
     </Compile>
