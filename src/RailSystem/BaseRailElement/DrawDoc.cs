@@ -18,7 +18,7 @@ namespace BaseRailElement
     [XmlInclude(typeof(CrossEle))]
     [XmlInclude(typeof(RailLabal))]
 
-    public class DrawDoc : BaseRailEle
+    public class DrawDoc : Mcs.RailSystem.Common.BaseRailEle
     {
         public DataSet dsEle = new DataSet();
         public DataTable dtEle = new DataTable("RailEleTable");
@@ -47,24 +47,24 @@ namespace BaseRailElement
             get { return new DrawDoc(); }
         }
 
-        List<BaseRailEle> drawObjectList = new List<BaseRailEle>();
+        List<Mcs.RailSystem.Common.BaseRailEle> drawObjectList = new List<Mcs.RailSystem.Common.BaseRailEle>();
         [Browsable(false)]
-        public List<BaseRailEle> DrawObjectList
+        public List<Mcs.RailSystem.Common.BaseRailEle> DrawObjectList
         {
             get { return drawObjectList; }
         }
 
-        List<BaseRailEle> selectedDrawObjectList = new List<BaseRailEle>();
+        List<Mcs.RailSystem.Common.BaseRailEle> selectedDrawObjectList = new List<Mcs.RailSystem.Common.BaseRailEle>();
         [XmlIgnore]
         [Browsable(false)]
-        public List<BaseRailEle> SelectedDrawObjectList
+        public List<Mcs.RailSystem.Common.BaseRailEle> SelectedDrawObjectList
         {
             get { return selectedDrawObjectList; }
         }
 
-        public List<BaseRailEle> CutAndCopyObjectList = new List<BaseRailEle>();
+        public List<Mcs.RailSystem.Common.BaseRailEle> CutAndCopyObjectList = new List<Mcs.RailSystem.Common.BaseRailEle>();
 
-        private BaseRailEle lastHitedObject = null;
+        private Mcs.RailSystem.Common.BaseRailEle lastHitedObject = null;
 
         private enum CutOrCopy
         {
@@ -209,14 +209,14 @@ namespace BaseRailElement
             return -1;
         }
 
-        public void SelectOne(BaseRailEle obj)
+        public void SelectOne(Mcs.RailSystem.Common.BaseRailEle obj)
         {
             selectedDrawObjectList.Clear();
             if (obj != null)
                 selectedDrawObjectList.Add(obj);
         }
 
-        public void SelectMore(BaseRailEle obj)
+        public void SelectMore(Mcs.RailSystem.Common.BaseRailEle obj)
         {
             if (obj != null)
                 selectedDrawObjectList.Add(obj);
@@ -227,7 +227,7 @@ namespace BaseRailElement
             CutAndCopyObjectList.Clear();
             if (selectedDrawObjectList.Count > 0)
             {
-                foreach (BaseRailEle o in selectedDrawObjectList)
+                foreach (Mcs.RailSystem.Common.BaseRailEle o in selectedDrawObjectList)
                 {
                     CutAndCopyObjectList.Add(o);
                 }
@@ -240,7 +240,7 @@ namespace BaseRailElement
             CutAndCopyObjectList.Clear();
             if (selectedDrawObjectList.Count > 0)
             {
-                foreach (BaseRailEle o in selectedDrawObjectList)
+                foreach (Mcs.RailSystem.Common.BaseRailEle o in selectedDrawObjectList)
                 {
                     CutAndCopyObjectList.Add(o);
                 }
@@ -255,42 +255,42 @@ namespace BaseRailElement
                 if (_CutOrCopy == CutOrCopy.CutOp)
                 {
                     int n = selectedDrawObjectList.Count;
-                    foreach (BaseRailEle obj in selectedDrawObjectList)
+                    foreach (Mcs.RailSystem.Common.BaseRailEle obj in selectedDrawObjectList)
                     {
                         drawObjectList.Remove(obj);
                     }
                 }
                 else if (_CutOrCopy == CutOrCopy.CopyOp)
                 {
-                    BaseRailEle o = CutAndCopyObjectList[0];
+                    Mcs.RailSystem.Common.BaseRailEle o = CutAndCopyObjectList[0];
                     if (1 == o.GraphType)
                     {
-                        StraightRailEle cl = (StraightRailEle)o;
-                        StraightRailEle n = (StraightRailEle)cl.Clone(str);
+                        RailEleLine cl = (RailEleLine)o;
+                        RailEleLine n = (RailEleLine)cl.Clone(str);
                         drawObjectList.Add(n);
                         SelectOne(n);
                     }
-                    else if (2 == o.GraphType)
-                    {
-                        CurvedRailEle cl = (CurvedRailEle)o;
-                        CurvedRailEle n = (CurvedRailEle)cl.Clone(str);
-                        drawObjectList.Add(n);
-                        SelectOne(n);
-                    }
-                    else if (3 == o.GraphType)
-                    {
-                        CrossEle cl = (CrossEle)o;
-                        CrossEle n = (CrossEle)cl.Clone(str);
-                        drawObjectList.Add(n);
-                        SelectOne(n);
-                    }
-                    else if (4 == o.GraphType)
-                    {
-                        RailLabal cl = (RailLabal)o;
-                        RailLabal n = (RailLabal)cl.Clone();
-                        drawObjectList.Add(n);
-                        SelectOne(n);
-                    }
+                    //else if (2 == o.GraphType)
+                    //{
+                    //    CurvedRailEle cl = (CurvedRailEle)o;
+                    //    CurvedRailEle n = (CurvedRailEle)cl.Clone(str);
+                    //    drawObjectList.Add(n);
+                    //    SelectOne(n);
+                    //}
+                    //else if (3 == o.GraphType)
+                    //{
+                    //    CrossEle cl = (CrossEle)o;
+                    //    CrossEle n = (CrossEle)cl.Clone(str);
+                    //    drawObjectList.Add(n);
+                    //    SelectOne(n);
+                    //}
+                    //else if (4 == o.GraphType)
+                    //{
+                    //    RailLabal cl = (RailLabal)o;
+                    //    RailLabal n = (RailLabal)cl.Clone();
+                    //    drawObjectList.Add(n);
+                    //    SelectOne(n);
+                    //}
                     CutAndCopyObjectList.RemoveAt(0);
                 }
             }
@@ -353,7 +353,7 @@ namespace BaseRailElement
             int num = drawObjectList.Count;
             for (int i = 0; i < num; i++)
             {
-                drawObjectList[i].DataSetXMLSave(dtEle);
+                drawObjectList[i].SaveEleInfo(dtEle);
             }
             dsEle.Tables.Add(dtEle);
         }
@@ -365,18 +365,7 @@ namespace BaseRailElement
             int num = drawObjectList.Count;
             for (int i = 0; i < num; i++)
             {
-                switch (drawObjectList[i].GraphType)
-                {
-                    case 1:
-                        ((StraightRailEle)drawObjectList[i]).SaveCodingDataTable(dtEleCoding);
-                        break;
-                    case 2:
-                        ((CurvedRailEle)drawObjectList[i]).SaveCodingDataTable(dtEleCoding);
-                        break;
-                    case 3:
-                        ((CrossEle)drawObjectList[i]).SaveCodingDataTable(dtEleCoding);
-                        break;
-                }
+                
             }
             dsEleCoding.Tables.Add(dtEleCoding);
         }
