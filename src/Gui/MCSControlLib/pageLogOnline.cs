@@ -13,7 +13,7 @@ namespace MCSControlLib
     public partial class pageLogOnline : baseControlPage, IMcsControlBase
     {
         private LogWinClientCS.LogWinClient logClient = new LogWinClientCS.LogWinClient();
-        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.Timer timer2 = new Timer();
         private event EventHandler UpdateList;
         private event EventHandler GetNowMsg;
        // private int m_nQueryType = 0;
@@ -25,13 +25,24 @@ namespace MCSControlLib
         {
             InitializeComponent();
             tb_EventID.Text = "-1";
-            timer2 = new Timer();
-            timer2.Enabled = true;
-            timer2.Interval = 3000;
+            timer2.Interval = 500;
             UpdateList += new EventHandler(EvUpdate);
             GetNowMsg += new EventHandler(Form1_GetNowMsg);
             timer2.Tick += new EventHandler(timer2_Tick);
         }
+
+         public override void PageInit()
+        {
+            logClient.ConnectServer();
+            timer2.Enabled = true;
+        }
+
+         public override void PageExit()
+         {
+             base.PageExit();
+             timer2.Enabled = false;
+             logClient.Disconnect();
+         }
 
         private void timer2_Tick(object sender, EventArgs e)
         {
