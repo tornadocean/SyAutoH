@@ -56,6 +56,8 @@ void Child::InitComBox()
 	m_TeachPosType.AddString(L"0x08 减速点");
 	m_TeachPosType.AddString(L"0x10 停止点");
 	m_TeachPosType.AddString(L"0x20 取放点");
+	m_TeachPosType.AddString(L"0x40 暂存柜取放点");
+	m_TeachPosType.AddString(L"0x80 Stocker取放点");
 }
 void Child::InitList()
 {
@@ -102,6 +104,11 @@ CString Child::GetType(int num)
 		case(0x20):
 			Type = (_T("取放点"));
 			break;
+		case(0x40):
+			Type = (_T("暂存柜取放点"));
+			break;
+		case(0x80):
+			Type = (_T("Stocker取放点"));
 		}
 	return Type;
 }
@@ -237,6 +244,12 @@ void Child::OnBnClickedCreatebutton2()
 		break;
 	case 5:
 		nType = 0x20;
+		break;
+	case 6:
+		nType = 0x40;
+		break;
+	case 7:
+		nType = 0x80;
 		break;
 	default:
 		nType = 0x01;

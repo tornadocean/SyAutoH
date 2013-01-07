@@ -65,6 +65,7 @@ namespace LogWinClientCS
         {
             if (null != communicator)
             {
+                communicator.shutdown();
                 communicator.destroy();
             }
         }

@@ -45,6 +45,7 @@
             this.button_Confirm.TabIndex = 0;
             this.button_Confirm.Text = "OK";
             this.button_Confirm.UseVisualStyleBackColor = true;
+            this.button_Confirm.Click += new System.EventHandler(this.button_Confirm_Click);
             // 
             // button_Cancel
             // 

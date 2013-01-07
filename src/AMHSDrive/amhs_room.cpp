@@ -691,6 +691,7 @@ void amhs_room::Handle_OHT_Auth(amhs_participant_ptr participants, AMHSPacket& P
 			pOht->nID = ohtID;
 			pOht->nPOS = ohtPosition;
 			pOht->nHand = ohtHand;
+			pOht->nBackStatusMark = 0;
 			pOht->p_participant = participants;
 			oht_map_.insert(std::make_pair(ohtID, pOht));
 			nAuthAck = 1;
