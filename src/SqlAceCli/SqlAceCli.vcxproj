@@ -103,6 +103,7 @@
     <ClCompile Include="DBKeyPoints.cpp" />
     <ClCompile Include="DBLane.cpp" />
     <ClCompile Include="DBSession.cpp" />
+    <ClCompile Include="DBTransfer.cpp" />
     <ClCompile Include="DBUserAce.cpp" />
     <ClCompile Include="SqlAceCli.cpp" />
     <ClCompile Include="stdafx.cpp">
