@@ -292,7 +292,6 @@
             this.checkBoxAll.TabIndex = 20;
             this.checkBoxAll.Text = "All";
             this.checkBoxAll.UseVisualStyleBackColor = true;
-            //this.checkBoxAll.CheckedChanged += new System.EventHandler(this.checkBoxAll_CheckedChanged);
             // 
             // label7
             // 
@@ -310,7 +309,6 @@
             this.tBOnlineIDS.Name = "tBOnlineIDS";
             this.tBOnlineIDS.Size = new System.Drawing.Size(83, 21);
             this.tBOnlineIDS.TabIndex = 18;
-            //this.tBOnlineIDS.TextChanged += new System.EventHandler(this.tBOnlineIDS_TextChanged);
             // 
             // tabPage2
             // 
@@ -380,6 +378,7 @@
             this.bnAlmPrev.TabIndex = 9;
             this.bnAlmPrev.Text = "<";
             this.bnAlmPrev.UseVisualStyleBackColor = true;
+            //this.bnAlmPrev.Click += new System.EventHandler(this.bnAlmPrev_Click);
             // 
             // listViewAlarm
             // 
