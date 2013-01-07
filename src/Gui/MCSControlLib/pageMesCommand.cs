@@ -136,13 +136,13 @@ namespace MCSControlLib
 
         private void linkLabelFoupRefresh_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            int nWRet = m_dataHub.WriteData(GuiCommand.MesGetFoupTable, "");
+            m_dataHub.Async_WriteData(GuiCommand.MesGetFoupTable, "");
         }
 
         private void linkLabelLocationRefresh_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // get keypoints where type = 0x20, (pick and place)
-            int nWRet = m_dataHub.WriteData(GuiCommand.MesGetPosTable, "");
+            m_dataHub.Async_WriteData(GuiCommand.MesGetPosTable, "");
         }
 
         private void pageMesCommand_Load(object sender, EventArgs e)
@@ -194,7 +194,28 @@ namespace MCSControlLib
 
         private void bnFoupMove_Click(object sender, EventArgs e)
         {
+            int nFoupBarCode = -1;
+            int nLocation = -1;
 
+            nLocation = TryConver.ToInt32(tbLocPosition.Text);
+            nFoupBarCode = TryConver.ToInt32(tbFoupBarCode.Text);
+
+            if (nLocation < 0)
+            {
+                MessageBox.Show("Please select Locatoin from Locations Table.");
+                return;
+            }
+
+            if (nFoupBarCode < 0)
+            {
+                MessageBox.Show("Please select Foup from Foups Table.");
+                return;
+            }
+
+            if (nLocation > 0 && nFoupBarCode > 0)
+            {
+                //int nWRet = m_dataHub.Async_WriteData(GuiCommand.MesGetPosTable, "");
+            }
         }
 
         private void bnFoupMovePause_Click(object sender, EventArgs e)
