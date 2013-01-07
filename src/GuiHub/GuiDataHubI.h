@@ -1,6 +1,7 @@
 #pragma once
 #include "iGuiHub.h"
 #include "../shared/ThreadLock.h"
+#include "boost/threadpool.hpp"
 using namespace MCS;
 
 class ClientInfo
@@ -67,6 +68,8 @@ private:
 
 	int m_nTimerID;
 	int m_nTimerPeriord;
+
+	boost::threadpool::pool m_tpWriteHandler;
 
 private:
 	void SetTimer();

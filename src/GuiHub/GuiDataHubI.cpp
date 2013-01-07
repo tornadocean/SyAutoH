@@ -11,7 +11,8 @@
 
 GuiDataHubI::GuiDataHubI(void)
 	: m_nTimerPeriord(300),
-	m_nTimerID(0)
+	m_nTimerID(0),
+	m_tpWriteHandler(10)
 {
 	// for oht
 	m_mapHandles.insert(std::make_pair(GuiHub::OhtPosTime, 
@@ -92,6 +93,7 @@ GuiDataHubI::GuiDataHubI(void)
 GuiDataHubI::~GuiDataHubI(void)
 {
 	StopTimer();
+	m_tpWriteHandler.clear();
 }
 
 std::string GuiDataHubI::ReadData(MCS::GuiHub::GuiCommand enumCmd, Ice::Int nSession, const Ice::Current &)
@@ -105,7 +107,9 @@ Ice::Int GuiDataHubI::WriteData(MCS::GuiHub::GuiCommand enumCmd,
 	HANDLE_MAP::iterator it = m_mapHandles.find(enumCmd);
 	if (it != m_mapHandles.end())
 	{
-		(this->*it->second)(strVal, current);
+		m_tpWriteHandler.schedule(boost::bind(it->second, this, strVal, current));
+		LOG_DEBUG("Thread pool:   Size: %d, Active: %d, Pending: %d", 
+			m_tpWriteHandler.size(), m_tpWriteHandler.active(), m_tpWriteHandler.pending());
 		return 0;
 	}
 	else
