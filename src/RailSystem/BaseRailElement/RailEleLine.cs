@@ -9,7 +9,7 @@ using System.ComponentModel;
 
 namespace BaseRailElement
 {
-    public class RailEleLine:Mcs.RailSystem.Common.EleLine
+    public class RailEleLine : Mcs.RailSystem.Common.EleLine
     {
         private ObjectStraightOp objLineOp = new ObjectStraightOp();
 
@@ -40,7 +40,7 @@ namespace BaseRailElement
                 pts[0] = new Point(pt.X - Lenght, pt.Y);
                 pts[1] = new Point(pt.X, pt.Y);
             }
-            else 
+            else
             {
                 pts[0] = new Point(pt.X, pt.Y);
                 pts[1] = new Point(pt.X + Lenght, pt.Y);
@@ -226,7 +226,7 @@ namespace BaseRailElement
             dr["startPoint"] = StartPoint.ToString();
             dr["endPoint"] = EndPoint.ToString();
             dr["railText"] = railText;
-            
+
             dr["Color"] = ColorTranslator.ToHtml(PenLine.Color);
             dr["DashStyle"] = PenLine.DashStyle;
             dr["PenWidth"] = PenLine.Width;
