@@ -73,9 +73,7 @@ namespace Mcs.RailSystem.Common
         public virtual void DrawTracker(Graphics canvas) { }
         public virtual int HitTest(Point point, bool isSelected) { return -1; }
         public virtual void Move(Point start, Point end) { }
-        protected virtual void Translate(int offsetX, int offsetY) { }
         public virtual void MoveHandle(int handle, Point start, Point end) { }
-        protected virtual void Scale(int handle, int dx, int dy) { }
         public virtual Region GetRedrawRegion() { return null; }
         public virtual void ChangePropertyValue() { }
         public virtual void RotateCounterClw() { }
