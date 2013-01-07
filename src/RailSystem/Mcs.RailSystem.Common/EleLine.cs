@@ -86,6 +86,7 @@ namespace Mcs.RailSystem.Common
             get { return linePen.DashStyle; }
             set { linePen.DashStyle = value; pen.DashStyle = value; }
         }
+        [Browsable(false)]
         public Pen PenLine
         {
             get { return pen; }
