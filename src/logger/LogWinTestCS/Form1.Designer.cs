@@ -378,7 +378,7 @@
             this.bnAlmPrev.TabIndex = 9;
             this.bnAlmPrev.Text = "<";
             this.bnAlmPrev.UseVisualStyleBackColor = true;
-            this.bnAlmPrev.Click += new System.EventHandler(this.bnAlmPrev_Click);
+            //this.bnAlmPrev.Click += new System.EventHandler(this.bnAlmPrev_Click);
             // 
             // listViewAlarm
             // 

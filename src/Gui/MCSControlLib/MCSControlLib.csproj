@@ -170,7 +170,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
     <None Include="Resources\016_CLW.jpg" />
   </ItemGroup>
   <ItemGroup>
