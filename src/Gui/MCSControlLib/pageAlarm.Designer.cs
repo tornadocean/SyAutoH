@@ -181,7 +181,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.LightGray;
             this.Controls.Add(this.bnClearAll);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.tBEventID);

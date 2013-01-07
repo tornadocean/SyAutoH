@@ -192,7 +192,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.LightGray;
             this.Controls.Add(this.checkBoxError);
             this.Controls.Add(this.checkBoxDebug);
             this.Controls.Add(this.checkBoxWarning);
