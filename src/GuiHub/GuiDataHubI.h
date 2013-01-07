@@ -105,6 +105,8 @@ private:
 
 	void MES_GetPositionTable(const std::string&, const ::Ice::Current&);
 	void MES_GetFoupTable(const std::string&, const ::Ice::Current&);
+	void MES_TransControl(const std::string&, const ::Ice::Current&);
+	void MES_FoupTransfer(const std::string&, const ::Ice::Current&);
 
 private:
 	GuiDataItem Push_OHT_DevInfo();

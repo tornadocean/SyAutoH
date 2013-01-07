@@ -45,3 +45,12 @@ void GuiDataHubI::MES_GetFoupTable(const std::string&, const ::Ice::Current& cur
 	}
 	UpdateDataOne(current.con, GuiHub::upMesFoupTable, strVal);
 }
+
+void GuiDataHubI::MES_TransControl(const std::string&, const ::Ice::Current&)
+{
+	LOG_ERROR("todo");
+}
+void GuiDataHubI::MES_FoupTransfer(const std::string&, const ::Ice::Current&)
+{
+	LOG_ERROR("todo");
+}

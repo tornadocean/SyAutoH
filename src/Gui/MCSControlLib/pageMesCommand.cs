@@ -215,22 +215,31 @@ namespace MCSControlLib
             if (nLocation > 0 && nFoupBarCode > 0)
             {
                 //int nWRet = m_dataHub.Async_WriteData(GuiCommand.MesGetPosTable, "");
+                string strFoupMove = string.Format("<{0},{1}>", nFoupBarCode, nLocation);
+                m_dataHub.Async_WriteData(GuiCommand.MesFoupTransfer, strFoupMove);
+               
+                
+                //string strVal = string.Format("{0}", MesTransCtrl.transRun);
+               // m_dataHub.Async_WriteData(GuiCommand.MesTransControl, strVal);
             }
         }
 
         private void bnFoupMovePause_Click(object sender, EventArgs e)
         {
-
+            string strVal = string.Format("{0}", MesTransCtrl.transPause);
+            m_dataHub.Async_WriteData(GuiCommand.MesTransControl, strVal);
         }
 
         private void bnFoupMoveContinue_Click(object sender, EventArgs e)
         {
-
+            string strVal = string.Format("{0}", MesTransCtrl.transContinue);
+            m_dataHub.Async_WriteData(GuiCommand.MesTransControl, strVal);
         }
 
         private void bnFoupMoveStop_Click(object sender, EventArgs e)
         {
-
+            string strVal = string.Format("{0}", MesTransCtrl.transStop);
+            m_dataHub.Async_WriteData(GuiCommand.MesTransControl, strVal);
         }
     }
 }

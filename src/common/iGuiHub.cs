@@ -1316,7 +1316,7 @@ namespace MCS
             {
                 result__.prepare__(__ReadData_name, Ice.OperationMode.Idempotent, ctx__, explicitContext__);
                 IceInternal.BasicStream os__ = result__.ostr__;
-                os__.writeByte((byte)Tag, 22);
+                os__.writeByte((byte)Tag, 24);
                 os__.writeInt(session);
                 os__.endWriteEncaps();
                 result__.send__(true);
@@ -1655,7 +1655,7 @@ namespace MCS
             {
                 result__.prepare__(__WriteData_name, Ice.OperationMode.Idempotent, ctx__, explicitContext__);
                 IceInternal.BasicStream os__ = result__.ostr__;
-                os__.writeByte((byte)Tag, 22);
+                os__.writeByte((byte)Tag, 24);
                 os__.writeString(Val);
                 os__.writeInt(session);
                 os__.endWriteEncaps();
@@ -3237,7 +3237,7 @@ namespace MCS
                 try
                 {
                     IceInternal.BasicStream os__ = og__.ostr();
-                    os__.writeByte((byte)Tag, 22);
+                    os__.writeByte((byte)Tag, 24);
                     os__.writeInt(session);
                 }
                 catch(Ice.LocalException ex__)
@@ -3434,7 +3434,7 @@ namespace MCS
                 try
                 {
                     IceInternal.BasicStream os__ = og__.ostr();
-                    os__.writeByte((byte)Tag, 22);
+                    os__.writeByte((byte)Tag, 24);
                     os__.writeString(Val);
                     os__.writeInt(session);
                 }
@@ -4842,7 +4842,7 @@ namespace MCS
             IceInternal.BasicStream is__ = inS__.istr();
             is__.startReadEncaps();
             MCS.GuiHub.GuiCommand Tag;
-            Tag = (MCS.GuiHub.GuiCommand)is__.readByte(22);
+            Tag = (MCS.GuiHub.GuiCommand)is__.readByte(24);
             int session;
             session = is__.readInt();
             is__.endReadEncaps();
@@ -4859,7 +4859,7 @@ namespace MCS
             IceInternal.BasicStream is__ = inS__.istr();
             is__.startReadEncaps();
             MCS.GuiHub.GuiCommand Tag;
-            Tag = (MCS.GuiHub.GuiCommand)is__.readByte(22);
+            Tag = (MCS.GuiHub.GuiCommand)is__.readByte(24);
             string Val;
             Val = is__.readString();
             int session;
