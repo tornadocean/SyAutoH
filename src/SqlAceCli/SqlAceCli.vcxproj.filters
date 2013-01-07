@@ -65,6 +65,9 @@
     <ClInclude Include="TFoup.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="TTransfer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SqlAceCli.rc">
