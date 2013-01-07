@@ -124,5 +124,11 @@ namespace Mcs.RailSystem.Common
             get { return curvePen.DashStyle; }
             set { curvePen.DashStyle = value; pen.DashStyle = value; }
         }
+        [Browsable(false)]
+        public Pen PenCurve
+        {
+            get { return pen; }
+            set { pen = value; }
+        }
     }
 }
