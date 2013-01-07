@@ -44,7 +44,9 @@
   <ItemGroup>
     <Compile Include="BaseRailEle.cs" />
     <Compile Include="ColorConverter.cs" />
-    <Compile Include="EleCurve.cs" />
+    <Compile Include="EleCurve.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="EleLine.cs" />
     <Compile Include="PenStyle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
