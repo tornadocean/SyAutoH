@@ -119,11 +119,11 @@ namespace BaseRailElement
                                 RailEleLine de = (RailEleLine)document.SelectedDrawObjectList[i];
                                 document.SelectedDrawObjectList[i].Move(lastPoint, point);
                             }
-                            //else if (document.SelectedDrawObjectList[i].GraphType == 2)
-                            //{
-                            //    CurvedRailEle de = (CurvedRailEle)document.SelectedDrawObjectList[i];
-                            //    document.SelectedDrawObjectList[i].Move(lastPoint, point);
-                            //}
+                            else if (document.SelectedDrawObjectList[i].GraphType == 2)
+                            {
+                                RailEleCurve de = (RailEleCurve)document.SelectedDrawObjectList[i];
+                                document.SelectedDrawObjectList[i].Move(lastPoint, point);
+                            }
                             //else if (document.SelectedDrawObjectList[i].GraphType == 3)
                             //{
                             //    CrossEle de = (CrossEle)document.SelectedDrawObjectList[i];

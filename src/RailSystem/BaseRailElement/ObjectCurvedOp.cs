@@ -15,7 +15,11 @@ namespace BaseRailElement
             set { drawMultiFactor = value; }
         }
 
-        public void DrawTracker(Graphics canvas, Point centerDot, int radiuArc, CurvedRailEle.DirectonCurved direction)
+        public void DrawTracker(
+            Graphics canvas, 
+            Point centerDot,
+            int radiuArc, 
+            Mcs.RailSystem.Common.EleCurve.DirectonCurved direction)
         {
             if (canvas == null)
                 throw new Exception("Graphics对象Canvas不能为空");
@@ -26,31 +30,31 @@ namespace BaseRailElement
             //SolidBrush bsh = new SolidBrush(Color.Black);
             switch (direction)
             {
-                case CurvedRailEle.DirectonCurved.first:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.first:
                     points[0] = center;
                     points[1] = new Point(center.X + radiu, center.Y);
                     points[2] = new Point(center.X + radiu, center.Y + radiu);
                     points[3] = new Point(center.X, center.Y + radiu);
                     break;
-                case CurvedRailEle.DirectonCurved.second:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.second:
                     points[0] = center;
                     points[1] = new Point(center.X, center.Y + radiu);
                     points[2] = new Point(center.X - radiu, center.Y + radiu);
                     points[3] = new Point(center.X - radiu, center.Y);
                     break;
-                case CurvedRailEle.DirectonCurved.third:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.third:
                     points[0] = center;
                     points[1] = new Point(center.X - radiu, center.Y);
                     points[2] = new Point(center.X - radiu, center.Y - radiu);
                     points[3] = new Point(center.X, center.Y - radiu);
                     break;
-                case CurvedRailEle.DirectonCurved.four:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.four:
                     points[0] = center;
                     points[1] = new Point(center.X, center.Y - radiu);
                     points[2] = new Point(center.X + radiu, center.Y - radiu);
                     points[3] = new Point(center.X + radiu, center.Y);
                     break;
-                case CurvedRailEle.DirectonCurved.NULL:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.NULL:
                     break;
             }
             for (int i = 0; i < 4; i++)
@@ -68,7 +72,7 @@ namespace BaseRailElement
             bool isSelected,
             Point centerArc,
             int radiuArc,
-            CurvedRailEle.DirectonCurved direction)
+            Mcs.RailSystem.Common.EleCurve.DirectonCurved direction)
         {
             Point center = new Point(centerArc.X * drawMultiFactor, centerArc.Y * drawMultiFactor);
             int radiu = radiuArc * drawMultiFactor;
@@ -84,27 +88,27 @@ namespace BaseRailElement
             Point[] points = new Point[4];
             switch (direction)
             {
-                case CurvedRailEle.DirectonCurved.first:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.first:
                     points[0] = center;
                     points[2] = new Point(center.X + radiu, center.Y + radiu);
                     rc = new Rectangle(points[0].X, points[0].Y, points[2].X - points[0].X, points[2].Y - points[0].Y);
                     break;
-                case CurvedRailEle.DirectonCurved.second:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.second:
                     points[1] = new Point(center.X, center.Y + radiu);
                     points[3] = new Point(center.X - radiu, center.Y);
                     rc = new Rectangle(points[3].X, points[3].Y, points[1].X - points[3].X, points[1].Y - points[3].Y);
                     break;
-                case CurvedRailEle.DirectonCurved.third:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.third:
                     points[0] = center;
                     points[2] = new Point(center.X - radiu, center.Y - radiu);
                     rc = new Rectangle(points[2].X, points[2].Y, points[0].X - points[2].X, points[0].Y - points[2].Y);
                     break;
-                case CurvedRailEle.DirectonCurved.four:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.four:
                     points[1] = new Point(center.X, center.Y - radiu);
                     points[3] = new Point(center.X + radiu, center.Y);
                     rc = new Rectangle(points[1].X, points[1].Y, points[3].X - points[1].X, points[3].Y - points[1].Y);
                     break;
-                case CurvedRailEle.DirectonCurved.NULL:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.NULL:
                     break;
             }
             GraphicsPath path = new GraphicsPath();
@@ -119,36 +123,36 @@ namespace BaseRailElement
         public int HandleHitTest(Point point,
             Point center,
             int radiu,
-            CurvedRailEle.DirectonCurved direction)
+            Mcs.RailSystem.Common.EleCurve.DirectonCurved direction)
         {
             Point[] points = new Point[4];
             switch (direction)
             {
-                case CurvedRailEle.DirectonCurved.first:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.first:
                     points[0] = center;
                     points[1] = new Point(center.X + radiu, center.Y);
                     points[2] = new Point(center.X + radiu, center.Y + radiu);
                     points[3] = new Point(center.X, center.Y + radiu);
                     break;
-                case CurvedRailEle.DirectonCurved.second:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.second:
                     points[0] = center;
                     points[1] = new Point(center.X, center.Y + radiu);
                     points[2] = new Point(center.X - radiu, center.Y + radiu);
                     points[3] = new Point(center.X - radiu, center.Y);
                     break;
-                case CurvedRailEle.DirectonCurved.third:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.third:
                     points[0] = center;
                     points[1] = new Point(center.X - radiu, center.Y);
                     points[2] = new Point(center.X - radiu, center.Y - radiu);
                     points[3] = new Point(center.X, center.Y - radiu);
                     break;
-                case CurvedRailEle.DirectonCurved.four:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.four:
                     points[0] = center;
                     points[1] = new Point(center.X, center.Y - radiu);
                     points[2] = new Point(center.X + radiu, center.Y - radiu);
                     points[3] = new Point(center.X + radiu, center.Y);
                     break;
-                case CurvedRailEle.DirectonCurved.NULL:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.NULL:
                     break;
             }
             for (int i = 0; i < 4; i++)
@@ -167,43 +171,43 @@ namespace BaseRailElement
             int dy,
             Point center,
             int radiu,
-            CurvedRailEle.DirectonCurved direction)
+            Mcs.RailSystem.Common.EleCurve.DirectonCurved direction)
         {
             Point[] points = new Point[4];
             switch (direction)
             {
-                case CurvedRailEle.DirectonCurved.first:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.first:
                     points[0] = center;
                     points[1] = new Point(center.X + radiu, center.Y);
                     points[2] = new Point(center.X + radiu, center.Y + radiu);
                     points[3] = new Point(center.X, center.Y + radiu);
                     break;
-                case CurvedRailEle.DirectonCurved.second:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.second:
                     points[0] = center;
                     points[1] = new Point(center.X, center.Y + radiu);
                     points[2] = new Point(center.X - radiu, center.Y + radiu);
                     points[3] = new Point(center.X - radiu, center.Y);
                     break;
-                case CurvedRailEle.DirectonCurved.third:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.third:
                     points[0] = center;
                     points[1] = new Point(center.X - radiu, center.Y);
                     points[2] = new Point(center.X - radiu, center.Y - radiu);
                     points[3] = new Point(center.X, center.Y - radiu);
                     break;
-                case CurvedRailEle.DirectonCurved.four:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.four:
                     points[0] = center;
                     points[1] = new Point(center.X, center.Y - radiu);
                     points[2] = new Point(center.X + radiu, center.Y - radiu);
                     points[3] = new Point(center.X + radiu, center.Y);
                     break;
-                case CurvedRailEle.DirectonCurved.NULL:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.NULL:
                     break;
             }
             Point pt = points[handle - 1];
             Point[] wrapper = new Point[] { pt };
             switch (direction)
             {
-                case CurvedRailEle.DirectonCurved.first:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.first:
                     if (1 == handle)
                     {
                         int var = dx;
@@ -267,7 +271,7 @@ namespace BaseRailElement
                         pt.Offset(0, dy);
                     }
                     break;
-                case CurvedRailEle.DirectonCurved.second:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.second:
                     if (1 == handle)
                     {
                         int var = dx;
@@ -331,7 +335,7 @@ namespace BaseRailElement
                         pt.Offset(dx, 0);
                     }
                     break;
-                case CurvedRailEle.DirectonCurved.third:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.third:
                     if (1 == handle)
                     {
                         int var = dx;
@@ -395,7 +399,7 @@ namespace BaseRailElement
                         pt.Offset(0, dy);
                     }
                     break;
-                case CurvedRailEle.DirectonCurved.four:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.four:
                     if (1 == handle)
                     {
                         int var = dx;
@@ -459,7 +463,7 @@ namespace BaseRailElement
                         pt.Offset(0, dy);
                     }
                     break;
-                case CurvedRailEle.DirectonCurved.NULL:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.NULL:
                     break;
             }
             wrapper[0] = pt;
@@ -470,7 +474,7 @@ namespace BaseRailElement
 
             switch (direction)
             {
-                case CurvedRailEle.DirectonCurved.first:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.first:
                     switch (handle)
                     {
                         case 1:
@@ -488,7 +492,7 @@ namespace BaseRailElement
                             break;
                     }
                     break;
-                case CurvedRailEle.DirectonCurved.second:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.second:
                     switch (handle)
                     {
                         case 1:
@@ -506,7 +510,7 @@ namespace BaseRailElement
                             break;
                     }
                     break;
-                case CurvedRailEle.DirectonCurved.third:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.third:
                     switch (handle)
                     {
                         case 1:
@@ -524,7 +528,7 @@ namespace BaseRailElement
                             break;
                     }
                     break;
-                case CurvedRailEle.DirectonCurved.four:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.four:
                     switch (handle)
                     {
                         case 1:
@@ -542,7 +546,7 @@ namespace BaseRailElement
                             break;
                     }
                     break;
-                case CurvedRailEle.DirectonCurved.NULL:
+                case Mcs.RailSystem.Common.EleCurve.DirectonCurved.NULL:
                     break;
             }
             return new Rectangle(center.X, center.Y, radiu, radiu);

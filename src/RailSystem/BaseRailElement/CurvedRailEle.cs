@@ -182,12 +182,13 @@ namespace BaseRailElement
 
         public override void DrawTracker(Graphics canvas)
         {
-            objectCurvedOp.DrawTracker(canvas, center, radiu, directionCurved);
+        //    objectCurvedOp.DrawTracker(canvas, center, radiu, directionCurved);
         }
 
         public override int HitTest(Point point, bool isSelected)
         {
-            return objectCurvedOp.HitTest(point, isSelected, center, radiu, directionCurved);
+        //    return objectCurvedOp.HitTest(point, isSelected, center, radiu, directionCurved);
+            return 1;
         }
 
         protected override void Translate(int offsetX, int offsetY)
@@ -208,46 +209,46 @@ namespace BaseRailElement
 
         protected override void Scale(int handle, int dx, int dy)
         {
-            Point pt_first = firstDot;
-            Point pt_sec = secDot;
-            Rectangle rc = objectCurvedOp.Scale(handle, dx, dy, center, radiu, directionCurved);
-            center = rc.Location;
-            oldCenter = center;
-            radiu = rc.Width;
-            oldRadiu = radiu;
-            switch (directionCurved)
-            {
-                case DirectonCurved.first:
-                    pt_first.X = center.X + radiu;
-                    pt_first.Y = center.Y;
-                    pt_sec.X = center.X;
-                    pt_sec.Y = center.Y + radiu;
-                    break;
-                case DirectonCurved.second:
-                    pt_first.X = center.X;
-                    pt_first.Y = center.Y + radiu;
-                    pt_sec.X = center.X - radiu;
-                    pt_sec.Y = center.Y;
-                    break;
-                case DirectonCurved.third:
-                    pt_first.X = center.X - radiu;
-                    pt_first.Y = center.Y;
-                    pt_sec.X = center.X;
-                    pt_sec.Y = center.Y - radiu;
-                    break;
-                case DirectonCurved.four:
-                    pt_first.X = center.X;
-                    pt_first.Y = center.Y - radiu;
-                    pt_sec.X = center.X + radiu;
-                    pt_sec.Y = center.Y;
-                    break;
-                case DirectonCurved.NULL:
-                    break;
-            }
-            firstDot = pt_first;
-            oldFirstDot = firstDot;
-            secDot = pt_sec;
-            oldSecDot = secDot;
+            //Point pt_first = firstDot;
+            //Point pt_sec = secDot;
+            //Rectangle rc = objectCurvedOp.Scale(handle, dx, dy, center, radiu, directionCurved);
+            //center = rc.Location;
+            //oldCenter = center;
+            //radiu = rc.Width;
+            //oldRadiu = radiu;
+            //switch (directionCurved)
+            //{
+            //    case DirectonCurved.first:
+            //        pt_first.X = center.X + radiu;
+            //        pt_first.Y = center.Y;
+            //        pt_sec.X = center.X;
+            //        pt_sec.Y = center.Y + radiu;
+            //        break;
+            //    case DirectonCurved.second:
+            //        pt_first.X = center.X;
+            //        pt_first.Y = center.Y + radiu;
+            //        pt_sec.X = center.X - radiu;
+            //        pt_sec.Y = center.Y;
+            //        break;
+            //    case DirectonCurved.third:
+            //        pt_first.X = center.X - radiu;
+            //        pt_first.Y = center.Y;
+            //        pt_sec.X = center.X;
+            //        pt_sec.Y = center.Y - radiu;
+            //        break;
+            //    case DirectonCurved.four:
+            //        pt_first.X = center.X;
+            //        pt_first.Y = center.Y - radiu;
+            //        pt_sec.X = center.X + radiu;
+            //        pt_sec.Y = center.Y;
+            //        break;
+            //    case DirectonCurved.NULL:
+            //        break;
+            //}
+            //firstDot = pt_first;
+            //oldFirstDot = firstDot;
+            //secDot = pt_sec;
+            //oldSecDot = secDot;
         }
 
         public override void RotateCounterClw()

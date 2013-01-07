@@ -270,13 +270,13 @@ namespace BaseRailElement
                         drawObjectList.Add(n);
                         SelectOne(n);
                     }
-                    //else if (2 == o.GraphType)
-                    //{
-                    //    CurvedRailEle cl = (CurvedRailEle)o;
-                    //    CurvedRailEle n = (CurvedRailEle)cl.Clone(str);
-                    //    drawObjectList.Add(n);
-                    //    SelectOne(n);
-                    //}
+                    else if (2 == o.GraphType)
+                    {
+                        RailEleCurve cl = (RailEleCurve)o;
+                        RailEleCurve n = (RailEleCurve)cl.Clone(str);
+                        drawObjectList.Add(n);
+                        SelectOne(n);
+                    }
                     //else if (3 == o.GraphType)
                     //{
                     //    CrossEle cl = (CrossEle)o;
@@ -365,7 +365,7 @@ namespace BaseRailElement
             int num = drawObjectList.Count;
             for (int i = 0; i < num; i++)
             {
-                
+                drawObjectList[i].SaveCodingInfo(dtEleCoding);
             }
             dsEleCoding.Tables.Add(dtEleCoding);
         }
