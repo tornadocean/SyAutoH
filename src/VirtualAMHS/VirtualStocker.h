@@ -58,6 +58,7 @@ public:
 	int m_nTimeCounter;
 	int m_nMoveStatus;
 	int m_nFoupChange;
+	int m_nInputStatus;
 	uint64 m_nMoveStatusTimeSet;
 	uint64 m_nFoupInfoTimeSet;
 	VirtualFoup CFoup;

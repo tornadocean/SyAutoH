@@ -19,6 +19,7 @@ MAP_ItemOHT g_mapOHTs;
 MAP_ItemStocker g_mapStockers;
 MAP_ItemFoup g_mapFoups;
 const int STOCKER_ID = 24;
+bool isSend;
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
@@ -130,6 +131,7 @@ BEGIN_MESSAGE_MAP(CVAMHSTestDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_STK_ALL_ONLINE_BUTTON, &CVAMHSTestDlg::OnBnClickedStkAllOnlineButton)
 	ON_BN_CLICKED(IDC_DELETE_STK_BUTTON, &CVAMHSTestDlg::OnBnClickedDeleteStkButton)
 	ON_BN_CLICKED(IDC_CLEAR_FOUPS_BUTTON, &CVAMHSTestDlg::OnBnClickedClearFoupsButton)
+	ON_BN_CLICKED(IDC_SET_STKPOS_BUTTON, &CVAMHSTestDlg::OnBnClickedSetStkposButton)
 END_MESSAGE_MAP()
 
 // CVAMHSTestDlg 消息处理程序
@@ -164,6 +166,7 @@ BOOL CVAMHSTestDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+	isSend = true;
 	InitListCtrlOHT();
 	InitListCtrlFOUP();
 	InitListCtrlSTOCKER();
@@ -378,7 +381,7 @@ void CVAMHSTestDlg::OnBnClickedBnStkIn()
 		    item->nRoomID = nRoomID;
 		    item->nProcessStatus = 0;
 			item->nBatchID = 0;
-			item->nStockerID = selectSTK;
+			item->nDeviceID = selectSTK;
 		    g_mapFoups.insert(std::make_pair(Foup_ID,item));
 		    CString str;
 		    m_listCtrlFOUP.InsertItem(0,str);
@@ -591,10 +594,12 @@ void CVAMHSTestDlg::ReadSTKXML()
 		int nStatus = GetElemData(xml,_T("Status"));
 		int nContain = GetElemData(xml,_T("nContain"));
 		int nOnline = 0;//GetElemData(xml,_T("Online"));
+		int nPosition = GetElemData(xml,_T("Position"));
 		item->nID = nID;
 		item->nStatus = nStatus;
 		item->nContain = nContain;
 		item->nOnline = nOnline;
+		item->nPosition = nPosition;
 		g_mapStockers.insert(std::make_pair(nID,item));
 		CString str;
 		m_listCtrlSTOCKER.InsertItem(0, str);
@@ -645,6 +650,7 @@ void CVAMHSTestDlg::SaveSTKXML()
 				xml.AddChildElem(_T("Status"),it->second->nStatus);
 				xml.AddChildElem(_T("nContain"),it->second->nContain);
 				xml.AddChildElem(_T("Online"),it->second->nOnline);
+				xml.AddChildElem(_T("Position"),it->second->nPosition);
 				xml.OutOfElem();
 				xml.OutOfElem();
 				xml.OutOfElem();
@@ -660,6 +666,7 @@ void CVAMHSTestDlg::SaveSTKXML()
 			xml.AddChildElem(_T("Status"),it->second->nStatus);
 			xml.AddChildElem(_T("Contain"),it->second->nContain);
 			xml.AddChildElem(_T("Online"),it->second->nOnline);
+			xml.AddChildElem(_T("Position"),it->second->nPosition);
 			xml.OutOfElem();
 			xml.OutOfElem();
 		}
@@ -706,9 +713,12 @@ void CVAMHSTestDlg::ReadFOUPXML(int STK_ID)
 			    item->nRoomID = nRoomID;
 			    item->nProcessStatus = nStatus;
 				item->nBatchID = nBatchID;
-				item->nStockerID = STK_ID;
+				item->nDeviceID = STK_ID;
 			    g_mapFoups.insert(std::make_pair(nID,item));
-				g_pVDev->STK_FoupInitRoom(STK_ID,item);
+				if(isSend == true)
+				{
+					g_pVDev->STK_FoupInitRoom(STK_ID,item);
+				}
 			    CString str;
 			    m_listCtrlFOUP.InsertItem(0,str);
 			    SetFOUPListItemData(item,0);
@@ -991,6 +1001,7 @@ void CVAMHSTestDlg::InitListCtrlFOUP(void)
 	m_listCtrlFOUP.InsertColumn(1, _T("RoomID"), LVCFMT_CENTER, 65);
 	m_listCtrlFOUP.InsertColumn(2, _T("Status"), LVCFMT_CENTER, 65);
 	m_listCtrlFOUP.InsertColumn(3,_T("Lot"),LVCFMT_CENTER,65);
+	
 }
 
 void CVAMHSTestDlg::InitListCtrlSTOCKER(void)
@@ -1004,6 +1015,7 @@ void CVAMHSTestDlg::InitListCtrlSTOCKER(void)
 	m_listCtrlSTOCKER.InsertColumn(1,_T("Status"),LVCFMT_CENTER,50);
 	m_listCtrlSTOCKER.InsertColumn(2,_T("Contain"),LVCFMT_CENTER,60);
 	m_listCtrlSTOCKER.InsertColumn(3,_T("Online"),LVCFMT_CENTER,50);
+	m_listCtrlSTOCKER.InsertColumn(4,_T("Position"),LVCFMT_CENTER,60);
 	ReadSTKXML();
 }
 
@@ -1012,6 +1024,17 @@ void CVAMHSTestDlg::OnTimer(UINT_PTR nIDEvent)
 	LIST_OHT ohts = g_pVDev->OHT_GetStatus();
 	LIST_STOCKER stockers = g_pVDev->Stocker_GetInfo();
 	LIST_FOUP foups = g_pVDev->Stocker_GetFoupsStatus(STOCKER_ID);
+
+	int nChangeOHT = g_pVDev->OHT_GetHandChangeID();
+	if(nChangeOHT != -1)
+	{
+		int nHandType = g_pVDev->OHT_GetHandChangeType(nChangeOHT);
+		if(nChangeOHT != -1)
+		{
+			ItemOHT handChangeOHT = g_pVDev->OHT_GetHandOHT(nChangeOHT);
+			SetStockerInputStatus(nHandType,handChangeOHT.nPosition);
+		}
+	}
 
 	LIST_OHT::iterator itOht = ohts.begin();
 	while(itOht != ohts.end())
@@ -1043,7 +1066,6 @@ void CVAMHSTestDlg::OnTimer(UINT_PTR nIDEvent)
 	int nChangeSTK = g_pVDev->STK_GetSTKID();
 	if(nChangeSTK != -1)
 	{
-	
 		int nChangeType = g_pVDev->STK_FoupChangeType(nChangeSTK);
 	    if(nChangeType != 0)
 	    {
@@ -1051,7 +1073,7 @@ void CVAMHSTestDlg::OnTimer(UINT_PTR nIDEvent)
 		    if(nChangeType == 1)
 		    {
 				FoupItem = g_pVDev->STK_GetChangedFoup(nChangeSTK);
-			    FoupItem.nStockerID = nChangeSTK;
+			    FoupItem.nDeviceID = nChangeSTK;
 			    FoupItem.nDisabled = 0;
 			    //ItemFoup* FoupItem1 = &FoupItem;
 			    g_mapFoups.insert(std::make_pair(FoupItem.nID,&FoupItem));
@@ -1150,6 +1172,8 @@ void CVAMHSTestDlg::SetStockerListItemData(ItemStocker* pStocker,int nListIndex)
 		str = _T("Off");
 	}
 	m_listCtrlSTOCKER.SetItemText(nListIndex,3,str);
+	str.Format(_T("%d"),pStocker->nPosition);
+	m_listCtrlSTOCKER.SetItemText(nListIndex,4,str);
 	m_listCtrlSTOCKER.SetItemData(nListIndex,pStocker->nID);
 }
 
@@ -1388,7 +1412,7 @@ void CVAMHSTestDlg::OnBnClickedAddStockerButton()
 		int nFoupCount = 0;
 		for(ite = g_mapFoups.begin();ite != g_mapFoups.end();ite++)
 		{
-			if(ite->second->nStockerID == nStocker_ID)
+			if(ite->second->nDeviceID == nStocker_ID)
 			{
 				nFoupCount++;
 				ite->second->nDisabled = 0;
@@ -1424,6 +1448,7 @@ void CVAMHSTestDlg::OnNMClickListFoup2(NMHDR *pNMHDR, LRESULT *pResult)
 		int nStockerID = m_listCtrlSTOCKER.GetItemData(nListIndex);	
 	    if(nStockerID != selectSTK)	
 	    {	
+			isSend = false;
 			selectSTK = nStockerID;
 		    m_listCtrlFOUP.DeleteAllItems();
 		    ReadFOUPXML(selectSTK);	
@@ -1431,6 +1456,7 @@ void CVAMHSTestDlg::OnNMClickListFoup2(NMHDR *pNMHDR, LRESULT *pResult)
 		    CID.Format(_T("%d"),nStockerID);	
 		    SetDlgItemText(IDC_SELECT_STK_EDIT,CID);
 	    }
+		isSend = true;
 	   // g_pVDev->STK_SetFoupNum(nStockerID,foupNum);
 	}
 	*pResult = 0;
@@ -1477,7 +1503,7 @@ void CVAMHSTestDlg::OnBnClickedDeleteStkButton()
 		MessageBox(_T("请至少选择一项"));
 		return;
 	}
-	nId=(int)m_listCtrlSTOCKER.GetNextSelectedItem(pos);
+	nId = (int)m_listCtrlSTOCKER.GetNextSelectedItem(pos);
 	m_listCtrlSTOCKER.DeleteItem(nId);
 	MAP_ItemStocker::iterator it;
 	it = g_mapStockers.find(nSTK_ID);
@@ -1488,13 +1514,12 @@ void CVAMHSTestDlg::OnBnClickedDeleteStkButton()
 	MAP_ItemFoup::iterator ite;
 	for(ite = g_mapFoups.begin();ite != g_mapFoups.end();ite++)
 	{
-		if(ite->second->nStockerID == nSTK_ID)
+		if(ite->second->nDeviceID == nSTK_ID)
 		{
 			ite->second->nDisabled = 1;
 		}
 	}
 }
-
 
 void CVAMHSTestDlg::OnBnClickedClearFoupsButton()
 {
@@ -1505,7 +1530,7 @@ void CVAMHSTestDlg::OnBnClickedClearFoupsButton()
 	MAP_ItemFoup::iterator it;
 	for(it = g_mapFoups.begin();it != g_mapFoups.end();it++)
 	{
-		if(it->second->nStockerID == selectSTK)
+		if(it->second->nDeviceID == selectSTK)
 		{
 			DeleteFoupXML(selectSTK,it->second->nID);
 			m_listFoups.push_back(it->second->nID);
@@ -1517,6 +1542,9 @@ void CVAMHSTestDlg::OnBnClickedClearFoupsButton()
 		it = g_mapFoups.find(*ite);
 		if(it != g_mapFoups.end())
 		{
+			CString strID;
+			strID.Format(_T("%d"),it->second->nID);
+			g_pVDev->Stocker_ManualOutputFoup(selectSTK,strID);
 			g_mapFoups.erase(it);
 		}
 	}
@@ -1526,5 +1554,52 @@ void CVAMHSTestDlg::OnBnClickedClearFoupsButton()
 	if(iter != g_mapStockers.end())
 	{
 		iter->second->nContain = 0;
+	}
+}
+
+
+void CVAMHSTestDlg::OnBnClickedSetStkposButton()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	int nPosition = GetDlgItemInt(IDC_STK_POSITION_EDIT);
+	int nSTK_ID = GetSelectStockerID();
+	MAP_ItemStocker::iterator it;
+	it = g_mapStockers.find(nSTK_ID);
+	if(it != g_mapStockers.end())
+	{
+		it->second->nPosition = nPosition;
+	}
+	/*
+	int nId;
+    POSITION pos = m_listCtrlSTOCKER.GetFirstSelectedItemPosition();
+    if(pos == NULL)
+    {
+		MessageBox(_T("请至少选择一项"));
+		return;
+	}
+	nId = (int)m_listCtrlSTOCKER.GetNextSelectedItem(pos);
+	*/
+}
+void CVAMHSTestDlg::SetStockerInputStatus(int nHandType,int nPosition)
+{
+	MAP_ItemStocker::iterator it;
+	for(it = g_mapStockers.begin();it != g_mapStockers.end();it++)
+	{
+		if(it->second->nOnline == 0)
+		{
+			MessageBox(_T("Foup is not online,port Status set failed!"));
+			return ;
+		}
+		if(it->second->nPosition == nPosition)
+		{
+			if(nHandType == 1)
+			{
+				int nSetStatus = g_pVDev->STK_SetInputStatus(it->second->nID,1);
+			}
+			if(nHandType == 0)
+			{
+				int nSetStatus = g_pVDev->STK_SetInputStatus(it->second->nID,0);
+			}
+		}
 	}
 }
