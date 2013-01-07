@@ -50,7 +50,7 @@ namespace BaseRailElement
             return this;
         }
 
-        public void Draw(Graphics canvas)
+        public override void Draw(Graphics canvas)
         {
             if (canvas == null)
             {
@@ -91,19 +91,37 @@ namespace BaseRailElement
             canvas.DrawLines(PenLine, pts);
         }
 
-        public void DrawTracker(Graphics canvas)
+        public override void DrawTracker(Graphics canvas)
         {
             objLineOp.DrawTracker(canvas);
         }
 
-        public int HitTest(Point point, bool isSelected)
+        public override int HitTest(Point point, bool isSelected)
         {
             return objLineOp.HitTest(point, isSelected);
+        }
+
+        public override void Move(Point start, Point end)
+        {
+            if (LocationLock)
+                return;
+            int x = (end.X - start.X) / DrawMultiFactor;
+            int y = (end.Y - start.Y) / DrawMultiFactor;
+            Translate(x, y);
         }
 
         protected void Translate(int offsetX, int offsetY)
         {
             objLineOp.Translate(offsetX, offsetY);
+        }
+
+        public override void MoveHandle(int handle, Point start, Point end)
+        {
+            if (sizeLock)
+                return;
+            int dx = (end.X - start.X) / DrawMultiFactor;
+            int dy = (end.Y - start.Y) / DrawMultiFactor;
+            Scale(handle, dx, dy);
         }
 
         protected void Scale(int handle, int dx, int dy)
