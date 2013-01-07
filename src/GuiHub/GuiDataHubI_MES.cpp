@@ -6,6 +6,7 @@
 #include "../SqlAceCli/SqlAceCli.h"
 #include "IceUtil/Unicode.h"
 #include "iConstDef.h"
+#include "../shared/Log.h"
 
 void GuiDataHubI::MES_GetPositionTable(const std::string&, const ::Ice::Current& current)
 {
@@ -48,9 +49,32 @@ void GuiDataHubI::MES_GetFoupTable(const std::string&, const ::Ice::Current& cur
 
 void GuiDataHubI::MES_TransControl(const std::string&, const ::Ice::Current&)
 {
-	LOG_ERROR("todo");
+	DBTransfer dbTransfer;
+	VEC_TRANS transList = dbTransfer.GetTransfer();
+	for (auto it = transList.cbegin();
+		it != transList.cend(); ++it)
+	{
+		printf("Transfer: FoupID: %d, Target: %d\r\n", it->nFoupID, it->nTarget);
+	}
 }
-void GuiDataHubI::MES_FoupTransfer(const std::string&, const ::Ice::Current&)
+void GuiDataHubI::MES_FoupTransfer(const std::string& strVal, const ::Ice::Current&)
 {
-	LOG_ERROR("todo");
+	STR_VEC vecStr = GetVecStrings(strVal);
+	for(STR_VEC::iterator it = vecStr.begin();
+		it != vecStr.end(); ++it)
+	{
+		string strE = *it;
+		STR_VEC Params = SplitString(*it, ",");
+		if (Params.size() == 2)
+		{
+			int nFoupBarCode = atoi(Params[0].c_str());
+			int nTarget = atoi(Params[1].c_str());
+			DBTransfer dbTransfer;
+			int nAdd = dbTransfer.AddTransfer(nFoupBarCode, nTarget);
+			if (nAdd < 0)
+			{
+				sLog.Warning("GuiDataHubI::MES_FoupTransfer", "AddTransfer Failed.");
+			}
+		}
+	}
 }
