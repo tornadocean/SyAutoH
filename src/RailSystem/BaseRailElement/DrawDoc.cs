@@ -277,13 +277,13 @@ namespace BaseRailElement
                         drawObjectList.Add(n);
                         SelectOne(n);
                     }
-                    //else if (3 == o.GraphType)
-                    //{
-                    //    CrossEle cl = (CrossEle)o;
-                    //    CrossEle n = (CrossEle)cl.Clone(str);
-                    //    drawObjectList.Add(n);
-                    //    SelectOne(n);
-                    //}
+                    else if (3 == o.GraphType)
+                    {
+                        RailEleCross cl = (RailEleCross)o;
+                        RailEleCross n = (RailEleCross)cl.Clone(str);
+                        drawObjectList.Add(n);
+                        SelectOne(n);
+                    }
                     //else if (4 == o.GraphType)
                     //{
                     //    RailLabal cl = (RailLabal)o;

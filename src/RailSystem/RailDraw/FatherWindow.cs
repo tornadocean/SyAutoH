@@ -36,7 +36,7 @@ namespace RailDraw
         private Int16 CrossNumber = 300;
 
         //using for test
-        SaveCodingRail saveCodingRail = new SaveCodingRail();
+   //     SaveCodingRail saveCodingRail = new SaveCodingRail();
 
         public FatherWindow()
         {
@@ -694,124 +694,124 @@ namespace RailDraw
                                 }
                                 AddElement(curTemp);
                                 break;
-                            //case "3":
-                            //    BaseRailElement.CrossEle croTemp = new BaseRailElement.CrossEle();
-                            //    string strcro = "";
-                            //    string[] strPointArrayCro = { };
-                            //    Point ptcro = Point.Empty;
-                            //    Int16 pointListVolCro = 0;
-                            //    for (int j = 0; j < dt.Columns.Count; j++)
-                            //    {
-                            //        switch (dt.Columns[j].ColumnName)
-                            //        {
-                            //            case "GraphType":
-                            //                croTemp.GraphType = Convert.ToInt32(dt.Rows[i][j]);
-                            //                break;
-                            //            case "Speed":
-                            //                croTemp.Speed = Convert.ToSingle(dt.Rows[i][j]);
-                            //                break;
-                            //            //case "SegmentNumber":
-                            //            //    croTemp.SegmentNumber = Convert.ToInt16(dt.Rows[i][j]);
-                            //            //    break;
-                            //            //case "TagNumber":
-                            //            //    croTemp.TagNumber = Convert.ToInt16(dt.Rows[i][j]);
-                            //            //    break;
-                            //            case "Mirror":
-                            //                croTemp.Mirror = Convert.ToBoolean(dt.Rows[i][j]);
-                            //                break;
-                            //            case "FirstPart":
-                            //                croTemp.FirstPart = Convert.ToInt32(dt.Rows[i][j]);
-                            //                break;
-                            //            case "SecPart":
-                            //                croTemp.SecPart = Convert.ToInt32(dt.Rows[i][j]);
-                            //                break;
-                            //            case "ThPart":
-                            //                croTemp.ThPart = Convert.ToInt32(dt.Rows[i][j]);
-                            //                break;
-                            //            case "FourPart":
-                            //                strcro = dt.Rows[i][j].ToString();
-                            //                strcro = strcro.Substring(1, strcro.Length - 2);
-                            //                strPointArrayCro = strcro.Split(',');
-                            //                ptcro = new Point() { X = int.Parse(strPointArrayCro[0].Substring(2)), Y = int.Parse(strPointArrayCro[1].Substring(2)) };
-                            //                croTemp.FourPart = ptcro;
-                            //                break;
-                            //            case "StartAngle":
-                            //                croTemp.StartAngle = Convert.ToInt32(dt.Rows[i][j]);
-                            //                break;
-                            //            case "RotateAngle":
-                            //                croTemp.RotateAngle = Convert.ToInt32(dt.Rows[i][j]);
-                            //                break;
-                            //            case "DirectionOfCross":
-                            //                croTemp.DirectionOfCross = (BaseRailElement.CrossEle.DirectionCross)Convert.ToInt32(dt.Rows[i][j]);
-                            //                break;
-                            //            case "PointListVol":
-                            //                pointListVolCro = Convert.ToInt16(dt.Rows[i][j]);
-                            //                for (Int16 k = 0; k < pointListVolCro; k++)
-                            //                {
-                            //                    strcro = dt.Rows[i][j + k + 1].ToString();
-                            //                    strcro = strcro.Substring(1, strcro.Length - 2);
-                            //                    strPointArrayCro = strcro.Split(',');
-                            //                    ptcro = new Point() { X = int.Parse(strPointArrayCro[0].Substring(2)), Y = int.Parse(strPointArrayCro[1].Substring(2)) };
-                            //                    croTemp.PointList.Add(ptcro);
-                            //                }
-                            //                break;
-                            //            case "drawMultiFactor":
-                            //                croTemp.DrawMultiFactor = Convert.ToInt16(dt.Rows[i][j]);
-                            //                break;
-                            //            case "startPoint":
-                            //                strcro = dt.Rows[i][j].ToString();
-                            //                strcro = strcro.Substring(1, strcro.Length - 2);
-                            //                strPointArrayCro = strcro.Split(',');
-                            //                ptcro = new Point() { X = int.Parse(strPointArrayCro[0].Substring(2)), Y = int.Parse(strPointArrayCro[1].Substring(2)) };
-                            //                croTemp.StartPoint = ptcro;
-                            //                break;
-                            //            case "endPoint":
-                            //                strcro = dt.Rows[i][j].ToString();
-                            //                strcro = strcro.Substring(1, strcro.Length - 2);
-                            //                strPointArrayCro = strcro.Split(',');
-                            //                ptcro = new Point() { X = int.Parse(strPointArrayCro[0].Substring(2)), Y = int.Parse(strPointArrayCro[1].Substring(2)) };
-                            //                croTemp.EndPoint = ptcro;
-                            //                break;
-                            //            case "CodingBegin":
-                            //                croTemp.CodingBegin = Convert.ToInt32(dt.Rows[i][j]);
-                            //                break;
-                            //            case "CodingEnd":
-                            //                croTemp.CodingEnd = Convert.ToInt32(dt.Rows[i][j]);
-                            //                break;
-                            //            case "CodingEndS":
-                            //                croTemp.CodingEndS = Convert.ToInt32(dt.Rows[i][j]);
-                            //                break;
-                            //            case "CodingNext":
-                            //                croTemp.CodingNext = Convert.ToInt32(dt.Rows[i][j]);
-                            //                break;
-                            //            case "CodingPrev":
-                            //                croTemp.CodingPrev = Convert.ToInt32(dt.Rows[i][j]);
-                            //                break;
-                            //            case "CodingNextS":
-                            //                croTemp.CodingNextS = Convert.ToInt32(dt.Rows[i][j]);
-                            //                break;
-                            //            //case "startDot":
-                            //            //    croTemp.StartDot = dt.Rows[i][j].ToString();
-                            //            //    break;
-                            //            case "railText":
-                            //                croTemp.railText = dt.Rows[i][j].ToString();
-                            //                break;
-                            //            case "lenghtOfStrai":
-                            //                croTemp.LenghtOfStrai = Convert.ToInt32(dt.Rows[i][j]);
-                            //                break;
-                            //            case "Color":
-                            //                croTemp.PenColor = ColorTranslator.FromHtml(dt.Rows[i][j].ToString());
-                            //                break;
-                            //            case "DashStyle":
-                            //                croTemp.PenDashStyle = (System.Drawing.Drawing2D.DashStyle)(Convert.ToInt32(dt.Rows[i][j]));
-                            //                break;
-                            //            case "PenWidth":
-                            //                croTemp.PenWidth = Convert.ToSingle(dt.Rows[i][j]);
-                            //                break;
-                            //        }
-                            //    }
-                            //    AddElement(croTemp);
-                            //    break;
+                            case "3":
+                                BaseRailElement.RailEleCross croTemp = new BaseRailElement.RailEleCross();
+                                string strcro = "";
+                                string[] strPointArrayCro = { };
+                                Point ptcro = Point.Empty;
+                                Int16 pointListVolCro = 0;
+                                for (int j = 0; j < dt.Columns.Count; j++)
+                                {
+                                    switch (dt.Columns[j].ColumnName)
+                                    {
+                                        case "GraphType":
+                                            croTemp.GraphType = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "Speed":
+                                            croTemp.Speed = Convert.ToSingle(dt.Rows[i][j]);
+                                            break;
+                                        //case "SegmentNumber":
+                                        //    croTemp.SegmentNumber = Convert.ToInt16(dt.Rows[i][j]);
+                                        //    break;
+                                        //case "TagNumber":
+                                        //    croTemp.TagNumber = Convert.ToInt16(dt.Rows[i][j]);
+                                        //    break;
+                                        case "Mirror":
+                                            croTemp.Mirror = Convert.ToBoolean(dt.Rows[i][j]);
+                                            break;
+                                        case "FirstPart":
+                                            croTemp.FirstPart = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "SecPart":
+                                            croTemp.SecPart = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "ThPart":
+                                            croTemp.ThPart = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "FourPart":
+                                            strcro = dt.Rows[i][j].ToString();
+                                            strcro = strcro.Substring(1, strcro.Length - 2);
+                                            strPointArrayCro = strcro.Split(',');
+                                            ptcro = new Point() { X = int.Parse(strPointArrayCro[0].Substring(2)), Y = int.Parse(strPointArrayCro[1].Substring(2)) };
+                                            croTemp.FourPart = ptcro;
+                                            break;
+                                        case "StartAngle":
+                                            croTemp.StartAngle = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "RotateAngle":
+                                            croTemp.RotateAngle = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "DirectionOfCross":
+                                            croTemp.DirectionOfCross = (Mcs.RailSystem.Common.EleCross.DirectionCross)Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "PointListVol":
+                                            pointListVolCro = Convert.ToInt16(dt.Rows[i][j]);
+                                            for (Int16 k = 0; k < pointListVolCro; k++)
+                                            {
+                                                strcro = dt.Rows[i][j + k + 1].ToString();
+                                                strcro = strcro.Substring(1, strcro.Length - 2);
+                                                strPointArrayCro = strcro.Split(',');
+                                                ptcro = new Point() { X = int.Parse(strPointArrayCro[0].Substring(2)), Y = int.Parse(strPointArrayCro[1].Substring(2)) };
+                                                croTemp.PointList.Add(ptcro);
+                                            }
+                                            break;
+                                        case "drawMultiFactor":
+                                            croTemp.DrawMultiFactor = Convert.ToInt16(dt.Rows[i][j]);
+                                            break;
+                                        case "startPoint":
+                                            strcro = dt.Rows[i][j].ToString();
+                                            strcro = strcro.Substring(1, strcro.Length - 2);
+                                            strPointArrayCro = strcro.Split(',');
+                                            ptcro = new Point() { X = int.Parse(strPointArrayCro[0].Substring(2)), Y = int.Parse(strPointArrayCro[1].Substring(2)) };
+                                            croTemp.StartPoint = ptcro;
+                                            break;
+                                        case "endPoint":
+                                            strcro = dt.Rows[i][j].ToString();
+                                            strcro = strcro.Substring(1, strcro.Length - 2);
+                                            strPointArrayCro = strcro.Split(',');
+                                            ptcro = new Point() { X = int.Parse(strPointArrayCro[0].Substring(2)), Y = int.Parse(strPointArrayCro[1].Substring(2)) };
+                                            croTemp.EndPoint = ptcro;
+                                            break;
+                                        case "CodingBegin":
+                                            croTemp.CodingBegin = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "CodingEnd":
+                                            croTemp.CodingEnd = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "CodingEndS":
+                                            croTemp.CodingEndS = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "CodingNext":
+                                            croTemp.CodingNext = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "CodingPrev":
+                                            croTemp.CodingPrev = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "CodingNextS":
+                                            croTemp.CodingNextS = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        //case "startDot":
+                                        //    croTemp.StartDot = dt.Rows[i][j].ToString();
+                                        //    break;
+                                        case "railText":
+                                            croTemp.railText = dt.Rows[i][j].ToString();
+                                            break;
+                                        case "lenghtOfStrai":
+                                            croTemp.LenghtOfStrai = Convert.ToInt32(dt.Rows[i][j]);
+                                            break;
+                                        case "Color":
+                                            croTemp.PenColor = ColorTranslator.FromHtml(dt.Rows[i][j].ToString());
+                                            break;
+                                        case "DashStyle":
+                                            croTemp.PenDashStyle = (System.Drawing.Drawing2D.DashStyle)(Convert.ToInt32(dt.Rows[i][j]));
+                                            break;
+                                        case "PenWidth":
+                                            croTemp.PenWidth = Convert.ToSingle(dt.Rows[i][j]);
+                                            break;
+                                    }
+                                }
+                                AddElement(croTemp);
+                                break;
                         }
                     }
                 }
@@ -873,17 +873,17 @@ namespace RailDraw
                     proPage.propertyGrid1.SelectedObject = curve;
                     proPage.propertyGrid1.Refresh();
                     break;
-                //case "Cross":
-                //    BaseRailElement.CrossEle croRailEle = new BaseRailElement.CrossEle();
-                //    ++CrossNumber;
-                //    str += "_" + CrossNumber.ToString();
-                //    croRailEle.CreateEle(mousePt, workRegionSize, multiFactor, str);
-                //    AddElement(croRailEle);
-                //    drawDoc.SelectOne(croRailEle);
-                //    workRegion.pictureBox1.Invalidate();
-                //    proPage.propertyGrid1.SelectedObject = croRailEle;
-                //    proPage.propertyGrid1.Refresh();
-                //    break;
+                case "Cross":
+                    BaseRailElement.RailEleCross cross = new BaseRailElement.RailEleCross();
+                    ++CrossNumber;
+                    str += "_" + CrossNumber.ToString();
+                    cross.CreateEle(mousePt, workRegionSize, multiFactor, str);
+                    AddElement(cross);
+                    drawDoc.SelectOne(cross);
+                    workRegion.pictureBox1.Invalidate();
+                    proPage.propertyGrid1.SelectedObject = cross;
+                    proPage.propertyGrid1.Refresh();
+                    break;
                 case "Device":
                     MessageBox.Show("a");
                     break;
@@ -892,34 +892,6 @@ namespace RailDraw
             }
             this.tools.itemSelected = null;
         }
-
-        //private void AddElement(BaseRailEle baseRailEle)
-        //{
-        //    string str = baseRailEle.railText;
-        //    int lenght = str.IndexOf('_');
-        //    if (-1!=lenght)
-        //    {
-        //        str = str.Substring(0,lenght);
-        //    }
-        //    switch(str)
-        //    {
-        //        case "Line":
-        //            BaseRailElement.StraightRailEle strRailEle = (BaseRailElement.StraightRailEle)baseRailEle;
-        //            drawDoc.DrawObjectList.Add(strRailEle);
-        //            proRegion.AddElementNode(this.workRegion.Text, strRailEle.railText);
-        //            break;
-        //        case "Curve":
-        //            BaseRailElement.CurvedRailEle curRailEle = (BaseRailElement.CurvedRailEle)baseRailEle;
-        //            drawDoc.DrawObjectList.Add(curRailEle);
-        //            proRegion.AddElementNode(this.workRegion.Text, curRailEle.railText);
-        //            break;
-        //        case "Cross":
-        //            BaseRailElement.CrossEle croRailEle = (BaseRailElement.CrossEle)baseRailEle;
-        //            drawDoc.DrawObjectList.Add(croRailEle);
-        //            proRegion.AddElementNode(this.workRegion.Text, croRailEle.railText);
-        //            break;
-        //    }
-        //}
 
         private void AddElement(Mcs.RailSystem.Common.BaseRailEle baseRailEle)
         {
@@ -940,6 +912,11 @@ namespace RailDraw
                     Mcs.RailSystem.Common.EleCurve curve = (Mcs.RailSystem.Common.EleCurve)baseRailEle;
                     drawDoc.DrawObjectList.Add(curve);
                     proRegion.AddElementNode(this.workRegion.Text, curve.railText);
+                    break;
+                case "Cross":
+                    Mcs.RailSystem.Common.EleCross cross = (Mcs.RailSystem.Common.EleCross)baseRailEle;
+                    drawDoc.DrawObjectList.Add(cross);
+                    proRegion.AddElementNode(this.workRegion.Text, cross.railText);
                     break;
             }
         }

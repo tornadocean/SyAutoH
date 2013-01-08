@@ -58,6 +58,7 @@
     <Compile Include="ObjectStraightOp.cs" />
     <Compile Include="PenStyle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RailEleCross.cs" />
     <Compile Include="RailEleCurve.cs" />
     <Compile Include="RailEleLine.cs" />
     <Compile Include="RailLabel.cs" />

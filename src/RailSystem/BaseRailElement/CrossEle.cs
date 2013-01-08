@@ -254,12 +254,13 @@ namespace BaseRailElement
 
         public override void DrawTracker(Graphics canvas)
         {
-            objectCrossOp.DrawTracker(canvas, directionOfCross);
+        //    objectCrossOp.DrawTracker(canvas, directionOfCross);
         }
 
         public override int HitTest(Point point, bool isSelected)
         {
-            return objectCrossOp.HitTest(point, isSelected, directionOfCross, Mirror);
+        //    return objectCrossOp.HitTest(point, isSelected, directionOfCross, Mirror);
+            return 1;
         }
 
         protected override void Translate(int offsetX, int offsetY)

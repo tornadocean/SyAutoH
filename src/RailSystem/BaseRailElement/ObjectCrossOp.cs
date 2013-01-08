@@ -49,7 +49,7 @@ namespace BaseRailElement
             set { fourPart = value; }
         }
 
-        public void DrawTracker(Graphics canvas, CrossEle.DirectionCross direction)
+        public void DrawTracker(Graphics canvas, Mcs.RailSystem.Common.EleCross.DirectionCross direction)
         {
             if (canvas == null)
                 throw new Exception("Graphics对象Canvas不能为空");
@@ -80,7 +80,7 @@ namespace BaseRailElement
         public int HitTest(
             Point point,
             bool isSelected,
-            CrossEle.DirectionCross direction,
+            Mcs.RailSystem.Common.EleCross.DirectionCross direction,
             bool isMirror)
         {
             if (isSelected)
@@ -118,16 +118,16 @@ namespace BaseRailElement
             }
             switch (direction)
             {
-                case CrossEle.DirectionCross.first:
+                case Mcs.RailSystem.Common.EleCross.DirectionCross.first:
                     rc = new Rectangle(pts[0].X, pts[3].Y, pts[2].X - pts[0].X, pts[1].Y - pts[3].Y);
                     break;
-                case CrossEle.DirectionCross.second:
+                case Mcs.RailSystem.Common.EleCross.DirectionCross.second:
                     rc = new Rectangle(pts[1].X, pts[0].Y, pts[3].X - pts[1].X, pts[2].Y - pts[0].Y);
                     break;
-                case CrossEle.DirectionCross.third:
+                case Mcs.RailSystem.Common.EleCross.DirectionCross.third:
                     rc = new Rectangle(pts[2].X, pts[1].Y, pts[0].X - pts[2].X, pts[3].Y - pts[1].Y);
                     break;
-                case CrossEle.DirectionCross.four:
+                case Mcs.RailSystem.Common.EleCross.DirectionCross.four:
                     rc = new Rectangle(pts[3].X, pts[2].Y, pts[1].X - pts[3].X, pts[0].Y - pts[2].Y);
                     break;
                 default:
@@ -142,7 +142,7 @@ namespace BaseRailElement
                 return -1;
         }
 
-        public int HandleHitTest(Point point, CrossEle.DirectionCross direction, bool isMirror)
+        public int HandleHitTest(Point point, Mcs.RailSystem.Common.EleCross.DirectionCross direction, bool isMirror)
         {
             Point[] pts = new Point[4];
             pts[0] = pointList[0];

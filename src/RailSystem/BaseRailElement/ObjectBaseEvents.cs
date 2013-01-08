@@ -124,11 +124,11 @@ namespace BaseRailElement
                                 RailEleCurve de = (RailEleCurve)document.SelectedDrawObjectList[i];
                                 document.SelectedDrawObjectList[i].Move(lastPoint, point);
                             }
-                            //else if (document.SelectedDrawObjectList[i].GraphType == 3)
-                            //{
-                            //    CrossEle de = (CrossEle)document.SelectedDrawObjectList[i];
-                            //    document.SelectedDrawObjectList[i].Move(lastPoint, point);
-                            //}
+                            else if (document.SelectedDrawObjectList[i].GraphType == 3)
+                            {
+                                RailEleCross de = (RailEleCross)document.SelectedDrawObjectList[i];
+                                document.SelectedDrawObjectList[i].Move(lastPoint, point);
+                            }
                             //else if (document.SelectedDrawObjectList[i].GraphType == 4)
                             //{
                             //    RailLabal de = (RailLabal)document.SelectedDrawObjectList[i];
