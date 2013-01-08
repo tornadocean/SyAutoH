@@ -11,14 +11,6 @@ namespace BaseRailElement
 {
     public class RailEleLine : Mcs.RailSystem.Common.EleLine
     {
-        private ObjectStraightOp objLineOp = new ObjectStraightOp();
-
-        [Browsable(false)]
-        public List<Point> PointList
-        {
-            get { return objLineOp.PointList; }
-        }
-
         public RailEleLine()
         {
             GraphType = 1;
@@ -32,7 +24,6 @@ namespace BaseRailElement
         {
             Point[] pts = new Point[2];
             DrawMultiFactor = multiFactor;
-            objLineOp.DrawMultiFactor = multiFactor;
             pt.Offset(pt.X / DrawMultiFactor - pt.X, pt.Y / DrawMultiFactor - pt.Y);
             pts[0] = pt;
             if ((pt.X + Lenght) > size.Width)
@@ -93,12 +84,78 @@ namespace BaseRailElement
 
         public override void DrawTracker(Graphics canvas)
         {
-            objLineOp.DrawTracker(canvas);
+            if (canvas == null)
+                throw new Exception("Graphics对象Canvas不能为空");
+            int n = PointList.Count;
+            Point[] pts = new Point[n];
+            PointList.CopyTo(pts);
+            Pen pen = new Pen(Color.Blue);
+            pen.Width = 1;
+            for (int i = 0; i < n; i++)
+            {
+                Point pt = pts[i];
+                pt.Offset(pt.X * (DrawMultiFactor - 1), pt.Y * (DrawMultiFactor - 1));
+                Rectangle rc = new Rectangle(pt.X - 4, pt.Y - 4, 8, 8);
+                canvas.DrawRectangle(pen, rc);
+            }
+            pen.Dispose();
         }
 
         public override int HitTest(Point point, bool isSelected)
         {
-            return objLineOp.HitTest(point, isSelected);
+            int n = PointList.Count;
+            if (isSelected)
+            {
+                int hit = HandleHitTest(point);
+                if (hit >= 0) return hit;
+            }
+            for (int i = 0; i < n - 1; i++)
+            {
+                Point pt1 = PointList[i];
+                Point pt2 = PointList[i + 1];
+                float angle = 0;
+                int length = 0;
+                if (pt1.X == pt2.X)
+                {
+                    angle = pt1.Y < pt2.Y ? 90 : -90;
+                    length = Math.Abs(pt1.Y - pt2.Y);
+                }
+                else if (pt1.Y == pt2.Y)
+                {
+                    angle = pt1.X < pt2.X ? 0 : 180;
+                    length = Math.Abs(pt1.X - pt2.X);
+                }
+                else
+                {
+                    float tan = (float)(pt2.Y - pt1.Y) / (pt2.X - pt1.X);
+                    angle = (float)(Math.Atan(tan) * 180 / Math.PI);
+                    int n1 = (pt2.Y - pt1.Y) * (pt2.Y - pt1.Y) + (pt2.X - pt1.X) * (pt2.X - pt1.X);
+                    double d1 = Math.Sqrt(n1);
+                    length = Convert.ToInt32(d1);
+                }
+                Rectangle rc = GetRedrawRc();
+                Point[] wrapper = new Point[1];
+                wrapper[0] = point;
+                if (rc.Contains(wrapper[0]))
+                    return 0;
+            }
+            return -1;
+        }
+
+        private int HandleHitTest(Point point)
+        {
+            int n = PointList.Count;
+            Point[] pts = new Point[n];
+            PointList.CopyTo(pts);
+            for (int i = 0; i < n; i++)
+            {
+                pts[i].Offset(pts[i].X * (DrawMultiFactor - 1), pts[i].Y * (DrawMultiFactor - 1));
+                Point pt = pts[i];
+                Rectangle rc = new Rectangle(pt.X - 3, pt.Y - 3, 6, 6);
+                if (rc.Contains(point))
+                    return i + 1;
+            }
+            return -1;
         }
 
         public override void Move(Point start, Point end)
@@ -110,9 +167,15 @@ namespace BaseRailElement
             Translate(x, y);
         }
 
-        protected void Translate(int offsetX, int offsetY)
+        private void Translate(int offsetX, int offsetY)
         {
-            objLineOp.Translate(offsetX, offsetY);
+            int n = PointList.Count;
+            for (int i = 0; i < n; i++)
+            {
+                Point pt = PointList[i];
+                pt.Offset(offsetX, offsetY);
+                PointList[i] = pt;
+            }
         }
 
         public override void MoveHandle(int handle, Point start, Point end)
@@ -124,9 +187,30 @@ namespace BaseRailElement
             Scale(handle, dx, dy);
         }
 
-        protected void Scale(int handle, int dx, int dy)
+        private void Scale(int handle, int dx, int dy)
         {
-            Lenght = objLineOp.Scale(handle, dx, dy, Lenght);
+            Point pt1 = new Point(0);
+            Point pt2 = new Point(0);
+            int n = PointList.Count;
+            for (int i = 0; i < n - 1; i++)
+            {
+                pt1 = PointList[i];
+                pt2 = PointList[i + 1];
+            }
+            if (pt1.Y == pt2.Y)
+            {
+                Point pt = PointList[handle - 1];
+                pt.Offset(dx, 0);
+                PointList[handle - 1] = pt;
+                Lenght = Math.Abs(PointList[1].X - PointList[0].X);
+            }
+            else if (pt1.X == pt2.X)
+            {
+                Point pt = PointList[handle - 1];
+                pt.Offset(0, dy);
+                PointList[handle - 1] = pt;
+                Lenght = Math.Abs(PointList[1].Y - PointList[0].Y);
+            }
         }
 
         public override void RotateCounterClw()
@@ -145,7 +229,8 @@ namespace BaseRailElement
             }
             RotateAngle = -90;
             StartAngle -= RotateAngle;
-            objLineOp.Rotate(pt, RotateAngle);
+
+            Rotate(pt, RotateAngle);
         }
 
         public override void RotateClw()
@@ -164,12 +249,26 @@ namespace BaseRailElement
             }
             RotateAngle = 90;
             StartAngle += RotateAngle;
-            objLineOp.Rotate(pt, RotateAngle);
+
+            Rotate(pt, RotateAngle);
+        }
+
+        private void Rotate(Point pt, int angle)
+        {
+            Matrix matrix = new Matrix();
+            matrix.RotateAt(angle, pt);
+
+            int n = PointList.Count;
+            Point[] points = new Point[n];
+            PointList.CopyTo(points);
+            matrix.TransformPoints(points);
+            PointList.Clear();
+            PointList.AddRange(points);
         }
 
         public override void DrawEnlargeOrShrink(float drawMultiFactor)
         {
-            objLineOp.DrawMultiFactor = Convert.ToInt16(drawMultiFactor);
+            DrawMultiFactor = Convert.ToInt16(drawMultiFactor);
             base.DrawEnlargeOrShrink(drawMultiFactor);
         }
 
@@ -198,7 +297,22 @@ namespace BaseRailElement
 
         public override bool ChosedInRegion(Rectangle rect)
         {
-            return objLineOp.ChosedInRegion(rect);
+            int containedNum = 0;
+            int n = PointList.Count;
+            Point[] pts = new Point[n];
+            for (int i = 0; i < n; i++)
+            {
+                pts[i] = PointList[i];
+                pts[i].Offset(pts[i].X * DrawMultiFactor - pts[i].X, pts[i].Y * DrawMultiFactor - pts[i].Y);
+            }
+            for (int i = 0; i < n; i++)
+            {
+                if (rect.Contains(pts[i]))
+                    containedNum++;
+            }
+            if (containedNum == n)
+                return true;
+            return false;
         }
 
         public override DataRow SaveEleInfo(DataTable dt)
@@ -257,9 +371,30 @@ namespace BaseRailElement
             cl.PointList.AddRange(PointList);
             cl.Lenght = Lenght;
             cl.DrawMultiFactor = DrawMultiFactor;
-            cl.objLineOp.DrawMultiFactor = DrawMultiFactor;
             cl.railText = str;
             return cl;
+        }
+
+        private Rectangle GetRedrawRc()
+        {
+            int n = PointList.Count;
+            int minX, minY, maxX, maxY;
+            maxX = minX = PointList[0].X * DrawMultiFactor;
+            maxY = minY = PointList[0].Y * DrawMultiFactor;
+            for (int i = 1; i < n; i++)
+            {
+                if (PointList[i].X * DrawMultiFactor < minX)
+                    minX = PointList[i].X * DrawMultiFactor;
+                else if (PointList[i].X * DrawMultiFactor > maxX)
+                    maxX = PointList[i].X * DrawMultiFactor;
+                if (PointList[i].Y * DrawMultiFactor < minY)
+                    minY = PointList[i].Y * DrawMultiFactor;
+                else if (PointList[i].Y * DrawMultiFactor > maxY)
+                    maxY = PointList[i].Y * DrawMultiFactor;
+            }
+            Rectangle rc = new Rectangle(minX, minY, maxX - minX, maxY - minY);
+            rc.Inflate(5, 5);
+            return rc;
         }
 
     }
