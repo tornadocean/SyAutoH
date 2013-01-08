@@ -14,7 +14,8 @@ VirtualOHT::VirtualOHT(void)
 	m_nTimeCounter(0),
 	isSetPath(false),
 	isMove(false),
-	isStop(false)
+	isStop(false),
+	m_nHandChange(-1)
 {
 	m_optHanders.insert(std::make_pair(OHT_MCS_ACK_AUTH, 
 		&VirtualOHT::Handle_Auth));
@@ -124,10 +125,16 @@ void VirtualOHT::Handle_FoupHanding(AMHSPacket& packet)
 	if (1 == nOpt)
 	{
 		m_nHand = 0;
+		m_nHandChange = 1;
+		m_nOHT.nOHT_ID = (int)(DeviceID());
+		m_nOHT.nPosition = m_nPos;
 	}
 	else
 	{
 		m_nHand = 1;
+		m_nHandChange = 0;
+		m_nOHT.nOHT_ID = (int)(DeviceID());
+		m_nOHT.nPosition = m_nPos;
 	}
 
 	m_nStatus = 5;

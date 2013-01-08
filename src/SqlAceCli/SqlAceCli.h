@@ -140,3 +140,20 @@ public:
 public:
 	VEC_LANE GetLaneTable(int nMapID);
 };
+
+typedef struct
+{
+	int nFoupID;
+	int nTarget;
+}ItemTrans;
+typedef std::vector<ItemTrans> VEC_TRANS;
+
+class SQLACECLI_API DBTransfer
+{
+public:
+	DBTransfer(void);
+	~DBTransfer(void);
+public:
+	int AddTransfer(int nFoupID, int nTarget);
+	VEC_TRANS GetTransfer();
+};

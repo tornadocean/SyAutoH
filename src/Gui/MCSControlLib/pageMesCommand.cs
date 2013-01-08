@@ -136,13 +136,13 @@ namespace MCSControlLib
 
         private void linkLabelFoupRefresh_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            int nWRet = m_dataHub.WriteData(GuiCommand.MesGetFoupTable, "");
+            m_dataHub.Async_WriteData(GuiCommand.MesGetFoupTable, "");
         }
 
         private void linkLabelLocationRefresh_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // get keypoints where type = 0x20, (pick and place)
-            int nWRet = m_dataHub.WriteData(GuiCommand.MesGetPosTable, "");
+            m_dataHub.Async_WriteData(GuiCommand.MesGetPosTable, "");
         }
 
         private void pageMesCommand_Load(object sender, EventArgs e)
@@ -175,9 +175,71 @@ namespace MCSControlLib
                 tbFoupBarCode.Text = row.Cells[0].Value.ToString();
                 tbFoupLot.Text = row.Cells[1].Value.ToString();
                 tbFoupStatus.Text = row.Cells[4].Value.ToString();
-                tbFoupLocType.Text = row.Cells[3].Value.ToString();
+                MCS.dbcli.LoctionType nLocType = (MCS.dbcli.LoctionType)TryConver.ToInt32(row.Cells[5].Value.ToString());
+                switch(nLocType)
+                {
+                    case MCS.dbcli.LoctionType.loctypeStocker:
+                        tbFoupLocType.Text = "Stocker";
+                        break;
+                    case MCS.dbcli.LoctionType.loctypeOHT:
+                        tbFoupLocType.Text = "OHT";
+                        break;
+                    default:
+                        tbFoupLocType.Text = "Unknown";
+                        break;
+                }
                 tbFoupLocation.Text = row.Cells[2].Value.ToString();
             }
+        }
+
+        private void bnFoupMove_Click(object sender, EventArgs e)
+        {
+            int nFoupBarCode = -1;
+            int nLocation = -1;
+
+            nLocation = TryConver.ToInt32(tbLocPosition.Text);
+            nFoupBarCode = TryConver.ToInt32(tbFoupBarCode.Text);
+
+            if (nLocation < 0)
+            {
+                MessageBox.Show("Please select Locatoin from Locations Table.");
+                return;
+            }
+
+            if (nFoupBarCode < 0)
+            {
+                MessageBox.Show("Please select Foup from Foups Table.");
+                return;
+            }
+
+            if (nLocation > 0 && nFoupBarCode > 0)
+            {
+                //int nWRet = m_dataHub.Async_WriteData(GuiCommand.MesGetPosTable, "");
+                string strFoupMove = string.Format("<{0},{1}>", nFoupBarCode, nLocation);
+                m_dataHub.Async_WriteData(GuiCommand.MesFoupTransfer, strFoupMove);
+               
+                
+                //string strVal = string.Format("{0}", MesTransCtrl.transRun);
+               // m_dataHub.Async_WriteData(GuiCommand.MesTransControl, strVal);
+            }
+        }
+
+        private void bnFoupMovePause_Click(object sender, EventArgs e)
+        {
+            string strVal = string.Format("{0}", MesTransCtrl.transPause);
+            m_dataHub.Async_WriteData(GuiCommand.MesTransControl, strVal);
+        }
+
+        private void bnFoupMoveContinue_Click(object sender, EventArgs e)
+        {
+            string strVal = string.Format("{0}", MesTransCtrl.transContinue);
+            m_dataHub.Async_WriteData(GuiCommand.MesTransControl, strVal);
+        }
+
+        private void bnFoupMoveStop_Click(object sender, EventArgs e)
+        {
+            string strVal = string.Format("{0}", MesTransCtrl.transStop);
+            m_dataHub.Async_WriteData(GuiCommand.MesTransControl, strVal);
         }
     }
 }

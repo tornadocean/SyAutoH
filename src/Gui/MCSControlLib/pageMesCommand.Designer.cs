@@ -28,16 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.bnMesFouptoLocation = new System.Windows.Forms.Button();
+            this.bnFoupMoveContinue = new System.Windows.Forms.Button();
+            this.bnFoupMovePause = new System.Windows.Forms.Button();
+            this.bnFoupMoveStop = new System.Windows.Forms.Button();
+            this.bnFoupMove = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tbLocDesp = new System.Windows.Forms.TextBox();
             this.tbLocName = new System.Windows.Forms.TextBox();
@@ -109,41 +109,45 @@
             this.label19.TabIndex = 26;
             this.label19.Text = "Name:";
             // 
-            // button3
+            // bnFoupMoveContinue
             // 
-            this.button3.Location = new System.Drawing.Point(217, 91);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(97, 23);
-            this.button3.TabIndex = 35;
-            this.button3.Text = "Continue";
-            this.button3.UseVisualStyleBackColor = true;
+            this.bnFoupMoveContinue.Location = new System.Drawing.Point(217, 91);
+            this.bnFoupMoveContinue.Name = "bnFoupMoveContinue";
+            this.bnFoupMoveContinue.Size = new System.Drawing.Size(97, 23);
+            this.bnFoupMoveContinue.TabIndex = 35;
+            this.bnFoupMoveContinue.Text = "Continue";
+            this.bnFoupMoveContinue.UseVisualStyleBackColor = true;
+            this.bnFoupMoveContinue.Click += new System.EventHandler(this.bnFoupMoveContinue_Click);
             // 
-            // button2
+            // bnFoupMovePause
             // 
-            this.button2.Location = new System.Drawing.Point(217, 62);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(97, 23);
-            this.button2.TabIndex = 34;
-            this.button2.Text = "Pause";
-            this.button2.UseVisualStyleBackColor = true;
+            this.bnFoupMovePause.Location = new System.Drawing.Point(217, 62);
+            this.bnFoupMovePause.Name = "bnFoupMovePause";
+            this.bnFoupMovePause.Size = new System.Drawing.Size(97, 23);
+            this.bnFoupMovePause.TabIndex = 34;
+            this.bnFoupMovePause.Text = "Pause";
+            this.bnFoupMovePause.UseVisualStyleBackColor = true;
+            this.bnFoupMovePause.Click += new System.EventHandler(this.bnFoupMovePause_Click);
             // 
-            // button1
+            // bnFoupMoveStop
             // 
-            this.button1.Location = new System.Drawing.Point(203, 120);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(130, 23);
-            this.button1.TabIndex = 33;
-            this.button1.Text = "Stop";
-            this.button1.UseVisualStyleBackColor = true;
+            this.bnFoupMoveStop.Location = new System.Drawing.Point(203, 120);
+            this.bnFoupMoveStop.Name = "bnFoupMoveStop";
+            this.bnFoupMoveStop.Size = new System.Drawing.Size(130, 23);
+            this.bnFoupMoveStop.TabIndex = 33;
+            this.bnFoupMoveStop.Text = "Stop";
+            this.bnFoupMoveStop.UseVisualStyleBackColor = true;
+            this.bnFoupMoveStop.Click += new System.EventHandler(this.bnFoupMoveStop_Click);
             // 
-            // bnMesFouptoLocation
+            // bnFoupMove
             // 
-            this.bnMesFouptoLocation.Location = new System.Drawing.Point(203, 33);
-            this.bnMesFouptoLocation.Name = "bnMesFouptoLocation";
-            this.bnMesFouptoLocation.Size = new System.Drawing.Size(130, 23);
-            this.bnMesFouptoLocation.TabIndex = 32;
-            this.bnMesFouptoLocation.Text = "Foup to Location";
-            this.bnMesFouptoLocation.UseVisualStyleBackColor = true;
+            this.bnFoupMove.Location = new System.Drawing.Point(203, 33);
+            this.bnFoupMove.Name = "bnFoupMove";
+            this.bnFoupMove.Size = new System.Drawing.Size(130, 23);
+            this.bnFoupMove.TabIndex = 32;
+            this.bnFoupMove.Text = "Foup to Location";
+            this.bnFoupMove.UseVisualStyleBackColor = true;
+            this.bnFoupMove.Click += new System.EventHandler(this.bnFoupMove_Click);
             // 
             // groupBox4
             // 
@@ -393,14 +397,14 @@
             this.dataGridViewKeyPos.BackgroundColor = System.Drawing.Color.MistyRose;
             this.dataGridViewKeyPos.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridViewKeyPos.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewKeyPos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewKeyPos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridViewKeyPos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewKeyPos.Location = new System.Drawing.Point(353, 18);
             this.dataGridViewKeyPos.MultiSelect = false;
@@ -423,14 +427,14 @@
             this.dataGridViewFoup.BackgroundColor = System.Drawing.Color.PaleTurquoise;
             this.dataGridViewFoup.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridViewFoup.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewFoup.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewFoup.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridViewFoup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewFoup.Location = new System.Drawing.Point(586, 18);
             this.dataGridViewFoup.MultiSelect = false;
@@ -451,10 +455,10 @@
             this.Controls.Add(this.dataGridViewKeyPos);
             this.Controls.Add(this.linkLabelLocationRefresh);
             this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.bnMesFouptoLocation);
+            this.Controls.Add(this.bnFoupMoveContinue);
+            this.Controls.Add(this.bnFoupMovePause);
+            this.Controls.Add(this.bnFoupMoveStop);
+            this.Controls.Add(this.bnFoupMove);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.linkLabelFoupRefresh);
@@ -482,10 +486,10 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button bnMesFouptoLocation;
+        private System.Windows.Forms.Button bnFoupMoveContinue;
+        private System.Windows.Forms.Button bnFoupMovePause;
+        private System.Windows.Forms.Button bnFoupMoveStop;
+        private System.Windows.Forms.Button bnFoupMove;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TextBox tbLocDesp;
         private System.Windows.Forms.TextBox tbLocName;

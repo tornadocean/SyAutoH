@@ -62,7 +62,8 @@ namespace MCSControl
             m_dataHub.Session = m_nSession;
 
             InitMcsControlDictionary();
-            this.timer1.Start();
+            this.timerGuiUpdateData.Start();
+            this.timerGuiUpdateData.Enabled = true;
         }
 
         private void OnDataChange(object sender, object obData1, object obData2)
@@ -140,7 +141,7 @@ namespace MCSControl
             }
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void timerGuiUpdateData_Tick(object sender, EventArgs e)
         {
             List<MCS.GuiDataItem> listGuiData = new List<MCS.GuiDataItem>();
             lock (buf)

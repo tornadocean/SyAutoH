@@ -26,6 +26,14 @@ module MCS
 	};
 	module GuiHub
 	{
+			enum MesTransCtrl
+			{
+				transRun,
+				transPause,
+				transContinue,
+				transStop,
+			};
+			
 			enum GuiCommand
 			{ 
 				OhtPosTime, 
@@ -55,6 +63,8 @@ module MCS
 				
 				MesGetFoupTable,
 				MesGetPosTable,
+				MesFoupTransfer,
+				MesTransControl,
 				
 			};
 			

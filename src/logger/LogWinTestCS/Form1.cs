@@ -435,7 +435,6 @@ namespace LogWinTestCS
                 m_nPageStart = 0;
             }
             GetOfflineLog();
-
         }
 
         private void bnEnd_Click(object sender, EventArgs e)
@@ -503,5 +502,6 @@ namespace LogWinTestCS
             public int[] types = null;
             public int[] ids = null;
         };
+
     }
 }

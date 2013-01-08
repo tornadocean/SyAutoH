@@ -1,6 +1,7 @@
 #pragma once
 #include "iGuiHub.h"
 #include "../shared/ThreadLock.h"
+#include "boost/threadpool.hpp"
 using namespace MCS;
 
 class ClientInfo
@@ -68,6 +69,8 @@ private:
 	int m_nTimerID;
 	int m_nTimerPeriord;
 
+	boost::threadpool::pool m_tpWriteHandler;
+
 private:
 	void SetTimer();
 	void StopTimer();
@@ -102,6 +105,8 @@ private:
 
 	void MES_GetPositionTable(const std::string&, const ::Ice::Current&);
 	void MES_GetFoupTable(const std::string&, const ::Ice::Current&);
+	void MES_TransControl(const std::string&, const ::Ice::Current&);
+	void MES_FoupTransfer(const std::string&, const ::Ice::Current&);
 
 private:
 	GuiDataItem Push_OHT_DevInfo();

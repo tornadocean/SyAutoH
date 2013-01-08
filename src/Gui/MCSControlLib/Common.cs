@@ -79,6 +79,11 @@ namespace MCSControlLib
         static public int ToInt32(string value)
         {
             int intValue = 0;
+            if (value.Length <= 0)
+            {
+                return int.MinValue;
+            }
+
             try
             {
                 intValue = System.Convert.ToInt32(value);

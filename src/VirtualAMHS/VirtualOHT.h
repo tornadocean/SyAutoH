@@ -7,6 +7,11 @@ typedef struct
 	int nSpeed;
 } PathInfo;
 typedef std::list<PathInfo> PATH_SET_LIST;
+typedef struct
+{
+	int nOHT_ID;
+	int nPosition;
+}ChangeOHT;
 class VirtualOHT : public VirtualAMHSDevice
 {
 public:
@@ -39,6 +44,7 @@ public:
 	bool isStop;
 	bool isMove;
 	bool isSetPath;
+	int m_nHandChange;
 	int m_nHand;
 	int m_nStatus;
 	int m_nSpeed;
@@ -47,6 +53,7 @@ public:
 	int m_nStatusUpdateTimeSet;
 	int m_nTimerID;
 	int m_nTimeCounter;
+	ChangeOHT m_nOHT;
 	void CreateTimer(void);
 	void DestoryTimer(void);
 	static void CALLBACK TimerHandler(UINT id, UINT msg, DWORD dwUser, DWORD dw1, DWORD dw2);

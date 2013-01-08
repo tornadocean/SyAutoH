@@ -42,6 +42,15 @@ namespace MCS
     namespace GuiHub
     {
         [_System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.4.2")]
+        public enum MesTransCtrl
+        {
+            transRun,
+            transPause,
+            transContinue,
+            transStop
+        }
+
+        [_System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.4.2")]
         public enum GuiCommand
         {
             OhtPosTime,
@@ -65,7 +74,9 @@ namespace MCS
             StkGetRoomStatus,
             StkGetFoupInSys,
             MesGetFoupTable,
-            MesGetPosTable
+            MesGetPosTable,
+            MesFoupTransfer,
+            MesTransControl
         }
 
         [_System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.4.2")]

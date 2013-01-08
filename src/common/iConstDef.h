@@ -64,6 +64,17 @@ void __read(::IceInternal::BasicStream*, LoctionType&);
 namespace GuiHub
 {
 
+enum MesTransCtrl
+{
+    transRun,
+    transPause,
+    transContinue,
+    transStop
+};
+
+void __write(::IceInternal::BasicStream*, MesTransCtrl);
+void __read(::IceInternal::BasicStream*, MesTransCtrl&);
+
 enum GuiCommand
 {
     OhtPosTime,
@@ -87,7 +98,9 @@ enum GuiCommand
     StkGetRoomStatus,
     StkGetFoupInSys,
     MesGetFoupTable,
-    MesGetPosTable
+    MesGetPosTable,
+    MesFoupTransfer,
+    MesTransControl
 };
 
 void __write(::IceInternal::BasicStream*, GuiCommand);

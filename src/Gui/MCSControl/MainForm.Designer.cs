@@ -52,7 +52,7 @@
             this.userToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timerGuiUpdateData = new System.Windows.Forms.Timer(this.components);
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -215,8 +215,9 @@
             // 
             // timer1
             // 
-            this.timer1.Interval = 300;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timerGuiUpdateData.Interval = 300;
+            this.timerGuiUpdateData.Enabled = true;
+            this.timerGuiUpdateData.Tick += new System.EventHandler(this.timerGuiUpdateData_Tick);
             // 
             // MainForm
             // 
@@ -260,7 +261,7 @@
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TreeView treeViewPage;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timerGuiUpdateData;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_PushTime;
     }
 }
