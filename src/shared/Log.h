@@ -5,10 +5,6 @@
 
 #pragma comment(lib, "shared.lib")
 
-
-
-class Session;
-
 #define TIME_FORMAT "[%m-%d-%Y %H:%M:%S]"
 #define TIME_FORMAT_LENGTH 100
 #define LINE_COLOUR_RED 2;
@@ -89,23 +85,6 @@ class oLog : public Singleton< oLog >
 		}
 
 };
-
-class SessionLogWriter
-{
-		FILE* m_file;
-		char* m_filename;
-	public:
-		SessionLogWriter(const char* filename, bool open);
-		~SessionLogWriter();
-
-		void write(const char* format, ...);
-		void writefromsession(Session* session, const char* format, ...);
-		inline bool IsOpen() { return (m_file != NULL); }
-		void Open();
-		void Close();
-};
-
-
 
 #define sLog oLog::getSingleton()
 
