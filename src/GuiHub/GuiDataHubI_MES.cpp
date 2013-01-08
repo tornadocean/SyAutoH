@@ -57,6 +57,7 @@ void GuiDataHubI::MES_TransControl(const std::string&, const ::Ice::Current&)
 		printf("Transfer: FoupID: %d, Target: %d\r\n", it->nFoupID, it->nTarget);
 	}
 }
+
 void GuiDataHubI::MES_FoupTransfer(const std::string& strVal, const ::Ice::Current&)
 {
 	STR_VEC vecStr = GetVecStrings(strVal);

@@ -2,6 +2,7 @@
 #include "iGuiHub.h"
 #include "../shared/ThreadLock.h"
 #include "boost/threadpool.hpp"
+
 using namespace MCS;
 
 class ClientInfo
@@ -70,6 +71,7 @@ private:
 	int m_nTimerPeriord;
 
 	boost::threadpool::pool m_tpWriteHandler;
+	boost::threadpool::pool m_tpPushHandler;
 
 private:
 	void SetTimer();
@@ -77,6 +79,7 @@ private:
 	static void CALLBACK TimerHandler(UINT id, UINT msg, DWORD dwUser, DWORD dw1, DWORD dw2);
 	void OnTimer(void);
 	void PushDatatoCli(const ::MCS::GuiDataUpdaterPrx&, MCS::GuiHub::PushData, const std::string &);
+	void PushData(const GuiDataUpdaterPrx& cli, MakePushData);
 
 private:
 	void OHT_SetPositionBackTime(const std::string&, const ::Ice::Current&);

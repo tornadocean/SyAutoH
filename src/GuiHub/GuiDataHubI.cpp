@@ -10,9 +10,10 @@
 #pragma comment(lib, "winmm.lib")
 
 GuiDataHubI::GuiDataHubI(void)
-	: m_nTimerPeriord(300),
-	m_nTimerID(0),
-	m_tpWriteHandler(10)
+	: m_nTimerPeriord(300)
+	, m_nTimerID(0)
+	, m_tpWriteHandler(10)
+	, m_tpPushHandler(10)
 {
 	// for oht
 	m_mapHandles.insert(std::make_pair(GuiHub::OhtPosTime, 
@@ -98,6 +99,9 @@ GuiDataHubI::~GuiDataHubI(void)
 {
 	StopTimer();
 	m_tpWriteHandler.clear();
+	m_tpPushHandler.clear();
+	m_tpPushHandler.wait();
+	m_tpWriteHandler.wait();
 }
 
 std::string GuiDataHubI::ReadData(MCS::GuiHub::GuiCommand enumCmd, Ice::Int nSession, const Ice::Current &)
@@ -177,6 +181,13 @@ void CALLBACK GuiDataHubI::TimerHandler(UINT id, UINT msg, DWORD dwUser, DWORD d
 	pHub->OnTimer();
 }
 
+void GuiDataHubI::PushData(const GuiDataUpdaterPrx& cli, MakePushData pFun)
+{
+	GuiDataItem dPush;
+	dPush = (this->*pFun)();
+	PushDatatoCli(cli, dPush.enumTag, dPush.sVal);
+}
+
 void GuiDataHubI::OnTimer()
 {
 	RLock(m_rwUpdaterSet)
@@ -188,17 +199,12 @@ void GuiDataHubI::OnTimer()
 			for (GuiHub::GuiPushDataList::iterator it = list.begin();
 				it != list.end(); ++it)
 			{
-				GuiDataItem dPush;
 				MAP_MAKEPUSH::iterator itMakePush = m_mapMakePush.find(*it);
 				if (itMakePush != m_mapMakePush.end())
 				{
-					dPush = (this->*itMakePush->second)();
+					//PushData(guicli, itMakePush->second);
+					m_tpPushHandler.schedule(boost::bind(&GuiDataHubI::PushData, this, guicli, itMakePush->second));
 				}
-				else
-				{
-					continue;
-				}
-				PushDatatoCli(guicli, dPush.enumTag, dPush.sVal);
 			}
 		}
 	}
