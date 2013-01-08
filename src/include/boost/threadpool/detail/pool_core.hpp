@@ -185,7 +185,8 @@ namespace boost { namespace threadpool { namespace detail
       
       if(lockedThis->m_scheduler.push(task))
       {
-        lockedThis->m_task_or_terminate_workers_event.notify_one();
+        //lockedThis->m_task_or_terminate_workers_event.notify_one();
+		lockedThis->m_task_or_terminate_workers_event.notify_all();
         return true;
       }
       else
