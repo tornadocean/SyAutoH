@@ -69,7 +69,7 @@ namespace Mcs.RailSystem.Common
             set { endPoint = value; }
         }
 
-        public virtual void Draw(Graphics _canvas) { }
+        public virtual void Draw(Graphics canvas) { }
         public virtual void DrawTracker(Graphics canvas) { }
         public virtual int HitTest(Point point, bool isSelected) { return -1; }
         public virtual void Move(Point start, Point end) { }
