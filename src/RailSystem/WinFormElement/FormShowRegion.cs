@@ -430,14 +430,4 @@ namespace WinFormElement
         public CrossEle() { GraphType = 3; }
     }
 
-    public abstract class RailEle
-    {
-        public int graphType = 0;
-        public float speed = 0;
-        public Int16 segmentNumber = 0;
-        public Int16 tagNumber = 0;
-        public Point startPoint = Point.Empty;
-        public Point endPoint = Point.Empty;
-    }
-
 }
