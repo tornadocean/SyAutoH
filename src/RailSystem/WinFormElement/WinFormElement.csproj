@@ -54,6 +54,12 @@
     <Compile Include="Vehicle.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mcs.RailSystem.Common\Mcs.RailSystem.Common.csproj">
+      <Project>{9AD100F6-E9A6-43DE-B3DA-6B11F36EB35B}</Project>
+      <Name>Mcs.RailSystem.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
