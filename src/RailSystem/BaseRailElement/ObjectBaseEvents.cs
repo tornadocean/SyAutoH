@@ -116,24 +116,24 @@ namespace BaseRailElement
                         {
                             if (document.SelectedDrawObjectList[i].GraphType == 1)
                             {
-                                StraightRailEle de = (StraightRailEle)document.SelectedDrawObjectList[i];
+                                RailEleLine de = (RailEleLine)document.SelectedDrawObjectList[i];
                                 document.SelectedDrawObjectList[i].Move(lastPoint, point);
                             }
                             else if (document.SelectedDrawObjectList[i].GraphType == 2)
                             {
-                                CurvedRailEle de = (CurvedRailEle)document.SelectedDrawObjectList[i];
+                                RailEleCurve de = (RailEleCurve)document.SelectedDrawObjectList[i];
                                 document.SelectedDrawObjectList[i].Move(lastPoint, point);
                             }
                             else if (document.SelectedDrawObjectList[i].GraphType == 3)
                             {
-                                CrossEle de = (CrossEle)document.SelectedDrawObjectList[i];
+                                RailEleCross de = (RailEleCross)document.SelectedDrawObjectList[i];
                                 document.SelectedDrawObjectList[i].Move(lastPoint, point);
                             }
-                            else if (document.SelectedDrawObjectList[i].GraphType == 4)
-                            {
-                                RailLabal de = (RailLabal)document.SelectedDrawObjectList[i];
-                                document.SelectedDrawObjectList[i].Move(lastPoint, point);
-                            }
+                            //else if (document.SelectedDrawObjectList[i].GraphType == 4)
+                            //{
+                            //    RailLabal de = (RailLabal)document.SelectedDrawObjectList[i];
+                            //    document.SelectedDrawObjectList[i].Move(lastPoint, point);
+                            //}
                         }
                         lastPoint.Offset(dx / tempDrawMultiFactor * tempDrawMultiFactor, dy / tempDrawMultiFactor * tempDrawMultiFactor);
                     }

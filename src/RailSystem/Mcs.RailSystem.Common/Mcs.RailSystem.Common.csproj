@@ -44,15 +44,14 @@
   <ItemGroup>
     <Compile Include="BaseRailEle.cs" />
     <Compile Include="ColorConverter.cs" />
+    <Compile Include="EleCross.cs" />
+    <Compile Include="EleCurve.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EleLine.cs" />
     <Compile Include="PenStyle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StraightRailEle.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BaseRailElement\BaseRailElement.csproj">
-      <Project>{7ECD290B-E92B-429F-AF15-8C60C62F20E5}</Project>
-      <Name>BaseRailElement</Name>
-    </ProjectReference>
+    <Compile Include="ReadSaveFile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
