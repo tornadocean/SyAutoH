@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace BaseRailElement
 {
-    public class RailLabal : BaseRailEle
+    public class RailLabal : Mcs.RailSystem.Common.BaseRailEle
     {
         private ObjectLabelOp objectLabelOp = new ObjectLabelOp();
         private Font font = null;
@@ -86,7 +86,7 @@ namespace BaseRailElement
             return objectLabelOp.HitTest(point, isSelected, rc);
         }
 
-        protected override void Translate(int offsetX, int offsetY)
+        protected void Translate(int offsetX, int offsetY)
         {
             Point pt = rect.Location;
             pt.Offset(offsetX, offsetY);
@@ -95,7 +95,7 @@ namespace BaseRailElement
             Debug.WriteLine(string.Format("label pt is {0}", pt));
         }
 
-        protected override void Scale(int handle, int dx, int dy)
+        protected void Scale(int handle, int dx, int dy)
         {
             rect = objectLabelOp.Scale(handle, rect, dx, dy);
             rectOrigionLoca.X = rect.X / DrawMultiFactor;
