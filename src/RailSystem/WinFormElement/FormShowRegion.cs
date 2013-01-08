@@ -14,7 +14,7 @@ namespace WinFormElement
 {
     public class FormShowRegion
     {
-        public List<RailEle> railInfoEleList = new List<RailEle>();
+        public List<Mcs.RailSystem.Common.BaseRailEle> railInfoEleList = new List<Mcs.RailSystem.Common.BaseRailEle>();
 
         public float xScale = 1;
         public float yScale = 1;
@@ -37,190 +37,35 @@ namespace WinFormElement
                 Debug.WriteLine(string.Format("read xml error is {0}", exp));
             }
             DataTable dt = ds.Tables[0];
-            for (int i = 0; i < dt.Rows.Count;i++ )
+            Mcs.RailSystem.Common.ReadSaveFile rFile = new Mcs.RailSystem.Common.ReadSaveFile();
+            rFile.InitDataTable(dt);
+            try 
             {
-                DataColumn dc = dt.Columns[0];
-                if (dc.ColumnName == "GraphType")
+                for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    switch (dt.Rows[i][0].ToString())
+                    switch (Convert.ToInt16(dt.Rows[i][0]))
                     {
-                        case "1":
-                            StraightEle strTemp = new StraightEle();
-                            Int16 pointListVolStr = 0;
-                            for (int j = 0; j < dt.Columns.Count; j++)
-                            {
-                                switch (dt.Columns[j].ColumnName)
-                                {
-                                    case "GraphType":
-                                        strTemp.graphType = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                    case "Speed":
-                                        strTemp.speed = Convert.ToSingle(dt.Rows[i][j]);
-                                        break;
-                                    case "SegmentNumber":
-                                        strTemp.segmentNumber = Convert.ToInt16(dt.Rows[i][j]);
-                                        break;
-                                    case "TagNumber":
-                                        strTemp.tagNumber = Convert.ToInt16(dt.Rows[i][j]);
-                                        break;
-                                    case "Lenght":
-                                        strTemp.lenght = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                    case "StartAngle":
-                                        strTemp.startAngle = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                    case "StartDot":
-                                        strTemp.startDot = Convert.ToString(dt.Rows[i][j]);
-                                        break;
-                                    case "PointListVol":
-                                        pointListVolStr = Convert.ToInt16(dt.Rows[i][j]);
-                                        for (int k = 0; k < pointListVolStr; k++)
-                                        {
-                                            string str = dt.Rows[i][j + k + 1].ToString();
-                                            str = str.Substring(1, str.Length - 2);
-                                            string[] strPointArray = str.Split(',');
-                                            Point ptTemp = new Point() { X = int.Parse(strPointArray[0].Substring(2)), Y = int.Parse(strPointArray[1].Substring(2)) };
-                                            strTemp.pointList.Add(ptTemp);
-                                        }
-                                        break;
-                                    case "CodingBegin":
-                                        strTemp.codingBegin = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                    case "CodingEnd":
-                                        strTemp.codingEnd = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                }
-                            }
-                            railInfoEleList.Add(strTemp);
+                        case 1:
+                            StraightEle line = new StraightEle();
+                            rFile.ReadDataFromRow(i, line);
+                            railInfoEleList.Add(line);
                             break;
-                        case "2":
-                            CurvedEle curTemp = new CurvedEle();
-                            string strcur = "";
-                            string[] strPointArrayCur = { };
-                            Point ptcur = Point.Empty;
-                            for (int j = 0; j < dt.Columns.Count; j++)
-                            {
-                                switch (dt.Columns[j].ColumnName)
-                                {
-                                    case "GraphType":
-                                        curTemp.graphType = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                    case "Speed":
-                                        curTemp.speed = Convert.ToSingle(dt.Rows[i][j]);
-                                        break;
-                                    case "SegmentNumber":
-                                        curTemp.segmentNumber = Convert.ToInt16(dt.Rows[i][j]);
-                                        break;
-                                    case "TagNumber":
-                                        curTemp.tagNumber = Convert.ToInt16(dt.Rows[i][j]);
-                                        break;
-                                    case "StartAngle":
-                                        curTemp.startAngle = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                    case "SweepAngle":
-                                        curTemp.sweepAngle = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                    case "Radiu":
-                                        curTemp.radiu = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                    case "Center":
-                                        strcur = dt.Rows[i][j].ToString();
-                                        strcur = strcur.Substring(1, strcur.Length - 2);
-                                        strPointArrayCur = strcur.Split(',');
-                                        ptcur = new Point() { X = int.Parse(strPointArrayCur[0].Substring(2)), Y = int.Parse(strPointArrayCur[1].Substring(2)) };
-                                        curTemp.center = ptcur;
-                                        break;
-                                    case "FirstDot":
-                                        strcur = dt.Rows[i][j].ToString();
-                                        strcur = strcur.Substring(1, strcur.Length - 2);
-                                        strPointArrayCur = strcur.Split(',');
-                                        ptcur = new Point() { X = int.Parse(strPointArrayCur[0].Substring(2)), Y = int.Parse(strPointArrayCur[1].Substring(2)) };
-                                        curTemp.firstDot = ptcur;
-                                        break;
-                                    case "SecDot":
-                                        strcur = dt.Rows[i][j].ToString();
-                                        strcur = strcur.Substring(1, strcur.Length - 2);
-                                        strPointArrayCur = strcur.Split(',');
-                                        ptcur = new Point() { X = int.Parse(strPointArrayCur[0].Substring(2)), Y = int.Parse(strPointArrayCur[1].Substring(2)) };
-                                        curTemp.secDot = ptcur;
-                                        break;
-                                    case "CodingBegin":
-                                        curTemp.codingBegin = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                    case "CodingEnd":
-                                        curTemp.codingEnd = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                }
-                            }
-                            railInfoEleList.Add(curTemp);
+                        case 2:
+                            CurvedEle curve = new CurvedEle();
+                            rFile.ReadDataFromRow(i, curve);
+                            railInfoEleList.Add(curve);
                             break;
-                        case "3":
-                            CrossEle croTemp = new CrossEle();
-                            string strcro = "";
-                            string[] strPointArrayCro = { };
-                            Point ptcro = Point.Empty;
-                            Int16 pointListVolCro = 0;
-                            for (int j = 0; j < dt.Columns.Count; j++)
-                            {
-                                switch (dt.Columns[j].ColumnName)
-                                {
-                                    case "GraphType":
-                                        croTemp.graphType = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                    case "Speed":
-                                        croTemp.speed = Convert.ToSingle(dt.Rows[i][j]);
-                                        break;
-                                    case "SegmentNumber":
-                                        croTemp.segmentNumber = Convert.ToInt16(dt.Rows[i][j]);
-                                        break;
-                                    case "TagNumber":
-                                        croTemp.tagNumber = Convert.ToInt16(dt.Rows[i][j]);
-                                        break;
-                                    case "FirstPart":
-                                        croTemp.firstPart = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                    case "SecPart":
-                                        croTemp.secPart = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                    case "ThPart":
-                                        croTemp.thPart = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                    case "FourPart":
-                                        strcro = dt.Rows[i][j].ToString();
-                                        strcro = strcro.Substring(1, strcro.Length - 2);
-                                        strPointArrayCro = strcro.Split(',');
-                                        ptcro = new Point() { X = int.Parse(strPointArrayCro[0].Substring(2)), Y = int.Parse(strPointArrayCro[1].Substring(2)) };
-                                        croTemp.fourPart = ptcro;
-                                        break;
-                                    case "StartAngle":
-                                        croTemp.startAngle = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                    case "RotateAngle":
-                                        croTemp.rotateAngle = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                    case "PointListVol":
-                                        pointListVolCro = Convert.ToInt16(dt.Rows[i][j]);
-                                        for (Int16 k = 0; k < pointListVolCro; k++)
-                                        {
-                                            strcro = dt.Rows[i][j + k + 1].ToString();
-                                            strcro = strcro.Substring(1, strcro.Length - 2);
-                                            strPointArrayCro = strcro.Split(',');
-                                            ptcro = new Point() { X = int.Parse(strPointArrayCro[0].Substring(2)), Y = int.Parse(strPointArrayCro[1].Substring(2)) };
-                                            croTemp.pointList.Add(ptcro);
-                                        }
-                                        break;
-                                    case "CodingBegin":
-                                        croTemp.codingBegin = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                    case "CodingEnd":
-                                        croTemp.codingEnd = Convert.ToInt32(dt.Rows[i][j]);
-                                        break;
-                                }
-                            }
-                            railInfoEleList.Add(croTemp);
+                        case 3:
+                            CrossEle cross = new CrossEle();
+                            rFile.ReadDataFromRow(i,cross);
+                            railInfoEleList.Add(cross);
                             break;
                     }
                 }
+            }
+            catch 
+            {
+                MessageBox.Show("this is a error when open xml save file");
             }
             return true;
         }
@@ -233,32 +78,32 @@ namespace WinFormElement
         public void DrawRailInfo(Graphics canvas)
         {
             Pen pen = new Pen(Color.Black, 1);
-            foreach (RailEle obj in railInfoEleList)
+            foreach (Mcs.RailSystem.Common.BaseRailEle obj in railInfoEleList)
             {
-                switch (obj.graphType)
+                switch (obj.GraphType)
                 {
                     case 1:
                         StraightEle strTemp = (StraightEle)obj;
-                        canvas.DrawLine(pen, strTemp.pointList[0], strTemp.pointList[1]);
+                        canvas.DrawLine(pen, strTemp.PointList[0], strTemp.PointList[1]);
                         break;
                     case 2:
                         CurvedEle curTemp = (CurvedEle)obj;
                         Rectangle rc = new Rectangle();
-                        rc.Location = new Point(curTemp.center.X - curTemp.radiu, curTemp.center.Y - curTemp.radiu);
-                        rc.Size = new Size(curTemp.radiu * 2, curTemp.radiu * 2);
+                        rc.Location = new Point(curTemp.Center.X - curTemp.Radiu, curTemp.Center.Y - curTemp.Radiu);
+                        rc.Size = new Size(curTemp.Radiu * 2, curTemp.Radiu * 2);
                         GraphicsPath gp = new GraphicsPath();
-                        gp.AddArc(rc, curTemp.startAngle, curTemp.sweepAngle);
+                        gp.AddArc(rc, curTemp.StartAngle, curTemp.SweepAngle);
                         canvas.DrawPath(pen, gp);
                         gp.Dispose();
                         break;
                     case 3:
                         CrossEle croTemp = (CrossEle)obj;
-                        int n = croTemp.pointList.Count;
+                        int n = croTemp.PointList.Count;
                         Point[] pts = new Point[2];
                         for (int i = 0; i < n; i++, i++)
                         {
-                            pts[0] = croTemp.pointList[i];
-                            pts[1] = croTemp.pointList[i + 1];
+                            pts[0] = croTemp.PointList[i];
+                            pts[1] = croTemp.PointList[i + 1];
                             canvas.DrawLines(pen, pts);
                         }
                         break;
@@ -292,7 +137,7 @@ namespace WinFormElement
             }
         }
 
-        private Point ComputeCoordinates(List<RailEle> tempList, uint locationValue)
+        private Point ComputeCoordinates(List<Mcs.RailSystem.Common.BaseRailEle> tempList, uint locationValue)
         {
             Point returnPt = Point.Empty;
             if (null == tempList)
@@ -306,27 +151,27 @@ namespace WinFormElement
             Int32 listCount = tempList.Count;
             for (int i = 0; i < listCount; i++)
             {
-                switch (tempList[i].graphType)
+                switch (tempList[i].GraphType)
                 {
                     case 1:
                         strTemp = (StraightEle)tempList[i];
-                        if (locationValue > strTemp.codingBegin && locationValue <= strTemp.codingEnd)
+                        if (locationValue > strTemp.CodingBegin && locationValue <= strTemp.CodingEnd)
                         {
-                            offsetTemp = ((int)locationValue - strTemp.codingBegin) * strTemp.lenght / (strTemp.codingEnd - strTemp.codingBegin);
-                            returnPt = strTemp.startPoint;
-                            if (Math.Abs(strTemp.pointList[0].Y - strTemp.pointList[1].Y) < 3)
+                            offsetTemp = ((int)locationValue - strTemp.CodingBegin) * strTemp.Lenght / (strTemp.CodingEnd - strTemp.CodingBegin);
+                            returnPt = strTemp.StartPoint;
+                            if (Math.Abs(strTemp.PointList[0].Y - strTemp.PointList[1].Y) < 3)
                             {
-                                if (strTemp.startPoint.X < strTemp.endPoint.X)
-                                    returnPt.X = strTemp.startPoint.X + offsetTemp;
-                                else if (strTemp.startPoint.X > strTemp.endPoint.X)
-                                    returnPt.X = strTemp.startPoint.X - offsetTemp;
+                                if (strTemp.StartPoint.X < strTemp.EndPoint.X)
+                                    returnPt.X = strTemp.StartPoint.X + offsetTemp;
+                                else if (strTemp.StartPoint.X > strTemp.EndPoint.X)
+                                    returnPt.X = strTemp.StartPoint.X - offsetTemp;
                             }
                             else
                             {
-                                if (strTemp.startPoint.Y < strTemp.endPoint.Y)
-                                    returnPt.Y = strTemp.startPoint.Y + offsetTemp;
-                                else if (strTemp.startPoint.Y > strTemp.endPoint.Y)
-                                    returnPt.Y = strTemp.startPoint.Y - offsetTemp;
+                                if (strTemp.StartPoint.Y < strTemp.EndPoint.Y)
+                                    returnPt.Y = strTemp.StartPoint.Y + offsetTemp;
+                                else if (strTemp.StartPoint.Y > strTemp.EndPoint.Y)
+                                    returnPt.Y = strTemp.StartPoint.Y - offsetTemp;
                             }
                             i = listCount;
                         }
@@ -343,18 +188,18 @@ namespace WinFormElement
             return returnPt;  
         }
 
-        private void SetEleStartDot(List<RailEle> paraList)
+        private void SetEleStartDot(List<Mcs.RailSystem.Common.BaseRailEle> paraList)
         {
-            List<RailEle> tempList = new List<RailEle>();
+            List<Mcs.RailSystem.Common.BaseRailEle> tempList = new List<Mcs.RailSystem.Common.BaseRailEle>();
             StraightEle strTemp = new StraightEle();
             Int16 num = Convert.ToInt16(paraList.Count);
             for (Int16 i = 0; i < num; i++)
             {
-                if (paraList[i].graphType == 1)
+                if (paraList[i].GraphType == 1)
                 {
                     strTemp = (StraightEle)paraList[i];
-                    paraList[i].startPoint = strTemp.pointList[0];
-                    paraList[i].endPoint = strTemp.pointList[1];
+                    paraList[i].StartPoint = strTemp.PointList[0];
+                    paraList[i].EndPoint = strTemp.PointList[1];
                     tempList.Add(paraList[i]);
                 }
             }
@@ -368,19 +213,19 @@ namespace WinFormElement
             Point ptTempMinY = Point.Empty;
             Point pt = Point.Empty;
             szShowPic = showPicSz;
-            switch (railInfoEleList[0].graphType)
+            switch (railInfoEleList[0].GraphType)
             {
                 case 1:
                     StraightEle strEle = (StraightEle)railInfoEleList[0];
-                    pt = strEle.pointList[0];
+                    pt = strEle.PointList[0];
                     break;
                 case 2:
                     CurvedEle curEle = (CurvedEle)railInfoEleList[0];
-                    pt = curEle.firstDot;
+                    pt = curEle.FirstDot;
                     break;
                 case 3:
                     CrossEle croEle = (CrossEle)railInfoEleList[0];
-                    pt = croEle.pointList[0];
+                    pt = croEle.PointList[0];
                     break;
             }
 
@@ -388,108 +233,108 @@ namespace WinFormElement
             Point ptMinX = pt;
             Point ptMaxY = pt;
             Point ptMinY = pt;
-            foreach (RailEle obj in railInfoEleList)
+            foreach (Mcs.RailSystem.Common.BaseRailEle obj in railInfoEleList)
             {
-                switch (obj.graphType)
+                switch (obj.GraphType)
                 {
                     case 1:
                         StraightEle strEle = (StraightEle)obj;
-                        if (strEle.pointList[0].Y == strEle.pointList[1].Y)
+                        if (strEle.PointList[0].Y == strEle.PointList[1].Y)
                         {
-                            if (strEle.pointList[0].X < strEle.pointList[1].X)
+                            if (strEle.PointList[0].X < strEle.PointList[1].X)
                             {
-                                ptTempMinX = strEle.pointList[0];
-                                ptTempMaxX = strEle.pointList[1];
+                                ptTempMinX = strEle.PointList[0];
+                                ptTempMaxX = strEle.PointList[1];
                             }
                             else
                             {
-                                ptTempMinX = strEle.pointList[1];
-                                ptTempMaxX = strEle.pointList[0];
+                                ptTempMinX = strEle.PointList[1];
+                                ptTempMaxX = strEle.PointList[0];
                             }
                         }
-                        else if (strEle.pointList[0].X == strEle.pointList[1].X)
+                        else if (strEle.PointList[0].X == strEle.PointList[1].X)
                         {
-                            if (strEle.pointList[0].Y < strEle.pointList[1].Y)
+                            if (strEle.PointList[0].Y < strEle.PointList[1].Y)
                             {
-                                ptTempMinY = strEle.pointList[0];
-                                ptTempMaxY = strEle.pointList[1];
+                                ptTempMinY = strEle.PointList[0];
+                                ptTempMaxY = strEle.PointList[1];
                             }
                             else
                             {
-                                ptTempMinY = strEle.pointList[1];
-                                ptTempMaxY = strEle.pointList[0];
+                                ptTempMinY = strEle.PointList[1];
+                                ptTempMaxY = strEle.PointList[0];
                             }
                         }
                         break;
                     case 2:
                         CurvedEle curEle = (CurvedEle)obj;
-                        if (curEle.firstDot.X < curEle.secDot.X)
+                        if (curEle.FirstDot.X < curEle.SecDot.X)
                         {
-                            ptTempMinX = curEle.firstDot;
-                            ptTempMaxX = curEle.secDot;
+                            ptTempMinX = curEle.FirstDot;
+                            ptTempMaxX = curEle.SecDot;
                         }
-                        else if (curEle.firstDot.X > curEle.secDot.X)
+                        else if (curEle.FirstDot.X > curEle.SecDot.X)
                         {
-                            ptTempMinX = curEle.secDot;
-                            ptTempMaxX = curEle.firstDot;
+                            ptTempMinX = curEle.SecDot;
+                            ptTempMaxX = curEle.FirstDot;
                         }
-                        if(curEle.firstDot.Y<curEle.secDot.Y)
+                        if (curEle.FirstDot.Y < curEle.SecDot.Y)
                         {
-                            ptTempMinY = curEle.firstDot;
-                            ptTempMaxY = curEle.secDot;
+                            ptTempMinY = curEle.FirstDot;
+                            ptTempMaxY = curEle.SecDot;
                         }
-                        else if (curEle.firstDot.Y > curEle.secDot.Y)
+                        else if (curEle.FirstDot.Y > curEle.SecDot.Y)
                         {
-                            ptTempMinY = curEle.secDot;
-                            ptTempMaxY = curEle.firstDot;
+                            ptTempMinY = curEle.SecDot;
+                            ptTempMaxY = curEle.FirstDot;
                         }
                         break;
                     case 3:
                         CrossEle croEle = (CrossEle)obj;
-                        if (croEle.pointList[0].Y == croEle.pointList[5].Y)
+                        if (croEle.PointList[0].Y == croEle.PointList[5].Y)
                         {
-                            if (croEle.pointList[0].X < croEle.pointList[5].X)
+                            if (croEle.PointList[0].X < croEle.PointList[5].X)
                             {
-                                ptTempMinX = croEle.pointList[0];
-                                ptTempMaxX = croEle.pointList[5];
+                                ptTempMinX = croEle.PointList[0];
+                                ptTempMaxX = croEle.PointList[5];
                             }
-                            else if (croEle.pointList[0].X > croEle.pointList[5].X)
+                            else if (croEle.PointList[0].X > croEle.PointList[5].X)
                             {
-                                ptTempMinX = croEle.pointList[5];
-                                ptTempMaxX = croEle.pointList[0];
+                                ptTempMinX = croEle.PointList[5];
+                                ptTempMaxX = croEle.PointList[0];
                             }
-                            if (croEle.pointList[3].Y < croEle.pointList[7].Y)
+                            if (croEle.PointList[3].Y < croEle.PointList[7].Y)
                             {
-                                ptTempMinY = croEle.pointList[3];
-                                ptTempMaxY = croEle.pointList[7];
+                                ptTempMinY = croEle.PointList[3];
+                                ptTempMaxY = croEle.PointList[7];
                             }
-                            else if (croEle.pointList[3].Y > croEle.pointList[7].Y)
+                            else if (croEle.PointList[3].Y > croEle.PointList[7].Y)
                             {
-                                ptTempMinY = croEle.pointList[7];
-                                ptTempMaxY = croEle.pointList[3];
+                                ptTempMinY = croEle.PointList[7];
+                                ptTempMaxY = croEle.PointList[3];
                             }
                         }
-                        else if (croEle.pointList[0].X == croEle.pointList[5].X)
+                        else if (croEle.PointList[0].X == croEle.PointList[5].X)
                         {
-                            if (croEle.pointList[0].Y < croEle.pointList[5].Y)
+                            if (croEle.PointList[0].Y < croEle.PointList[5].Y)
                             {
-                                ptTempMinY = croEle.pointList[0];
-                                ptTempMaxY = croEle.pointList[5];
+                                ptTempMinY = croEle.PointList[0];
+                                ptTempMaxY = croEle.PointList[5];
                             }
-                            else if (croEle.pointList[0].Y > croEle.pointList[5].Y)
+                            else if (croEle.PointList[0].Y > croEle.PointList[5].Y)
                             {
-                                ptTempMinY = croEle.pointList[5];
-                                ptTempMaxY = croEle.pointList[0];
+                                ptTempMinY = croEle.PointList[5];
+                                ptTempMaxY = croEle.PointList[0];
                             }
-                            if (croEle.pointList[3].X < croEle.pointList[7].X)
+                            if (croEle.PointList[3].X < croEle.PointList[7].X)
                             {
-                                ptTempMinX = croEle.pointList[3];
-                                ptTempMaxX = croEle.pointList[7];
+                                ptTempMinX = croEle.PointList[3];
+                                ptTempMaxX = croEle.PointList[7];
                             }
-                            else if (croEle.pointList[3].X > croEle.pointList[7].X)
+                            else if (croEle.PointList[3].X > croEle.PointList[7].X)
                             {
-                                ptTempMinX = croEle.pointList[7];
-                                ptTempMaxX = croEle.pointList[3];
+                                ptTempMinX = croEle.PointList[7];
+                                ptTempMaxX = croEle.PointList[3];
                             }
                         }
                         break;
@@ -570,6 +415,21 @@ namespace WinFormElement
     }
 
 
+    public class StraightEle : Mcs.RailSystem.Common.EleLine
+    {
+        public StraightEle() { GraphType = 1; }
+    }
+
+    public class CurvedEle : Mcs.RailSystem.Common.EleCurve
+    {
+        public CurvedEle() { GraphType = 2; }
+    }
+
+    public class CrossEle : Mcs.RailSystem.Common.EleCross 
+    {
+        public CrossEle() { GraphType = 3; }
+    }
+
     public abstract class RailEle
     {
         public int graphType = 0;
@@ -580,38 +440,4 @@ namespace WinFormElement
         public Point endPoint = Point.Empty;
     }
 
-    public class StraightEle : RailEle
-    {
-        public int lenght = 0;
-        public int startAngle = 0;
-        public string startDot = "";
-        public List<Point> pointList = new List<Point>();
-        public Int32 codingBegin = -1;
-        public Int32 codingEnd = -1;
-    }
-
-    public class CurvedEle : RailEle
-    {
-        public int startAngle = 0;
-        public int sweepAngle = 0;
-        public int radiu = 0;
-        public Point center = Point.Empty;
-        public Point firstDot = Point.Empty;
-        public Point secDot = Point.Empty;
-        public Int32 codingBegin = -1;
-        public Int32 codingEnd = -1;
-    }
-
-    public class CrossEle : RailEle
-    {
-        public int firstPart = 0;
-        public int secPart = 0;
-        public int thPart = 0;
-        public Point fourPart = Point.Empty;
-        public int startAngle = 0;
-        public int rotateAngle = 0;
-        public List<Point> pointList = new List<Point>();
-        public Int32 codingBegin = -1;
-        public Int32 codingEnd = -1;
-    }
 }
