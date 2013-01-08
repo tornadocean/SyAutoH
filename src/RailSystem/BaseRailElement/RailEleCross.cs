@@ -11,14 +11,6 @@ namespace BaseRailElement
 {
     public class RailEleCross : Mcs.RailSystem.Common.EleCross
     {
-        private ObjectCrossOp objCrossOp = new ObjectCrossOp();
-
-        [Browsable(false)]
-        public List<Point> PointList
-        {
-            get { return objCrossOp.PointList; }
-        }
-
         public RailEleCross()
         {
             GraphType = 3;
@@ -32,7 +24,6 @@ namespace BaseRailElement
         {
             Point[] pts = new Point[8];
             DrawMultiFactor = multiFactor;
-            objCrossOp.DrawMultiFactor = DrawMultiFactor;
             pt.Offset(pt.X / DrawMultiFactor - pt.X, pt.Y / DrawMultiFactor - pt.Y);
             pts[0] = pt;
             pts[1].X = pts[0].X + FirstPart;
@@ -79,12 +70,107 @@ namespace BaseRailElement
 
         public override void DrawTracker(Graphics canvas)
         {
-            objCrossOp.DrawTracker(canvas, DirectionOfCross);
+            if (canvas == null)
+                throw new Exception("Graphics对象Canvas不能为空");
+            Pen pen = new Pen(Color.Blue, 1);
+            Point[] pts = new Point[4];
+            pts[0] = PointList[0];
+            pts[1] = PointList[3];
+            pts[2] = PointList[5];
+            pts[3] = PointList[7];
+            if (DrawMultiFactor != 1)
+            {
+                for (int i = 0; i < pts.Length; i++)
+                {
+                    pts[i].Offset(pts[i].X * DrawMultiFactor - pts[i].X, pts[i].Y * DrawMultiFactor - pts[i].Y);
+                }
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                Rectangle rc = new Rectangle(pts[i].X - 4, pts[i].Y - 4, 8, 8);
+                canvas.DrawRectangle(pen, rc);
+            }
+            pen.Dispose();
         }
 
         public override int HitTest(Point point, bool isSelected)
         {
-            return objCrossOp.HitTest(point, isSelected, DirectionOfCross, Mirror);
+            if (isSelected)
+            {
+                int handleHit = HandleHitTest(point, DirectionOfCross, Mirror);
+                if (handleHit > 0)
+                    return handleHit;
+            }
+            Point wrapper = new Point();
+            wrapper = point;
+            Rectangle rc = new Rectangle();
+            Point[] pts = new Point[4];
+            if (!Mirror)
+            {
+                pts[0] = PointList[0];
+                pts[2] = PointList[5];
+            }
+            else if (Mirror)
+            {
+                pts[0] = PointList[5];
+                pts[2] = PointList[0];
+            }
+            pts[1] = PointList[3];
+            pts[3] = PointList[7];
+            if (DrawMultiFactor != 1)
+            {
+                Point tempPt = Point.Empty;
+                int n = pts.Length;
+                for (int i = 0; i < n; i++)
+                {
+                    tempPt = pts[i];
+                    tempPt.Offset(tempPt.X * DrawMultiFactor - tempPt.X, tempPt.Y * DrawMultiFactor - tempPt.Y);
+                    pts[i] = tempPt;
+                }
+            }
+            switch (DirectionOfCross)
+            {
+                case Mcs.RailSystem.Common.EleCross.DirectionCross.first:
+                    rc = new Rectangle(pts[0].X, pts[3].Y, pts[2].X - pts[0].X, pts[1].Y - pts[3].Y);
+                    break;
+                case Mcs.RailSystem.Common.EleCross.DirectionCross.second:
+                    rc = new Rectangle(pts[1].X, pts[0].Y, pts[3].X - pts[1].X, pts[2].Y - pts[0].Y);
+                    break;
+                case Mcs.RailSystem.Common.EleCross.DirectionCross.third:
+                    rc = new Rectangle(pts[2].X, pts[1].Y, pts[0].X - pts[2].X, pts[3].Y - pts[1].Y);
+                    break;
+                case Mcs.RailSystem.Common.EleCross.DirectionCross.four:
+                    rc = new Rectangle(pts[3].X, pts[2].Y, pts[1].X - pts[3].X, pts[0].Y - pts[2].Y);
+                    break;
+                default:
+                    break;
+            }
+            GraphicsPath path = new GraphicsPath();
+            path.AddRectangle(rc);
+            Region region = new Region(path);
+            if (region.IsVisible(wrapper))
+                return 0;
+            else
+                return -1;
+        }
+
+        private int HandleHitTest(Point point, Mcs.RailSystem.Common.EleCross.DirectionCross direction, bool isMirror)
+        {
+            Point[] pts = new Point[4];
+            pts[0] = PointList[0];
+            pts[1] = PointList[3];
+            pts[2] = PointList[5];
+            pts[3] = PointList[7];
+            Point tempPt = Point.Empty;
+            for (int i = 0; i < 4; i++)
+            {
+                Point pt = pts[i];
+                pt.Offset(pt.X * DrawMultiFactor - pt.X, pt.Y * DrawMultiFactor - pt.Y);
+                Rectangle rc = new Rectangle(pt.X - 3, pt.Y - 3, 6, 6);
+                if (rc.Contains(point))
+                    return i + 1;
+            }
+            return -1;
         }
 
         public override void Move(Point start, Point end)
@@ -96,7 +182,7 @@ namespace BaseRailElement
             Translate(x, y);
         }
 
-        protected void Translate(int offsetX, int offsetY)
+        private void Translate(int offsetX, int offsetY)
         {
             Point[] pts = new Point[8];
             PointList.CopyTo(pts);
@@ -119,11 +205,172 @@ namespace BaseRailElement
 
         protected void Scale(int handle, int dx, int dy)
         {
-            objCrossOp.scale(handle, dx, dy, Mirror);
-            FirstPart = objCrossOp.FirstPart;
-            SecPart =objCrossOp.SecPart;
-            ThPart =objCrossOp.ThPart;
-            FourPart =objCrossOp.FourPart;
+            Point[] ptsList = new Point[8];
+            Point[] ptsHandle = new Point[4];
+            PointList.CopyTo(ptsList);
+            ptsHandle[0] = PointList[0];
+            ptsHandle[1] = PointList[3];
+            ptsHandle[2] = PointList[5];
+            ptsHandle[3] = PointList[7];
+            if (ptsHandle[0].Y == ptsHandle[2].Y)
+            {
+                switch (handle)
+                {
+                    case 1:
+                        if (Math.Abs(ptsList[0].X - ptsList[1].X) > (1 + Math.Abs(dx)))
+                        {
+                            ptsList[0].Offset(dx, 0);
+                            if (Math.Abs(ptsList[0].X - ptsList[1].X) > (1 + Math.Abs(dx)))
+                            {
+                                PointList[0] = ptsList[0];
+                                if (ptsList[0].X < ptsList[1].X)
+                                    FirstPart -= dx;
+                                else
+                                    FirstPart += dx;
+                            }
+                        }
+                        break;
+                    case 2:
+                        if (Math.Abs(ptsList[2].X - ptsList[3].X) > (1 + Math.Abs(dx)))
+                        {
+                            ptsList[3].Offset(dx, 0);
+                            ptsList[4].X += dx;
+                            ptsList[5].X += dx;
+                            if (Math.Abs(ptsList[2].X - ptsList[3].X) > (1 + Math.Abs(dx)))
+                            {
+                                PointList.Clear();
+                                PointList.AddRange(ptsList);
+                                if (ptsList[0].X < ptsList[1].X)
+                                    SecPart += dx;
+                                else
+                                    SecPart -= dx;
+                            }
+                        }
+                        break;
+                    case 3:
+                        if (Math.Abs(ptsList[4].X - ptsList[5].X) > (1 + Math.Abs(dx)))
+                        {
+                            ptsList[5].Offset(dx, 0);
+                            if (Math.Abs(ptsList[4].X - ptsList[5].X) > (1 + Math.Abs(dx)))
+                            {
+                                PointList[5] = ptsList[5];
+                                if (ptsList[0].X < ptsList[1].X)
+                                    ThPart += dx;
+                                else
+                                    ThPart -= dx;
+                            }
+                        }
+                        break;
+                    case 4:
+                        if (!Mirror && Math.Abs(ptsList[7].X - ptsList[6].X) > (1 + Math.Abs(dx)) && (dx * dy) < 0)
+                        {
+                            ptsList[7].Offset(dx, -dx);
+                            if (Math.Abs(ptsList[7].X - ptsList[6].X) > (1 + Math.Abs(dx)))
+                            {
+                                PointList[7] = ptsList[7];
+                                if (ptsList[7].X > ptsList[6].X)
+                                    FourPart.Offset(dx, dx);
+                                else
+                                    FourPart.Offset(-dx, -dx);
+                            }
+                        }
+                        else if (Mirror && Math.Abs(ptsList[7].X - ptsList[6].X) > (1 + Math.Abs(dx)) && (dx * dy) > 0)
+                        {
+                            ptsList[7].Offset(dx, dx);
+                            if (Math.Abs(ptsList[7].X - ptsList[6].X) > (1 + Math.Abs(dx)))
+                            {
+                                PointList[7] = ptsList[7];
+                                if (PointList[7].X > PointList[6].X)
+                                    FourPart.Offset(dx, dx);
+                                else
+                                    FourPart.Offset(-dx, -dx);
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if (ptsHandle[0].X == ptsHandle[2].X)
+            {
+                switch (handle)
+                {
+                    case 1:
+                        if (Math.Abs(ptsList[0].Y - ptsList[1].Y) > (1 + Math.Abs(dy)))
+                        {
+                            ptsList[0].Offset(0, dy);
+                            if (Math.Abs(ptsList[0].Y - ptsList[1].Y) > (1 + Math.Abs(dy)))
+                            {
+                                PointList[0] = ptsList[0];
+                                if (PointList[0].Y < PointList[1].Y)
+                                    FirstPart -= dy;
+                                else
+                                    FirstPart += dy;
+                            }
+                        }
+                        break;
+                    case 2:
+                        if (Math.Abs(ptsList[2].Y - ptsList[3].Y) > (1 + Math.Abs(dy)))
+                        {
+                            ptsList[3].Offset(0, dy);
+                            ptsList[4].Y += dy;
+                            ptsList[5].Y += dy;
+                            if (Math.Abs(ptsList[2].Y - ptsList[3].Y) > (1 + Math.Abs(dy)))
+                            {
+                                PointList.Clear();
+                                PointList.AddRange(ptsList);
+                                if (PointList[0].Y < PointList[1].Y)
+                                    SecPart += dy;
+                                else
+                                    SecPart -= dy;
+                            }
+                        }
+                        break;
+                    case 3:
+                        if (Math.Abs(ptsList[4].Y - ptsList[5].Y) > (1 + Math.Abs(dy)))
+                        {
+                            ptsList[5].Offset(0, dy);
+                            if (Math.Abs(ptsList[4].Y - ptsList[5].Y) > (1 + Math.Abs(dy)))
+                            {
+                                PointList[5] = ptsList[5];
+                                if (PointList[0].Y < PointList[1].Y)
+                                    ThPart += dy;
+                                else
+                                    ThPart -= dy;
+                            }
+                        }
+                        break;
+                    case 4:
+                        if (!Mirror && Math.Abs(ptsList[7].Y - ptsList[6].Y) > (1 + Math.Abs(dy)) && (dx * dy) > 0)
+                        {
+                            ptsList[7].Offset(dy, dy);
+                            if (Math.Abs(ptsList[7].Y - ptsList[6].Y) > (1 + Math.Abs(dy)))
+                            {
+                                PointList[7] = ptsList[7];
+                                if (PointList[7].Y > PointList[6].Y)
+                                    FourPart.Offset(dy, dy);
+                                else
+                                    FourPart.Offset(-dy, -dy);
+                            }
+                        }
+                        else if (Mirror && Math.Abs(ptsList[7].Y - ptsList[6].Y) > (1 + Math.Abs(dy)) && (dx * dy) < 0)
+                        {
+                            ptsList[7].Offset(-dy, dy);
+                            if (Math.Abs(ptsList[7].Y - ptsList[6].Y) > (1 + Math.Abs(dy)))
+                            {
+                                PointList[7] = ptsList[7];
+                                if (PointList[7].Y > PointList[6].Y)
+                                    FourPart.Offset(dy, dy);
+                                else
+                                    FourPart.Offset(-dy, -dy);
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return ;
         }
 
         public override void RotateCounterClw()
@@ -240,7 +487,7 @@ namespace BaseRailElement
 
         public override void DrawEnlargeOrShrink(float draw_multi_factor)
         {
-            objCrossOp.DrawMultiFactor = Convert.ToInt16(draw_multi_factor);
+            DrawMultiFactor = Convert.ToInt16(draw_multi_factor);
             base.DrawEnlargeOrShrink(draw_multi_factor);
         }
 
@@ -383,7 +630,22 @@ namespace BaseRailElement
 
         public override bool ChosedInRegion(Rectangle rect)
         {
-            return objCrossOp.ChosedInRegion(rect);
+            int containedNum = 0;
+            int n = PointList.Count;
+            Point[] pts = new Point[n];
+            for (int i = 0; i < n; i++)
+            {
+                pts[i] = PointList[i];
+                pts[i].Offset(pts[i].X * DrawMultiFactor - pts[i].X, pts[i].Y * DrawMultiFactor - pts[i].Y);
+            }
+            for (int i = 0; i < n; i++)
+            {
+                if (rect.Contains(pts[i]))
+                    containedNum++;
+            }
+            if (containedNum == n)
+                return true;
+            return false;
         }
 
         public override DataRow SaveEleInfo(DataTable dt)
@@ -465,11 +727,6 @@ namespace BaseRailElement
             cl.Mirror = Mirror;
             cl.railText = str;
             cl.PenCross = PenCross;
-            cl.objCrossOp.DrawMultiFactor = DrawMultiFactor;
-            cl.objCrossOp.FirstPart = FirstPart;
-            cl.objCrossOp.SecPart = SecPart;
-            cl.objCrossOp.ThPart = ThPart;
-            cl.objCrossOp.FourPart = FourPart;
             return cl;
         }
 
