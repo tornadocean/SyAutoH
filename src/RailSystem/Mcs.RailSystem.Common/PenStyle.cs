@@ -27,7 +27,7 @@ namespace Mcs.RailSystem.Common
             set { _color = ColorTranslator.FromHtml(value); }
         }
 
-        private float _width = 1;
+        private float _width = 3.0f;
         public float Width
         {
             get { return _width; }

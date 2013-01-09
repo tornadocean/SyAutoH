@@ -7,7 +7,7 @@ using System.Data;
 
 namespace BaseRailElement
 {
-    public class Device : BaseRailEle
+    public class Device : Mcs.RailSystem.Common.BaseRailEle
     {
    //     private Bitmap image = new Bitmap(
         public Point deviceLocation = Point.Empty;
@@ -48,18 +48,6 @@ namespace BaseRailElement
             return 0;
         }
 
-        protected override void Translate(int offsetX, int offsetY)
-        { }
-
-        protected override void Scale(int handle, int dx, int dy)
-        { }
-
-        public override void RotateCounterClw()
-        { }
-
-        public override void RotateClw()
-        { }
-
         public override void DrawEnlargeOrShrink(float drawMultiFactor)
         { }
 
@@ -69,12 +57,6 @@ namespace BaseRailElement
         public override bool ChosedInRegion(Rectangle rect)
         {
             return false;
-        }
-
-        public override DataRow DataSetXMLSave(DataTable dt)
-        {
-            DataRow dr = dt.NewRow();
-            return dr;
         }
     }
 }

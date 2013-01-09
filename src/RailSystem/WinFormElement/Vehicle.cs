@@ -64,8 +64,30 @@ namespace WinFormElement
 
         public bool ShowInScreen(Graphics canvas, Point location)
         {
-            Pen pen = new Pen(Color.Red);
-            SolidBrush bsh = new SolidBrush(Color.Red);
+            Color vehicleStatus = Color.Blue;
+            switch (Hand)
+            {
+                case 0:
+                    vehicleStatus = Color.Red;
+                    break;
+                case 1:
+                    vehicleStatus = Color.Blue;
+                    break;
+                case 2:
+                    vehicleStatus = Color.Green;
+                    break;
+                case 3:
+                    vehicleStatus = Color.Yellow;
+                    break;
+                case 4:
+                    vehicleStatus = Color.GreenYellow;
+                    break;
+                case 5:
+                    vehicleStatus = Color.Linen;
+                    break;
+            }
+            Pen pen = new Pen(vehicleStatus);
+            SolidBrush bsh = new SolidBrush(vehicleStatus);
             ChangeVehiclePoint(location);
             Point[] tranglePts = new Point[3];
             tranglePts[0] = location;

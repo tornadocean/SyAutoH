@@ -130,6 +130,10 @@
       <Project>{7ECD290B-E92B-429F-AF15-8C60C62F20E5}</Project>
       <Name>BaseRailElement</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Mcs.RailSystem.Common\Mcs.RailSystem.Common.csproj">
+      <Project>{9AD100F6-E9A6-43DE-B3DA-6B11F36EB35B}</Project>
+      <Name>Mcs.RailSystem.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WinFormsUI\WinFormsUI.csproj">
       <Project>{C75532C4-765B-418E-B09B-46D36B2ABDB1}</Project>
       <Name>WinFormsUI</Name>
