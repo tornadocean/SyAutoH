@@ -31,6 +31,7 @@ namespace RailDraw
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FatherWindow));
             WeifenLuo.WinFormsUI.Docking.DockPanelSkin dockPanelSkin1 = new WeifenLuo.WinFormsUI.Docking.DockPanelSkin();
             WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin autoHideStripSkin1 = new WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin();
             WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
@@ -91,6 +92,10 @@ namespace RailDraw
             this.mirror = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.addtext = new System.Windows.Forms.ToolStripButton();
+            this.btnRectangle = new System.Windows.Forms.ToolStripButton();
+            this.btnEllipse = new System.Windows.Forms.ToolStripButton();
+            this.btnLine = new System.Windows.Forms.ToolStripButton();
+            this.btnArc = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
@@ -316,6 +321,10 @@ namespace RailDraw
             this.mirror,
             this.toolStripSeparator5,
             this.addtext,
+            this.btnRectangle,
+            this.btnEllipse,
+            this.btnLine,
+            this.btnArc,
             this.toolStripSeparator6});
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
@@ -499,6 +508,42 @@ namespace RailDraw
             this.addtext.Text = "addtext";
             this.addtext.Click += new System.EventHandler(this.addtext_Click);
             // 
+            // btnRectangle
+            // 
+            this.btnRectangle.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRectangle.Image = ((System.Drawing.Image)(resources.GetObject("btnRectangle.Image")));
+            this.btnRectangle.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRectangle.Name = "btnRectangle";
+            this.btnRectangle.Size = new System.Drawing.Size(23, 22);
+            this.btnRectangle.Text = "toolStripButton1";
+            // 
+            // btnEllipse
+            // 
+            this.btnEllipse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnEllipse.Image = ((System.Drawing.Image)(resources.GetObject("btnEllipse.Image")));
+            this.btnEllipse.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnEllipse.Name = "btnEllipse";
+            this.btnEllipse.Size = new System.Drawing.Size(23, 22);
+            this.btnEllipse.Text = "toolStripButton2";
+            // 
+            // btnLine
+            // 
+            this.btnLine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLine.Image = ((System.Drawing.Image)(resources.GetObject("btnLine.Image")));
+            this.btnLine.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLine.Name = "btnLine";
+            this.btnLine.Size = new System.Drawing.Size(23, 22);
+            this.btnLine.Text = "toolStripButton3";
+            // 
+            // btnArc
+            // 
+            this.btnArc.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnArc.Image = ((System.Drawing.Image)(resources.GetObject("btnArc.Image")));
+            this.btnArc.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnArc.Name = "btnArc";
+            this.btnArc.Size = new System.Drawing.Size(23, 22);
+            this.btnArc.Text = "toolStripButton4";
+            // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
@@ -667,6 +712,10 @@ namespace RailDraw
         private ToolStripMenuItem toolsToolStripMenuItem;
         private ToolStripMenuItem workRegionToolStripMenuItem;
         public WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel1;
+        private ToolStripButton btnRectangle;
+        private ToolStripButton btnEllipse;
+        private ToolStripButton btnLine;
+        private ToolStripButton btnArc;
     }
 }
 
