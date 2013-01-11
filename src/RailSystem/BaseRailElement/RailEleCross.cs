@@ -17,7 +17,6 @@ namespace BaseRailElement
             PenCross.Width = PenWidth;
             PenCross.Color = PenColor;
             PenCross.DashStyle = PenDashStyle;
-            PenCross.EndCap = LineCap.ArrowAnchor;
         }
 
         public RailEleCross CreateEle(Point pt, Size size, Int16 multiFactor, string text)
