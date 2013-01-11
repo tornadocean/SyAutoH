@@ -198,12 +198,6 @@
     <None Include="Resources\shrink.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\open1.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\object.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\newfile.bmp" />
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +208,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\mirror.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rectangle.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rectange.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ellipse.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

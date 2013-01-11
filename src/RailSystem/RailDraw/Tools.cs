@@ -13,9 +13,15 @@ namespace RailDraw
 {
     public partial class Tools : DockContent
     {
-        public bool picLine = false;
-        public ListViewItem itemSelected = null;
+        private bool picLine = false;
         public bool winShown = false;
+        public ListViewItem itemSelected = null;
+
+        public bool PicLine
+        {
+            get { return picLine; }
+        }
+        
 
         public Tools()
         {
@@ -45,20 +51,25 @@ namespace RailDraw
 
         [DllImport("user32")]
         private static extern IntPtr LoadCursorFromFile(string fileName);
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+        [DllImport("user32.dll")]
+        public static extern IntPtr SetCapture(IntPtr h);
 
         private void listView1_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 itemSelected = listView1.GetItemAt(e.X, e.Y);
-                if (itemSelected != null && e.Button == MouseButtons.Left)
+                if (itemSelected != null && e.Button == MouseButtons.Left && !((FatherWindow)this.ParentForm).DrapIsDown)
                 {
                     this.Cursor = CommonFunction.CreatCursor("draw");
                     picLine = true;
-                    FatherWindow temp = (FatherWindow)(this.ParentForm);
-                    temp.workRegion.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(temp.workRegion.pictureBox1_MouseUp);
-                    temp.workRegion.pictureBox1.MouseEnter += new System.EventHandler(temp.workRegion.pictureBox1_MouseEnter);
-                    temp.workRegion.pictureBox1.MouseLeave += new System.EventHandler(temp.workRegion.pictureBox1_MouseLeave);
+                    this.listView1.MouseLeave += new EventHandler(listView1_MouseLeave);
+                }
+                else if (((FatherWindow)this.ParentForm).DrapIsDown)
+                {
+                    this.Cursor = Cursors.No;
                 }
             }
         }
@@ -67,13 +78,19 @@ namespace RailDraw
         {
             if (e.Button == MouseButtons.Left)
             {
+                this.listView1.MouseLeave -= new EventHandler(listView1_MouseLeave);
                 this.Cursor = System.Windows.Forms.Cursors.Default;
-                FatherWindow temp = (FatherWindow)(this.ParentForm);
-                temp.workRegion.pictureBox1.MouseUp -= new System.Windows.Forms.MouseEventHandler(temp.workRegion.pictureBox1_MouseUp);
-                temp.workRegion.pictureBox1.MouseEnter -= new System.EventHandler(temp.workRegion.pictureBox1_MouseEnter);
-                temp.workRegion.pictureBox1.MouseLeave -= new System.EventHandler(temp.workRegion.pictureBox1_MouseLeave);
                 picLine = false;
             }
+        }
+
+        private void listView1_MouseLeave(object sender, EventArgs e)
+        {
+            this.listView1.MouseLeave -= new EventHandler(listView1_MouseLeave);
+            ReleaseCapture();
+            SetCapture(((FatherWindow)(this.ParentForm)).workRegion.picBoxCanvas.Handle);
+            ((FatherWindow)this.ParentForm).workRegion.picBoxCanvas.MouseUp +=
+                new MouseEventHandler(((FatherWindow)this.ParentForm).workRegion.ElementDraw_MouseUp);
         }
 
         private void eleBtn_Click(object sender, EventArgs e)
@@ -121,5 +138,8 @@ namespace RailDraw
         { }
         public void DelEvent(Control control, string eventname)
         { }
+
+        
+
     }
 }

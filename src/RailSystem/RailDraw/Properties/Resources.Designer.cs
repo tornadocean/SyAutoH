@@ -151,6 +151,13 @@ namespace RailDraw.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ellipse {
+            get {
+                object obj = ResourceManager.GetObject("ellipse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap enlarge {
             get {
                 object obj = ResourceManager.GetObject("enlarge", resourceCulture);
@@ -196,6 +203,13 @@ namespace RailDraw.Properties {
         internal static System.Drawing.Bitmap recover {
             get {
                 object obj = ResourceManager.GetObject("recover", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap rectange {
+            get {
+                object obj = ResourceManager.GetObject("rectange", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
