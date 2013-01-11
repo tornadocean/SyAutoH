@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using WeifenLuo.WinFormsUI.Docking;
+using System.Runtime.InteropServices;
 
 namespace RailDraw
 {
@@ -23,8 +24,8 @@ namespace RailDraw
 
         private void WorkRegion_Load(object sender, EventArgs e)
         {
-            this.pictureBox1.Size = this.Size;
-            this.pictureBox1.Location = new Point(0);
+            this.picBoxCanvas.Size = this.Size;
+            this.picBoxCanvas.Location = new Point(0);
             this.KeyPreview = true;
         }
 
@@ -40,27 +41,28 @@ namespace RailDraw
             winShown = false;
         }
 
-        public void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+        [DllImport("user32.dll")]
+        public static extern IntPtr SetCapture(IntPtr h);
+
+        public void ElementDraw_MouseUp(object sender, MouseEventArgs e)
         {
-            this.pictureBox1.MouseUp -= new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
-            this.pictureBox1.MouseEnter -= new System.EventHandler(this.pictureBox1_MouseEnter);
-            this.pictureBox1.MouseLeave -= new System.EventHandler(this.pictureBox1_MouseLeave);
+            this.picBoxCanvas.MouseUp -= new MouseEventHandler(this.ElementDraw_MouseUp);
+            
             this.Cursor = System.Windows.Forms.Cursors.Default;
-            ((FatherWindow)this.ParentForm).CreateElement(e.Location, this.pictureBox1.ClientSize);
-            this.Activate();
+            Point pt = e.Location;
+            Rectangle rc = this.ClientRectangle;
+            if (((FatherWindow)this.ParentForm).tools.PicLine && rc.Contains(pt))
+            {
+                ((FatherWindow)this.ParentForm).CreateElement(e.Location, this.picBoxCanvas.ClientSize);
+                this.Activate();
+            }            
+
+            ReleaseCapture();
         }
 
-        public void pictureBox1_MouseEnter(object sender, EventArgs e)
-        {
-            this.Cursor = CommonFunction.CreatCursor("draw");
-        }
-
-        public void pictureBox1_MouseLeave(object sender, EventArgs e)
-        {
-            this.Cursor = System.Windows.Forms.Cursors.Default;
-        }
-
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        private void picBoxCanvas_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
      
@@ -70,24 +72,24 @@ namespace RailDraw
             base.OnPaint(e);
         }
 
-        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        private void picBoxCanvas_MouseDown(object sender, MouseEventArgs e)
         {
-            ((FatherWindow)this.ParentForm).PicMouseDown(sender, e);
+            ((FatherWindow)this.ParentForm).CanvasMouseDown(sender, e);
         }
 
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        private void picBoxCanvas_MouseMove(object sender, MouseEventArgs e)
         {
-            ((FatherWindow)this.ParentForm).PicMouseMove(sender, e);
+            ((FatherWindow)this.ParentForm).CanvasMouseMove(sender, e);
         }
 
-        private void pictureBox1_MouseUp_1(object sender, MouseEventArgs e)
+        private void picBoxCanvas_MouseUp(object sender, MouseEventArgs e)
         {
-            ((FatherWindow)this.ParentForm).PicMouseUp(sender, e);
+            ((FatherWindow)this.ParentForm).CanvasMouseUp(sender, e);
         }
 
-        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
+        private void picBoxCanvas_MouseClick(object sender, MouseEventArgs e)
         {
-            ((FatherWindow)this.ParentForm).PicMouseClick(sender, e);
+            ((FatherWindow)this.ParentForm).CanvasMouseClick(sender, e);
         }
 
         public void contextmenustrip_Click(object sender, EventArgs e)
@@ -155,12 +157,14 @@ namespace RailDraw
             }
         }
 
-        private void pictureBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        private void picBoxCanvas_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if (((FatherWindow)this.ParentForm).drawDoc.SelectedDrawObjectList.Count != 0)
             {
                 ((FatherWindow)this.ParentForm).WorkRegionKeyMove(e.KeyCode);
             }
         }
+
+
     }
 }
