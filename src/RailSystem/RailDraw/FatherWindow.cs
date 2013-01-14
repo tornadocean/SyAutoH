@@ -34,6 +34,10 @@ namespace RailDraw
         private Int16 lineNumber = 100;
         private Int16 curveNumber = 200;
         private Int16 CrossNumber = 300;
+        public bool DrapIsDown
+        {
+            get { return drapIsDown; }
+        }
 
         public FatherWindow()
         {
@@ -63,13 +67,13 @@ namespace RailDraw
             tools.Show(this.dockPanel1);
             tools.DockTo(this.dockPanel1, DockStyle.Right);
 
-            drawregOrigSize.Width = this.workRegion.pictureBox1.Width;
-            drawregOrigSize.Height = this.workRegion.pictureBox1.Height;
+            drawregOrigSize.Width = this.workRegion.picBoxCanvas.Width;
+            drawregOrigSize.Height = this.workRegion.picBoxCanvas.Height;
         }
 
         #region  workRegion Operation
 
-        public void PicMouseDown(object sender, MouseEventArgs e)
+        public void CanvasMouseDown(object sender, MouseEventArgs e)
         {
             switch (e.Button)
             {
@@ -83,37 +87,37 @@ namespace RailDraw
                     mouseIsDown = true;
                     break;
             }
-            this.workRegion.pictureBox1.Invalidate();
+            this.workRegion.picBoxCanvas.Invalidate();
         }
 
-        public void PicMouseUp(object sender, MouseEventArgs e)
+        public void CanvasMouseUp(object sender, MouseEventArgs e)
         {
+            if (drapIsDown && mouseIsDown)
+            {
+                Point pt_offset = objectEvent.DrapDrawRegion(e.Location);
+                Point picLoc = this.workRegion.picBoxCanvas.Location;
+                this.workRegion.picBoxCanvas.Location = new Point(picLoc.X + pt_offset.X, picLoc.Y + pt_offset.Y);
+                drapIsDown = true;
+            }
             if (mouseIsDown)
             {
                 mouseIsDown = false;
             }
-            if (drapIsDown)
-            {
-                Point pt_offset = objectEvent.DrapDrawRegion(e.Location);
-                Point picLoc = this.workRegion.pictureBox1.Location;
-                this.workRegion.pictureBox1.Location = new Point(picLoc.X + pt_offset.X, picLoc.Y + pt_offset.Y);
-                drapIsDown = true;
-            }
             objectEvent.OnLButtonUp(e.Location);
-            this.workRegion.pictureBox1.Invalidate();
-            this.workRegion.pictureBox1.Focus();
+            this.workRegion.picBoxCanvas.Invalidate();
+            this.workRegion.picBoxCanvas.Focus();
         }
 
-        public void PicMouseMove(object sender, MouseEventArgs e)
+        public void CanvasMouseMove(object sender, MouseEventArgs e)
         {
             if (mouseIsDown && !drapIsDown)
             {
                 objectEvent.OnMouseMove(e.Location);
-                this.workRegion.pictureBox1.Invalidate();
+                this.workRegion.picBoxCanvas.Invalidate();
             }
         }
 
-        public void PicMouseClick(object sender, MouseEventArgs e)
+        public void CanvasMouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -137,7 +141,7 @@ namespace RailDraw
         public void ChangePropertyValue()
         {
             objectEvent.ChangePropertyValue();
-            this.workRegion.pictureBox1.Invalidate();
+            this.workRegion.picBoxCanvas.Invalidate();
             this.proPage.propertyGrid1.Refresh();
         }
 
@@ -167,7 +171,7 @@ namespace RailDraw
                 foreach (BaseRailElement.RailEleLine o in this.drawDoc.DrawObjectList)
                     this.drawDoc.SelectedDrawObjectList.Add(o);
             }
-            this.workRegion.pictureBox1.Invalidate();
+            this.workRegion.picBoxCanvas.Invalidate();
         }
 
         private void menupercentone_Click(object sender, EventArgs e)
@@ -178,8 +182,8 @@ namespace RailDraw
                 System.Windows.Forms.ToolStrip parent = item.GetCurrentParent();
                 int i = parent.Items.IndexOf(item);
                 Int16 multi = Convert.ToInt16(i + 1);
-                this.workRegion.pictureBox1.Width = drawregOrigSize.Width * multi;
-                this.workRegion.pictureBox1.Height = drawregOrigSize.Height * multi;
+                this.workRegion.picBoxCanvas.Width = drawregOrigSize.Width * multi;
+                this.workRegion.picBoxCanvas.Height = drawregOrigSize.Height * multi;
                 EnlargeAndShortenCanvas(multi);
             }
         }
@@ -247,7 +251,7 @@ namespace RailDraw
                         drawDoc.SelectedDrawObjectList.Clear();
                         proRegion.treeNodeList.Clear();
                         proRegion.treeView1.Nodes[0].Nodes.Clear();
-                        this.workRegion.pictureBox1.Invalidate();
+                        this.workRegion.picBoxCanvas.Invalidate();
                         this.proRegion.Invalidate();
                         break;
                     case DialogResult.No:
@@ -255,7 +259,7 @@ namespace RailDraw
                         drawDoc.SelectedDrawObjectList.Clear();
                         proRegion.treeNodeList.Clear();
                         proRegion.treeView1.Nodes[0].Nodes.Clear();
-                        this.workRegion.pictureBox1.Invalidate();
+                        this.workRegion.picBoxCanvas.Invalidate();
                         this.proRegion.Invalidate();
                         break;
                 }
@@ -281,10 +285,10 @@ namespace RailDraw
                 drawDoc.SelectedDrawObjectList.Clear();
                 proRegion.treeNodeList.Clear();
                 proRegion.treeView1.Nodes[0].Nodes.Clear();
-                this.workRegion.pictureBox1.Top = 0;
-                this.workRegion.pictureBox1.Left = 0;
-                this.workRegion.pictureBox1.Width = drawregOrigSize.Width;
-                this.workRegion.pictureBox1.Height = drawregOrigSize.Height;
+                this.workRegion.picBoxCanvas.Top = 0;
+                this.workRegion.picBoxCanvas.Left = 0;
+                this.workRegion.picBoxCanvas.Width = drawregOrigSize.Width;
+                this.workRegion.picBoxCanvas.Height = drawregOrigSize.Height;
                 drapIsDown = false;
                 this.Cursor = System.Windows.Forms.Cursors.Default;
                 try
@@ -301,7 +305,7 @@ namespace RailDraw
                     MessageBox.Show("open error");
                 }
             }
-            this.workRegion.pictureBox1.Invalidate();
+            this.workRegion.picBoxCanvas.Invalidate();
             this.proRegion.Invalidate();
             this.proRegion.treeView1.Invalidate();
         }
@@ -338,7 +342,7 @@ namespace RailDraw
         private void cut_Click(object sender, EventArgs e)
         {
             this.drawDoc.Cut();
-            this.workRegion.pictureBox1.Invalidate();
+            this.workRegion.picBoxCanvas.Invalidate();
         }
 
         private void copy_Click(object sender, EventArgs e)
@@ -358,11 +362,11 @@ namespace RailDraw
 
         private void enlarge_Click(object sender, EventArgs e)
         {
-            if (this.workRegion.pictureBox1.Width < drawregOrigSize.Width * 4)
+            if (this.workRegion.picBoxCanvas.Width < drawregOrigSize.Width * 4)
             {
-                this.workRegion.pictureBox1.Width += (drawregOrigSize.Width * CONST_MULTI_FACTOR);
-                this.workRegion.pictureBox1.Height += (drawregOrigSize.Height * CONST_MULTI_FACTOR);
-                multiFactor = Convert.ToInt16(this.workRegion.pictureBox1.Width / drawregOrigSize.Width);
+                this.workRegion.picBoxCanvas.Width += (drawregOrigSize.Width * CONST_MULTI_FACTOR);
+                this.workRegion.picBoxCanvas.Height += (drawregOrigSize.Height * CONST_MULTI_FACTOR);
+                multiFactor = Convert.ToInt16(this.workRegion.picBoxCanvas.Width / drawregOrigSize.Width);
                 this.drawDoc.DrawMultiFactor = multiFactor;
                 int n = this.drawDoc.DrawObjectList.Count;
                 for (int i = 0; i < n; i++)
@@ -370,22 +374,22 @@ namespace RailDraw
                     this.drawDoc.DrawObjectList[i].DrawMultiFactor = multiFactor;
                 }
                 ChangeDrawRegionLoction();
-                this.workRegion.pictureBox1.Invalidate();
+                this.workRegion.picBoxCanvas.Invalidate();
             }
         }
 
         private void shorten_Click(object sender, EventArgs e)
         {
-            if (this.workRegion.pictureBox1.Width > drawregOrigSize.Width)
+            if (this.workRegion.picBoxCanvas.Width > drawregOrigSize.Width)
             {
-                this.workRegion.pictureBox1.Width -= (drawregOrigSize.Width * CONST_MULTI_FACTOR);
-                this.workRegion.pictureBox1.Height -= (drawregOrigSize.Height * CONST_MULTI_FACTOR);
-                multiFactor = Convert.ToInt16(this.workRegion.pictureBox1.Width / drawregOrigSize.Width);
+                this.workRegion.picBoxCanvas.Width -= (drawregOrigSize.Width * CONST_MULTI_FACTOR);
+                this.workRegion.picBoxCanvas.Height -= (drawregOrigSize.Height * CONST_MULTI_FACTOR);
+                multiFactor = Convert.ToInt16(this.workRegion.picBoxCanvas.Width / drawregOrigSize.Width);
                 this.drawDoc.DrawMultiFactor = multiFactor;
                 int n = this.drawDoc.DrawObjectList.Count;
                 for (int i = 0; i < n; i++)
                     this.drawDoc.DrawObjectList[i].DrawMultiFactor = multiFactor;
-                this.workRegion.pictureBox1.Invalidate();
+                this.workRegion.picBoxCanvas.Invalidate();
                 ChangeDrawRegionLoction();
             }
         }
@@ -395,7 +399,7 @@ namespace RailDraw
             if (this.drawDoc.SelectedDrawObjectList.Count > 0)
             {
                 this.drawDoc.SelectedDrawObjectList[0].RotateCounterClw();
-                this.workRegion.pictureBox1.Invalidate();
+                this.workRegion.picBoxCanvas.Invalidate();
                 this.proPage.propertyGrid1.Refresh();
             }   
         }
@@ -405,7 +409,7 @@ namespace RailDraw
             if (this.drawDoc.SelectedDrawObjectList.Count > 0)
             {
                 this.drawDoc.SelectedDrawObjectList[0].RotateClw();
-                this.workRegion.pictureBox1.Invalidate();
+                this.workRegion.picBoxCanvas.Invalidate();
                 this.proPage.propertyGrid1.Refresh();
             }
         }
@@ -426,7 +430,7 @@ namespace RailDraw
             if (this.drawDoc.SelectedDrawObjectList.Count > 0)
             {
                 this.drawDoc.SelectedDrawObjectList[0].ObjectMirror();
-                this.workRegion.pictureBox1.Invalidate();
+                this.workRegion.picBoxCanvas.Invalidate();
             }
         }
 
@@ -509,21 +513,21 @@ namespace RailDraw
             int n = this.drawDoc.DrawObjectList.Count;
             for (int i = 0; i < n; i++)
                 this.drawDoc.DrawObjectList[i].DrawMultiFactor = drawMulti;
-            this.workRegion.pictureBox1.Invalidate();
+            this.workRegion.picBoxCanvas.Invalidate();
             ChangeDrawRegionLoction();
         }
 
         private void ChangeDrawRegionLoction()
         {
             Point drawRegionLoc = Point.Empty;
-            Point drawRegionSize = (Point)this.workRegion.pictureBox1.Size;
-            Point workRegSize = (Point)this.workRegion.panel1.Size;
+            Point drawRegionSize = (Point)this.workRegion.picBoxCanvas.Size;
+            Point workRegSize = (Point)this.workRegion.panelCanvas.Size;
             Point centerDrawRegion = new Point(drawRegionSize.X / 2, drawRegionSize.Y / 2);
             Point centerWorkRegSize = new Point(workRegSize.X / 2, workRegSize.Y / 2);
             int dx = centerWorkRegSize.X - centerDrawRegion.X;
             int dy = centerWorkRegSize.Y - centerDrawRegion.Y;
             drawRegionLoc.Offset(dx, dy);
-            this.workRegion.pictureBox1.Location = drawRegionLoc;
+            this.workRegion.picBoxCanvas.Location = drawRegionLoc;
         }
 
         public void CreateElement(Point mousePt, Size workRegionSize)
@@ -538,7 +542,7 @@ namespace RailDraw
                     line.CreateEle(mousePt, workRegionSize, multiFactor, str);
                     AddElement(line);
                     drawDoc.SelectOne(line);
-                    workRegion.pictureBox1.Invalidate();
+                    workRegion.picBoxCanvas.Invalidate();
                     proPage.propertyGrid1.SelectedObject = line;
                     proPage.propertyGrid1.Refresh();
                     break;
@@ -549,7 +553,7 @@ namespace RailDraw
                     curve.CreateEle(mousePt, workRegionSize, multiFactor, str);
                     AddElement(curve);
                     drawDoc.SelectOne(curve);
-                    workRegion.pictureBox1.Invalidate();
+                    workRegion.picBoxCanvas.Invalidate();
                     proPage.propertyGrid1.SelectedObject = curve;
                     proPage.propertyGrid1.Refresh();
                     break;
@@ -560,7 +564,7 @@ namespace RailDraw
                     cross.CreateEle(mousePt, workRegionSize, multiFactor, str);
                     AddElement(cross);
                     drawDoc.SelectOne(cross);
-                    workRegion.pictureBox1.Invalidate();
+                    workRegion.picBoxCanvas.Invalidate();
                     proPage.propertyGrid1.SelectedObject = cross;
                     proPage.propertyGrid1.Refresh();
                     break;
@@ -615,7 +619,7 @@ namespace RailDraw
                 this.proPage.propertyGrid1.SelectedObject = null;
             }
             this.proPage.propertyGrid1.Refresh();
-            this.workRegion.pictureBox1.Invalidate();
+            this.workRegion.picBoxCanvas.Invalidate();
         }
 
         public void CutElement()
@@ -654,7 +658,7 @@ namespace RailDraw
                 }
                 this.proRegion.AddElementNode(this.workRegion.Text, str);
                 this.drawDoc.Paste(str);
-                this.workRegion.pictureBox1.Invalidate();
+                this.workRegion.picBoxCanvas.Invalidate();
                 this.proPage.propertyGrid1.SelectedObject = drawDoc.SelectedDrawObjectList[0];
             }
         }
@@ -666,7 +670,7 @@ namespace RailDraw
                 Int16 num = Convert.ToInt16(drawDoc.DrawObjectList.IndexOf(drawDoc.SelectedDrawObjectList[0]));
                 this.proRegion.DeleteElementNode(this.workRegion.Text, num);
                 this.drawDoc.Delete(num);
-                this.workRegion.pictureBox1.Invalidate();
+                this.workRegion.picBoxCanvas.Invalidate();
             }
         }
 
@@ -691,7 +695,7 @@ namespace RailDraw
                     break;
             }
             objectEvent.WorkRegionKeyDown(direction);
-            this.workRegion.pictureBox1.Invalidate();
+            this.workRegion.picBoxCanvas.Invalidate();
         }
     }
 }
