@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Data;
 using System.ComponentModel;
 
 namespace BaseRailElement
@@ -491,60 +490,6 @@ namespace BaseRailElement
             if (containedNum == n)
                 return true;
             return false;
-        }
-
-        public override DataRow SaveEleInfo(DataTable dt)
-        {
-            DataRow dr = dt.NewRow();
-            dr["GraphType"] = GraphType;
-            dr["LocationLock"] = locationLock;
-            dr["SizeLock"] = sizeLock;
-            dr["Selectable"] = Selectable;
-            dr["Speed"] = Speed;
-            dr["Mirror"] = Mirror;
-            dr["StartAngle"] = StartAngle;
-            dr["RotateAngle"] = RotateAngle;
-            dr["DirectionOfCross"] = DirectionOfCross;
-            dr["PointListVol"] = PointList.Count;
-            for (int i = 0; i < PointList.Count; i++)
-            {
-                dr["PointList" + i.ToString()] = PointList[i];
-            }
-
-            dr["drawMultiFactor"] = DrawMultiFactor;
-            dr["startPoint"] = StartPoint.ToString();
-            dr["endPoint"] = EndPoint.ToString();
-            dr["CodingBegin"] = CodingBegin;
-            dr["CodingEnd"] = CodingEnd;
-            dr["CodingEndF"] = CodingEndFork;
-            dr["CodingPrev"] = CodingPrev;
-            dr["CodingNext"] = CodingNext;
-            dr["CodingNextF"] = CodingNextFork;
-            dr["railText"] = railText;
-            dr["lenght"] = Lenght;
-            dr["lenghtFork"] = LenghtFork;
-            dr["Color"] = ColorTranslator.ToHtml(PenCross.Color);
-            dr["DashStyle"] = PenCross.DashStyle;
-            dr["PenWidth"] = PenCross.Width;
-
-            dt.Rows.Add(dr);
-            return dr;
-        }
-
-        public override DataRow SaveCodingInfo(DataTable dt)
-        {
-            DataRow dr = dt.NewRow();
-
-            dr["GraphType"] = GraphType;
-            dr["CodingBegin"] = CodingBegin;
-            dr["CodingEnd"] = CodingEnd;
-            dr["CodingEndF"] = CodingEndFork;
-            dr["CodingPrev"] = CodingPrev;
-            dr["CodingNext"] = CodingNext;
-            dr["CodingNextF"] = CodingNextFork;
-
-            dt.Rows.Add(dr);
-            return dr;
         }
 
         public object Clone(string str)
