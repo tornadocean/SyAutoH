@@ -12,18 +12,15 @@ namespace Mcs.RailSystem.Common
     {
         private int startAngle = 0;
         private int rotateAngle = 90;
-        private int lenghtOfStrai = 100;
-        private int firstPart = 30;
-        private int secPart = 40;
-        private int thPart = 30;
-        private Point fourPart = new Point(40, 40);
+        private int lenght = 30;
+        private int lenghtFork = 30;
         private bool mirror = false;
         private Int32 codingBegin = -1;
         private Int32 codingEnd = -1;
-        private Int32 codingEndS = -1;
+        private Int32 codingEndFork = -1;
         private Int32 codingPrev = -1;
         private Int32 codingNext = -1;
-        private Int32 codingNextS = -1;
+        private Int32 codingNextFork = -1;
         private List<Point> pointList = new List<Point>();
         private DirectionCross directionOfCross = DirectionCross.NULL;
         private PenStyle crossPen = new PenStyle();
@@ -46,35 +43,17 @@ namespace Mcs.RailSystem.Common
             get { return rotateAngle; }
             set { rotateAngle = value; }
         }
-        [Browsable(false)]
-        public int LenghtOfStrai
+        [Category("轨道长度")]
+        public int Lenght
         {
-            get { return lenghtOfStrai; }
-            set { lenghtOfStrai = value; }
+            get { return lenght; }
+            set { lenght = value; }
         }
         [Category("轨道长度")]
-        public int FirstPart
+        public int LenghtFork
         {
-            get { return firstPart; }
-            set { firstPart = value; }
-        }
-        [Category("轨道长度")]
-        public int SecPart
-        {
-            get { return secPart; }
-            set { secPart = value; }
-        }
-        [Category("轨道长度")]
-        public int ThPart
-        {
-            get { return thPart; }
-            set { thPart = value; }
-        }
-        [Category("轨道长度")]
-        public Point FourPart
-        {
-            get { return fourPart; }
-            set { fourPart = value; }
+            get { return lenghtFork; }
+            set { lenghtFork = value; }
         }
         [Browsable(false)]
         public bool Mirror
@@ -95,10 +74,10 @@ namespace Mcs.RailSystem.Common
             set { codingEnd = value; }
         }
         [Description("条形码终止"), Category("轨道段信息")]
-        public Int32 CodingEndS
+        public Int32 CodingEndFork
         {
-            get { return codingEndS; }
-            set { codingEndS = value; }
+            get { return codingEndFork; }
+            set { codingEndFork = value; }
         }
         [Description("条形码终止"), Category("轨道段信息")]
         public Int32 CodingPrev
@@ -113,10 +92,10 @@ namespace Mcs.RailSystem.Common
             set { codingNext = value; }
         }
         [Description("条形码终止"), Category("轨道段信息")]
-        public Int32 CodingNextS
+        public Int32 CodingNextFork
         {
-            get { return codingNextS; }
-            set { codingNextS = value; }
+            get { return codingNextFork; }
+            set { codingNextFork = value; }
         }
         [Browsable(false)]
         public List<Point> PointList

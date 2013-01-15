@@ -234,22 +234,6 @@ namespace Mcs.RailSystem.Common
                             case "Mirror":
                                 cross.Mirror = Convert.ToBoolean(dt.Rows[row][j]);
                                 break;
-                            case "FirstPart":
-                                cross.FirstPart = Convert.ToInt32(dt.Rows[row][j]);
-                                break;
-                            case "SecPart":
-                                cross.SecPart = Convert.ToInt32(dt.Rows[row][j]);
-                                break;
-                            case "ThPart":
-                                cross.ThPart = Convert.ToInt32(dt.Rows[row][j]);
-                                break;
-                            case "FourPart":
-                                strcro = dt.Rows[row][j].ToString();
-                                strcro = strcro.Substring(1, strcro.Length - 2);
-                                strPointArrayCro = strcro.Split(',');
-                                ptcro = new Point() { X = int.Parse(strPointArrayCro[0].Substring(2)), Y = int.Parse(strPointArrayCro[1].Substring(2)) };
-                                cross.FourPart = ptcro;
-                                break;
                             case "StartAngle":
                                 cross.StartAngle = Convert.ToInt32(dt.Rows[row][j]);
                                 break;
@@ -293,8 +277,8 @@ namespace Mcs.RailSystem.Common
                             case "CodingEnd":
                                 cross.CodingEnd = Convert.ToInt32(dt.Rows[row][j]);
                                 break;
-                            case "CodingEndS":
-                                cross.CodingEndS = Convert.ToInt32(dt.Rows[row][j]);
+                            case "CodingEndF":
+                                cross.CodingEndFork = Convert.ToInt32(dt.Rows[row][j]);
                                 break;
                             case "CodingNext":
                                 cross.CodingNext = Convert.ToInt32(dt.Rows[row][j]);
@@ -302,14 +286,17 @@ namespace Mcs.RailSystem.Common
                             case "CodingPrev":
                                 cross.CodingPrev = Convert.ToInt32(dt.Rows[row][j]);
                                 break;
-                            case "CodingNextS":
-                                cross.CodingNextS = Convert.ToInt32(dt.Rows[row][j]);
+                            case "CodingNextF":
+                                cross.CodingNextFork = Convert.ToInt32(dt.Rows[row][j]);
                                 break;
                             case "railText":
                                 cross.railText = dt.Rows[row][j].ToString();
                                 break;
-                            case "lenghtOfStrai":
-                                cross.LenghtOfStrai = Convert.ToInt32(dt.Rows[row][j]);
+                            case "lenght":
+                                cross.Lenght = Convert.ToInt32(dt.Rows[row][j]);
+                                break;
+                            case "lenghtFork":
+                                cross.LenghtFork = Convert.ToInt32(dt.Rows[row][j]);
                                 break;
                             case "Color":
                                 cross.PenColor = ColorTranslator.FromHtml(dt.Rows[row][j].ToString());
