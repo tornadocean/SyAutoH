@@ -13,9 +13,6 @@ using System.Data;
 
 namespace BaseRailElement
 {
-    //[XmlInclude(typeof(StraightRailEle))]
-    //[XmlInclude(typeof(CurvedRailEle))]
-    //[XmlInclude(typeof(CrossEle))]
     [XmlInclude(typeof(RailLabal))]
 
     public class DrawDoc : Mcs.RailSystem.Common.BaseRailEle
@@ -35,9 +32,6 @@ namespace BaseRailElement
         }
 
         [
-        //XmlArrayItem(Type = typeof(StraightRailEle)),
-        //XmlArrayItem(Type = typeof(CurvedRailEle)),
-        //XmlArrayItem(Type = typeof(CrossEle)),
         XmlArrayItem(Type = typeof(RailLabal)),
         ]
 
@@ -95,9 +89,9 @@ namespace BaseRailElement
             dtEle.Columns.Add("railText", typeof(string));
             dtEle.Columns.Add("CodingBegin", typeof(int));
             dtEle.Columns.Add("CodingEnd", typeof(int));
-            dtEle.Columns.Add("CodingEndS", typeof(int));
+            dtEle.Columns.Add("CodingEndF", typeof(Int32));
             dtEle.Columns.Add("CodingNext", typeof(int));
-            dtEle.Columns.Add("CodingNextS", typeof(int));
+            dtEle.Columns.Add("CodingNextF", typeof(Int32));
             dtEle.Columns.Add("CodingPrev", typeof(int));
             dtEle.Columns.Add("startPoint", typeof(string));
             dtEle.Columns.Add("endPoint", typeof(string));
@@ -108,7 +102,7 @@ namespace BaseRailElement
 
             dtEle.Columns.Add("Lenght", typeof(int));
             dtEle.Columns.Add("PointListVol", typeof(Int16));
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 3; i++)
             {
                 dtEle.Columns.Add("PointList" + i.ToString(), typeof(string));
             }
@@ -124,11 +118,8 @@ namespace BaseRailElement
             dtEle.Columns.Add("DirectionCurvedAttribute", typeof(int));
 
             dtEle.Columns.Add("Mirror", typeof(bool));
-            dtEle.Columns.Add("FirstPart", typeof(int));
-            dtEle.Columns.Add("SecPart", typeof(int));
-            dtEle.Columns.Add("ThPart", typeof(int));
-            dtEle.Columns.Add("FourPart", typeof(string));
-            dtEle.Columns.Add("lenghtOfStrai", typeof(Int32));
+            dtEle.Columns.Add("lenght", typeof(Int32));
+            dtEle.Columns.Add("lenghtFork", typeof(Int32));
             dtEle.Columns.Add("DirectionOfCross", typeof(int));
 
             dtEle.Columns.Add("Color", typeof(string));
@@ -141,9 +132,9 @@ namespace BaseRailElement
             dtEleCoding.Columns.Add("GraphType", typeof(int));
             dtEleCoding.Columns.Add("CodingBegin", typeof(int));
             dtEleCoding.Columns.Add("CodingEnd", typeof(int));
-            dtEleCoding.Columns.Add("CodingEndS", typeof(int));
+            dtEleCoding.Columns.Add("CodingEndF", typeof(int));
             dtEleCoding.Columns.Add("CodingNext", typeof(int));
-            dtEleCoding.Columns.Add("CodingNextS", typeof(int));
+            dtEleCoding.Columns.Add("CodingNextF", typeof(int));
             dtEleCoding.Columns.Add("CodingPrev", typeof(int));
         }
 

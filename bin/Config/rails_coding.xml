@@ -50,46 +50,17 @@
     <CodingPrev>-1</CodingPrev>
   </RailEleCodingTable>
   <RailEleCodingTable>
-    <GraphType>3</GraphType>
+    <GraphType>1</GraphType>
     <CodingBegin>-1</CodingBegin>
     <CodingEnd>-1</CodingEnd>
-    <CodingEndS>-1</CodingEndS>
     <CodingNext>-1</CodingNext>
-    <CodingNextS>-1</CodingNextS>
-    <CodingPrev>-1</CodingPrev>
-  </RailEleCodingTable>
-  <RailEleCodingTable>
-    <GraphType>3</GraphType>
-    <CodingBegin>-1</CodingBegin>
-    <CodingEnd>-1</CodingEnd>
-    <CodingEndS>-1</CodingEndS>
-    <CodingNext>-1</CodingNext>
-    <CodingNextS>-1</CodingNextS>
     <CodingPrev>-1</CodingPrev>
   </RailEleCodingTable>
   <RailEleCodingTable>
     <GraphType>1</GraphType>
-    <CodingBegin>6700</CodingBegin>
-    <CodingEnd>7900</CodingEnd>
+    <CodingBegin>0</CodingBegin>
+    <CodingEnd>2300</CodingEnd>
     <CodingNext>-1</CodingNext>
-    <CodingPrev>-1</CodingPrev>
-  </RailEleCodingTable>
-  <RailEleCodingTable>
-    <GraphType>3</GraphType>
-    <CodingBegin>-1</CodingBegin>
-    <CodingEnd>-1</CodingEnd>
-    <CodingEndS>-1</CodingEndS>
-    <CodingNext>-1</CodingNext>
-    <CodingNextS>-1</CodingNextS>
-    <CodingPrev>-1</CodingPrev>
-  </RailEleCodingTable>
-  <RailEleCodingTable>
-    <GraphType>3</GraphType>
-    <CodingBegin>-1</CodingBegin>
-    <CodingEnd>-1</CodingEnd>
-    <CodingEndS>-1</CodingEndS>
-    <CodingNext>-1</CodingNext>
-    <CodingNextS>-1</CodingNextS>
     <CodingPrev>-1</CodingPrev>
   </RailEleCodingTable>
   <RailEleCodingTable>
@@ -101,29 +72,72 @@
   </RailEleCodingTable>
   <RailEleCodingTable>
     <GraphType>1</GraphType>
-    <CodingBegin>0</CodingBegin>
-    <CodingEnd>2300</CodingEnd>
-    <CodingNext>2300</CodingNext>
-    <CodingPrev>-1</CodingPrev>
-  </RailEleCodingTable>
-  <RailEleCodingTable>
-    <GraphType>2</GraphType>
     <CodingBegin>2300</CodingBegin>
-    <CodingEnd>2300</CodingEnd>
-    <CodingNext>2300</CodingNext>
-    <CodingPrev>2300</CodingPrev>
-  </RailEleCodingTable>
-  <RailEleCodingTable>
-    <GraphType>2</GraphType>
-    <CodingBegin>2800</CodingBegin>
     <CodingEnd>2800</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
   </RailEleCodingTable>
   <RailEleCodingTable>
+    <GraphType>2</GraphType>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
+    <CodingNext>-1</CodingNext>
+    <CodingPrev>-1</CodingPrev>
+  </RailEleCodingTable>
+  <RailEleCodingTable>
+    <GraphType>2</GraphType>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
+    <CodingNext>-1</CodingNext>
+    <CodingPrev>-1</CodingPrev>
+  </RailEleCodingTable>
+  <RailEleCodingTable>
+    <GraphType>3</GraphType>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
+    <CodingEndF>-1</CodingEndF>
+    <CodingNext>-1</CodingNext>
+    <CodingNextF>-1</CodingNextF>
+    <CodingPrev>-1</CodingPrev>
+  </RailEleCodingTable>
+  <RailEleCodingTable>
     <GraphType>1</GraphType>
-    <CodingBegin>2300</CodingBegin>
-    <CodingEnd>2800</CodingEnd>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
+    <CodingNext>-1</CodingNext>
+    <CodingPrev>-1</CodingPrev>
+  </RailEleCodingTable>
+  <RailEleCodingTable>
+    <GraphType>3</GraphType>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
+    <CodingEndF>-1</CodingEndF>
+    <CodingNext>-1</CodingNext>
+    <CodingNextF>-1</CodingNextF>
+    <CodingPrev>-1</CodingPrev>
+  </RailEleCodingTable>
+  <RailEleCodingTable>
+    <GraphType>3</GraphType>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
+    <CodingEndF>-1</CodingEndF>
+    <CodingNext>-1</CodingNext>
+    <CodingNextF>-1</CodingNextF>
+    <CodingPrev>-1</CodingPrev>
+  </RailEleCodingTable>
+  <RailEleCodingTable>
+    <GraphType>3</GraphType>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
+    <CodingEndF>-1</CodingEndF>
+    <CodingNext>-1</CodingNext>
+    <CodingNextF>-1</CodingNextF>
+    <CodingPrev>-1</CodingPrev>
+  </RailEleCodingTable>
+  <RailEleCodingTable>
+    <GraphType>1</GraphType>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
   </RailEleCodingTable>
