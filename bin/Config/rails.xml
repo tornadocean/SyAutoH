@@ -18,8 +18,8 @@
     <rotateAngle>90</rotateAngle>
     <Lenght>360</Lenght>
     <PointListVol>2</PointListVol>
-    <PointList0>{X=484,Y=192}</PointList0>
-    <PointList1>{X=844,Y=192}</PointList1>
+    <PointList0>{X=299,Y=104}</PointList0>
+    <PointList1>{X=659,Y=104}</PointList1>
     <Color>Black</Color>
     <DashStyle>0</DashStyle>
     <PenWidth>3</PenWidth>
@@ -42,13 +42,13 @@
     <SweepAngle>90</SweepAngle>
     <rotateAngle>90</rotateAngle>
     <Radiu>10</Radiu>
-    <Center>{X=844,Y=232}</Center>
-    <FirstDot>{X=854,Y=232}</FirstDot>
-    <SecDot>{X=844,Y=242}</SecDot>
+    <Center>{X=659,Y=144}</Center>
+    <FirstDot>{X=669,Y=144}</FirstDot>
+    <SecDot>{X=659,Y=154}</SecDot>
     <oldRadiu>10</oldRadiu>
-    <oldCenter>{X=844,Y=232}</oldCenter>
-    <oldFirstDot>{X=854,Y=232}</oldFirstDot>
-    <oldSecDot>{X=844,Y=242}</oldSecDot>
+    <oldCenter>{X=659,Y=144}</oldCenter>
+    <oldFirstDot>{X=669,Y=144}</oldFirstDot>
+    <oldSecDot>{X=659,Y=154}</oldSecDot>
     <DirectionCurvedAttribute>0</DirectionCurvedAttribute>
     <Color>Black</Color>
     <DashStyle>0</DashStyle>
@@ -72,13 +72,13 @@
     <SweepAngle>90</SweepAngle>
     <rotateAngle>90</rotateAngle>
     <Radiu>10</Radiu>
-    <Center>{X=484,Y=232}</Center>
-    <FirstDot>{X=484,Y=242}</FirstDot>
-    <SecDot>{X=474,Y=232}</SecDot>
+    <Center>{X=299,Y=144}</Center>
+    <FirstDot>{X=299,Y=154}</FirstDot>
+    <SecDot>{X=289,Y=144}</SecDot>
     <oldRadiu>10</oldRadiu>
-    <oldCenter>{X=484,Y=232}</oldCenter>
-    <oldFirstDot>{X=484,Y=242}</oldFirstDot>
-    <oldSecDot>{X=474,Y=232}</oldSecDot>
+    <oldCenter>{X=299,Y=144}</oldCenter>
+    <oldFirstDot>{X=299,Y=154}</oldFirstDot>
+    <oldSecDot>{X=289,Y=144}</oldSecDot>
     <DirectionCurvedAttribute>1</DirectionCurvedAttribute>
     <Color>Black</Color>
     <DashStyle>0</DashStyle>
@@ -102,13 +102,13 @@
     <SweepAngle>90</SweepAngle>
     <rotateAngle>90</rotateAngle>
     <Radiu>10</Radiu>
-    <Center>{X=484,Y=202}</Center>
-    <FirstDot>{X=474,Y=202}</FirstDot>
-    <SecDot>{X=484,Y=192}</SecDot>
+    <Center>{X=299,Y=114}</Center>
+    <FirstDot>{X=289,Y=114}</FirstDot>
+    <SecDot>{X=299,Y=104}</SecDot>
     <oldRadiu>10</oldRadiu>
-    <oldCenter>{X=484,Y=202}</oldCenter>
-    <oldFirstDot>{X=474,Y=202}</oldFirstDot>
-    <oldSecDot>{X=484,Y=192}</oldSecDot>
+    <oldCenter>{X=299,Y=114}</oldCenter>
+    <oldFirstDot>{X=289,Y=114}</oldFirstDot>
+    <oldSecDot>{X=299,Y=104}</oldSecDot>
     <DirectionCurvedAttribute>2</DirectionCurvedAttribute>
     <Color>Black</Color>
     <DashStyle>0</DashStyle>
@@ -128,17 +128,17 @@
     <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
-    <StartAngle>270</StartAngle>
+    <StartAngle>-90</StartAngle>
     <SweepAngle>90</SweepAngle>
-    <rotateAngle>90</rotateAngle>
+    <rotateAngle>-90</rotateAngle>
     <Radiu>10</Radiu>
-    <Center>{X=844,Y=202}</Center>
-    <FirstDot>{X=844,Y=192}</FirstDot>
-    <SecDot>{X=854,Y=202}</SecDot>
+    <Center>{X=659,Y=114}</Center>
+    <FirstDot>{X=659,Y=104}</FirstDot>
+    <SecDot>{X=669,Y=114}</SecDot>
     <oldRadiu>10</oldRadiu>
-    <oldCenter>{X=844,Y=202}</oldCenter>
-    <oldFirstDot>{X=844,Y=192}</oldFirstDot>
-    <oldSecDot>{X=854,Y=202}</oldSecDot>
+    <oldCenter>{X=659,Y=114}</oldCenter>
+    <oldFirstDot>{X=659,Y=104}</oldFirstDot>
+    <oldSecDot>{X=669,Y=114}</oldSecDot>
     <DirectionCurvedAttribute>3</DirectionCurvedAttribute>
     <Color>Black</Color>
     <DashStyle>0</DashStyle>
@@ -162,8 +162,8 @@
     <rotateAngle>90</rotateAngle>
     <Lenght>30</Lenght>
     <PointListVol>2</PointListVol>
-    <PointList0>{X=854,Y=202}</PointList0>
-    <PointList1>{X=854,Y=232}</PointList1>
+    <PointList0>{X=669,Y=114}</PointList0>
+    <PointList1>{X=669,Y=144}</PointList1>
     <Color>Black</Color>
     <DashStyle>0</DashStyle>
     <PenWidth>3</PenWidth>
@@ -182,88 +182,12 @@
     <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
-    <StartAngle>180</StartAngle>
-    <rotateAngle>90</rotateAngle>
+    <StartAngle>90</StartAngle>
+    <rotateAngle>-90</rotateAngle>
     <Lenght>30</Lenght>
     <PointListVol>2</PointListVol>
-    <PointList0>{X=474,Y=232}</PointList0>
-    <PointList1>{X=474,Y=202}</PointList1>
-    <Color>Black</Color>
-    <DashStyle>0</DashStyle>
-    <PenWidth>3</PenWidth>
-  </RailEleTable>
-  <RailEleTable>
-    <GraphType>3</GraphType>
-    <LocationLock>false</LocationLock>
-    <SizeLock>false</SizeLock>
-    <Selectable>true</Selectable>
-    <Speed>0</Speed>
-    <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>Cross_301</railText>
-    <CodingBegin>-1</CodingBegin>
-    <CodingEnd>-1</CodingEnd>
-    <CodingEndS>-1</CodingEndS>
-    <CodingNext>-1</CodingNext>
-    <CodingNextS>-1</CodingNextS>
-    <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
-    <StartAngle>180</StartAngle>
-    <rotateAngle>90</rotateAngle>
-    <PointListVol>8</PointListVol>
-    <PointList0>{X=484,Y=242}</PointList0>
-    <PointList1>{X=494,Y=242}</PointList1>
-    <PointList2>{X=494,Y=237}</PointList2>
-    <PointList3>{X=509,Y=237}</PointList3>
-    <PointList4>{X=509,Y=242}</PointList4>
-    <PointList5>{X=519,Y=242}</PointList5>
-    <PointList6>{X=494,Y=247}</PointList6>
-    <PointList7>{X=500,Y=253}</PointList7>
-    <Mirror>true</Mirror>
-    <FirstPart>10</FirstPart>
-    <SecPart>15</SecPart>
-    <ThPart>10</ThPart>
-    <FourPart>{X=6,Y=6}</FourPart>
-    <lenghtOfStrai>100</lenghtOfStrai>
-    <DirectionOfCross>2</DirectionOfCross>
-    <Color>Black</Color>
-    <DashStyle>0</DashStyle>
-    <PenWidth>3</PenWidth>
-  </RailEleTable>
-  <RailEleTable>
-    <GraphType>3</GraphType>
-    <LocationLock>false</LocationLock>
-    <SizeLock>false</SizeLock>
-    <Selectable>true</Selectable>
-    <Speed>0</Speed>
-    <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>Cross_302</railText>
-    <CodingBegin>-1</CodingBegin>
-    <CodingEnd>-1</CodingEnd>
-    <CodingEndS>-1</CodingEndS>
-    <CodingNext>-1</CodingNext>
-    <CodingNextS>-1</CodingNextS>
-    <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
-    <StartAngle>180</StartAngle>
-    <rotateAngle>90</rotateAngle>
-    <PointListVol>8</PointListVol>
-    <PointList0>{X=554,Y=242}</PointList0>
-    <PointList1>{X=544,Y=242}</PointList1>
-    <PointList2>{X=544,Y=237}</PointList2>
-    <PointList3>{X=529,Y=237}</PointList3>
-    <PointList4>{X=529,Y=242}</PointList4>
-    <PointList5>{X=519,Y=242}</PointList5>
-    <PointList6>{X=544,Y=247}</PointList6>
-    <PointList7>{X=538,Y=253}</PointList7>
-    <Mirror>false</Mirror>
-    <FirstPart>10</FirstPart>
-    <SecPart>15</SecPart>
-    <ThPart>10</ThPart>
-    <FourPart>{X=6,Y=6}</FourPart>
-    <lenghtOfStrai>100</lenghtOfStrai>
-    <DirectionOfCross>2</DirectionOfCross>
+    <PointList0>{X=289,Y=144}</PointList0>
+    <PointList1>{X=289,Y=114}</PointList1>
     <Color>Black</Color>
     <DashStyle>0</DashStyle>
     <PenWidth>3</PenWidth>
@@ -276,8 +200,8 @@
     <Speed>0</Speed>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Line_104</railText>
-    <CodingBegin>6700</CodingBegin>
-    <CodingEnd>7900</CodingEnd>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
@@ -286,84 +210,8 @@
     <rotateAngle>90</rotateAngle>
     <Lenght>290</Lenght>
     <PointListVol>2</PointListVol>
-    <PointList0>{X=844,Y=242}</PointList0>
-    <PointList1>{X=554,Y=242}</PointList1>
-    <Color>Black</Color>
-    <DashStyle>0</DashStyle>
-    <PenWidth>3</PenWidth>
-  </RailEleTable>
-  <RailEleTable>
-    <GraphType>3</GraphType>
-    <LocationLock>false</LocationLock>
-    <SizeLock>false</SizeLock>
-    <Selectable>true</Selectable>
-    <Speed>0</Speed>
-    <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>Cross_303</railText>
-    <CodingBegin>-1</CodingBegin>
-    <CodingEnd>-1</CodingEnd>
-    <CodingEndS>-1</CodingEndS>
-    <CodingNext>-1</CodingNext>
-    <CodingNextS>-1</CodingNextS>
-    <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
-    <StartAngle>90</StartAngle>
-    <rotateAngle>90</rotateAngle>
-    <PointListVol>8</PointListVol>
-    <PointList0>{X=500,Y=285}</PointList0>
-    <PointList1>{X=500,Y=275}</PointList1>
-    <PointList2>{X=495,Y=275}</PointList2>
-    <PointList3>{X=495,Y=260}</PointList3>
-    <PointList4>{X=500,Y=260}</PointList4>
-    <PointList5>{X=500,Y=250}</PointList5>
-    <PointList6>{X=505,Y=275}</PointList6>
-    <PointList7>{X=520,Y=260}</PointList7>
-    <Mirror>true</Mirror>
-    <FirstPart>10</FirstPart>
-    <SecPart>15</SecPart>
-    <ThPart>10</ThPart>
-    <FourPart>{X=15,Y=15}</FourPart>
-    <lenghtOfStrai>100</lenghtOfStrai>
-    <DirectionOfCross>1</DirectionOfCross>
-    <Color>Black</Color>
-    <DashStyle>0</DashStyle>
-    <PenWidth>3</PenWidth>
-  </RailEleTable>
-  <RailEleTable>
-    <GraphType>3</GraphType>
-    <LocationLock>false</LocationLock>
-    <SizeLock>false</SizeLock>
-    <Selectable>true</Selectable>
-    <Speed>0</Speed>
-    <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>Cross_304</railText>
-    <CodingBegin>-1</CodingBegin>
-    <CodingEnd>-1</CodingEnd>
-    <CodingEndS>-1</CodingEndS>
-    <CodingNext>-1</CodingNext>
-    <CodingNextS>-1</CodingNextS>
-    <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
-    <StartAngle>-90</StartAngle>
-    <rotateAngle>90</rotateAngle>
-    <PointListVol>8</PointListVol>
-    <PointList0>{X=538,Y=285}</PointList0>
-    <PointList1>{X=538,Y=275}</PointList1>
-    <PointList2>{X=543,Y=275}</PointList2>
-    <PointList3>{X=543,Y=260}</PointList3>
-    <PointList4>{X=538,Y=260}</PointList4>
-    <PointList5>{X=538,Y=250}</PointList5>
-    <PointList6>{X=533,Y=275}</PointList6>
-    <PointList7>{X=518,Y=260}</PointList7>
-    <Mirror>false</Mirror>
-    <FirstPart>10</FirstPart>
-    <SecPart>15</SecPart>
-    <ThPart>10</ThPart>
-    <FourPart>{X=15,Y=15}</FourPart>
-    <lenghtOfStrai>100</lenghtOfStrai>
-    <DirectionOfCross>3</DirectionOfCross>
+    <PointList0>{X=659,Y=154}</PointList0>
+    <PointList1>{X=369,Y=154}</PointList1>
     <Color>Black</Color>
     <DashStyle>0</DashStyle>
     <PenWidth>3</PenWidth>
@@ -376,18 +224,18 @@
     <Speed>0</Speed>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Line_105</railText>
-    <CodingBegin>2800</CodingBegin>
-    <CodingEnd>5100</CodingEnd>
+    <CodingBegin>0</CodingBegin>
+    <CodingEnd>2300</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>90</StartAngle>
-    <rotateAngle>-90</rotateAngle>
+    <rotateAngle>90</rotateAngle>
     <Lenght>300</Lenght>
     <PointListVol>2</PointListVol>
-    <PointList0>{X=500,Y=585}</PointList0>
-    <PointList1>{X=500,Y=285}</PointList1>
+    <PointList0>{X=358,Y=194}</PointList0>
+    <PointList1>{X=358,Y=494}</PointList1>
     <Color>Black</Color>
     <DashStyle>0</DashStyle>
     <PenWidth>3</PenWidth>
@@ -400,78 +248,18 @@
     <Speed>0</Speed>
     <DrawMultiFactor>1</DrawMultiFactor>
     <railText>Line_106</railText>
-    <CodingBegin>0</CodingBegin>
-    <CodingEnd>2300</CodingEnd>
-    <CodingNext>2300</CodingNext>
-    <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
-    <StartAngle>90</StartAngle>
-    <rotateAngle>90</rotateAngle>
-    <Lenght>300</Lenght>
-    <PointListVol>2</PointListVol>
-    <PointList0>{X=538,Y=285}</PointList0>
-    <PointList1>{X=538,Y=585}</PointList1>
-    <Color>Black</Color>
-    <DashStyle>0</DashStyle>
-    <PenWidth>3</PenWidth>
-  </RailEleTable>
-  <RailEleTable>
-    <GraphType>2</GraphType>
-    <LocationLock>false</LocationLock>
-    <SizeLock>false</SizeLock>
-    <Selectable>true</Selectable>
-    <Speed>0</Speed>
-    <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>Curve_205</railText>
-    <CodingBegin>2300</CodingBegin>
-    <CodingEnd>2300</CodingEnd>
-    <CodingNext>2300</CodingNext>
-    <CodingPrev>2300</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
-    <StartAngle>0</StartAngle>
-    <SweepAngle>90</SweepAngle>
-    <rotateAngle>90</rotateAngle>
-    <Radiu>10</Radiu>
-    <Center>{X=528,Y=585}</Center>
-    <FirstDot>{X=538,Y=585}</FirstDot>
-    <SecDot>{X=528,Y=595}</SecDot>
-    <oldRadiu>10</oldRadiu>
-    <oldCenter>{X=528,Y=585}</oldCenter>
-    <oldFirstDot>{X=538,Y=585}</oldFirstDot>
-    <oldSecDot>{X=528,Y=595}</oldSecDot>
-    <DirectionCurvedAttribute>0</DirectionCurvedAttribute>
-    <Color>Black</Color>
-    <DashStyle>0</DashStyle>
-    <PenWidth>3</PenWidth>
-  </RailEleTable>
-  <RailEleTable>
-    <GraphType>2</GraphType>
-    <LocationLock>false</LocationLock>
-    <SizeLock>false</SizeLock>
-    <Selectable>true</Selectable>
-    <Speed>0</Speed>
-    <DrawMultiFactor>1</DrawMultiFactor>
-    <railText>Curve_206</railText>
     <CodingBegin>2800</CodingBegin>
-    <CodingEnd>2800</CodingEnd>
+    <CodingEnd>5100</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
     <startPoint>{X=0,Y=0}</startPoint>
     <endPoint>{X=0,Y=0}</endPoint>
     <StartAngle>90</StartAngle>
-    <SweepAngle>90</SweepAngle>
-    <rotateAngle>90</rotateAngle>
-    <Radiu>10</Radiu>
-    <Center>{X=510,Y=585}</Center>
-    <FirstDot>{X=510,Y=595}</FirstDot>
-    <SecDot>{X=500,Y=585}</SecDot>
-    <oldRadiu>10</oldRadiu>
-    <oldCenter>{X=510,Y=585}</oldCenter>
-    <oldFirstDot>{X=510,Y=595}</oldFirstDot>
-    <oldSecDot>{X=500,Y=585}</oldSecDot>
-    <DirectionCurvedAttribute>1</DirectionCurvedAttribute>
+    <rotateAngle>-90</rotateAngle>
+    <Lenght>300</Lenght>
+    <PointListVol>2</PointListVol>
+    <PointList0>{X=320,Y=494}</PointList0>
+    <PointList1>{X=320,Y=194}</PointList1>
     <Color>Black</Color>
     <DashStyle>0</DashStyle>
     <PenWidth>3</PenWidth>
@@ -494,8 +282,236 @@
     <rotateAngle>90</rotateAngle>
     <Lenght>18</Lenght>
     <PointListVol>2</PointListVol>
-    <PointList0>{X=528,Y=595}</PointList0>
-    <PointList1>{X=510,Y=595}</PointList1>
+    <PointList0>{X=348,Y=504}</PointList0>
+    <PointList1>{X=330,Y=504}</PointList1>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
+  </RailEleTable>
+  <RailEleTable>
+    <GraphType>2</GraphType>
+    <LocationLock>false</LocationLock>
+    <SizeLock>false</SizeLock>
+    <Selectable>true</Selectable>
+    <Speed>0</Speed>
+    <DrawMultiFactor>1</DrawMultiFactor>
+    <railText>Curve_205</railText>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
+    <CodingNext>-1</CodingNext>
+    <CodingPrev>-1</CodingPrev>
+    <startPoint>{X=0,Y=0}</startPoint>
+    <endPoint>{X=0,Y=0}</endPoint>
+    <StartAngle>0</StartAngle>
+    <SweepAngle>90</SweepAngle>
+    <rotateAngle>90</rotateAngle>
+    <Radiu>10</Radiu>
+    <Center>{X=348,Y=494}</Center>
+    <FirstDot>{X=358,Y=494}</FirstDot>
+    <SecDot>{X=348,Y=504}</SecDot>
+    <oldRadiu>10</oldRadiu>
+    <oldCenter>{X=348,Y=494}</oldCenter>
+    <oldFirstDot>{X=358,Y=494}</oldFirstDot>
+    <oldSecDot>{X=348,Y=504}</oldSecDot>
+    <DirectionCurvedAttribute>0</DirectionCurvedAttribute>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
+  </RailEleTable>
+  <RailEleTable>
+    <GraphType>2</GraphType>
+    <LocationLock>false</LocationLock>
+    <SizeLock>false</SizeLock>
+    <Selectable>true</Selectable>
+    <Speed>0</Speed>
+    <DrawMultiFactor>1</DrawMultiFactor>
+    <railText>Curve_206</railText>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
+    <CodingNext>-1</CodingNext>
+    <CodingPrev>-1</CodingPrev>
+    <startPoint>{X=0,Y=0}</startPoint>
+    <endPoint>{X=0,Y=0}</endPoint>
+    <StartAngle>90</StartAngle>
+    <SweepAngle>90</SweepAngle>
+    <rotateAngle>90</rotateAngle>
+    <Radiu>10</Radiu>
+    <Center>{X=330,Y=494}</Center>
+    <FirstDot>{X=330,Y=504}</FirstDot>
+    <SecDot>{X=320,Y=494}</SecDot>
+    <oldRadiu>10</oldRadiu>
+    <oldCenter>{X=330,Y=494}</oldCenter>
+    <oldFirstDot>{X=330,Y=504}</oldFirstDot>
+    <oldSecDot>{X=320,Y=494}</oldSecDot>
+    <DirectionCurvedAttribute>1</DirectionCurvedAttribute>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
+  </RailEleTable>
+  <RailEleTable>
+    <GraphType>3</GraphType>
+    <LocationLock>false</LocationLock>
+    <SizeLock>false</SizeLock>
+    <Selectable>true</Selectable>
+    <Speed>0</Speed>
+    <DrawMultiFactor>1</DrawMultiFactor>
+    <railText>Cross_301</railText>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
+    <CodingEndF>-1</CodingEndF>
+    <CodingNext>-1</CodingNext>
+    <CodingNextF>-1</CodingNextF>
+    <CodingPrev>-1</CodingPrev>
+    <startPoint>{X=0,Y=0}</startPoint>
+    <endPoint>{X=0,Y=0}</endPoint>
+    <StartAngle>180</StartAngle>
+    <rotateAngle>90</rotateAngle>
+    <PointListVol>3</PointListVol>
+    <PointList0>{X=309,Y=154}</PointList0>
+    <PointList1>{X=319,Y=154}</PointList1>
+    <PointList2>{X=320,Y=165}</PointList2>
+    <Mirror>true</Mirror>
+    <lenght>10</lenght>
+    <lenghtFork>15</lenghtFork>
+    <DirectionOfCross>2</DirectionOfCross>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
+  </RailEleTable>
+  <RailEleTable>
+    <GraphType>1</GraphType>
+    <LocationLock>false</LocationLock>
+    <SizeLock>false</SizeLock>
+    <Selectable>true</Selectable>
+    <Speed>0</Speed>
+    <DrawMultiFactor>1</DrawMultiFactor>
+    <railText>Line_108</railText>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
+    <CodingNext>-1</CodingNext>
+    <CodingPrev>-1</CodingPrev>
+    <startPoint>{X=0,Y=0}</startPoint>
+    <endPoint>{X=0,Y=0}</endPoint>
+    <StartAngle>180</StartAngle>
+    <rotateAngle>90</rotateAngle>
+    <Lenght>10</Lenght>
+    <PointListVol>2</PointListVol>
+    <PointList0>{X=309,Y=154}</PointList0>
+    <PointList1>{X=299,Y=154}</PointList1>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
+  </RailEleTable>
+  <RailEleTable>
+    <GraphType>3</GraphType>
+    <LocationLock>false</LocationLock>
+    <SizeLock>false</SizeLock>
+    <Selectable>true</Selectable>
+    <Speed>0</Speed>
+    <DrawMultiFactor>1</DrawMultiFactor>
+    <railText>Cross_302</railText>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
+    <CodingEndF>-1</CodingEndF>
+    <CodingNext>-1</CodingNext>
+    <CodingNextF>-1</CodingNextF>
+    <CodingPrev>-1</CodingPrev>
+    <startPoint>{X=0,Y=0}</startPoint>
+    <endPoint>{X=0,Y=0}</endPoint>
+    <StartAngle>180</StartAngle>
+    <rotateAngle>90</rotateAngle>
+    <PointListVol>3</PointListVol>
+    <PointList0>{X=369,Y=154}</PointList0>
+    <PointList1>{X=359,Y=154}</PointList1>
+    <PointList2>{X=358,Y=165}</PointList2>
+    <Mirror>false</Mirror>
+    <lenght>10</lenght>
+    <lenghtFork>15</lenghtFork>
+    <DirectionOfCross>2</DirectionOfCross>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
+  </RailEleTable>
+  <RailEleTable>
+    <GraphType>3</GraphType>
+    <LocationLock>false</LocationLock>
+    <SizeLock>false</SizeLock>
+    <Selectable>true</Selectable>
+    <Speed>0</Speed>
+    <DrawMultiFactor>1</DrawMultiFactor>
+    <railText>Cross_303</railText>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
+    <CodingEndF>-1</CodingEndF>
+    <CodingNext>-1</CodingNext>
+    <CodingNextF>-1</CodingNextF>
+    <CodingPrev>-1</CodingPrev>
+    <startPoint>{X=0,Y=0}</startPoint>
+    <endPoint>{X=0,Y=0}</endPoint>
+    <StartAngle>270</StartAngle>
+    <rotateAngle>90</rotateAngle>
+    <PointListVol>3</PointListVol>
+    <PointList0>{X=358,Y=194}</PointList0>
+    <PointList1>{X=358,Y=164}</PointList1>
+    <PointList2>{X=338,Y=174}</PointList2>
+    <Mirror>false</Mirror>
+    <lenght>30</lenght>
+    <lenghtFork>28</lenghtFork>
+    <DirectionOfCross>3</DirectionOfCross>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
+  </RailEleTable>
+  <RailEleTable>
+    <GraphType>3</GraphType>
+    <LocationLock>false</LocationLock>
+    <SizeLock>false</SizeLock>
+    <Selectable>true</Selectable>
+    <Speed>0</Speed>
+    <DrawMultiFactor>1</DrawMultiFactor>
+    <railText>Cross_304</railText>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
+    <CodingEndF>-1</CodingEndF>
+    <CodingNext>-1</CodingNext>
+    <CodingNextF>-1</CodingNextF>
+    <CodingPrev>-1</CodingPrev>
+    <startPoint>{X=0,Y=0}</startPoint>
+    <endPoint>{X=0,Y=0}</endPoint>
+    <StartAngle>270</StartAngle>
+    <rotateAngle>90</rotateAngle>
+    <PointListVol>3</PointListVol>
+    <PointList0>{X=320,Y=194}</PointList0>
+    <PointList1>{X=320,Y=164}</PointList1>
+    <PointList2>{X=340,Y=174}</PointList2>
+    <Mirror>true</Mirror>
+    <lenght>30</lenght>
+    <lenghtFork>28</lenghtFork>
+    <DirectionOfCross>3</DirectionOfCross>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
+  </RailEleTable>
+  <RailEleTable>
+    <GraphType>1</GraphType>
+    <LocationLock>false</LocationLock>
+    <SizeLock>false</SizeLock>
+    <Selectable>true</Selectable>
+    <Speed>0</Speed>
+    <DrawMultiFactor>1</DrawMultiFactor>
+    <railText>Line_109</railText>
+    <CodingBegin>-1</CodingBegin>
+    <CodingEnd>-1</CodingEnd>
+    <CodingNext>-1</CodingNext>
+    <CodingPrev>-1</CodingPrev>
+    <startPoint>{X=0,Y=0}</startPoint>
+    <endPoint>{X=0,Y=0}</endPoint>
+    <StartAngle>180</StartAngle>
+    <rotateAngle>90</rotateAngle>
+    <Lenght>40</Lenght>
+    <PointListVol>2</PointListVol>
+    <PointList0>{X=359,Y=154}</PointList0>
+    <PointList1>{X=319,Y=154}</PointList1>
     <Color>Black</Color>
     <DashStyle>0</DashStyle>
     <PenWidth>3</PenWidth>
