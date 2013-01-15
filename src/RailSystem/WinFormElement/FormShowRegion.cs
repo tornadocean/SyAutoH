@@ -37,8 +37,10 @@ namespace WinFormElement
                 Debug.WriteLine(string.Format("read xml error is {0}", exp));
             }
             DataTable dt = ds.Tables[0];
-            Mcs.RailSystem.Common.ReadSaveFile rFile = new Mcs.RailSystem.Common.ReadSaveFile();
-            rFile.InitDataTable(dt);
+    //        Mcs.RailSystem.Common.ReadSaveFile rFile = new Mcs.RailSystem.Common.ReadSaveFile();
+            Mcs.RailSystem.Common.DrawDoc doc = new Mcs.RailSystem.Common.DrawDoc();
+            doc.InitDataTable(dt);
+   //         rFile.InitDataTable(dt);
             try 
             {
                 for (int i = 0; i < dt.Rows.Count; i++)
@@ -47,17 +49,20 @@ namespace WinFormElement
                     {
                         case 1:
                             StraightEle line = new StraightEle();
-                            rFile.ReadDataFromRow(i, line);
+                   //         rFile.ReadDataFromRow(i, line);
+                            doc.ReadDataFromRow(i, line);
                             railInfoEleList.Add(line);
                             break;
                         case 2:
                             CurvedEle curve = new CurvedEle();
-                            rFile.ReadDataFromRow(i, curve);
+                    //        rFile.ReadDataFromRow(i, curve);
+                            doc.ReadDataFromRow(i, curve);
                             railInfoEleList.Add(curve);
                             break;
                         case 3:
                             CrossEle cross = new CrossEle();
-                            rFile.ReadDataFromRow(i,cross);
+                  //          rFile.ReadDataFromRow(i,cross);
+                            doc.ReadDataFromRow(i, cross);
                             railInfoEleList.Add(cross);
                             break;
                     }
