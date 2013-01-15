@@ -472,9 +472,9 @@ namespace RailDraw
 
         private bool OpenXmlFile(DataSet ds)
         {
-            Mcs.RailSystem.Common.ReadSaveFile rFile = new Mcs.RailSystem.Common.ReadSaveFile();
+            Mcs.RailSystem.Common.DrawDoc doc = new Mcs.RailSystem.Common.DrawDoc();
             DataTable dt = ds.Tables[0];
-            rFile.InitDataTable(dt);
+            doc.InitDataTable(dt);
 
             try
             {
@@ -484,17 +484,17 @@ namespace RailDraw
                     {
                         case 1:
                             RailEleLine line = new RailEleLine();
-                            rFile.ReadDataFromRow(i, line);
+                            doc.ReadDataFromRow(i, line);
                             AddElement(line);
                             break;
                         case 2:
                             RailEleCurve curve = new RailEleCurve();
-                            rFile.ReadDataFromRow(i, curve);
+                            doc.ReadDataFromRow(i, curve);
                             AddElement(curve);
                             break;
                         case 3:
                             RailEleCross cross = new RailEleCross();
-                            rFile.ReadDataFromRow(i, cross);
+                            doc.ReadDataFromRow(i, cross);
                             AddElement(cross);
                             break;
                     }
