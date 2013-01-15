@@ -43,6 +43,8 @@ namespace WinFormElement
         public void ShowRegion(Graphics canvas)
         {
             //RemoveLencyOHT();
+            canvas.SmoothingMode = SmoothingMode.HighQuality;
+            canvas.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
             GraphicsContainer moveContainer = canvas.BeginContainer();
             canvas.TranslateTransform(formShowRegion.canvasMoveX, formShowRegion.canvasMoveY);

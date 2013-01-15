@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Data;
 using System.ComponentModel;
 
 namespace BaseRailElement
@@ -314,55 +313,6 @@ namespace BaseRailElement
                 return true;
             return false;
         }
-
-        public override DataRow SaveEleInfo(DataTable dt)
-        {
-            DataRow dr = dt.NewRow();
-            dr["GraphType"] = GraphType;
-            dr["LocationLock"] = locationLock;
-            dr["SizeLock"] = sizeLock;
-            dr["Selectable"] = Selectable;
-            dr["Speed"] = Speed;
-            dr["CodingBegin"] = CodingBegin;
-            dr["CodingEnd"] = CodingEnd;
-            dr["CodingNext"] = CodingNext;
-            dr["CodingPrev"] = CodingPrev;
-            dr["Lenght"] = Lenght;
-            dr["StartAngle"] = StartAngle;
-            dr["rotateAngle"] = RotateAngle;
-            dr["PointListVol"] = PointList.Count;
-            for (int i = 0; i < PointList.Count; i++)
-            {
-                dr["PointList" + i.ToString()] = PointList[i].ToString();
-            }
-
-            dr["DrawMultiFactor"] = DrawMultiFactor;
-            dr["startPoint"] = StartPoint.ToString();
-            dr["endPoint"] = EndPoint.ToString();
-            dr["railText"] = railText;
-
-            dr["Color"] = ColorTranslator.ToHtml(PenLine.Color);
-            dr["DashStyle"] = PenLine.DashStyle;
-            dr["PenWidth"] = PenLine.Width;
-
-            dt.Rows.Add(dr);
-            return dr;
-        }
-
-        public override DataRow SaveCodingInfo(DataTable dt)
-        {
-            DataRow dr = dt.NewRow();
-
-            dr["GraphType"] = GraphType;
-            dr["CodingBegin"] = CodingBegin;
-            dr["CodingEnd"] = CodingEnd;
-            dr["CodingNext"] = CodingNext;
-            dr["CodingPrev"] = CodingPrev;
-
-            dt.Rows.Add(dr);
-            return dr;
-        }
-
 
         public object Clone(string str)
         {

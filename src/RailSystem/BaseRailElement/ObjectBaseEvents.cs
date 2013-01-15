@@ -11,8 +11,8 @@ namespace BaseRailElement
 {
     public class ObjectBaseEvents : BaseEvents
     {
-        protected static DrawDoc document = DrawDoc.EmptyDocument;
-        public static DrawDoc Document
+        protected static DrawDocOp document = DrawDocOp.EmptyDocument;
+        public static DrawDocOp Document
         {
             get { return document; }
             set { document = value; }
