@@ -13,129 +13,17 @@ using System.Data;
 
 namespace BaseRailElement
 {
-    [XmlInclude(typeof(RailLabal))]
-
-    public class DrawDoc : Mcs.RailSystem.Common.BaseRailEle
+    public class DrawDocOp : Mcs.RailSystem.Common.DrawDoc 
     {
-        public DataSet dsEle = new DataSet();
-        public DataTable dtEle = new DataTable("RailEleTable");
-
-        public DataSet dsEleCoding = new DataSet();
-        public DataTable dtEleCoding = new DataTable("RailEleCodingTable");
-
-        private string _name = "";
-        [Browsable(false)]
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
-
-        [
-        XmlArrayItem(Type = typeof(RailLabal)),
-        ]
-
-        [XmlIgnore]
-        public static DrawDoc EmptyDocument
-        {
-            get { return new DrawDoc(); }
-        }
-
-        List<Mcs.RailSystem.Common.BaseRailEle> drawObjectList = new List<Mcs.RailSystem.Common.BaseRailEle>();
-        [Browsable(false)]
-        public List<Mcs.RailSystem.Common.BaseRailEle> DrawObjectList
-        {
-            get { return drawObjectList; }
-        }
-
-        List<Mcs.RailSystem.Common.BaseRailEle> selectedDrawObjectList = new List<Mcs.RailSystem.Common.BaseRailEle>();
-        [XmlIgnore]
-        [Browsable(false)]
-        public List<Mcs.RailSystem.Common.BaseRailEle> SelectedDrawObjectList
-        {
-            get { return selectedDrawObjectList; }
-        }
-
-        public List<Mcs.RailSystem.Common.BaseRailEle> CutAndCopyObjectList = new List<Mcs.RailSystem.Common.BaseRailEle>();
-
-        private Mcs.RailSystem.Common.BaseRailEle lastHitedObject = null;
-
-        private enum CutOrCopy
-        {
-            CutOp, CopyOp, NoneOp
-        }
-        private CutOrCopy _CutOrCopy = CutOrCopy.NoneOp;
-
-        private bool chooseObject = false;
-        private Point downPoint = Point.Empty;
-        private Point lastPoint = Point.Empty;
-
-        public DrawDoc()
+        public DrawDocOp()
         {
             InitDTEle();
             InitDTEleCoding();
         }
 
-        private void InitDTEle()
+        public static DrawDocOp EmptyDocument
         {
-            dtEle.Columns.Add("GraphType", typeof(int));
-            dtEle.Columns.Add("LocationLock", typeof(bool));
-            dtEle.Columns.Add("SizeLock", typeof(bool));
-            dtEle.Columns.Add("Selectable", typeof(bool));
-            dtEle.Columns.Add("Speed", typeof(float));
-            dtEle.Columns.Add("SegmentNumber", typeof(Int16));
-            dtEle.Columns.Add("TagNumber", typeof(int));
-            dtEle.Columns.Add("DrawMultiFactor", typeof(Int16));
-            dtEle.Columns.Add("railText", typeof(string));
-            dtEle.Columns.Add("CodingBegin", typeof(int));
-            dtEle.Columns.Add("CodingEnd", typeof(int));
-            dtEle.Columns.Add("CodingEndF", typeof(Int32));
-            dtEle.Columns.Add("CodingNext", typeof(int));
-            dtEle.Columns.Add("CodingNextF", typeof(Int32));
-            dtEle.Columns.Add("CodingPrev", typeof(int));
-            dtEle.Columns.Add("startPoint", typeof(string));
-            dtEle.Columns.Add("endPoint", typeof(string));
-            dtEle.Columns.Add("StartAngle", typeof(int));
-            dtEle.Columns.Add("SweepAngle", typeof(int));
-            dtEle.Columns.Add("rotateAngle", typeof(int));
-            dtEle.Columns.Add("StartDot", typeof(string));
-
-            dtEle.Columns.Add("Lenght", typeof(int));
-            dtEle.Columns.Add("PointListVol", typeof(Int16));
-            for (int i = 0; i < 3; i++)
-            {
-                dtEle.Columns.Add("PointList" + i.ToString(), typeof(string));
-            }
-
-            dtEle.Columns.Add("Radiu", typeof(int));
-            dtEle.Columns.Add("Center", typeof(string));
-            dtEle.Columns.Add("FirstDot", typeof(string));
-            dtEle.Columns.Add("SecDot", typeof(string));
-            dtEle.Columns.Add("oldRadiu", typeof(Int32));
-            dtEle.Columns.Add("oldCenter", typeof(string));
-            dtEle.Columns.Add("oldFirstDot", typeof(string));
-            dtEle.Columns.Add("oldSecDot", typeof(string));
-            dtEle.Columns.Add("DirectionCurvedAttribute", typeof(int));
-
-            dtEle.Columns.Add("Mirror", typeof(bool));
-            dtEle.Columns.Add("lenght", typeof(Int32));
-            dtEle.Columns.Add("lenghtFork", typeof(Int32));
-            dtEle.Columns.Add("DirectionOfCross", typeof(int));
-
-            dtEle.Columns.Add("Color", typeof(string));
-            dtEle.Columns.Add("DashStyle", typeof(DashStyle));
-            dtEle.Columns.Add("PenWidth", typeof(float));
-        }
-
-        private void InitDTEleCoding()
-        {
-            dtEleCoding.Columns.Add("GraphType", typeof(int));
-            dtEleCoding.Columns.Add("CodingBegin", typeof(int));
-            dtEleCoding.Columns.Add("CodingEnd", typeof(int));
-            dtEleCoding.Columns.Add("CodingEndF", typeof(int));
-            dtEleCoding.Columns.Add("CodingNext", typeof(int));
-            dtEleCoding.Columns.Add("CodingNextF", typeof(int));
-            dtEleCoding.Columns.Add("CodingPrev", typeof(int));
+            get { return new DrawDocOp(); }
         }
 
         public override void Draw(Graphics canvas)
@@ -222,7 +110,7 @@ namespace BaseRailElement
                 {
                     CutAndCopyObjectList.Add(o);
                 }
-                _CutOrCopy = CutOrCopy.CutOp;
+                cutOrCopy = CutOrCopy.CutOp;
             }
         }
 
@@ -235,7 +123,7 @@ namespace BaseRailElement
                 {
                     CutAndCopyObjectList.Add(o);
                 }
-                _CutOrCopy = CutOrCopy.CopyOp;
+                cutOrCopy = CutOrCopy.CopyOp;
             }
         }
 
@@ -243,7 +131,7 @@ namespace BaseRailElement
         {
             if (CutAndCopyObjectList.Count > 0)
             {
-                if (_CutOrCopy == CutOrCopy.CutOp)
+                if (cutOrCopy == CutOrCopy.CutOp)
                 {
                     int n = selectedDrawObjectList.Count;
                     foreach (Mcs.RailSystem.Common.BaseRailEle obj in selectedDrawObjectList)
@@ -251,7 +139,7 @@ namespace BaseRailElement
                         drawObjectList.Remove(obj);
                     }
                 }
-                else if (_CutOrCopy == CutOrCopy.CopyOp)
+                else if (cutOrCopy == CutOrCopy.CopyOp)
                 {
                     Mcs.RailSystem.Common.BaseRailEle o = CutAndCopyObjectList[0];
                     if (1 == o.GraphType)
@@ -344,7 +232,7 @@ namespace BaseRailElement
             int num = drawObjectList.Count;
             for (int i = 0; i < num; i++)
             {
-                drawObjectList[i].SaveEleInfo(dtEle);
+                SaveElementInfo(drawObjectList[i]);
             }
             dsEle.Tables.Add(dtEle);
         }
@@ -356,7 +244,7 @@ namespace BaseRailElement
             int num = drawObjectList.Count;
             for (int i = 0; i < num; i++)
             {
-                drawObjectList[i].SaveCodingInfo(dtEleCoding);
+                SaveCodingInfo(drawObjectList[i]);
             }
             dsEleCoding.Tables.Add(dtEleCoding);
         }
