@@ -22,7 +22,7 @@ namespace RailDraw
         public PropertyPage proPage = new PropertyPage();
         public WorkRegion workRegion = new WorkRegion();
         public Tools tools = new Tools();
-        public BaseRailElement.DrawDoc drawDoc = new BaseRailElement.DrawDoc();
+        public BaseRailElement.DrawDocOp drawDoc = new BaseRailElement.DrawDocOp();
         public BaseRailElement.ObjectBaseEvents objectEvent = new BaseRailElement.ObjectBaseEvents();
         private bool mouseIsDown = false;
         private bool drapIsDown = false;
@@ -328,8 +328,8 @@ namespace RailDraw
                     string projectpath = sProjectPath;
                     string projectcodingpath = projectpath.Substring(0, projectpath.Length - 4) + "_coding.xml";
                     drawDoc.DataXmlSave();
-                    drawDoc.dsEle.WriteXml(projectpath);
-                    drawDoc.dsEleCoding.WriteXml(projectcodingpath);
+                    drawDoc.DsEle.WriteXml(projectpath);
+                    drawDoc.DsEleCoding.WriteXml(projectcodingpath);
                 }
                 catch(Exception ex)
                 {
@@ -458,8 +458,8 @@ namespace RailDraw
                     string projectpath = sFile.FileName;
                     string projectcodingpath = projectpath.Substring(0, projectpath.Length - 4) + "_coding.xml";
                     drawDoc.DataXmlSave();
-                    drawDoc.dsEle.WriteXml(projectpath);
-                    drawDoc.dsEleCoding.WriteXml(projectcodingpath);
+                    drawDoc.DsEle.WriteXml(projectpath);
+                    drawDoc.DsEleCoding.WriteXml(projectcodingpath);
                     sProjectPath = projectpath;
                     UpdateFormTitle();
                 }
