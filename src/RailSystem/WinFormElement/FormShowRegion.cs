@@ -37,8 +37,8 @@ namespace WinFormElement
                 Debug.WriteLine(string.Format("read xml error is {0}", exp));
             }
             DataTable dt = ds.Tables[0];
-            Mcs.RailSystem.Common.ReadSaveFile rFile = new Mcs.RailSystem.Common.ReadSaveFile();
-            rFile.InitDataTable(dt);
+            Mcs.RailSystem.Common.DrawDoc doc = new Mcs.RailSystem.Common.DrawDoc();
+            doc.InitDataTable(dt);
             try 
             {
                 for (int i = 0; i < dt.Rows.Count; i++)
@@ -47,17 +47,17 @@ namespace WinFormElement
                     {
                         case 1:
                             StraightEle line = new StraightEle();
-                            rFile.ReadDataFromRow(i, line);
+                            doc.ReadDataFromRow(i, line);
                             railInfoEleList.Add(line);
                             break;
                         case 2:
                             CurvedEle curve = new CurvedEle();
-                            rFile.ReadDataFromRow(i, curve);
+                            doc.ReadDataFromRow(i, curve);
                             railInfoEleList.Add(curve);
                             break;
                         case 3:
                             CrossEle cross = new CrossEle();
-                            rFile.ReadDataFromRow(i,cross);
+                            doc.ReadDataFromRow(i, cross);
                             railInfoEleList.Add(cross);
                             break;
                     }
@@ -84,6 +84,7 @@ namespace WinFormElement
                 {
                     case 1:
                         StraightEle strTemp = (StraightEle)obj;
+                        pen.Width = strTemp.PenWidth;
                         canvas.DrawLine(pen, strTemp.PointList[0], strTemp.PointList[1]);
                         break;
                     case 2:
@@ -93,19 +94,23 @@ namespace WinFormElement
                         rc.Size = new Size(curTemp.Radiu * 2, curTemp.Radiu * 2);
                         GraphicsPath gp = new GraphicsPath();
                         gp.AddArc(rc, curTemp.StartAngle, curTemp.SweepAngle);
+                        pen.Width = curTemp.PenWidth;
                         canvas.DrawPath(pen, gp);
                         gp.Dispose();
                         break;
                     case 3:
                         CrossEle croTemp = (CrossEle)obj;
                         int n = croTemp.PointList.Count;
-                        Point[] pts = new Point[2];
-                        for (int i = 0; i < n; i++, i++)
+                        Point[] pts = new Point[n];
+                        for (int i = 0; i < n; i++)
                         {
-                            pts[0] = croTemp.PointList[i];
-                            pts[1] = croTemp.PointList[i + 1];
-                            canvas.DrawLines(pen, pts);
+                            pts[i] = croTemp.PointList[i];
                         }
+                        pen.Width = croTemp.PenWidth;
+                        canvas.DrawLine(pen, pts[0], pts[2]);
+                        pen.DashStyle = DashStyle.Dot;
+                        canvas.DrawLine(pen, pts[0], pts[1]);
+                        pen.DashStyle = DashStyle.Solid;
                         break;
                     default:
                         break;
@@ -291,50 +296,50 @@ namespace WinFormElement
                         break;
                     case 3:
                         CrossEle croEle = (CrossEle)obj;
-                        if (croEle.PointList[0].Y == croEle.PointList[5].Y)
+                        if (croEle.PointList[0].Y == croEle.PointList[1].Y)
                         {
-                            if (croEle.PointList[0].X < croEle.PointList[5].X)
+                            if (croEle.PointList[0].X < croEle.PointList[1].X)
                             {
                                 ptTempMinX = croEle.PointList[0];
-                                ptTempMaxX = croEle.PointList[5];
+                                ptTempMaxX = croEle.PointList[1];
                             }
-                            else if (croEle.PointList[0].X > croEle.PointList[5].X)
+                            else if (croEle.PointList[0].X > croEle.PointList[1].X)
                             {
-                                ptTempMinX = croEle.PointList[5];
+                                ptTempMinX = croEle.PointList[1];
                                 ptTempMaxX = croEle.PointList[0];
                             }
-                            if (croEle.PointList[3].Y < croEle.PointList[7].Y)
-                            {
-                                ptTempMinY = croEle.PointList[3];
-                                ptTempMaxY = croEle.PointList[7];
-                            }
-                            else if (croEle.PointList[3].Y > croEle.PointList[7].Y)
-                            {
-                                ptTempMinY = croEle.PointList[7];
-                                ptTempMaxY = croEle.PointList[3];
-                            }
-                        }
-                        else if (croEle.PointList[0].X == croEle.PointList[5].X)
-                        {
-                            if (croEle.PointList[0].Y < croEle.PointList[5].Y)
+                            if (croEle.PointList[0].Y < croEle.PointList[2].Y)
                             {
                                 ptTempMinY = croEle.PointList[0];
-                                ptTempMaxY = croEle.PointList[5];
+                                ptTempMaxY = croEle.PointList[2];
                             }
-                            else if (croEle.PointList[0].Y > croEle.PointList[5].Y)
+                            else if (croEle.PointList[0].Y > croEle.PointList[2].Y)
                             {
-                                ptTempMinY = croEle.PointList[5];
+                                ptTempMinY = croEle.PointList[2];
                                 ptTempMaxY = croEle.PointList[0];
                             }
-                            if (croEle.PointList[3].X < croEle.PointList[7].X)
+                        }
+                        else if (croEle.PointList[0].X == croEle.PointList[1].X)
+                        {
+                            if (croEle.PointList[0].Y < croEle.PointList[1].Y)
                             {
-                                ptTempMinX = croEle.PointList[3];
-                                ptTempMaxX = croEle.PointList[7];
+                                ptTempMinY = croEle.PointList[0];
+                                ptTempMaxY = croEle.PointList[1];
                             }
-                            else if (croEle.PointList[3].X > croEle.PointList[7].X)
+                            else if (croEle.PointList[0].Y > croEle.PointList[1].Y)
                             {
-                                ptTempMinX = croEle.PointList[7];
-                                ptTempMaxX = croEle.PointList[3];
+                                ptTempMinY = croEle.PointList[1];
+                                ptTempMaxY = croEle.PointList[0];
+                            }
+                            if (croEle.PointList[0].X < croEle.PointList[2].X)
+                            {
+                                ptTempMinX = croEle.PointList[0];
+                                ptTempMaxX = croEle.PointList[2];
+                            }
+                            else if (croEle.PointList[0].X > croEle.PointList[2].X)
+                            {
+                                ptTempMinX = croEle.PointList[2];
+                                ptTempMaxX = croEle.PointList[0];
                             }
                         }
                         break;
