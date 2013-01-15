@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 
 namespace Mcs.RailSystem.Common
 {
@@ -81,7 +80,5 @@ namespace Mcs.RailSystem.Common
         public virtual void DrawEnlargeOrShrink(float draw_multi_factor) { }
         public virtual void ObjectMirror() { }
         public virtual bool ChosedInRegion(Rectangle rect) { return false; }
-        public virtual DataRow SaveEleInfo(DataTable dt) { return null; }
-        public virtual DataRow SaveCodingInfo(DataTable dt) { return null; }
     }
 }

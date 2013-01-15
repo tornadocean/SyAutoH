@@ -22,7 +22,7 @@ namespace RailDraw
         public PropertyPage proPage = new PropertyPage();
         public WorkRegion workRegion = new WorkRegion();
         public Tools tools = new Tools();
-        public BaseRailElement.DrawDoc drawDoc = new BaseRailElement.DrawDoc();
+        public BaseRailElement.DrawDocOp drawDoc = new BaseRailElement.DrawDocOp();
         public BaseRailElement.ObjectBaseEvents objectEvent = new BaseRailElement.ObjectBaseEvents();
         private bool mouseIsDown = false;
         private bool drapIsDown = false;
@@ -328,8 +328,8 @@ namespace RailDraw
                     string projectpath = sProjectPath;
                     string projectcodingpath = projectpath.Substring(0, projectpath.Length - 4) + "_coding.xml";
                     drawDoc.DataXmlSave();
-                    drawDoc.dsEle.WriteXml(projectpath);
-                    drawDoc.dsEleCoding.WriteXml(projectcodingpath);
+                    drawDoc.DsEle.WriteXml(projectpath);
+                    drawDoc.DsEleCoding.WriteXml(projectcodingpath);
                 }
                 catch(Exception ex)
                 {
@@ -458,8 +458,8 @@ namespace RailDraw
                     string projectpath = sFile.FileName;
                     string projectcodingpath = projectpath.Substring(0, projectpath.Length - 4) + "_coding.xml";
                     drawDoc.DataXmlSave();
-                    drawDoc.dsEle.WriteXml(projectpath);
-                    drawDoc.dsEleCoding.WriteXml(projectcodingpath);
+                    drawDoc.DsEle.WriteXml(projectpath);
+                    drawDoc.DsEleCoding.WriteXml(projectcodingpath);
                     sProjectPath = projectpath;
                     UpdateFormTitle();
                 }
@@ -472,9 +472,9 @@ namespace RailDraw
 
         private bool OpenXmlFile(DataSet ds)
         {
-            Mcs.RailSystem.Common.ReadSaveFile rFile = new Mcs.RailSystem.Common.ReadSaveFile();
+            Mcs.RailSystem.Common.DrawDoc doc = new Mcs.RailSystem.Common.DrawDoc();
             DataTable dt = ds.Tables[0];
-            rFile.InitDataTable(dt);
+            doc.InitDataTable(dt);
 
             try
             {
@@ -484,17 +484,17 @@ namespace RailDraw
                     {
                         case 1:
                             RailEleLine line = new RailEleLine();
-                            rFile.ReadDataFromRow(i, line);
+                            doc.ReadDataFromRow(i, line);
                             AddElement(line);
                             break;
                         case 2:
                             RailEleCurve curve = new RailEleCurve();
-                            rFile.ReadDataFromRow(i, curve);
+                            doc.ReadDataFromRow(i, curve);
                             AddElement(curve);
                             break;
                         case 3:
                             RailEleCross cross = new RailEleCross();
-                            rFile.ReadDataFromRow(i, cross);
+                            doc.ReadDataFromRow(i, cross);
                             AddElement(cross);
                             break;
                     }

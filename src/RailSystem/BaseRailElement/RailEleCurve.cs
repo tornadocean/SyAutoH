@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Data;
 using System.ComponentModel;
 
 namespace BaseRailElement
@@ -465,58 +464,6 @@ namespace BaseRailElement
                 return true;
             else
                 return false;
-        }
-
-        public override DataRow SaveEleInfo(DataTable dt)
-        {
-            DataRow dr = dt.NewRow();
-            dr["GraphType"] = GraphType;
-            dr["LocationLock"] = locationLock;
-            dr["SizeLock"] = sizeLock;
-            dr["Selectable"] = Selectable;
-            dr["Speed"] = Speed;
-            dr["StartAngle"] = StartAngle;
-            dr["SweepAngle"] = SweepAngle;
-            dr["Radiu"] = Radiu;
-            dr["Center"] = Center.ToString();
-            dr["FirstDot"] = FirstDot.ToString();
-            dr["SecDot"] = SecDot.ToString();
-            dr["DirectionCurvedAttribute"] = DirectionCurvedAttribute;
-
-            dr["drawMultiFactor"] = DrawMultiFactor;
-            dr["startPoint"] = StartPoint.ToString();
-            dr["endPoint"] = EndPoint.ToString();
-            dr["CodingBegin"] = CodingBegin;
-            dr["CodingEnd"] = CodingEnd;
-            dr["CodingNext"] = CodingNext;
-            dr["CodingPrev"] = CodingPrev;
-            dr["railText"] = railText;
-            dr["rotateAngle"] = RotateAngle;
-            dr["oldRadiu"] = oldRadiu;
-            dr["oldCenter"] = oldCenter.ToString();
-            dr["oldFirstDot"] = oldFirstDot.ToString();
-            dr["oldSecDot"] = oldSecDot.ToString();
-
-            dr["Color"] = ColorTranslator.ToHtml(PenCurve.Color);
-            dr["DashStyle"] = PenCurve.DashStyle;
-            dr["PenWidth"] = PenCurve.Width;
-
-            dt.Rows.Add(dr);
-            return dr;
-        }
-
-        public override DataRow SaveCodingInfo(DataTable dt)
-        {
-            DataRow dr = dt.NewRow();
-
-            dr["GraphType"] = GraphType;
-            dr["CodingBegin"] = CodingBegin;
-            dr["CodingEnd"] = CodingEnd;
-            dr["CodingNext"] = CodingNext;
-            dr["CodingPrev"] = CodingPrev;
-
-            dt.Rows.Add(dr);
-            return dr;
         }
 
         public object Clone(string str)
