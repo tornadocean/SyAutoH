@@ -35,8 +35,7 @@ int MaterialController::Init(void)
 	m_GuiHub.StartServer(&m_amhsDrive);
 	m_amhsDrive.Init();
 	
-	m_pathFinder.Init();
-	m_pathFinder.Test();
+	m_core.Init();
 
 	return 0;
 }
@@ -44,7 +43,6 @@ int MaterialController::Init(void)
 
 void MaterialController::Check(void)
 {
-	m_pathFinder.Test();
 	return;
 	////m_amhsDrive.Run();
 	////m_amhsDrive.SetOHTBackMessage(24, 200);

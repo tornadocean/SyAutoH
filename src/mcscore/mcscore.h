@@ -8,15 +8,20 @@
 #define MCSCORE_API __declspec(dllexport)
 #else
 #define MCSCORE_API __declspec(dllimport)
+#pragma comment(lib, "mcscore.lib")
 #endif
 
+#pragma once
+#include <vector>
+typedef std::vector<int> INT_LIST;
+
 // 此类是从 mcscore.dll 导出的
-class MCSCORE_API Cmcscore {
+class MCSCORE_API CMCSCore {
 public:
-	Cmcscore(void);
+	CMCSCore(void);
 	// TODO: 在此添加您的方法。
+
+public:
+	int Init(void);
+	INT_LIST GetPath(int nFrom, int nTo);
 };
-
-extern MCSCORE_API int nmcscore;
-
-MCSCORE_API int fnmcscore(void);

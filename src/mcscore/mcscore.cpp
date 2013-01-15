@@ -3,20 +3,64 @@
 
 #include "stdafx.h"
 #include "mcscore.h"
-
-
-// 这是导出变量的一个示例
-MCSCORE_API int nmcscore=0;
-
-// 这是导出函数的一个示例。
-MCSCORE_API int fnmcscore(void)
-{
-	return 42;
-}
-
+#include "PathProductor.h"
 // 这是已导出类的构造函数。
 // 有关类定义的信息，请参阅 mcscore.h
-Cmcscore::Cmcscore()
+CMCSCore::CMCSCore()
 {
 	return;
+}
+
+int CMCSCore::Init()
+{
+	new CPathProductor;
+
+	sPathProductor.GetLaneData();
+
+	{
+		int nFrom = 50;
+		int nTo = 1050;
+		auto path = GetPath(nFrom, nTo);
+		cout<< "Start: " << nFrom << " To: " << nTo << endl;
+		cout << "Path: " << endl;
+		auto it = path.cbegin();
+		if (it != path.cend())
+		{
+			cout << *it;
+			for (++it;
+				it != path.cend(); ++it)
+			{
+				cout<< "->" << *it;
+			}
+			cout<< endl;
+		}
+	}
+
+	{
+		int nFrom = 1050;
+		int nTo = 50;
+		auto path = GetPath(nFrom, nTo);
+		cout<< "Start: " << nFrom << " To: " << nTo << endl;
+		cout << "Path: " << endl;
+		auto it = path.cbegin();
+		if (it != path.cend())
+		{
+			cout << *it;
+			for (++it;
+				it != path.cend(); ++it)
+			{
+				cout<< "->" << *it;
+			}
+			cout<< endl;
+		}
+	}
+
+	return 0;
+}
+
+INT_LIST CMCSCore::GetPath(int nFrom, int nTo)
+{
+	INT_LIST list;
+	list = sPathProductor.ProductPath(nFrom, nTo);
+	return list;
 }
