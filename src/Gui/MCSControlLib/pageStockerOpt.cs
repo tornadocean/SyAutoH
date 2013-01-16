@@ -191,7 +191,7 @@ namespace MCSControlLib
                         string lastEventTime = dt.ToString();
                         tBLastEventTime.Text = lastEventTime;
                     }
-                    catch (System.Exception ex)
+                    catch (System.Exception /*ex*/)
                     {
                         //MessageBox.Show(ex.Message);
                     }
