@@ -49,8 +49,7 @@ void MMoveCtrlServer::Run(int argc, _TCHAR** argv)
 	}
 	LogS(10, LogType::Info, "MCS", "MCS Started.");
 	
-
-	//if(authsockcreated && intersockcreated)
+	MC.Run();
 	{
 		// hook signals
 		signal(SIGINT, _OnSignal);
@@ -61,25 +60,6 @@ void MMoveCtrlServer::Run(int argc, _TCHAR** argv)
 #else
 		signal(SIGHUP, _OnSignal);
 #endif
-
-		//		/* write pid file */
-		//		FILE* fPid = fopen("logonserver.pid", "w");
-		//		if(fPid)
-		//		{
-		//			uint32 pid;
-		//#ifdef WIN32
-		//			pid = GetCurrentProcessId();
-		//#else
-		//			pid = getpid();
-		//#endif
-		//			fprintf(fPid, "%u", (unsigned int)pid);
-		//			fclose(fPid);
-		//		}
-		//		uint32 loop_counter = 0;
-		//ThreadPool.Gobble();
-		//sLog.outString("Success! Ready for connections");
-		
-
 		
 
 		while(g_Running.GetVal())
@@ -118,5 +98,7 @@ void MMoveCtrlServer::Run(int argc, _TCHAR** argv)
 		signal(SIGHUP, 0);
 #endif
 	}
+
+	MC.Stop();
 
 }

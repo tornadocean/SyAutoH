@@ -93,3 +93,17 @@ void MaterialController::PrintfInfo(void)
 	//Log.outBasic(chLogo);
 	Log.outBasic(strLogo.c_str());
 }
+
+
+int MaterialController::Run(void)
+{
+	m_core.Run();
+	return 0;
+}
+
+
+int MaterialController::Stop(void)
+{
+	m_core.Stop();
+	return 0;
+}

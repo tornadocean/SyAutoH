@@ -8,5 +8,9 @@ class CScheduler : public Singleton<CScheduler>
 public:
 	CScheduler(void);
 	~CScheduler(void);
+	int Init(void);
+	int Run(void);
+	int Stop(void);
 };
 
+#define sScheduler CScheduler::getSingleton()

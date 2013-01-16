@@ -19,9 +19,12 @@ typedef std::vector<int> INT_LIST;
 class MCSCORE_API CMCSCore {
 public:
 	CMCSCore(void);
+	~CMCSCore();
 	// TODO: 在此添加您的方法。
 
 public:
 	int Init(void);
 	INT_LIST GetPath(int nFrom, int nTo);
+	int Run(void);
+	int Stop(void);
 };

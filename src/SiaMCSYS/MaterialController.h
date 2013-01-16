@@ -91,5 +91,7 @@ private:
 	CMCSCore m_core;
 public:
 	void PrintfInfo(void);
+	int Run(void);
+	int Stop(void);
 };
 
