@@ -143,10 +143,12 @@ public:
 
 typedef struct
 {
+	int nID;
 	int nFoupID;
 	int nTarget;
 }ItemTrans;
 typedef std::vector<ItemTrans> VEC_TRANS;
+typedef std::map<int, ItemTrans> MAP_TRANS;
 
 class SQLACECLI_API DBTransfer
 {

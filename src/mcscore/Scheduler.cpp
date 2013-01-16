@@ -25,7 +25,6 @@ int CScheduler::Run(void)
 {
 	LOG_DEBUG("");
 	//test
-	GetMacroCommand();
 
 	return 0;
 }
@@ -40,15 +39,35 @@ int CScheduler::Stop(void)
 
 int CScheduler::GetMacroCommand(void)
 {
+	bool bChanged = false;
 	DBTransfer dbTransfer;
-	m_listTrans = dbTransfer.GetTransferNoFinished();
-	for (auto it = m_listTrans.cbegin();
-		it != m_listTrans.cend(); ++it)
+	VEC_TRANS listTrans = dbTransfer.GetTransferNoFinished();
+	if (listTrans.size() != m_mapTrans.size())
 	{
-		printf("Transfer: FoupID: %d, Target: %d\r\n", it->nFoupID, it->nTarget);
+		m_mapTrans.clear();
+	}
+	
+	for (auto it = listTrans.cbegin();
+		it != listTrans.cend(); ++it)
+	{
+		int nID = it->nID;
+		auto itFind = m_mapTrans.find(nID);
+		if (itFind == m_mapTrans.cend())
+		{
+			bChanged = true;
+			m_mapTrans.insert(std::make_pair(nID, *it));
+		}
 	}
 
-	return 0;
+	if (true == bChanged)
+	{
+		return listTrans.size();
+	}
+	else
+	{
+		return 0;
+	}
+	
 }
 
 
@@ -56,7 +75,17 @@ void CScheduler::_taskCheckTrans(void)
 {
 	while (true)
 	{
-		GetMacroCommand();
+		if (GetMacroCommand() > 0)
+		{
+			for (auto it = m_mapTrans.cbegin();
+				it != m_mapTrans.cend(); ++it)
+			{
+				auto pTrans = &(it->second);
+				printf("Transfer: ID: %d, FoupID: %d, Target: %d\r\n", 
+					pTrans->nID, pTrans->nFoupID,pTrans->nTarget);
+			}
+		}
+		
 		Sleep(1000);
 	}
 }

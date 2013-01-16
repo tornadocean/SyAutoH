@@ -16,10 +16,12 @@ public:
 	int Stop(void);
 
 private:
-	int GetMacroCommand(void);
 	VEC_TRANS m_listTrans;
+	MAP_TRANS m_mapTrans;
 	boost::threadpool::pool m_tpTask;
-public:
+
+private:
+	int GetMacroCommand(void);
 	void _taskCheckTrans(void);
 };
 

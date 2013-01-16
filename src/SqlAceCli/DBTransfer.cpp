@@ -106,6 +106,7 @@ VEC_TRANS DBTransfer::GetTransferAll()
 	while(table.MoveNext() != DB_S_ENDOFROWSET)
 	{
 		ItemTrans iTrans;
+		iTrans.nID = table.m_id;
 		iTrans.nFoupID = table.m_FoupID;
 		iTrans.nTarget = table.m_Destination;
 		transList.push_back(iTrans);
@@ -145,6 +146,7 @@ VEC_TRANS DBTransfer::GetTransferNoFinished(void)
 	while(table.MoveNext() != DB_S_ENDOFROWSET)
 	{
 		ItemTrans iTrans;
+		iTrans.nID = table.m_id;
 		iTrans.nFoupID = table.m_FoupID;
 		iTrans.nTarget = table.m_Destination;
 		transList.push_back(iTrans);
