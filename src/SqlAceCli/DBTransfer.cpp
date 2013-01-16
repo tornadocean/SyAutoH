@@ -88,7 +88,7 @@ int DBTransfer::AddTransfer(int nFoupID, int nTarget)
 	return nRet;
 }
 
-VEC_TRANS DBTransfer::GetTransfer()
+VEC_TRANS DBTransfer::GetTransferAll()
 {
 	VEC_TRANS transList;
 
@@ -113,5 +113,45 @@ VEC_TRANS DBTransfer::GetTransfer()
 
 	table.CloseAll();
 	CoUninitialize();
+	return transList;
+}
+
+VEC_TRANS DBTransfer::GetTransferNoFinished(void)
+{
+	VEC_TRANS transList;
+
+	CoInitialize(NULL);
+	HRESULT hr;
+
+	CTableTransfer table;
+	hr = table.OpenDataSource();
+	if (FAILED(hr))
+	{
+		cout << "Open Transfer Failed." << endl;
+		CoUninitialize();
+		return transList;
+	}
+
+	CString strFind = L"";
+	strFind.Format(L"SELECT * From Transfer where Status != 'Finished'");
+	hr = table.Open(table.m_session, strFind);
+	if (FAILED(hr))
+	{
+		cout << "Open Transfer Failed." << endl;
+		CoUninitialize();
+		return transList;
+	}
+
+	while(table.MoveNext() != DB_S_ENDOFROWSET)
+	{
+		ItemTrans iTrans;
+		iTrans.nFoupID = table.m_FoupID;
+		iTrans.nTarget = table.m_Destination;
+		transList.push_back(iTrans);
+	}
+
+	table.CloseAll();
+	CoUninitialize();
+
 	return transList;
 }

@@ -155,5 +155,6 @@ public:
 	~DBTransfer(void);
 public:
 	int AddTransfer(int nFoupID, int nTarget);
-	VEC_TRANS GetTransfer();
+	VEC_TRANS GetTransferAll();
+	VEC_TRANS GetTransferNoFinished(void);
 };

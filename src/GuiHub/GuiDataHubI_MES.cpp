@@ -50,7 +50,7 @@ void GuiDataHubI::MES_GetFoupTable(const std::string&, const ::Ice::Current& cur
 void GuiDataHubI::MES_TransControl(const std::string&, const ::Ice::Current&)
 {
 	DBTransfer dbTransfer;
-	VEC_TRANS transList = dbTransfer.GetTransfer();
+	VEC_TRANS transList = dbTransfer.GetTransferAll();
 	for (auto it = transList.cbegin();
 		it != transList.cend(); ++it)
 	{
