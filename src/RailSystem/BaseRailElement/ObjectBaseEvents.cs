@@ -52,6 +52,7 @@ namespace BaseRailElement
 
         public override bool OnRButtonDown(Point point)
         {
+            base.OnRButtonDown(point);
             int hit = document.HitTest(point, false);
             if (hit >= 0)
                 return true;
@@ -65,7 +66,7 @@ namespace BaseRailElement
             document.ChangeChooseSign(false, point);
         }
 
-        public override void OnMouseMove(Point point)
+        public override void OnMouseMoveLeft(Point point)
         {
             int dx = point.X - lastPoint.X;
             int dy = point.Y - lastPoint.Y;
@@ -140,10 +141,9 @@ namespace BaseRailElement
                     break;
                 case SelectObject.SelectNone:
                     document.ChangeChooseSign(true, point);
-                    base.OnMouseMove(point);
+                    base.OnMouseMoveLeft(point);
                     break;
             }
-            Debug.WriteLine(string.Format("move pt is {0} lastpoint is {1} tempDrawMultiFactor is {2}", point, lastPoint, tempDrawMultiFactor));
         }
 
         public override Point DrapDrawRegion(Point point)
@@ -167,16 +167,16 @@ namespace BaseRailElement
             switch (direction)
             {
                 case Direction.up:
-                    OnMouseMove(new Point(lastPoint.X, lastPoint.Y - offset));
+                    OnMouseMoveLeft(new Point(lastPoint.X, lastPoint.Y - offset));
                     break;
                 case Direction.down:
-                    OnMouseMove(new Point(lastPoint.X, lastPoint.Y + offset));
+                    OnMouseMoveLeft(new Point(lastPoint.X, lastPoint.Y + offset));
                     break;
                 case Direction.left:
-                    OnMouseMove(new Point(lastPoint.X - offset, lastPoint.Y));
+                    OnMouseMoveLeft(new Point(lastPoint.X - offset, lastPoint.Y));
                     break;
                 case Direction.right:
-                    OnMouseMove(new Point(lastPoint.X + offset, lastPoint.Y));
+                    OnMouseMoveLeft(new Point(lastPoint.X + offset, lastPoint.Y));
                     break;
             }
         }
