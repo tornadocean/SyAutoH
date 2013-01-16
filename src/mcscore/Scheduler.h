@@ -11,6 +11,9 @@ public:
 	int Init(void);
 	int Run(void);
 	int Stop(void);
+
+private:
+	int GetMacroCommand(void);
 };
 
 #define sScheduler CScheduler::getSingleton()
