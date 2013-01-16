@@ -144,9 +144,6 @@
     <None Include="Resources\draw.cur" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\drap.cur" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\arrow.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -208,9 +205,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\mirror.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\rectangle.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\rectange.bmp" />
