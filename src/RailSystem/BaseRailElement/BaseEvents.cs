@@ -37,7 +37,7 @@ namespace BaseRailElement
             return false;
         }
 
-        public virtual void OnMouseMove(Point point)
+        public virtual void OnMouseMoveLeft(Point point)
         {
             lastPoint = point;
         }
