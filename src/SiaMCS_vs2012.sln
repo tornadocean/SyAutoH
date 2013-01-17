@@ -110,6 +110,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogWinClientCS", "logger\LogWinClientCS\LogWinClientCS.csproj", "{8B4D720A-A323-47E2-A215-B57DDCA254AB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mcscore", "mcscore\mcscore.vcxproj", "{B05BB5D1-218C-485E-899F-5A0945460785}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3A4280FB-0DA9-45D0-B645-F05071BAC2BD} = {3A4280FB-0DA9-45D0-B645-F05071BAC2BD}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
