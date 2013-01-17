@@ -62,7 +62,7 @@ void amhs_dev_server::STK_CleanLastEvent(int nID)
 
 vector<int> amhs_dev_server::STK_GetRoom(int nID)
 {
-	return room_.STK_GetRoom(nID);
+	return room_.STK_GetShelf(nID);
 }
 
 void amhs_dev_server::OHT_Set_StatusBackTime(int nID, int ms)

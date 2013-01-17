@@ -32,7 +32,7 @@ amhs_room::amhs_room()
 	m_optHanders.insert(std::make_pair(STK_ACK_STATUS, 
 		&amhs_room::Handle_STK_AckStatus));
 	m_optHanders.insert(std::make_pair(STK_ACK_ROOM, 
-		&amhs_room::Handle_STK_AckRoom));
+		&amhs_room::Handle_STK_AckShelf));
 	m_optHanders.insert(std::make_pair(STK_ACK_STORAGE, 
 		&amhs_room::Handle_STK_AckStorage));
 	m_optHanders.insert(std::make_pair(STK_ACK_INPUT_STATUS, 
@@ -186,7 +186,7 @@ amhs_foup_vec amhs_room::STK_GetLastEventFoup(int nID)
 	return foup_vec;
 }
 
-vector<int> amhs_room::STK_GetRoom(int nID)
+vector<int> amhs_room::STK_GetShelf(int nID)
 {
 	vector<int> room_vec;
 	RLock(rwLock_stocker_map_)
@@ -374,7 +374,7 @@ void amhs_room::Handle_STK_AckStatus(amhs_participant_ptr, AMHSPacket& Packet)
 	}
 	Log.Warning("amhs_room", "Packet handle not implemented\n");
 }
-void amhs_room::Handle_STK_AckRoom(amhs_participant_ptr, AMHSPacket& Packet)
+void amhs_room::Handle_STK_AckShelf(amhs_participant_ptr, AMHSPacket& Packet)
 {
 	uint8 nID = 0;
 	uint8 nStats = 0;
