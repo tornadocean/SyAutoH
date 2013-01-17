@@ -25,7 +25,7 @@ MaterialController::~MaterialController(void)
 
 int MaterialController::Init(void)
 {
-	CoInitializeEx(NULL,COINIT_MULTITHREADED);
+	CoInitializeEx(NULL, COINIT_MULTITHREADED);
 
 	m_MesReciver.m_pFoupDB = &m_FoupDB;
 	m_MesLink.Init(&m_MesSource);
