@@ -22,10 +22,12 @@ namespace RailDraw
         public PropertyPage proPage = new PropertyPage();
         public WorkRegion workRegion = new WorkRegion();
         public Tools tools = new Tools();
-        public BaseRailElement.DrawDoc drawDoc = new BaseRailElement.DrawDoc();
+        public BaseRailElement.DrawDocOp drawDoc = new BaseRailElement.DrawDocOp();
         public BaseRailElement.ObjectBaseEvents objectEvent = new BaseRailElement.ObjectBaseEvents();
-        private bool mouseIsDown = false;
-        private bool drapIsDown = false;
+        private bool mouseLDown = false;
+        private bool mouseRDown = false;
+        private bool canvasMove = false;
+        private bool mouseRMove = false;
         private string sProjectPath = "";
         private Size drawregOrigSize = new Size();
         private const Int16 CONST_MULTI_FACTOR = 1;
@@ -33,10 +35,10 @@ namespace RailDraw
         private Point workSize = Point.Empty;
         private Int16 lineNumber = 100;
         private Int16 curveNumber = 200;
-        private Int16 CrossNumber = 300;
+        private Int16 crossNumber = 300;
         public bool DrapIsDown
         {
-            get { return drapIsDown; }
+            get { return canvasMove; }
         }
 
         public FatherWindow()
@@ -79,12 +81,13 @@ namespace RailDraw
             {
                 case MouseButtons.Left:
                     objectEvent.OnLButtonDown(e.Location);
-                    mouseIsDown = true;
+                    mouseLDown = true;
+                    if (canvasMove)
+                        this.Cursor = CommonFunction.CreatCursor("draw");
                     break;
                 case MouseButtons.Right:
-                    this.workRegion.contextMenuStripWorkReg.Items.Clear();
-                    this.workRegion.ContextMenuStripCreate(objectEvent.OnRButtonDown(e.Location));
-                    mouseIsDown = true;
+                    objectEvent.OnRButtonDown(e.Location);
+                    mouseRDown = true;
                     break;
             }
             this.workRegion.picBoxCanvas.Invalidate();
@@ -92,29 +95,56 @@ namespace RailDraw
 
         public void CanvasMouseUp(object sender, MouseEventArgs e)
         {
-            if (drapIsDown && mouseIsDown)
+            switch (e.Button)
             {
-                Point pt_offset = objectEvent.DrapDrawRegion(e.Location);
-                Point picLoc = this.workRegion.picBoxCanvas.Location;
-                this.workRegion.picBoxCanvas.Location = new Point(picLoc.X + pt_offset.X, picLoc.Y + pt_offset.Y);
-                drapIsDown = true;
+                case MouseButtons.Left:
+                    if (canvasMove && mouseLDown && !mouseRDown)
+                    {
+                        canvasMove = true;
+                        this.Cursor = Cursors.Default;
+                    }
+                    if (mouseLDown)
+                    {
+                        mouseLDown = false;
+                    }
+                    objectEvent.OnLButtonUp(e.Location);
+                    break;
+                case MouseButtons.Right:
+                    if (!mouseRMove && !mouseLDown && mouseRDown)
+                    {
+                        this.workRegion.ContextMenuStripCreate(objectEvent.OnRButtonDown(e.Location));
+                    }
+                    mouseRDown = false;
+                    mouseRMove = false;
+                    this.Cursor = Cursors.Default;
+                    break;
             }
-            if (mouseIsDown)
-            {
-                mouseIsDown = false;
-            }
-            objectEvent.OnLButtonUp(e.Location);
             this.workRegion.picBoxCanvas.Invalidate();
             this.workRegion.picBoxCanvas.Focus();
         }
 
         public void CanvasMouseMove(object sender, MouseEventArgs e)
         {
-            if (mouseIsDown && !drapIsDown)
+            if (mouseLDown && !canvasMove)
             {
-                objectEvent.OnMouseMove(e.Location);
+                objectEvent.OnMouseMoveLeft(e.Location);
                 this.workRegion.picBoxCanvas.Invalidate();
             }
+            else if (mouseLDown && canvasMove)
+            {
+                this.workRegion.picBoxCanvas.Left += (e.X - BaseEvents.LastPoint.X);
+                this.workRegion.picBoxCanvas.Top += (e.Y - BaseEvents.LastPoint.Y);
+            }
+            else if (mouseRDown && (e.Location!=BaseEvents.LastPoint))
+            {
+                mouseRMove = true;
+                this.Cursor = CommonFunction.CreatCursor("draw");
+                this.workRegion.picBoxCanvas.Left += (e.X - BaseEvents.LastPoint.X);
+                this.workRegion.picBoxCanvas.Top += (e.Y - BaseEvents.LastPoint.Y);
+                this.workRegion.picBoxCanvas.Invalidate();
+                Debug.WriteLine(string.Format("mouse move is {0}", e.Location));
+            }
+            Debug.WriteLine(string.Format("mouseRDown is {0}", e.Location));
         }
 
         public void CanvasMouseClick(object sender, MouseEventArgs e)
@@ -289,7 +319,7 @@ namespace RailDraw
                 this.workRegion.picBoxCanvas.Left = 0;
                 this.workRegion.picBoxCanvas.Width = drawregOrigSize.Width;
                 this.workRegion.picBoxCanvas.Height = drawregOrigSize.Height;
-                drapIsDown = false;
+                canvasMove = false;
                 this.Cursor = System.Windows.Forms.Cursors.Default;
                 try
                 {
@@ -328,8 +358,8 @@ namespace RailDraw
                     string projectpath = sProjectPath;
                     string projectcodingpath = projectpath.Substring(0, projectpath.Length - 4) + "_coding.xml";
                     drawDoc.DataXmlSave();
-                    drawDoc.dsEle.WriteXml(projectpath);
-                    drawDoc.dsEleCoding.WriteXml(projectcodingpath);
+                    drawDoc.DsEle.WriteXml(projectpath);
+                    drawDoc.DsEleCoding.WriteXml(projectcodingpath);
                 }
                 catch(Exception ex)
                 {
@@ -416,12 +446,15 @@ namespace RailDraw
 
         private void drap_Click(object sender, EventArgs e)
         {
-            drapIsDown = true;
+            canvasMove = true;
+            this.drawCanvas.BackColor = SystemColors.ControlDark;
         }
 
         private void mouse_Click(object sender, EventArgs e)
         {
-            drapIsDown = false;
+            canvasMove = false;
+            this.drawCanvas.Enabled = true;
+            this.drawCanvas.BackColor = SystemColors.Control;
             this.Cursor = System.Windows.Forms.Cursors.Default;
         }
 
@@ -458,8 +491,8 @@ namespace RailDraw
                     string projectpath = sFile.FileName;
                     string projectcodingpath = projectpath.Substring(0, projectpath.Length - 4) + "_coding.xml";
                     drawDoc.DataXmlSave();
-                    drawDoc.dsEle.WriteXml(projectpath);
-                    drawDoc.dsEleCoding.WriteXml(projectcodingpath);
+                    drawDoc.DsEle.WriteXml(projectpath);
+                    drawDoc.DsEleCoding.WriteXml(projectcodingpath);
                     sProjectPath = projectpath;
                     UpdateFormTitle();
                 }
@@ -472,9 +505,9 @@ namespace RailDraw
 
         private bool OpenXmlFile(DataSet ds)
         {
-            Mcs.RailSystem.Common.ReadSaveFile rFile = new Mcs.RailSystem.Common.ReadSaveFile();
+            Mcs.RailSystem.Common.DrawDoc doc = new Mcs.RailSystem.Common.DrawDoc();
             DataTable dt = ds.Tables[0];
-            rFile.InitDataTable(dt);
+            doc.InitDataTable(dt);
 
             try
             {
@@ -484,17 +517,17 @@ namespace RailDraw
                     {
                         case 1:
                             RailEleLine line = new RailEleLine();
-                            rFile.ReadDataFromRow(i, line);
+                            doc.ReadDataFromRow(i, line);
                             AddElement(line);
                             break;
                         case 2:
                             RailEleCurve curve = new RailEleCurve();
-                            rFile.ReadDataFromRow(i, curve);
+                            doc.ReadDataFromRow(i, curve);
                             AddElement(curve);
                             break;
                         case 3:
                             RailEleCross cross = new RailEleCross();
-                            rFile.ReadDataFromRow(i, cross);
+                            doc.ReadDataFromRow(i, cross);
                             AddElement(cross);
                             break;
                     }
@@ -559,8 +592,8 @@ namespace RailDraw
                     break;
                 case "Cross":
                     BaseRailElement.RailEleCross cross = new BaseRailElement.RailEleCross();
-                    ++CrossNumber;
-                    str += "_" + CrossNumber.ToString();
+                    ++crossNumber;
+                    str += "_" + crossNumber.ToString();
                     cross.CreateEle(mousePt, workRegionSize, multiFactor, str);
                     AddElement(cross);
                     drawDoc.SelectOne(cross);
@@ -653,8 +686,8 @@ namespace RailDraw
                 }
                 else if (str == "Cross")
                 {
-                    CrossNumber++;
-                    str += "_" + CrossNumber.ToString();
+                    crossNumber++;
+                    str += "_" + crossNumber.ToString();
                 }
                 this.proRegion.AddElementNode(this.workRegion.Text, str);
                 this.drawDoc.Paste(str);

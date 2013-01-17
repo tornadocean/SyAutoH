@@ -46,7 +46,7 @@
   <ItemGroup>
     <Compile Include="BaseEvents.cs" />
     <Compile Include="Device.cs" />
-    <Compile Include="DrawDoc.cs" />
+    <Compile Include="DrawDocOp.cs" />
     <Compile Include="ObjectBaseEvents.cs" />
     <Compile Include="ObjectLabelOp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
