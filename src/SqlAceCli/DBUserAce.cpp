@@ -9,12 +9,12 @@
 DBCommonBase::DBCommonBase()
 {
 	//CoInitialize(NULL);
-	CoInitializeEx(NULL,COINIT_MULTITHREADED);
+	//CoInitializeEx(NULL,COINIT_MULTITHREADED);
 }
 
 DBCommonBase::~DBCommonBase()
 {
-	CoUninitialize();
+	//CoUninitialize();
 }
 
 //////////////////////////////////////////////////////////////////////////

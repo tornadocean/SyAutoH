@@ -25,16 +25,13 @@ MaterialController::~MaterialController(void)
 
 int MaterialController::Init(void)
 {
-	
-	m_MesReciver.m_pFoupDB = &m_FoupDB;
-		
+	CoInitializeEx(NULL,COINIT_MULTITHREADED);
 
+	m_MesReciver.m_pFoupDB = &m_FoupDB;
 	m_MesLink.Init(&m_MesSource);
 	m_MesReciver.hookEvent(&m_MesSource);
-	
 	m_GuiHub.StartServer(&m_amhsDrive);
 	m_amhsDrive.Init();
-	
 	m_core.Init();
 
 	return 0;
@@ -105,5 +102,8 @@ int MaterialController::Run(void)
 int MaterialController::Stop(void)
 {
 	m_core.Stop();
+
+	CoUninitialize();
+
 	return 0;
 }
