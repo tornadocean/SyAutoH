@@ -15,13 +15,11 @@ VEC_LANE DBLane::GetLaneTable(int nMapID)
 {
 	VEC_LANE listLane;
 
-	CoInitialize(NULL);
 	HRESULT hr;
 	CTableLane table;
 	hr = table.OpenAll();
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return listLane;
 	}
 
@@ -41,7 +39,6 @@ VEC_LANE DBLane::GetLaneTable(int nMapID)
 		listLane.push_back(item);
 	}
 	table.CloseAll();
-	CoUninitialize();
 
 	return listLane;
 }

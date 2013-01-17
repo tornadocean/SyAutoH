@@ -14,7 +14,6 @@ DBFoup::~DBFoup(void)
 
 int DBFoup::AddFoup(int nBarCode, int nLot, const FoupLocation& location)
 {
-	CoInitialize(NULL);
 	HRESULT hr;
 	int nFoup = 0;
 
@@ -23,7 +22,6 @@ int DBFoup::AddFoup(int nBarCode, int nLot, const FoupLocation& location)
 	if (FAILED(hr))
 	{
 		cout << "Open Foup Failed." << endl;
-		CoUninitialize();
 		return -1;
 	}
 	CString strFind = L"";
@@ -32,14 +30,12 @@ int DBFoup::AddFoup(int nBarCode, int nLot, const FoupLocation& location)
 	if (FAILED(hr))
 	{
 		cout << "Open Foup Failed." << endl;
-		CoUninitialize();
 		return -1;
 	}
 
 	if(tableFoup.MoveFirst() != DB_S_ENDOFROWSET)
 	{
 		tableFoup.CloseAll();
-		CoUninitialize();
 		return -1;
 	}
 	tableFoup.CloseAll();
@@ -47,7 +43,6 @@ int DBFoup::AddFoup(int nBarCode, int nLot, const FoupLocation& location)
 	hr = tableFoup.OpenAll();
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return -1;
 	}
 
@@ -81,8 +76,6 @@ int DBFoup::AddFoup(int nBarCode, int nLot, const FoupLocation& location)
 	{
 		tableFoup.UpdateAll();
 	}
-	
-	CoUninitialize();
 
 	return nRet;
 }
@@ -103,7 +96,6 @@ int DBFoup::UpdateFoup(int nBarCode, int nLot, const FoupLocation& location)
 
 int DBFoup::FindFoup(int nBarCode)
 {
-	CoInitialize(NULL);
 	HRESULT hr;
 	int nFoup = 0;
 
@@ -112,7 +104,6 @@ int DBFoup::FindFoup(int nBarCode)
 	if (FAILED(hr))
 	{
 		cout << "Open Foup Failed." << endl;
-		CoUninitialize();
 		return -1;
 	}
 
@@ -122,7 +113,6 @@ int DBFoup::FindFoup(int nBarCode)
 	if (FAILED(hr))
 	{
 		cout << "Open Foup Failed." << endl;
-		CoUninitialize();
 		return -1;
 	}
 
@@ -131,13 +121,11 @@ int DBFoup::FindFoup(int nBarCode)
 		nFoup = tableFoup.m_ID;
 	}
 	tableFoup.CloseAll();
-	CoUninitialize();
 
 	return nFoup;
 }
 int DBFoup::SetFoupLocation(int nFoup, const FoupLocation& location)
 {
-	CoInitialize(NULL);
 	HRESULT hr;
 
 	CTableFoup tableFoup;
@@ -170,12 +158,11 @@ int DBFoup::SetFoupLocation(int nFoup, const FoupLocation& location)
 		tableFoup.UpdateAll();
 	}
 	tableFoup.CloseAll();
-	CoUninitialize();
+
 	return 0;
 }
 int DBFoup::GetFoupLocation(int nFoup, FoupLocation& location)
 {
-	CoInitialize(NULL);
 	HRESULT hr;
 
 	CTableFoup tableFoup;
@@ -203,7 +190,6 @@ int DBFoup::GetFoupLocation(int nFoup, FoupLocation& location)
 		location.nPort = tableFoup.m_Port;
 	}
 	tableFoup.CloseAll();
-	CoUninitialize();
 
 	return 0;
 }
@@ -211,7 +197,6 @@ int DBFoup::GetFoupLocation(int nFoup, FoupLocation& location)
 VEC_FOUP DBFoup::GetFoupsInStocker(int nStockerID)
 {
 	VEC_FOUP foupList;
-	CoInitialize(NULL);
 	HRESULT hr;
 
 	CTableFoup tableFoup;
@@ -245,7 +230,6 @@ VEC_FOUP DBFoup::GetFoupsInStocker(int nStockerID)
 		foupList.push_back(foupItem);
 	}
 	tableFoup.CloseAll();
-	CoUninitialize();
 
 	return foupList;
 }
@@ -253,7 +237,6 @@ VEC_FOUP DBFoup::GetFoupsInStocker(int nStockerID)
 VEC_FOUP DBFoup::GetFoupAllTable()
 {
 	VEC_FOUP foupList;
-	CoInitialize(NULL);
 	HRESULT hr;
 
 	CTableFoup tableFoup;
@@ -277,7 +260,6 @@ VEC_FOUP DBFoup::GetFoupAllTable()
 		foupList.push_back(foupItem);
 	}
 	tableFoup.CloseAll();
-	CoUninitialize();
 
 	return foupList;
 }

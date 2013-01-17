@@ -20,6 +20,13 @@
 
 using namespace std;
 
+class SQLACECLI_API DBCommonBase
+{
+public:
+	DBCommonBase();
+	virtual ~DBCommonBase();
+};
+
 typedef struct  
 {
 	int nID;
@@ -28,11 +35,11 @@ typedef struct
 } UserData;
 
 typedef list<UserData> UserDataList;
-class SQLACECLI_API DBUserAce
+class SQLACECLI_API DBUserAce : public DBCommonBase
 {
 public:
 	DBUserAce(void);
-	~DBUserAce(void);
+	virtual ~DBUserAce(void);
 
 public:
 	int Login(const ::std::string& sName, const ::std::string& sHash);
@@ -64,11 +71,11 @@ typedef struct
 } FoupItem;
 typedef std::vector<FoupItem> VEC_FOUP;
 
-class SQLACECLI_API DBFoup
+class SQLACECLI_API DBFoup : public DBCommonBase
 {
 public:
 	DBFoup(void);
-	~DBFoup(void);
+	virtual ~DBFoup(void);
 public:
 	int AddFoup(int nBarCode, int nLot, const FoupLocation& location);
 	int UpdateFoup(int nBarCode, int nLot, const FoupLocation& location);
@@ -80,11 +87,11 @@ public:
 };
 
 typedef map<int, int> Map_Int;
-class SQLACECLI_API DBSession
+class SQLACECLI_API DBSession : public DBCommonBase
 {
 public:
 	DBSession(void);
-	~DBSession(void);
+	virtual ~DBSession(void);
 public:
 private:
 	Map_Int* m_pmapRole;
@@ -109,11 +116,11 @@ typedef struct
 	UINT uNext;//,[Next]
 } KeyPointItem;
 typedef std::vector<KeyPointItem> VEC_KEYPOINT;
-class SQLACECLI_API DBKeyPoints
+class SQLACECLI_API DBKeyPoints : public DBCommonBase
 {
 public:
 	DBKeyPoints(void);
-	~DBKeyPoints(void);
+	virtual ~DBKeyPoints(void);
 	int SetKeyPointbyOHTTeach(int nOHT_ID, int nPOS, int nType, int nSpeedRate);
 	VEC_KEYPOINT GetKeyPointsTable(vector<int> nTypes);
 };
@@ -131,11 +138,11 @@ typedef struct
 	bool bEnable;
 }ItemLane;
 typedef std::vector<ItemLane> VEC_LANE;
-class SQLACECLI_API DBLane
+class SQLACECLI_API DBLane : public DBCommonBase
 {
 public:
 	DBLane(void);
-	~DBLane(void);
+	virtual ~DBLane(void);
 
 public:
 	VEC_LANE GetLaneTable(int nMapID);
@@ -150,13 +157,15 @@ typedef struct
 typedef std::vector<ItemTrans> VEC_TRANS;
 typedef std::map<int, ItemTrans> MAP_TRANS;
 
-class SQLACECLI_API DBTransfer
+class SQLACECLI_API DBTransfer : public DBCommonBase
 {
 public:
 	DBTransfer(void);
-	~DBTransfer(void);
+	virtual ~DBTransfer(void);
 public:
 	int AddTransfer(int nFoupID, int nTarget);
 	VEC_TRANS GetTransferAll();
 	VEC_TRANS GetTransferNoFinished(void);
+	VEC_TRANS GetTransfer(const std::string& strStatus, bool bInclude = true);
+	int SetTransferStatus(int nID, const std::string& sStatus);
 };

@@ -4,6 +4,21 @@
 #include "../CypAce/CypAce.h"
 #include "DBConst.h"
 
+//////////////////////////////////////////////////////////////////////////
+//
+DBCommonBase::DBCommonBase()
+{
+	//CoInitialize(NULL);
+	CoInitializeEx(NULL,COINIT_MULTITHREADED);
+}
+
+DBCommonBase::~DBCommonBase()
+{
+	CoUninitialize();
+}
+
+//////////////////////////////////////////////////////////////////////////
+//
 DBUserAce::DBUserAce(void)
 {
 	
@@ -23,14 +38,12 @@ int DBUserAce::Login(const ::std::string& sName, const ::std::string& sHash)
 	strName = sName.c_str();
 	strHash = sHash.c_str();
 
-	CoInitialize(NULL);
 	HRESULT hr;
 	CTableMcsUser dbUser;
 
 	hr = dbUser.OpenDataSource();
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return nLoginStatus;
 	}
 
@@ -40,7 +53,6 @@ int DBUserAce::Login(const ::std::string& sName, const ::std::string& sHash)
 	hr = dbUser.Open(dbUser.m_session, strSQL);
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return nLoginStatus;
 	}
 	if (dbUser.MoveFirst() != DB_S_ENDOFROWSET)
@@ -53,7 +65,6 @@ int DBUserAce::Login(const ::std::string& sName, const ::std::string& sHash)
 	}
 
 	dbUser.CloseAll();
-	CoUninitialize();
 	return nLoginStatus;
 }
 int DBUserAce::Logout(int)
@@ -71,14 +82,12 @@ int DBUserAce::CreateUser(const ::std::string& sName,
 	strPassWord = sPassWord.c_str();
 	strUserHash = CypHashUserInfo(strName, strPassWord);
 
-	CoInitialize(NULL);
 	HRESULT hr;
 	CTableMcsUser dbUser;
 
 	hr = dbUser.OpenDataSource();
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return 2;
 	}
 	CString strFind = L"Select Name from mcsuser where Name = '#@#'";
@@ -86,13 +95,11 @@ int DBUserAce::CreateUser(const ::std::string& sName,
 	hr = dbUser.Open(dbUser.m_session, strFind);
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return 2;
 	}
 	if (dbUser.MoveNext() != DB_S_ENDOFROWSET )
 	{
 		dbUser.CloseAll();
-		CoUninitialize();
 		return 3;
 	}
 	dbUser.CloseAll();
@@ -101,7 +108,6 @@ int DBUserAce::CreateUser(const ::std::string& sName,
 	hr = dbUser.OpenAll();
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return 2;
 	}
 
@@ -121,20 +127,17 @@ int DBUserAce::CreateUser(const ::std::string& sName,
 	}
 	
 	dbUser.CloseAll();
-	CoUninitialize();
 
 	return nRet;
 }
 int DBUserAce::DeleteUser(int nID)
 {
-	CoInitialize(NULL);
 	HRESULT hr;
 	CTableMcsUser dbUser;
 
 	hr = dbUser.OpenDataSource();
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return -1;
 	}
 	CDBPropSet propset(DBPROPSET_ROWSET);
@@ -145,7 +148,6 @@ int DBUserAce::DeleteUser(int nID)
 	hr = dbUser.Open(dbUser.m_session, strSQL, &propset);
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return -1;
 	}
 
@@ -159,19 +161,17 @@ int DBUserAce::DeleteUser(int nID)
 
 	dbUser.UpdateAll();
 	dbUser.CloseAll();
-	CoUninitialize();
+
 	return 0;
 }
 int DBUserAce::SetUserPW(int nID, const ::std::string& sPassWord)
 {
-	CoInitialize(NULL);
 	HRESULT hr;
 	CTableMcsUser dbUser;
 
 	hr = dbUser.OpenDataSource();
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return -1;
 	}
 	CDBPropSet propset(DBPROPSET_ROWSET);
@@ -182,7 +182,6 @@ int DBUserAce::SetUserPW(int nID, const ::std::string& sPassWord)
 	hr = dbUser.Open(dbUser.m_session, strSQL, &propset);
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return -1;
 	}
 	if (dbUser.MoveFirst() != DB_S_ENDOFROWSET)
@@ -197,20 +196,18 @@ int DBUserAce::SetUserPW(int nID, const ::std::string& sPassWord)
 	}
 
 	dbUser.CloseAll();
-	CoUninitialize();
+
 	return 0;
 }
 
 int DBUserAce::SetUserRight(int nID, int nRight)
 {
-	CoInitialize(NULL);
 	HRESULT hr;
 	CTableMcsUser dbUser;
 
 	hr = dbUser.OpenDataSource();
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return -1;
 	}
 	CDBPropSet propset(DBPROPSET_ROWSET);
@@ -221,7 +218,6 @@ int DBUserAce::SetUserRight(int nID, int nRight)
 	hr = dbUser.Open(dbUser.m_session, strSQL, &propset);
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return -1;
 	}
 	if (dbUser.MoveFirst() != DB_S_ENDOFROWSET)
@@ -232,21 +228,18 @@ int DBUserAce::SetUserRight(int nID, int nRight)
 	}
 
 	dbUser.CloseAll();
-	CoUninitialize();
 
 	return 0;
 }
 
 int DBUserAce::GetUserCount()
 {
-	CoInitialize(NULL);
 	HRESULT hr;
 	CTableMcsUser dbUser;
 
 	hr = dbUser.OpenAll();
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return 2;
 	}
 	int nCount = 0;
@@ -256,7 +249,6 @@ int DBUserAce::GetUserCount()
 	}
 
 	dbUser.CloseAll();
-	CoUninitialize();
 
 	return nCount;
 }
@@ -266,14 +258,12 @@ UserData DBUserAce::GetUserDatabyName(const ::std::string& sName)
 	UserData user;
 	user.nID = 0;
 
-	CoInitialize(NULL);
 	HRESULT hr;
 	CTableMcsUser dbUser;
 
 	hr = dbUser.OpenDataSource();
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return user;
 	}
 
@@ -285,7 +275,6 @@ UserData DBUserAce::GetUserDatabyName(const ::std::string& sName)
 	hr = dbUser.Open(dbUser.m_session, strSQL);
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return user;
 	}
 	if (dbUser.MoveFirst() != DB_S_ENDOFROWSET)
@@ -296,7 +285,6 @@ UserData DBUserAce::GetUserDatabyName(const ::std::string& sName)
 	}
 
 	dbUser.CloseAll();
-	CoUninitialize();
 
 	return user;
 }
@@ -305,14 +293,12 @@ UserData DBUserAce::GetUserDatabyID(int nUserID)
 	UserData user;
 	user.nID = 0;
 
-	CoInitialize(NULL);
 	HRESULT hr;
 	CTableMcsUser dbUser;
 
 	hr = dbUser.OpenDataSource();
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return user;
 	}
 
@@ -322,7 +308,6 @@ UserData DBUserAce::GetUserDatabyID(int nUserID)
 	hr = dbUser.Open(dbUser.m_session, strSQL);
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return user;
 	}
 	if (dbUser.MoveFirst() != DB_S_ENDOFROWSET)
@@ -333,7 +318,6 @@ UserData DBUserAce::GetUserDatabyID(int nUserID)
 	}
 
 	dbUser.CloseAll();
-	CoUninitialize();
 
 	return user;
 }
@@ -341,14 +325,12 @@ UserData DBUserAce::GetUserDatabyID(int nUserID)
 UserDataList DBUserAce::GetUserList(int nStartID, int nCount)
 {
 	UserDataList list;
-	CoInitialize(NULL);
 	HRESULT hr;
 	CTableMcsUser dbUser;
 
 	hr = dbUser.OpenDataSource();
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return list;
 	}
 	
@@ -357,7 +339,6 @@ UserDataList DBUserAce::GetUserList(int nStartID, int nCount)
 	hr = dbUser.Open(dbUser.m_session, strSQL);
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return list;
 	}
 
@@ -370,7 +351,6 @@ UserDataList DBUserAce::GetUserList(int nStartID, int nCount)
 		list.push_back(anUser);
 	}
 	dbUser.CloseAll();
-	CoUninitialize();
 
 	return list;
 }

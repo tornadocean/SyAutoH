@@ -21,13 +21,12 @@ int DBSession::GetLoginSession(int nUserID, int nRight,
 	const string& strConnection, bool bLastLimit)
 {
 	int nSession = 0;
-	CoInitialize(NULL);
+
 	HRESULT hr;
 	CTableLinkSession linkSession;
 	hr = linkSession.OpenAll();
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return -1;
 	}
 
@@ -57,7 +56,6 @@ int DBSession::GetLoginSession(int nUserID, int nRight,
 	if (FAILED(hr))
 	{
 		linkSession.CloseAll();
-		CoUninitialize();
 		return -1;
 	}
 	linkSession.UpdateAll();
@@ -66,7 +64,6 @@ int DBSession::GetLoginSession(int nUserID, int nRight,
 		nSession = linkSession.m_SessionID;
 	}
 	linkSession.CloseAll();
-	CoUninitialize();
 
 	return nSession;
 }
@@ -74,13 +71,11 @@ int DBSession::GetLoginSession(int nUserID, int nRight,
 int DBSession::LoginOut(int nSession)
 {
 	int nRetrun = -1;
-	CoInitialize(NULL);
 	HRESULT hr;
 	CTableLinkSession linkSession;
 	hr = linkSession.OpenDataSource();
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return nRetrun;
 	}
 	CDBPropSet propset(DBPROPSET_ROWSET);
@@ -92,7 +87,6 @@ int DBSession::LoginOut(int nSession)
 	hr = linkSession.Open(linkSession.m_session, strSQL, &propset);
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return nRetrun;
 	}
 
@@ -108,7 +102,6 @@ int DBSession::LoginOut(int nSession)
 		}
 	}
 	linkSession.CloseAll();
-	CoUninitialize();
 
 	return nRetrun;
 }
@@ -116,13 +109,11 @@ int DBSession::LoginOut(int nSession)
 int DBSession::SetRealRight(int nSession, int nRealRight)
 {
 	int nRetrun = -1;
-	CoInitialize(NULL);
 	HRESULT hr;
 	CTableLinkSession linkSession;
 	hr = linkSession.OpenDataSource();
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return nRetrun;
 	}
 	CDBPropSet propset(DBPROPSET_ROWSET);
@@ -134,7 +125,6 @@ int DBSession::SetRealRight(int nSession, int nRealRight)
 	hr = linkSession.Open(linkSession.m_session, strSQL, &propset);
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return nRetrun;
 	}
 
@@ -149,7 +139,6 @@ int DBSession::SetRealRight(int nSession, int nRealRight)
 		}
 	}
 	linkSession.CloseAll();
-	CoUninitialize();
 
 	return nRetrun;
 }
@@ -165,13 +154,11 @@ int DBSession::GetRealRight(int nSession)
 	}
 	else
 	{
-		CoInitialize(NULL);
 		HRESULT hr;
 		CTableLinkSession linkSession;
 		hr = linkSession.OpenDataSource();
 		if (FAILED(hr))
 		{
-			CoUninitialize();
 			return nRight;
 		}
 
@@ -181,7 +168,6 @@ int DBSession::GetRealRight(int nSession)
 		hr = linkSession.Open(linkSession.m_session, strSQL);
 		if (FAILED(hr))
 		{
-			CoUninitialize();
 			return nRight;
 		}
 	
@@ -190,7 +176,6 @@ int DBSession::GetRealRight(int nSession)
 			nRight = linkSession.m_RealRight;
 		}
 		linkSession.CloseAll();
-		CoUninitialize();
 		(*m_pmapRole)[nSession] = nRight;
 	}
 

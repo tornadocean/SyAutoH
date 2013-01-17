@@ -16,14 +16,12 @@ VEC_KEYPOINT DBKeyPoints::GetKeyPointsTable(vector<int> nTypes)
 {
 	VEC_KEYPOINT keyPTList;
 
-	CoInitialize(NULL);
 	HRESULT hr;
 	CTableKeyPoints table;
 
 	hr = table.OpenDataSource();
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return keyPTList;
 	}
 
@@ -56,7 +54,6 @@ VEC_KEYPOINT DBKeyPoints::GetKeyPointsTable(vector<int> nTypes)
 	hr = table.Open(table.m_session, strSQL);
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return keyPTList;
 	}
 
@@ -75,14 +72,12 @@ VEC_KEYPOINT DBKeyPoints::GetKeyPointsTable(vector<int> nTypes)
 		keyPTList.push_back(item);
 	}
 	table.CloseAll();
-	CoUninitialize();
 
 	return keyPTList;
 }
 
 int DBKeyPoints::SetKeyPointbyOHTTeach(int nOHT_ID, int nPOS, int nType, int nSpeedRate)
 {
-	CoInitialize(NULL);
 	HRESULT hr;
 	int nFoup = 0;
 
@@ -91,7 +86,6 @@ int DBKeyPoints::SetKeyPointbyOHTTeach(int nOHT_ID, int nPOS, int nType, int nSp
 	if (FAILED(hr))
 	{
 		cout << "Open KeyPoints Failed." << endl;
-		CoUninitialize();
 		return -1;
 	}
 	CDBPropSet propset(DBPROPSET_ROWSET);
@@ -103,7 +97,6 @@ int DBKeyPoints::SetKeyPointbyOHTTeach(int nOHT_ID, int nPOS, int nType, int nSp
 	if (FAILED(hr))
 	{
 		cout << "Open KeyPoints Failed." << endl;
-		CoUninitialize();
 		return -1;
 	}
 
@@ -122,7 +115,6 @@ int DBKeyPoints::SetKeyPointbyOHTTeach(int nOHT_ID, int nPOS, int nType, int nSp
 			cout<< "update keypoints table failed." << endl;
 		}
 		table.CloseAll();
-		CoUninitialize();
 		return -1;
 	}
 	table.CloseAll();
@@ -130,7 +122,6 @@ int DBKeyPoints::SetKeyPointbyOHTTeach(int nOHT_ID, int nPOS, int nType, int nSp
 	hr = table.OpenAll();
 	if (FAILED(hr))
 	{
-		CoUninitialize();
 		return -1;
 	}
 
@@ -174,7 +165,6 @@ int DBKeyPoints::SetKeyPointbyOHTTeach(int nOHT_ID, int nPOS, int nType, int nSp
 		table.UpdateAll();
 	}
 	table.CloseAll();
-	CoUninitialize();
 
 	return nRet;
 }
