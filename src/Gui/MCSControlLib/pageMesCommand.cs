@@ -8,8 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using MCS.GuiHub;
+using MCSControlLib.Common;
 
-namespace MCSControlLib
+namespace MCSControlLib.Page
 {
     public partial class pageMesCommand : baseControlPage, IMcsControlBase
     {

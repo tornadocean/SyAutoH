@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace MCSControlLib
+namespace MCSControlLib.Page.Stocker
 {
     public partial class formSTKFoupHistory : Form
     {

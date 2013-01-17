@@ -6,8 +6,9 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using MCSControlLib.Common;
 
-namespace MCSControlLib
+namespace MCSControlLib.Page
 {
     public partial class pageLogOffline : baseControlPage, IMcsControlBase
     {

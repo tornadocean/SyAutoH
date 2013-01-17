@@ -1,4 +1,4 @@
-﻿namespace MCSControlLib
+﻿namespace MCSControlLib.Page.Alarm
 {
     partial class LoggerFilter
     {

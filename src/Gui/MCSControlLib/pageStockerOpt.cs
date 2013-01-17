@@ -9,8 +9,10 @@ using System.Text;
 using System.Windows.Forms;
 using System.Timers;
 using MCS.GuiHub;
+using MCSControlLib.Common;
+using MCSControlLib.Page.Stocker;
 
-namespace MCSControlLib
+namespace MCSControlLib.Page
 {
     public partial class pageStockerOpt : baseControlPage, IMcsControlBase
     {

@@ -1,4 +1,4 @@
-﻿namespace MCSControlLib
+﻿namespace MCSControlLib.Page
 {
     partial class pageOHTInfo
     {

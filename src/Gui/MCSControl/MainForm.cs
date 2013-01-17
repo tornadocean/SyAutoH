@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using MCSControlLib;
+using MCSControlLib.Common;
+using MCSControlLib.Page;
 
 namespace MCSControl
 {
@@ -36,7 +38,7 @@ namespace MCSControl
         private int m_nSession = -1;
         private Dictionary<string, baseControlPage> m_dictMcsControl = 
             new Dictionary<string, baseControlPage>();
-        private baseControlPage _ctrl = null;
+        private MCSControlLib.Common.baseControlPage _ctrl = null;
         private IMcsControlBase m_ctrlBase = null;
 
         public MainForm()

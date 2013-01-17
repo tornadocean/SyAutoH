@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Gemma;
 
-namespace MCSControlLib
+namespace MCSControlLib.Page.Alarm
 {
     public partial class LoggerFilter : Form
     {

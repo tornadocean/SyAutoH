@@ -7,8 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Gemma;
+using MCSControlLib.Common;
 
-namespace MCSControlLib
+namespace MCSControlLib.Page
 {
     public partial class pageAlarm : baseControlPage, IMcsControlBase
     {

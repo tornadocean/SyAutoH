@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using GuiAccess;
 
-namespace MCSControlLib
+namespace MCSControlLib.Common
 {
     public delegate void DataChangeHander(object sender, object obData1, object obData2);
     public interface IMcsControlBase

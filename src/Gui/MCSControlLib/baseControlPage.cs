@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 using MCS.GuiHub;
 
-namespace MCSControlLib
+namespace MCSControlLib.Common
 {
     public partial class baseControlPage : UserControl
     {
