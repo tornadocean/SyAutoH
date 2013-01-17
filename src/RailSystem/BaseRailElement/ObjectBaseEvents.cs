@@ -63,6 +63,12 @@ namespace BaseRailElement
         public override void OnLButtonUp(Point point)
         {
             base.OnLButtonUp(point);
+            if (selectObject == SelectObject.SelectEle && hasContact)
+            {
+                hasContact = false;
+                document.SelectedDrawObjectList[0].Move(contactStartDot, contactEndDot);
+                document.SelectedDrawObjectList[0].TrackerColor = Color.Blue;
+            }
             document.ChangeChooseSign(false, point);
         }
 
@@ -138,6 +144,10 @@ namespace BaseRailElement
                         }
                         lastPoint.Offset(dx / tempDrawMultiFactor * tempDrawMultiFactor, dy / tempDrawMultiFactor * tempDrawMultiFactor);
                     }
+                    if (1 == document.SelectedDrawObjectList.Count)
+                    {
+                        CheckAutoContact();
+                    }
                     break;
                 case SelectObject.SelectNone:
                     document.ChangeChooseSign(true, point);
@@ -180,5 +190,75 @@ namespace BaseRailElement
                     break;
             }
         }
+
+        private void CheckAutoContact()
+        {
+            Point[] pts=new Point[3];
+            pts[0] = document.SelectedDrawObjectList[0].DotStart;
+            pts[1] = document.SelectedDrawObjectList[0].DotEnd;
+            pts[2] = document.SelectedDrawObjectList[0].DotEndFork;
+            Rectangle rc;
+            int selectedObjListDotCount = 0;
+            switch (document.SelectedDrawObjectList[0].GraphType)
+            {
+                case 1:
+                case 2:
+                    selectedObjListDotCount = 2;
+                    break;
+                case 3:
+                    selectedObjListDotCount = 3;
+                    break;
+            }
+
+            for (int i = 0; i < selectedObjListDotCount; i++)
+            {
+                rc = new Rectangle(pts[i].X - 4, pts[i].Y - 4, 8, 8);
+                int drawObjListCount = document.DrawObjectList.Count;
+                for (int j = 0; j < drawObjListCount; j++)
+                {
+                    Mcs.RailSystem.Common.BaseRailEle obj = document.DrawObjectList[j];
+                    if (obj != document.SelectedDrawObjectList[0])
+                    {
+                        if (rc.Contains(obj.DotStart))
+                        {
+                            hasContact = true;
+                            contactStartDot = pts[i];
+                            contactEndDot = obj.DotStart;
+                            document.SelectedDrawObjectList[0].TrackerColor = Color.Red;
+                            j = drawObjListCount;
+                            i = selectedObjListDotCount;
+                        }
+                        else if(rc.Contains(obj.DotEnd))
+                        {
+                            hasContact = true;
+                            contactStartDot = pts[i];
+                            contactEndDot = obj.DotEnd;
+                            document.SelectedDrawObjectList[0].TrackerColor = Color.Red;
+                            j = drawObjListCount;
+                            i = selectedObjListDotCount;
+                        }
+                        else if (rc.Contains(obj.DotEndFork))
+                        {
+                            hasContact = true;
+                            contactStartDot = pts[i];
+                            contactEndDot = obj.DotEndFork;
+                            document.SelectedDrawObjectList[0].TrackerColor = Color.Red;
+                            j = drawObjListCount;
+                            i = selectedObjListDotCount;
+                        }
+                        else if (hasContact)
+                        {
+                            hasContact = false;
+                            document.SelectedDrawObjectList[0].TrackerColor = Color.Blue;
+                            contactStartDot = Point.Empty;
+                            contactEndDot = Point.Empty;
+                        }
+                    }
+                }
+            }
+        }
+
+
+
     }
 }
