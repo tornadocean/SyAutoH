@@ -42,7 +42,7 @@ namespace MCSControlLib.Page
                 PushData.upStkLastOptFoup, 
                 PushData.upStkStatus, 
                 PushData.upStkInputStatus, 
-   //             PushData.upStkRoomStatus,
+                PushData.upStkRoomStatus,
             };
             m_dataHub.Async_SetPushCmdList(cmds);
         }
@@ -199,6 +199,8 @@ namespace MCSControlLib.Page
                     }
                     
                 }
+                RefreshFoup();
+                RefreshShelf();
             }
         }
 
@@ -277,10 +279,12 @@ namespace MCSControlLib.Page
                 byte nID = TryConver.ToByte(item[0].ToString());
                 if (nID == stockorId)
                 {
-                    listViewPageStkRoom.Clear();
+                    listViewPageStkRoom.BeginUpdate();
+                    listViewPageStkRoom.Items.Clear();
                     for (int i = 1; i < 142; i++)
                     {
                         Int32 nStatus = TryConver.ToInt32(item[i].ToString());
+                        //listViewPageStkRoom.DataBindings
                         ListViewItem listItem = new ListViewItem();
                         switch (nStatus)
                         {
@@ -297,6 +301,7 @@ namespace MCSControlLib.Page
                         listItem.Text = i.ToString();
                         listViewPageStkRoom.Items.Add(listItem);
                     }
+                    listViewPageStkRoom.EndUpdate();
                 }
             }
         }
@@ -321,15 +326,19 @@ namespace MCSControlLib.Page
             hisFoup.ShowDialog();
         }
 
-        private void linkLabelStkFoupRefresh_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void RefreshFoup()
         {
             byte nID = stockorId;
             string strVal;
             strVal = string.Format("<{0}>", nID);
 
-            int nWRet = m_dataHub.WriteData(GuiCommand.StkInquiryStorage, strVal);
-
             m_tableFoupsInfo.Rows.Clear();
+            int nWRet = m_dataHub.WriteData(GuiCommand.StkInquiryStorage, strVal);
+        }
+
+        private void linkLabelStkFoupRefresh_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            RefreshFoup();
         }
 
         private void btnBackTimeStatus_Click(object sender, EventArgs e)
@@ -407,23 +416,17 @@ namespace MCSControlLib.Page
             }
         }
 
-        private void linkLabelRoomStatus_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void RefreshShelf()
         {
             byte nID = stockorId;
             string strVal = string.Format("<{0}>", nID);
 
             int nWRet = m_dataHub.WriteData(GuiCommand.StkInquiryRoom, strVal);
-
-            System.Timers.Timer timeRoom = new System.Timers.Timer();
-            timeRoom.Elapsed += new ElapsedEventHandler(TimerGetRoom);
-            timeRoom.Interval = 3000;
-            timeRoom.AutoReset = false;
-            timeRoom.Enabled = true;
         }
 
-        private void TimerGetRoom(object source, System.Timers.ElapsedEventArgs e)
+        private void linkLabelRoomStatus_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            int nWRet = m_dataHub.WriteData(GuiCommand.StkGetRoomStatus, "");
+            RefreshShelf();
         }
     }
 }

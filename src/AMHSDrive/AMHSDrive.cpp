@@ -104,10 +104,15 @@ DR_FOUP_LIST CAMHSDrive::GetStkFoupList(int nID)
 	return list;
 }
 
+void CAMHSDrive::STKCleanLastEvent(int nID)
+{
+	sAmhsServer.GetServer()->STK_CleanLastEvent(nID);
+}
+
 DR_FOUP_LIST CAMHSDrive::GetStkLastOptFoup(int nID)
 {
 	DR_FOUP_LIST list;
-	amhs_foup_vec foup_vec=sAmhsServer.GetServer()->STK_GetLastOptFoup(nID);
+	amhs_foup_vec foup_vec = sAmhsServer.GetServer()->STK_GetLastOptFoup(nID);
 	for(amhs_foup_vec::iterator it=foup_vec.begin();
 		it != foup_vec.end(); ++it)
 	{
@@ -144,31 +149,12 @@ DR_OHT_LIST CAMHSDrive::GetOhtList()
 
 int CAMHSDrive::Check()
 {
-	/*while(1)
-	{
-	ThreadPool.ShowStats();
-	Sleep(5000);
-	}*/
-	/*while(1)
-	{
-	sSocketMgr.ShowStatus();
-	Sleep(1000);
-	}*/
-
-	//int nCount = sAmhsServer.GetConnectedCount();
-	//printf("amhs dev connected: %d\n", nCount);
 
 	return 0;
 }
 
 int CAMHSDrive::Clean()
 {
-	//sSocketMgr.ShutdownThreads();
-	//sSocketMgr.CloseAll();
-	//delete SocketMgr::getSingletonPtr();
-	//delete SocketGarbageCollector::getSingletonPtr();
-
-	//ThreadPool.Shutdown();
 	delete AMHS_Server::getSingletonPtr();
 	return 0;
 }

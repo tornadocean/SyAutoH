@@ -90,6 +90,8 @@ GuiDataHubI::GuiDataHubI(void)
 		&GuiDataHubI::Push_STK_Status));
 	m_mapMakePush.insert(std::make_pair(GuiHub::upStkInputStatus,
 		&GuiDataHubI::Push_STK_InputStatus));
+	m_mapMakePush.insert(std::make_pair(GuiHub::upStkRoomStatus,
+		&GuiDataHubI::Push_STK_GetRoom));
 
 	SetTimer();
 }

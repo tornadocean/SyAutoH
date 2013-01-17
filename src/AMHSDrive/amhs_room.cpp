@@ -155,15 +155,34 @@ amhs_foup_vec amhs_room::STK_GetFoups(int nID)
 	return foup_vec;
 }
 
+void amhs_room::STK_CleanLastEventFoup(int nID)
+{
+	WLock(rwLock_stocker_map_)
+	{
+		auto itStocker=stocker_map_.find(nID);
+		if (itStocker != stocker_map_.cend())
+		{
+			itStocker->second->last_opt_foup_vec.clear();
+		}
+	}
+}
+
 amhs_foup_vec amhs_room::STK_GetLastEventFoup(int nID)
 {
 	amhs_foup_vec foup_vec;
-	amhs_stocker_map::iterator itStocker=stocker_map_.find(nID);
-	for(amhs_foup_vec::iterator itFoup = itStocker->second->last_opt_foup_vec.begin();
-		itFoup != itStocker->second->last_opt_foup_vec.end(); ++itFoup)
+	RLock(rwLock_stocker_map_)
 	{
-		foup_vec.push_back(*itFoup);
+		auto itStocker=stocker_map_.find(nID);
+		if (itStocker != stocker_map_.cend())
+		{
+			for(auto itFoup = itStocker->second->last_opt_foup_vec.cbegin();
+				itFoup != itStocker->second->last_opt_foup_vec.cend(); ++itFoup)
+			{
+				foup_vec.push_back(*itFoup);
+			}
+		}
 	}
+	
 	return foup_vec;
 }
 

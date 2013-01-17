@@ -55,6 +55,11 @@ amhs_foup_vec amhs_dev_server::STK_GetLastOptFoup(int nID)
 	return room_.STK_GetLastEventFoup(nID);
 }
 
+void amhs_dev_server::STK_CleanLastEvent(int nID)
+{
+	return room_.STK_CleanLastEventFoup(nID);
+}
+
 vector<int> amhs_dev_server::STK_GetRoom(int nID)
 {
 	return room_.STK_GetRoom(nID);

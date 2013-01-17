@@ -86,6 +86,7 @@ public:
 	DR_STK_LIST GetStkList();
 	DR_FOUP_LIST GetStkFoupList(int nID);
 	DR_FOUP_LIST GetStkLastOptFoup(int nID);
+	void STKCleanLastEvent(int nID);
 	//void GetStkRoom(int nID, int room[141]);
 	vector<int> GetStkRoom(int nID);
 	void STKFoupHand(int nID, int nOpt, int nMode, int nData);

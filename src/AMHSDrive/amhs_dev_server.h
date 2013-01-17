@@ -128,6 +128,7 @@ public:
 	amhs_stocker_vec STK_GetStockerList();
 	amhs_foup_vec STK_GetFoups(int nID);
 	amhs_foup_vec STK_GetLastEventFoup(int nID);
+	void STK_CleanLastEventFoup(int nID);
 	vector<int> STK_GetRoom(int nID);
 
 private:
@@ -217,6 +218,7 @@ public:
 	amhs_stocker_vec STK_GetDataSet();
 	amhs_foup_vec STK_GetFoupDataSet(int nID);
 	amhs_foup_vec STK_GetLastOptFoup(int nID);
+	void STK_CleanLastEvent(int nID);
 	vector<int> STK_GetRoom(int nID);
 
 	void STK_FOUP(int nID, int nMode, int nPick, int nFoupData);
