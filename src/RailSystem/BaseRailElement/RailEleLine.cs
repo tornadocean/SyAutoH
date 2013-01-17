@@ -36,6 +36,8 @@ namespace BaseRailElement
                 pts[1] = new Point(pt.X + Lenght, pt.Y);
             }
             PointList.AddRange(pts);
+            dotStart = PointList[0];
+            dotEnd = PointList[1];
             this.railText = text;
             return this;
         }
@@ -89,6 +91,7 @@ namespace BaseRailElement
             Point[] pts = new Point[n];
             PointList.CopyTo(pts);
             Pen pen = new Pen(Color.Blue);
+            pen.Color = TrackerColor;
             pen.Width = 1;
             for (int i = 0; i < n; i++)
             {
@@ -175,6 +178,8 @@ namespace BaseRailElement
                 pt.Offset(offsetX, offsetY);
                 PointList[i] = pt;
             }
+            dotStart = PointList[0];
+            dotEnd = PointList[1];
         }
 
         public override void MoveHandle(int handle, Point start, Point end)
@@ -210,6 +215,8 @@ namespace BaseRailElement
                 PointList[handle - 1] = pt;
                 Lenght = Math.Abs(PointList[1].Y - PointList[0].Y);
             }
+            dotStart = PointList[0];
+            dotEnd = PointList[1];
         }
 
         public override void RotateCounterClw()
@@ -263,6 +270,8 @@ namespace BaseRailElement
             matrix.TransformPoints(points);
             PointList.Clear();
             PointList.AddRange(points);
+            dotStart = PointList[0];
+            dotEnd = PointList[1];
         }
 
         public override void DrawEnlargeOrShrink(float drawMultiFactor)
@@ -291,6 +300,8 @@ namespace BaseRailElement
             }
             PointList.Clear();
             PointList.AddRange(pts);
+            dotStart = PointList[0];
+            dotEnd = PointList[1];
             base.ChangePropertyValue();
         }
 
@@ -322,6 +333,8 @@ namespace BaseRailElement
             cl.Lenght = Lenght;
             cl.DrawMultiFactor = DrawMultiFactor;
             cl.railText = str;
+            cl.dotStart = dotStart;
+            cl.dotEnd = dotEnd;
             return cl;
         }
 

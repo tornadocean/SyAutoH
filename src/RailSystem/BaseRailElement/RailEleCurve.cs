@@ -33,6 +33,8 @@ namespace BaseRailElement
             oldFirstDot = pt_first;
             SecDot = pt_sec;
             oldSecDot = pt_sec;
+            dotStart = pt_first;
+            dotEnd = pt_sec;
             this.railText = text;
             return this;
         }
@@ -62,6 +64,7 @@ namespace BaseRailElement
             int radiu = Radiu * DrawMultiFactor;
             Point[] points = new Point[4];
             Pen pen = new Pen(Color.Blue, 1);
+            pen.Color = TrackerColor;
             switch (DirectionCurvedAttribute)
             {
                 case Mcs.RailSystem.Common.EleCurve.DirectonCurved.first:
@@ -215,6 +218,8 @@ namespace BaseRailElement
             pt.Offset(offsetX, offsetY);
             SecDot = pt;
             oldSecDot = pt;
+            dotStart = FirstDot;
+            dotEnd = SecDot;
         }
 
         public override void MoveHandle(int handle, Point start, Point end)
@@ -268,6 +273,8 @@ namespace BaseRailElement
             oldFirstDot = FirstDot;
             SecDot = pt_sec;
             oldSecDot = SecDot;
+            dotStart = FirstDot;
+            dotEnd = SecDot;
         }
 
         public override void RotateCounterClw()
@@ -317,6 +324,8 @@ namespace BaseRailElement
             oldFirstDot = pts[1];
             SecDot = pts[2];
             oldSecDot = pts[2];
+            dotStart = FirstDot;
+            dotEnd = SecDot;
         }
 
         public override void RotateClw()
@@ -366,6 +375,8 @@ namespace BaseRailElement
             oldFirstDot = pts[1];
             SecDot = pts[2];
             oldSecDot = pts[2];
+            dotStart = FirstDot;
+            dotEnd = SecDot;
         }
 
         public override void DrawEnlargeOrShrink(float draw_multi_factor)
@@ -448,6 +459,8 @@ namespace BaseRailElement
                 oldFirstDot = FirstDot;
                 oldSecDot = SecDot;
             }
+            dotStart = FirstDot;
+            dotEnd = SecDot;
             base.ChangePropertyValue();
         }
 
@@ -490,6 +503,8 @@ namespace BaseRailElement
             cl.DrawMultiFactor = DrawMultiFactor;
             cl.DirectionCurvedAttribute = DirectionCurvedAttribute;
             cl.railText = str;
+            cl.dotStart = dotStart;
+            cl.dotEnd = dotEnd;
             return cl;
         }
 

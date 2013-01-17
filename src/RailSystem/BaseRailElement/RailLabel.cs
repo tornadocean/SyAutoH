@@ -92,7 +92,7 @@ namespace BaseRailElement
             pt.Offset(offsetX, offsetY);
             rect.Location = pt;
             rectOrigionLoca = pt;
-            Debug.WriteLine(string.Format("label pt is {0}", pt));
+        //    Debug.WriteLine(string.Format("label pt is {0}", pt));
         }
 
         protected void Scale(int handle, int dx, int dy)

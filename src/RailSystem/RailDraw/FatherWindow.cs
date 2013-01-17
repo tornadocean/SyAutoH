@@ -119,6 +119,7 @@ namespace RailDraw
                     this.Cursor = Cursors.Default;
                     break;
             }
+            this.proPage.propertyGrid1.Refresh();
             this.workRegion.picBoxCanvas.Invalidate();
             this.workRegion.picBoxCanvas.Focus();
         }
@@ -142,9 +143,7 @@ namespace RailDraw
                 this.workRegion.picBoxCanvas.Left += (e.X - BaseEvents.LastPoint.X);
                 this.workRegion.picBoxCanvas.Top += (e.Y - BaseEvents.LastPoint.Y);
                 this.workRegion.picBoxCanvas.Invalidate();
-                Debug.WriteLine(string.Format("mouse move is {0}", e.Location));
             }
-            Debug.WriteLine(string.Format("mouseRDown is {0}", e.Location));
         }
 
         public void CanvasMouseClick(object sender, MouseEventArgs e)
