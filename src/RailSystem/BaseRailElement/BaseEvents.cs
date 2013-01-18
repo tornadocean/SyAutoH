@@ -23,6 +23,9 @@ namespace BaseRailElement
             get { return lastPoint; }
             set { lastPoint = value; }
         }
+        protected bool hasContact = false;
+        protected Point contactStartDot = Point.Empty;
+        protected Point contactEndDot = Point.Empty;
 
         public virtual void OnLButtonDown(Point point)
         {

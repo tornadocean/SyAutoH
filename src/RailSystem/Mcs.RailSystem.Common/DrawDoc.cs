@@ -106,8 +106,9 @@ namespace Mcs.RailSystem.Common
             dtEle.Columns.Add("CodingNext", typeof(int));
             dtEle.Columns.Add("CodingNextF", typeof(Int32));
             dtEle.Columns.Add("CodingPrev", typeof(int));
-            dtEle.Columns.Add("startPoint", typeof(string));
-            dtEle.Columns.Add("endPoint", typeof(string));
+            dtEle.Columns.Add("DotStart", typeof(string));
+            dtEle.Columns.Add("DotEnd", typeof(string));
+            dtEle.Columns.Add("DotEndFork", typeof(string));
             dtEle.Columns.Add("StartAngle", typeof(int));
             dtEle.Columns.Add("SweepAngle", typeof(int));
             dtEle.Columns.Add("rotateAngle", typeof(int));
@@ -177,8 +178,8 @@ namespace Mcs.RailSystem.Common
                     }
 
                     dr["DrawMultiFactor"] = line.DrawMultiFactor;
-                    dr["startPoint"] = line.StartPoint.ToString();
-                    dr["endPoint"] = line.EndPoint.ToString();
+                    dr["DotStart"] = line.DotStart.ToString();
+                    dr["DotEnd"] = line.DotEnd.ToString();
                     dr["railText"] = line.railText;
 
                     dr["Color"] = ColorTranslator.ToHtml(line.PenLine.Color);
@@ -203,12 +204,12 @@ namespace Mcs.RailSystem.Common
                     dr["DirectionCurvedAttribute"] = curve.DirectionCurvedAttribute;
 
                     dr["drawMultiFactor"] = curve.DrawMultiFactor;
-                    dr["startPoint"] = curve.StartPoint.ToString();
-                    dr["endPoint"] = curve.EndPoint.ToString();
                     dr["CodingBegin"] = curve.CodingBegin;
                     dr["CodingEnd"] = curve.CodingEnd;
                     dr["CodingNext"] = curve.CodingNext;
                     dr["CodingPrev"] = curve.CodingPrev;
+                    dr["DotStart"] = curve.DotStart.ToString();
+                    dr["DotEnd"] = curve.DotEnd.ToString();
                     dr["railText"] = curve.railText;
                     dr["rotateAngle"] = curve.RotateAngle;
                     dr["oldRadiu"] = curve.oldRadiu;
@@ -240,14 +241,15 @@ namespace Mcs.RailSystem.Common
                     }
 
                     dr["drawMultiFactor"] = cross.DrawMultiFactor;
-                    dr["startPoint"] = cross.StartPoint.ToString();
-                    dr["endPoint"] = cross.EndPoint.ToString();
                     dr["CodingBegin"] = cross.CodingBegin;
                     dr["CodingEnd"] = cross.CodingEnd;
                     dr["CodingEndF"] = cross.CodingEndFork;
                     dr["CodingPrev"] = cross.CodingPrev;
                     dr["CodingNext"] = cross.CodingNext;
                     dr["CodingNextF"] = cross.CodingNextFork;
+                    dr["DotStart"] = cross.DotStart.ToString();
+                    dr["DotEnd"] = cross.DotEnd.ToString();
+                    dr["DotEndFork"] = cross.DotEndFork.ToString();
                     dr["railText"] = cross.railText;
                     dr["lenght"] = cross.Lenght;
                     dr["lenghtFork"] = cross.LenghtFork;
@@ -348,19 +350,19 @@ namespace Mcs.RailSystem.Common
                             case "DrawMultiFactor":
                                 line.DrawMultiFactor = Convert.ToInt16(dtEle.Rows[row][j]);
                                 break;
-                            case "startPoint":
+                            case "DotStart":
                                 str = dtEle.Rows[row][j].ToString();
                                 str = str.Substring(1, str.Length - 2);
                                 strPointArray = str.Split(',');
                                 ptTemp = new Point() { X = int.Parse(strPointArray[0].Substring(2)), Y = int.Parse(strPointArray[1].Substring(2)) };
-                                line.StartPoint = ptTemp;
+                                line.DotStart = ptTemp;
                                 break;
                             case "endPoint":
                                 str = dtEle.Rows[row][j].ToString();
                                 str = str.Substring(1, str.Length - 2);
                                 strPointArray = str.Split(',');
                                 ptTemp = new Point() { X = int.Parse(strPointArray[0].Substring(2)), Y = int.Parse(strPointArray[1].Substring(2)) };
-                                line.EndPoint = ptTemp;
+                                line.DotEnd = ptTemp;
                                 break;
                             case "railText":
                                 line.railText = dtEle.Rows[row][j].ToString();
@@ -440,19 +442,19 @@ namespace Mcs.RailSystem.Common
                             case "DirectionCurvedAttribute":
                                 curve.DirectionCurvedAttribute = (Mcs.RailSystem.Common.EleCurve.DirectonCurved)Convert.ToInt32(dtEle.Rows[row][j]);
                                 break;
-                            case "startPoint":
+                            case "DotStart":
                                 str = dtEle.Rows[row][j].ToString();
                                 str = str.Substring(1, str.Length - 2);
                                 strPointArrayCur = str.Split(',');
                                 ptcur = new Point() { X = int.Parse(strPointArrayCur[0].Substring(2)), Y = int.Parse(strPointArrayCur[1].Substring(2)) };
-                                curve.StartPoint = ptcur;
+                                curve.DotStart = ptcur;
                                 break;
-                            case "endPoint":
+                            case "DotEnd":
                                 str = dtEle.Rows[row][j].ToString();
                                 str = str.Substring(1, str.Length - 2);
                                 strPointArrayCur = str.Split(',');
                                 ptcur = new Point() { X = int.Parse(strPointArrayCur[0].Substring(2)), Y = int.Parse(strPointArrayCur[1].Substring(2)) };
-                                curve.EndPoint = ptcur;
+                                curve.DotEnd = ptcur;
                                 break;
                             case "CodingBegin":
                                 curve.CodingBegin = Convert.ToInt32(dtEle.Rows[row][j]);
@@ -550,19 +552,26 @@ namespace Mcs.RailSystem.Common
                             case "drawMultiFactor":
                                 cross.DrawMultiFactor = Convert.ToInt16(dtEle.Rows[row][j]);
                                 break;
-                            case "startPoint":
+                            case "DotStart":
                                 strcro = dtEle.Rows[row][j].ToString();
                                 strcro = strcro.Substring(1, strcro.Length - 2);
                                 strPointArrayCro = strcro.Split(',');
                                 ptcro = new Point() { X = int.Parse(strPointArrayCro[0].Substring(2)), Y = int.Parse(strPointArrayCro[1].Substring(2)) };
-                                cross.StartPoint = ptcro;
+                                cross.DotStart = ptcro;
                                 break;
-                            case "endPoint":
+                            case "DotEnd":
                                 strcro = dtEle.Rows[row][j].ToString();
                                 strcro = strcro.Substring(1, strcro.Length - 2);
                                 strPointArrayCro = strcro.Split(',');
                                 ptcro = new Point() { X = int.Parse(strPointArrayCro[0].Substring(2)), Y = int.Parse(strPointArrayCro[1].Substring(2)) };
-                                cross.EndPoint = ptcro;
+                                cross.DotEnd = ptcro;
+                                break;
+                            case "DotEndFork":
+                                strcro = dtEle.Rows[row][j].ToString();
+                                strcro = strcro.Substring(1, strcro.Length - 2);
+                                strPointArrayCro = strcro.Split(',');
+                                ptcro = new Point() { X = int.Parse(strPointArrayCro[0].Substring(2)), Y = int.Parse(strPointArrayCro[1].Substring(2)) };
+                                cross.DotEndFork = ptcro;
                                 break;
                             case "CodingBegin":
                                 cross.CodingBegin = Convert.ToInt32(dtEle.Rows[row][j]);
