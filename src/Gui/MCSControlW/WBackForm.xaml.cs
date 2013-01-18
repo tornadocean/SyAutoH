@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MCSControlLibW;
 
 namespace MCSControlW
 {
@@ -33,8 +34,9 @@ namespace MCSControlW
                 bool bNeedLogin = true;
                 while (true == bNeedLogin)
                 {
-                    LoginForm login = new LoginForm();
-                    login.UserManagement = userLink;
+                    NavigationService.Navigate(new Uri("WLogin.xaml", UriKind.Relative));
+                    //WLogin login = new WLogin();
+                    //login.UserManagement = userLink;
                     login.ShowDialog();
                     if (login.IsLogin == false)
                     {
@@ -45,12 +47,12 @@ namespace MCSControlW
                     {
                         try
                         {
-                            MainForm mainForm = new MainForm();
-                            mainForm.UserName = login.UserName;
-                            mainForm.Session = login.Session;
+                            WMCSControl mainForm = new WMCSControl();
+                            //mainForm.UserName = login.UserName;
+                            //mainForm.Session = login.Session;
                             mainForm.ShowDialog();
-                            userLink.Logout(mainForm.Session);
-                            bNeedLogin = mainForm.NeedLogin;
+                            //userLink.Logout(mainForm.Session);
+                            //bNeedLogin = mainForm.NeedLogin;
                         }
                         catch (System.Exception ex)
                         {

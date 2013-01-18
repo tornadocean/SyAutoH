@@ -115,6 +115,10 @@
       <Project>{c969609b-8a6a-4d79-b77b-eb7c2a5dc54e}</Project>
       <Name>GuiAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MCSControlLibW\MCSControlLibW.csproj">
+      <Project>{320b7d2a-a891-445a-a926-3cd6c1e63aae}</Project>
+      <Name>MCSControlLibW</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

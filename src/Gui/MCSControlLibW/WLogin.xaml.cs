@@ -19,6 +19,12 @@ namespace MCSControlLibW
     /// </summary>
     public partial class WLogin : Window
     {
+        private bool m_bIsLogin = false;
+        public bool IsLogin
+        {
+            get { return m_bIsLogin; }
+            set { m_bIsLogin = value; }
+        }
         public WLogin()
         {
             InitializeComponent();
