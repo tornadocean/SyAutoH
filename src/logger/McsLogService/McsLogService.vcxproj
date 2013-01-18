@@ -80,7 +80,9 @@
     </Link>
     <PostBuildEvent>
       <Message>执行注册</Message>
-      <Command>"$(TargetPath)" /RegServer</Command>
+      <Command>"$(TargetPath)" /RegServer
+
+copy $(ProjectDir)\\script\\*.* $(TargetDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -116,7 +118,9 @@
     </Link>
     <PostBuildEvent>
       <Message>执行注册</Message>
-      <Command>"$(TargetPath)" /RegServer</Command>
+      <Command>"$(TargetPath)" /RegServer
+
+copy $(ProjectDir)\\script\\*.* $(TargetDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
