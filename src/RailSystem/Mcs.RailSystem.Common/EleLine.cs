@@ -13,10 +13,6 @@ namespace Mcs.RailSystem.Common
         private int lenght = 100;
         private int startAngle = 0;
         private int rotateAngle = 90;
-        private Int32 codingBegin = -1;
-        private Int32 codingEnd = -1;
-        private Int32 codingNext = -1;
-        private Int32 codingPrev = -1;
         private List<Point> pointList = new List<Point>();
         private PenStyle linePen = new PenStyle();
         private Pen pen = new Pen(Color.Black, 3);
@@ -39,29 +35,23 @@ namespace Mcs.RailSystem.Common
             get { return rotateAngle; }
             set { rotateAngle = value; }
         }
-        [Description("条形码起始"), Category("轨道段信息")]
-        public Int32 CodingBegin
+        [Browsable(false)]
+        public new Int32 CodingEndFork
         {
-            get { return codingBegin; }
-            set { codingBegin = value; }
+            get;
+            set;
         }
-        [Description("条形码终止"), Category("轨道段信息")]
-        public Int32 CodingEnd
+        [Browsable(false)]
+        public new Int32 CodingNextFork
         {
-            get { return codingEnd; }
-            set { codingEnd = value; }
+            get;
+            set;
         }
-        [Description("条形码起始"), Category("轨道段信息")]
-        public Int32 CodingNext
+        [Browsable(false)]
+        public new Point DotEndFork
         {
-            get { return codingNext; }
-            set { codingNext = value; }
-        }
-        [Description("条形码起始"), Category("轨道段信息")]
-        public Int32 CodingPrev
-        {
-            get { return codingPrev; }
-            set { codingPrev = value; }
+            get;
+            set;
         }
         public List<Point> PointList
         {
@@ -92,5 +82,6 @@ namespace Mcs.RailSystem.Common
             get { return pen; }
             set { pen = value; }
         }
+        
     }
 }

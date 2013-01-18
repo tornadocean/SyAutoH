@@ -36,6 +36,9 @@ namespace BaseRailElement
             pts[2] = points[0];
             PointList.AddRange(pts);
             DirectionOfCross = Mcs.RailSystem.Common.EleCross.DirectionCross.first;
+            dotStart = PointList[0];
+            dotEnd = PointList[1];
+            dotEndFork = PointList[2];
             this.railText = text;
             return this;
         }
@@ -66,6 +69,7 @@ namespace BaseRailElement
             if (canvas == null)
                 throw new Exception("Graphics对象Canvas不能为空");
             Pen pen = new Pen(Color.Blue, 1);
+            pen.Color = TrackerColor;
             int num = PointList.Count;
             Point[] pts = new Point[num];
             for (int i = 0; i < num;i++ )
@@ -148,6 +152,9 @@ namespace BaseRailElement
             }
             PointList.Clear();
             PointList.AddRange(pts);
+            dotStart = PointList[0];
+            dotEnd = PointList[1];
+            dotEndFork = PointList[2];
         }
 
         public override void MoveHandle(int handle, Point start, Point end)
@@ -279,6 +286,9 @@ namespace BaseRailElement
                         break;
                 }
             }
+            dotStart = PointList[0];
+            dotEnd = PointList[1];
+            dotEndFork = PointList[2];
             return ;
         }
 
@@ -332,6 +342,9 @@ namespace BaseRailElement
             {
                 PointList.Add(Point.Ceiling(pts[i]));
             }
+            dotStart = PointList[0];
+            dotEnd = PointList[1];
+            dotEndFork = PointList[2];
         }
 
         public override void RotateClw()
@@ -384,6 +397,9 @@ namespace BaseRailElement
             {
                 PointList.Add(Point.Ceiling(pts[i]));
             }
+            dotStart = PointList[0];
+            dotEnd = PointList[1];
+            dotEndFork = PointList[2];
         }
 
         public override void DrawEnlargeOrShrink(float draw_multi_factor)
@@ -428,6 +444,9 @@ namespace BaseRailElement
             PointList.Clear();
             for (int i = 0; i < num; i++)
                 PointList.Add(Point.Ceiling(pts[i]));
+            dotStart = PointList[0];
+            dotEnd = PointList[1];
+            dotEndFork = PointList[2];
         }
 
         public override void ChangePropertyValue()
@@ -469,7 +488,9 @@ namespace BaseRailElement
                 ObjectMirror();
                 Mirror = true;
             }
-           
+            dotStart = PointList[0];
+            dotEnd = PointList[1];
+            dotEndFork = PointList[2];
         }
 
         public override bool ChosedInRegion(Rectangle rect)
@@ -512,6 +533,9 @@ namespace BaseRailElement
             cl.Mirror = Mirror;
             cl.railText = str;
             cl.PenCross = PenCross;
+            cl.dotStart = dotStart;
+            cl.dotEnd = dotEnd;
+            cl.dotEndFork = dotEndFork;
             return cl;
         }
 

@@ -163,20 +163,20 @@ namespace WinFormElement
                         if (locationValue > strTemp.CodingBegin && locationValue <= strTemp.CodingEnd)
                         {
                             offsetTemp = ((int)locationValue - strTemp.CodingBegin) * strTemp.Lenght / (strTemp.CodingEnd - strTemp.CodingBegin);
-                            returnPt = strTemp.StartPoint;
+                            returnPt = strTemp.DotStart;
                             if (Math.Abs(strTemp.PointList[0].Y - strTemp.PointList[1].Y) < 3)
                             {
-                                if (strTemp.StartPoint.X < strTemp.EndPoint.X)
-                                    returnPt.X = strTemp.StartPoint.X + offsetTemp;
-                                else if (strTemp.StartPoint.X > strTemp.EndPoint.X)
-                                    returnPt.X = strTemp.StartPoint.X - offsetTemp;
+                                if (strTemp.DotStart.X < strTemp.DotEnd.X)
+                                    returnPt.X = strTemp.DotStart.X + offsetTemp;
+                                else if (strTemp.DotStart.X > strTemp.DotEnd.X)
+                                    returnPt.X = strTemp.DotStart.X - offsetTemp;
                             }
                             else
                             {
-                                if (strTemp.StartPoint.Y < strTemp.EndPoint.Y)
-                                    returnPt.Y = strTemp.StartPoint.Y + offsetTemp;
-                                else if (strTemp.StartPoint.Y > strTemp.EndPoint.Y)
-                                    returnPt.Y = strTemp.StartPoint.Y - offsetTemp;
+                                if (strTemp.DotStart.Y < strTemp.DotEnd.Y)
+                                    returnPt.Y = strTemp.DotStart.Y + offsetTemp;
+                                else if (strTemp.DotStart.Y > strTemp.DotEnd.Y)
+                                    returnPt.Y = strTemp.DotStart.Y - offsetTemp;
                             }
                             i = listCount;
                         }
@@ -203,8 +203,8 @@ namespace WinFormElement
                 if (paraList[i].GraphType == 1)
                 {
                     strTemp = (StraightEle)paraList[i];
-                    paraList[i].StartPoint = strTemp.PointList[0];
-                    paraList[i].EndPoint = strTemp.PointList[1];
+                    paraList[i].DotStart = strTemp.PointList[0];
+                    paraList[i].DotEnd = strTemp.PointList[1];
                     tempList.Add(paraList[i]);
                 }
             }

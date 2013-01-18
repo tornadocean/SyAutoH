@@ -15,9 +15,17 @@ namespace Mcs.RailSystem.Common
         private bool selectable = true;
         private float speed = 0;
         private Int16 drawMultiFactor = 1;
-        private Point startPoint = Point.Empty;
-        private Point endPoint = Point.Empty;
+        protected Int32 codingBegin = -1;
+        protected Int32 codingEnd = -1;
+        protected Int32 codingEndFork = -1;
+        protected Int32 codingPrev = -1;
+        protected Int32 codingNext = -1;
+        protected Int32 codingNextFork = -1;
+        protected Point dotStart = Point.Empty;
+        protected Point dotEnd = Point.Empty;
+        protected Point dotEndFork = Point.Empty;
         public string railText = "";
+        private Color trackerColor = Color.Blue;
 
         [Browsable(false)]
         public int GraphType
@@ -55,17 +63,67 @@ namespace Mcs.RailSystem.Common
             get { return drawMultiFactor; }
             set { drawMultiFactor = value; }
         }
-        [Browsable(false)]
-        public Point StartPoint
+        [Description("条形码起始"), Category("轨道段信息")]
+        public Int32 CodingBegin
         {
-            get { return startPoint; }
-            set { startPoint = value; }
+            get { return codingBegin; }
+            set { codingBegin = value; }
         }
-        [Browsable(false)]
-        public Point EndPoint
+        [Description("条形码终止"), Category("轨道段信息")]
+        public Int32 CodingEnd
         {
-            get { return endPoint; }
-            set { endPoint = value; }
+            get { return codingEnd; }
+            set { codingEnd = value; }
+        }
+        [Description("条形码终止"), Category("轨道段信息")]
+        public Int32 CodingEndFork
+        {
+            get { return codingEndFork; }
+            set { codingEndFork = value; }
+        }
+        [Description("条形码终止"), Category("轨道段信息")]
+        public Int32 CodingPrev
+        {
+            get { return codingPrev; }
+            set { codingPrev = value; }
+        }
+        [Description("条形码终止"), Category("轨道段信息")]
+        public Int32 CodingNext
+        {
+            get { return codingNext; }
+            set { codingNext = value; }
+        }
+        [Description("条形码终止"), Category("轨道段信息")]
+        public Int32 CodingNextFork
+        {
+            get { return codingNextFork; }
+            set { codingNextFork = value; }
+        }
+        [Description("条形码终止"), Category("轨道段信息")]
+        [ReadOnly(true)]
+        public Point DotStart
+        {
+            get { return dotStart; }
+            set { dotStart = value; }
+        }
+        [Description("条形码终止"), Category("轨道段信息")]
+        [ReadOnly(true)]
+        public Point DotEnd
+        {
+            get { return dotEnd; }
+            set { dotEnd = value; }
+        }
+        [Description("条形码终止"), Category("轨道段信息")]
+        [ReadOnly(true)]
+        public Point DotEndFork
+        {
+            get { return dotEndFork; }
+            set { dotEndFork = value; }
+        }
+        public Color TrackerColor
+        {
+            get { return trackerColor; }
+            set { trackerColor = value; }
         }
 
         public virtual void Draw(Graphics canvas) { }
