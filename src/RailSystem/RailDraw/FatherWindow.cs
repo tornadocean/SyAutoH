@@ -622,17 +622,20 @@ namespace RailDraw
                 case "Line":
                     Mcs.RailSystem.Common.EleLine line = (Mcs.RailSystem.Common.EleLine)baseRailEle;
                     drawDoc.DrawObjectList.Add(line);
-                    proRegion.AddElementNode(this.workRegion.Text, line.railText);
+             //       proRegion.AddElementNode(this.workRegion.Text, line.railText);
+                    proRegion.AddElementNode("Line", line.railText);
                     break;
                 case "Curve":
                     Mcs.RailSystem.Common.EleCurve curve = (Mcs.RailSystem.Common.EleCurve)baseRailEle;
                     drawDoc.DrawObjectList.Add(curve);
-                    proRegion.AddElementNode(this.workRegion.Text, curve.railText);
+             //       proRegion.AddElementNode(this.workRegion.Text, curve.railText);
+                    proRegion.AddElementNode("Curve", curve.railText);
                     break;
                 case "Cross":
                     Mcs.RailSystem.Common.EleCross cross = (Mcs.RailSystem.Common.EleCross)baseRailEle;
                     drawDoc.DrawObjectList.Add(cross);
-                    proRegion.AddElementNode(this.workRegion.Text, cross.railText);
+             //       proRegion.AddElementNode(this.workRegion.Text, cross.railText);
+                    proRegion.AddElementNode("Cross", cross.railText);
                     break;
             }
         }
@@ -688,7 +691,8 @@ namespace RailDraw
                     crossNumber++;
                     str += "_" + crossNumber.ToString();
                 }
-                this.proRegion.AddElementNode(this.workRegion.Text, str);
+         //       this.proRegion.AddElementNode(this.workRegion.Text, str);
+                this.proRegion.AddElementNode(str.Substring(0,str.IndexOf('_')), str);
                 this.drawDoc.Paste(str);
                 this.workRegion.picBoxCanvas.Invalidate();
                 this.proPage.propertyGrid1.SelectedObject = drawDoc.SelectedDrawObjectList[0];
@@ -700,7 +704,8 @@ namespace RailDraw
             for (Int16 i = 0; i < drawDoc.SelectedDrawObjectList.Count; )
             {
                 Int16 num = Convert.ToInt16(drawDoc.DrawObjectList.IndexOf(drawDoc.SelectedDrawObjectList[0]));
-                this.proRegion.DeleteElementNode(this.workRegion.Text, num);
+                string str = drawDoc.SelectedDrawObjectList[i].railText;
+                this.proRegion.DeleteElementNode(str.Substring(0, str.IndexOf('_')), num);
                 this.drawDoc.Delete(num);
                 this.workRegion.picBoxCanvas.Invalidate();
             }
