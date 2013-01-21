@@ -26,8 +26,10 @@ int CMCSCore::Init()
 
 	sScheduler.Init();
 
+	cout<< "Path Productor test: " << endl;
 	sPathProductor.GetLaneData();
 	{
+	
 		int nFrom = 50;
 		int nTo = 1050;
 		auto path = GetPath(nFrom, nTo);
