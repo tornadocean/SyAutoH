@@ -109,6 +109,10 @@ int DBKeyPoints::SetKeyPointbyOHTTeach(int nOHT_ID, int nPOS, int nType, int nSp
 		table.m_TeachMode = 1;
 		table.m_OHT_ID = nOHT_ID;
 
+		table.m_dwSpeedRateStatus = DBSTATUS_S_OK;
+		table.m_dwTeachModeStatus = DBSTATUS_S_OK;
+		table.m_dwOHT_IDStatus = DBSTATUS_S_OK;
+
 		//table.m_dwPositionStatus = DBSTATUS_S_IGNORE;
 		hr = table.SetData();
 		if (FAILED(hr))
@@ -126,14 +130,6 @@ int DBKeyPoints::SetKeyPointbyOHTTeach(int nOHT_ID, int nPOS, int nType, int nSp
 		return -1;
 	}
 
-	//Position, \
-	//	Type, \
-	//	SpeedRate, \
-	//	TeachMode, \
-	//	OHT_ID, \
-	//	Rail_ID, \
-	//	Prev, \
-	//	Next \
 	////// insert record
 	table.m_Position = nPOS;
 	table.m_Type = nType;
