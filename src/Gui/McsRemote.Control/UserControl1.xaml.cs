@@ -10,22 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MCSControlLibW
+namespace McsRemote.Control
 {
     /// <summary>
-    /// WLogin.xaml 的交互逻辑
+    /// UserControl1.xaml 的交互逻辑
     /// </summary>
-    public partial class WLogin : Window
+    public partial class UserControl1 : UserControl
     {
-        private bool m_bIsLogin = false;
-        public bool IsLogin
-        {
-            get { return m_bIsLogin; }
-            set { m_bIsLogin = value; }
-        }
-        public WLogin()
+        public UserControl1()
         {
             InitializeComponent();
         }

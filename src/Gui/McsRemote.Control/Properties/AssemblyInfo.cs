@@ -7,11 +7,11 @@ using System.Windows;
 // 有关程序集的常规信息通过以下
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("MCSControlW")]
+[assembly: AssemblyTitle("McsRemote.Control")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MCSControlW")]
+[assembly: AssemblyProduct("McsRemote.Control")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -31,13 +31,13 @@ using System.Windows;
 //[assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.Satellite)]
 
 
-[assembly: ThemeInfo(
+[assembly:ThemeInfo(
     ResourceDictionaryLocation.None, //主题特定资源词典所处位置
-    //(在页面或应用程序资源词典中 
-    // 未找到某个资源的情况下使用)
+                             //(在页面或应用程序资源词典中 
+                             // 未找到某个资源的情况下使用)
     ResourceDictionaryLocation.SourceAssembly //常规资源词典所处位置
-    //(在页面、应用程序或任何主题特定资源词典中
-    // 未找到某个资源的情况下使用)
+                                      //(在页面、应用程序或任何主题特定资源词典中 
+                                      // 未找到某个资源的情况下使用)
 )]
 
 

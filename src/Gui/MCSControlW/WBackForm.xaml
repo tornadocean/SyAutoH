@@ -1,9 +1,0 @@
-﻿<Window x:Class="MCSControlW.WBackForm"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="System Error" Height="133.949" Width="300" Loaded="Window_Loaded_1" WindowStartupLocation="CenterScreen">
-    <Grid Background="#FFFCFFC2">
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="System Error!" VerticalAlignment="Top" Height="56" Width="292" TextAlignment="Center" FontSize="36" Foreground="Red" Margin="0,24,0,0"/>
-
-    </Grid>
-</Window>

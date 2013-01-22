@@ -12,8 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using McsRemote.Control;
 
-namespace MCSControlW
+namespace McsRemotePad
 {
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
@@ -25,9 +26,10 @@ namespace MCSControlW
             InitializeComponent();
         }
 
-        private void bnExit_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Login wLogin = new Login();
+            wLogin.ShowDialog();
         }
     }
 }
