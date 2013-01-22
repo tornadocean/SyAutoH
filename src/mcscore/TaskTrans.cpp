@@ -27,6 +27,18 @@ void CTaskTrans::Run(void)
 	//Sleep(2000);
 	//db.SetTransferStatus(m_nID, "Finished");
 	
+	// find FOUP Location
+	DBFoup dbFoup;
+	int nFoupID = dbFoup.FindFoup(m_nFoupBarCode);
+	FoupLocation locFoup = {0};
+	if (nFoupID > 0)
+	{
+		dbFoup.GetFoupLocation(nFoupID, locFoup);
+	}
+	
+	// find FOUP keypoints
+
+	
 	// make path
 	sLog.outDebug("Make Path.");
 	int nFrom = 50;

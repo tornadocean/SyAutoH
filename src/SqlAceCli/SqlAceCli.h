@@ -80,8 +80,8 @@ public:
 	int AddFoup(int nBarCode, int nLot, const FoupLocation& location);
 	int UpdateFoup(int nBarCode, int nLot, const FoupLocation& location);
 	int FindFoup(int nBarCode);
-	int SetFoupLocation(int nBarCode, const FoupLocation& location);
-	int GetFoupLocation(int nBarCode, FoupLocation& location);
+	int SetFoupLocation(int nID, const FoupLocation& location);
+	int GetFoupLocation(int nID, FoupLocation& location);
 	VEC_FOUP GetFoupAllTable();
 	VEC_FOUP GetFoupsInStocker(int nStockerID);
 };
