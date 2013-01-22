@@ -28,44 +28,44 @@ int CMCSCore::Init()
 
 	cout<< "Path Productor test: " << endl;
 	sPathProductor.GetLaneData();
-	{
-	
-		int nFrom = 50;
-		int nTo = 1050;
-		auto path = GetPath(nFrom, nTo);
-		cout<< "Start: " << nFrom << " To: " << nTo << endl;
-		cout << "Path: " << endl;
-		auto it = path.cbegin();
-		if (it != path.cend())
-		{
-			cout << *it;
-			for (++it;
-				it != path.cend(); ++it)
-			{
-				cout<< "->" << *it;
-			}
-			cout<< endl;
-		}
-	}
+	//{
+	//
+	//	int nFrom = 50;
+	//	int nTo = 1050;
+	//	auto path = GetPath(nFrom, nTo);
+	//	cout<< "Start: " << nFrom << " To: " << nTo << endl;
+	//	cout << "Path: " << endl;
+	//	auto it = path.cbegin();
+	//	if (it != path.cend())
+	//	{
+	//		cout << *it;
+	//		for (++it;
+	//			it != path.cend(); ++it)
+	//		{
+	//			cout<< "->" << *it;
+	//		}
+	//		cout<< endl;
+	//	}
+	//}
 
-	{
-		int nFrom = 1050;
-		int nTo = 50;
-		auto path = GetPath(nFrom, nTo);
-		cout<< "Start: " << nFrom << " To: " << nTo << endl;
-		cout << "Path: " << endl;
-		auto it = path.cbegin();
-		if (it != path.cend())
-		{
-			cout << *it;
-			for (++it;
-				it != path.cend(); ++it)
-			{
-				cout<< "->" << *it;
-			}
-			cout<< endl;
-		}
-	}
+	//{
+	//	int nFrom = 1050;
+	//	int nTo = 50;
+	//	auto path = GetPath(nFrom, nTo);
+	//	cout<< "Start: " << nFrom << " To: " << nTo << endl;
+	//	cout << "Path: " << endl;
+	//	auto it = path.cbegin();
+	//	if (it != path.cend())
+	//	{
+	//		cout << *it;
+	//		for (++it;
+	//			it != path.cend(); ++it)
+	//		{
+	//			cout<< "->" << *it;
+	//		}
+	//		cout<< endl;
+	//	}
+	//}
 
 	return 0;
 }

@@ -40,3 +40,5 @@ using namespace std;
 #include <atldbsch.h>
 
 #include "DBConst.h"
+
+#include "../shared/Log.h"

@@ -44,7 +44,7 @@ void CTaskTrans::Run(void)
 	int nFrom = 50;
 	int nTo = 1050;
 
-	auto path = sPathProductor.ProductPath(nFrom, nTo);
+	/*auto path = sPathProductor.ProductPath(nFrom, nTo);
 	cout<< "Start: " << nFrom << " To: " << nTo << endl;
 	cout << "Path: " << endl;
 	auto it = path.cbegin();
@@ -57,7 +57,7 @@ void CTaskTrans::Run(void)
 			cout<< "->" << *it;
 		}
 		cout<< endl;
-	}
+	}*/
 	//db.SetTransferStatus(m_nID, "Add");
 	// make commands
 	sLog.outDebug("Make Commands.");

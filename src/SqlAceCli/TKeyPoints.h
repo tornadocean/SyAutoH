@@ -1,21 +1,24 @@
-// KeyPoints.h : CKeyPoints 的声明
+// TKeyPoints.h : CTableKeyPoints 的声明
 
 #pragma once
 
-// 代码生成在 2012年11月16日, 15:21
+// 代码生成在 2013年1月22日, 11:18
 
 class CTableKeyPointsAccessor
 {
 public:
+	LONG m_Id;
 	LONG m_Position;
-	BYTE m_Type;
+	LONG m_Type;
 	BYTE m_SpeedRate;
 	BYTE m_TeachMode;
 	BYTE m_OHT_ID;
-	BYTE m_Lane_ID;
+	LONG m_Lane_ID;
 	LONG m_Prev;
 	LONG m_Next;
 	TCHAR m_Name[51];
+	double m_refX;
+	double m_refY;
 
 	// 以下向导生成的数据成员包含
 	//列映射中相应字段的状态值。
@@ -26,6 +29,7 @@ public:
 	//“向导生成的访问器中的字段状态数据成员”。
 	// 注意: 在设置/插入数据前必须初始化这些字段!
 
+	DBSTATUS m_dwIdStatus;
 	DBSTATUS m_dwPositionStatus;
 	DBSTATUS m_dwTypeStatus;
 	DBSTATUS m_dwSpeedRateStatus;
@@ -35,12 +39,15 @@ public:
 	DBSTATUS m_dwPrevStatus;
 	DBSTATUS m_dwNextStatus;
 	DBSTATUS m_dwNameStatus;
+	DBSTATUS m_dwrefXStatus;
+	DBSTATUS m_dwrefYStatus;
 
 	// 以下向导生成的数据成员包含
 	//列映射中相应字段的长度值。
 	// 注意: 对变长列，在设置/插入
 	//       数据前必须初始化这些字段!
 
+	DBLENGTH m_dwIdLength;
 	DBLENGTH m_dwPositionLength;
 	DBLENGTH m_dwTypeLength;
 	DBLENGTH m_dwSpeedRateLength;
@@ -50,6 +57,8 @@ public:
 	DBLENGTH m_dwPrevLength;
 	DBLENGTH m_dwNextLength;
 	DBLENGTH m_dwNameLength;
+	DBLENGTH m_dwrefXLength;
+	DBLENGTH m_dwrefYLength;
 
 
 	void GetRowsetProperties(CDBPropSet* pPropSet)
@@ -65,10 +74,10 @@ public:
 		CDataSource _db;
 		HRESULT hr;
 //#error 安全问题：连接字符串可能包含密码。
-//// 此连接字符串中可能包含明文密码和/或其他重要
-//// 信息。请在查看完此连接字符串并找到所有与安全
-//// 有关的问题后移除 #error。可能需要将此密码存
-//// 储为其他格式或使用其他的用户身份验证。
+// 此连接字符串中可能包含明文密码和/或其他重要
+// 信息。请在查看完此连接字符串并找到所有与安全
+// 有关的问题后移除 #error。可能需要将此密码存
+// 储为其他格式或使用其他的用户身份验证。
 		hr = _db.OpenFromInitializationString(DbConnectString);
 		if (FAILED(hr))
 		{
@@ -94,6 +103,7 @@ public:
 
 	DEFINE_COMMAND_EX(CTableKeyPointsAccessor, L" \
 	SELECT \
+		Id, \
 		Position, \
 		Type, \
 		SpeedRate, \
@@ -102,7 +112,9 @@ public:
 		Lane_ID, \
 		Prev, \
 		Next, \
-		Name \
+		Name, \
+		refX, \
+		refY \
 		FROM dbo.KeyPoints")
 
 
@@ -110,15 +122,18 @@ public:
 	// 不同于提供程序所报告的顺序来绑定列
 
 	BEGIN_COLUMN_MAP(CTableKeyPointsAccessor)
-		COLUMN_ENTRY_LENGTH_STATUS(1, m_Position, m_dwPositionLength, m_dwPositionStatus)
-		COLUMN_ENTRY_LENGTH_STATUS(2, m_Type, m_dwTypeLength, m_dwTypeStatus)
-		COLUMN_ENTRY_LENGTH_STATUS(3, m_SpeedRate, m_dwSpeedRateLength, m_dwSpeedRateStatus)
-		COLUMN_ENTRY_LENGTH_STATUS(4, m_TeachMode, m_dwTeachModeLength, m_dwTeachModeStatus)
-		COLUMN_ENTRY_LENGTH_STATUS(5, m_OHT_ID, m_dwOHT_IDLength, m_dwOHT_IDStatus)
-		COLUMN_ENTRY_LENGTH_STATUS(6, m_Lane_ID, m_dwLane_IDLength, m_dwLane_IDStatus)
-		COLUMN_ENTRY_LENGTH_STATUS(7, m_Prev, m_dwPrevLength, m_dwPrevStatus)
-		COLUMN_ENTRY_LENGTH_STATUS(8, m_Next, m_dwNextLength, m_dwNextStatus)
-		COLUMN_ENTRY_LENGTH_STATUS(9, m_Name, m_dwNameLength, m_dwNameStatus)
+		COLUMN_ENTRY_LENGTH_STATUS(1, m_Id, m_dwIdLength, m_dwIdStatus)
+		COLUMN_ENTRY_LENGTH_STATUS(2, m_Position, m_dwPositionLength, m_dwPositionStatus)
+		COLUMN_ENTRY_LENGTH_STATUS(3, m_Type, m_dwTypeLength, m_dwTypeStatus)
+		COLUMN_ENTRY_LENGTH_STATUS(4, m_SpeedRate, m_dwSpeedRateLength, m_dwSpeedRateStatus)
+		COLUMN_ENTRY_LENGTH_STATUS(5, m_TeachMode, m_dwTeachModeLength, m_dwTeachModeStatus)
+		COLUMN_ENTRY_LENGTH_STATUS(6, m_OHT_ID, m_dwOHT_IDLength, m_dwOHT_IDStatus)
+		COLUMN_ENTRY_LENGTH_STATUS(7, m_Lane_ID, m_dwLane_IDLength, m_dwLane_IDStatus)
+		COLUMN_ENTRY_LENGTH_STATUS(8, m_Prev, m_dwPrevLength, m_dwPrevStatus)
+		COLUMN_ENTRY_LENGTH_STATUS(9, m_Next, m_dwNextLength, m_dwNextStatus)
+		COLUMN_ENTRY_LENGTH_STATUS(10, m_Name, m_dwNameLength, m_dwNameStatus)
+		COLUMN_ENTRY_LENGTH_STATUS(11, m_refX, m_dwrefXLength, m_dwrefXStatus)
+		COLUMN_ENTRY_LENGTH_STATUS(12, m_refY, m_dwrefYLength, m_dwrefYStatus)
 	END_COLUMN_MAP()
 };
 

@@ -107,11 +107,11 @@ typedef struct
 {
 	wstring strName;
 	UINT uPosition;
-	WORD uType;//,[Type]
+	int uType;//,[Type]
 	WORD uSpeedRate;//,[SpeedRate]
 	WORD uTeachMode;//,[TeachMode]
 	WORD uOHT_ID;//,[OHT_ID]
-	WORD uRail_ID;//,[Rail_ID]
+	int uLane_ID;//,[Rail_ID]
 	UINT uPrev;//,[Prev]
 	UINT uNext;//,[Next]
 } KeyPointItem;
