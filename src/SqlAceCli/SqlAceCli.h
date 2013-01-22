@@ -80,8 +80,8 @@ public:
 	int AddFoup(int nBarCode, int nLot, const FoupLocation& location);
 	int UpdateFoup(int nBarCode, int nLot, const FoupLocation& location);
 	int FindFoup(int nBarCode);
-	int SetFoupLocation(int nBarCode, const FoupLocation& location);
-	int GetFoupLocation(int nBarCode, FoupLocation& location);
+	int SetFoupLocation(int nID, const FoupLocation& location);
+	int GetFoupLocation(int nID, FoupLocation& location);
 	VEC_FOUP GetFoupAllTable();
 	VEC_FOUP GetFoupsInStocker(int nStockerID);
 };
@@ -107,11 +107,11 @@ typedef struct
 {
 	wstring strName;
 	UINT uPosition;
-	WORD uType;//,[Type]
+	int uType;//,[Type]
 	WORD uSpeedRate;//,[SpeedRate]
 	WORD uTeachMode;//,[TeachMode]
 	WORD uOHT_ID;//,[OHT_ID]
-	WORD uRail_ID;//,[Rail_ID]
+	int uLane_ID;//,[Rail_ID]
 	UINT uPrev;//,[Prev]
 	UINT uNext;//,[Next]
 } KeyPointItem;

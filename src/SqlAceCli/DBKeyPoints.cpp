@@ -65,7 +65,7 @@ VEC_KEYPOINT DBKeyPoints::GetKeyPointsTable(vector<int> nTypes)
 		item.uSpeedRate = table.m_SpeedRate;
 		item.uTeachMode = table.m_TeachMode;
 		item.uOHT_ID = table.m_OHT_ID;
-		item.uRail_ID = table.m_Lane_ID;
+		item.uLane_ID = table.m_Lane_ID;
 		item.uPrev = table.m_Prev;
 		item.uNext = table.m_Next;
 		item.strName = table.m_Name;
@@ -103,16 +103,21 @@ int DBKeyPoints::SetKeyPointbyOHTTeach(int nOHT_ID, int nPOS, int nType, int nSp
 	if(table.MoveFirst() != DB_S_ENDOFROWSET)
 	{
 		// update recoard
+		table.m_dwIdStatus = DBSTATUS_S_IGNORE;
 		table.m_Type = nType;
 		table.m_SpeedRate = nSpeedRate;
 		table.m_TeachMode = 1;
 		table.m_OHT_ID = nOHT_ID;
 
+		table.m_dwSpeedRateStatus = DBSTATUS_S_OK;
+		table.m_dwTeachModeStatus = DBSTATUS_S_OK;
+		table.m_dwOHT_IDStatus = DBSTATUS_S_OK;
+
 		//table.m_dwPositionStatus = DBSTATUS_S_IGNORE;
 		hr = table.SetData();
 		if (FAILED(hr))
 		{
-			cout<< "update keypoints table failed." << endl;
+			LOG_ERROR("update keypoints table failed.");
 		}
 		table.CloseAll();
 		return -1;
@@ -125,14 +130,6 @@ int DBKeyPoints::SetKeyPointbyOHTTeach(int nOHT_ID, int nPOS, int nType, int nSp
 		return -1;
 	}
 
-	//Position, \
-	//	Type, \
-	//	SpeedRate, \
-	//	TeachMode, \
-	//	OHT_ID, \
-	//	Rail_ID, \
-	//	Prev, \
-	//	Next \
 	////// insert record
 	table.m_Position = nPOS;
 	table.m_Type = nType;
@@ -143,6 +140,7 @@ int DBKeyPoints::SetKeyPointbyOHTTeach(int nOHT_ID, int nPOS, int nType, int nSp
 	table.m_Prev = 0;
 	table.m_Next = 0;
 
+	table.m_dwIdStatus = DBSTATUS_S_IGNORE;
 	table.m_dwPositionStatus = DBSTATUS_S_OK;
 	table.m_dwTypeStatus = DBSTATUS_S_OK;
 	table.m_dwSpeedRateStatus = DBSTATUS_S_OK;
@@ -152,12 +150,15 @@ int DBKeyPoints::SetKeyPointbyOHTTeach(int nOHT_ID, int nPOS, int nType, int nSp
 	table.m_dwPrevStatus = DBSTATUS_S_OK;
 	table.m_dwNextStatus = DBSTATUS_S_OK;
 	table.m_dwNameStatus = DBSTATUS_S_IGNORE;
+	table.m_dwrefXStatus = DBSTATUS_S_IGNORE;
+	table.m_dwrefYStatus = DBSTATUS_S_IGNORE;
 
-	table.Insert();
+	hr = table.Insert();
 
 	int nRet = 0;
 	if (FAILED(hr))
 	{
+		LOG_ERROR("Insert keypoints table failed.");
 		nRet = -1;
 	}
 	else

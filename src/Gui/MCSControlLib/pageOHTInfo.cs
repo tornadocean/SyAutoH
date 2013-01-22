@@ -89,13 +89,13 @@ namespace MCSControlLib.Page
             if (4 == item.Count)
             {
                 UInt32 uPos = Convert.ToUInt32(item[1]);
-                Byte uType = TryConver.ToByte(item[2].ToString());
+                int nType = TryConver.ToInt32(item[2].ToString());
                 Byte uSpeed = TryConver.ToByte(item[3].ToString());
                 DataRow row = m_tableKeyPos.Rows.Find(uPos);
                 if (null != row)
                 {
                     row[TKeyP_Name] = item[0].ToString();
-                    row[TKeyP_Type] = uType;
+                    row[TKeyP_Type] = nType;
                     row[TKeyP_Speed] = uSpeed;
                     row.AcceptChanges();
                 }
@@ -104,7 +104,7 @@ namespace MCSControlLib.Page
                     row = m_tableKeyPos.NewRow();
                     row[TKeyP_Pos] = uPos;
                     row[TKeyP_Name] = item[0].ToString();
-                    row[TKeyP_Type] = uType;
+                    row[TKeyP_Type] = nType;
                     row[TKeyP_Speed] = uSpeed;
                     m_tableKeyPos.Rows.Add(row);
                     m_tableKeyPos.AcceptChanges();
@@ -206,7 +206,7 @@ namespace MCSControlLib.Page
                 m_tableKeyPos.Columns[TKeyP_Pos].AllowDBNull = false;
                 m_tableKeyPos.PrimaryKey = new DataColumn[] { m_tableKeyPos.Columns[TKeyP_Pos] };
                 m_tableKeyPos.Columns.Add(TKeyP_Name, typeof(System.String));
-                m_tableKeyPos.Columns.Add(TKeyP_Type, typeof(System.Byte));
+                m_tableKeyPos.Columns.Add(TKeyP_Type, typeof(System.Int32));
                 m_tableKeyPos.Columns.Add(TKeyP_Speed, typeof(System.Byte));
 
                 m_tableKeyPos.AcceptChanges();
