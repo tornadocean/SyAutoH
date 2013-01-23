@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using MCSControlLib;
+using McsRemote.Control;
 
 namespace MCSControl
 {
@@ -26,7 +27,7 @@ namespace MCSControl
                 bool bNeedLogin = true;
                 while (true == bNeedLogin)
                 {
-                    LoginForm login = new LoginForm();
+                    Login login = new Login();
                     login.UserManagement = userLink;
                     login.ShowDialog();
                     if (login.IsLogin == false)
