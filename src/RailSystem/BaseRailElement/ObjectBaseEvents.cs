@@ -39,15 +39,26 @@ namespace BaseRailElement
         public override void OnLButtonDown(Point point)
         {
             base.OnLButtonDown(point);
-            int hit = document.HitTest(point, false);
-            _hit = hit;
-            if (hit > 0)
-                selectObject = SelectObject.SelectHandle;
-            else if (hit == 0)
-                selectObject = SelectObject.SelectEle;
-            else
-                selectObject = SelectObject.SelectNone;
-            document.ChangeChooseSign(true, point);
+            if (drawToolType == 4)
+            {
+                int hit = document.HitTest(point, false);
+                _hit = hit;
+                if (hit > 0)
+                    selectObject = SelectObject.SelectHandle;
+                else if (hit == 0)
+                    selectObject = SelectObject.SelectEle;
+                else
+                    selectObject = SelectObject.SelectNone;
+                document.ChangeChooseSign(true, point);
+            }
+            else if (0 == drawToolType
+                || 1 == drawToolType
+                || 2 == drawToolType)
+            {
+                BaseRailElement.RailAuxiliaryDraw auxDraw = new RailAuxiliaryDraw();
+                auxDraw.CreateEle(drawToolType, document.DrawMultiFactor, point);
+                document.LastHitedObject = auxDraw;
+            }
         }
 
         public override bool OnRButtonDown(Point point)
@@ -63,110 +74,180 @@ namespace BaseRailElement
         public override void OnLButtonUp(Point point)
         {
             base.OnLButtonUp(point);
-            if (selectObject == SelectObject.SelectEle && hasContact)
+            if (drawToolType == 4)
             {
-                hasContact = false;
-                document.SelectedDrawObjectList[0].Move(contactStartDot, contactEndDot);
-                document.SelectedDrawObjectList[0].TrackerColor = Color.Blue;
+                if (selectObject == SelectObject.SelectEle && hasContact)
+                {
+                    hasContact = false;
+                    document.SelectedDrawObjectList[0].Move(contactStartDot, contactEndDot);
+                    document.SelectedDrawObjectList[0].TrackerColor = Color.Blue;
+                }
+                document.ChangeChooseSign(false, point);
             }
-            document.ChangeChooseSign(false, point);
+            else if (0 == drawToolType
+                || 1 == drawToolType
+                || 2 == drawToolType)
+            {
+                document.LastHitedObject.DotEnd = point;
+                document.DrawObjectList.Add(document.LastHitedObject);
+            }
         }
 
         public override void OnMouseMoveLeft(Point point)
         {
-            int dx = point.X - lastPoint.X;
-            int dy = point.Y - lastPoint.Y;
-            int n = document.SelectedDrawObjectList.Count;
-            int tempDrawMultiFactor = 1;
-            switch (selectObject)
+            if (4 == drawToolType)
             {
-                case SelectObject.SelectHandle:
-                    tempDrawMultiFactor = document.SelectedDrawObjectList[0].DrawMultiFactor;
-                    if ((dx != 0 && dx / tempDrawMultiFactor != 0) || (dy != 0 && dy / tempDrawMultiFactor != 0))
-                    {
-                        if (document.SelectedDrawObjectList[0].GraphType == 1)
+                int dx = point.X - lastPoint.X;
+                int dy = point.Y - lastPoint.Y;
+                int n = document.SelectedDrawObjectList.Count;
+                int tempDrawMultiFactor = 1;
+                switch (selectObject)
+                {
+                    case SelectObject.SelectHandle:
+                        tempDrawMultiFactor = document.SelectedDrawObjectList[0].DrawMultiFactor;
+                        if ((dx != 0 && dx / tempDrawMultiFactor != 0) || (dy != 0 && dy / tempDrawMultiFactor != 0))
                         {
-                            if (n == 1)
+                            if (1==document.SelectedDrawObjectList[0].GraphType
+                                || 2==document.SelectedDrawObjectList[0].GraphType 
+                                || 3==document.SelectedDrawObjectList[0].GraphType 
+                                || 5==document.SelectedDrawObjectList[0].GraphType )
                             {
-                                document.SelectedDrawObjectList[0].MoveHandle(_hit, lastPoint, point);
+                                if (n == 1)
+                                {
+                                    document.SelectedDrawObjectList[0].MoveHandle(_hit, lastPoint, point);
+                                }
                             }
-                        }
-                        else if (document.SelectedDrawObjectList[0].GraphType == 2)
-                        {
-                            if (n == 1)
-                            {
-                                document.SelectedDrawObjectList[0].MoveHandle(_hit, lastPoint, point);
-                            }
-                        }
-                        else if (document.SelectedDrawObjectList[0].GraphType == 3)
-                        {
-                            if (n == 1)
-                            {
-                                document.SelectedDrawObjectList[0].MoveHandle(_hit, lastPoint, point);
-                            }
-                        }
-                        else if (document.SelectedDrawObjectList[0].GraphType == 4)
-                        {
-                            if (n == 1)
-                            {
-                                document.SelectedDrawObjectList[0].MoveHandle(_hit, lastPoint, point);
-                            }
-                        }
-                        lastPoint.Offset(dx / tempDrawMultiFactor * tempDrawMultiFactor, dy / tempDrawMultiFactor * tempDrawMultiFactor);
-                    }
-                    break;
-                case SelectObject.SelectEle:
-                    tempDrawMultiFactor = document.SelectedDrawObjectList[0].DrawMultiFactor;
-                    if ((dx != 0 && dx / tempDrawMultiFactor != 0) || (dy != 0 && dy / tempDrawMultiFactor != 0))
-                    {
-                        for (int i = 0; i < n; i++)
-                        {
-                            if (document.SelectedDrawObjectList[i].GraphType == 1)
-                            {
-                                RailEleLine de = (RailEleLine)document.SelectedDrawObjectList[i];
-                                document.SelectedDrawObjectList[i].Move(lastPoint, point);
-                            }
-                            else if (document.SelectedDrawObjectList[i].GraphType == 2)
-                            {
-                                RailEleCurve de = (RailEleCurve)document.SelectedDrawObjectList[i];
-                                document.SelectedDrawObjectList[i].Move(lastPoint, point);
-                            }
-                            else if (document.SelectedDrawObjectList[i].GraphType == 3)
-                            {
-                                RailEleCross de = (RailEleCross)document.SelectedDrawObjectList[i];
-                                document.SelectedDrawObjectList[i].Move(lastPoint, point);
-                            }
-                            //else if (document.SelectedDrawObjectList[i].GraphType == 4)
+                            //else if (document.SelectedDrawObjectList[0].GraphType == 2)
                             //{
-                            //    RailLabal de = (RailLabal)document.SelectedDrawObjectList[i];
-                            //    document.SelectedDrawObjectList[i].Move(lastPoint, point);
+                            //    if (n == 1)
+                            //    {
+                            //        document.SelectedDrawObjectList[0].MoveHandle(_hit, lastPoint, point);
+                            //    }
                             //}
+                            //else if (document.SelectedDrawObjectList[0].GraphType == 3)
+                            //{
+                            //    if (n == 1)
+                            //    {
+                            //        document.SelectedDrawObjectList[0].MoveHandle(_hit, lastPoint, point);
+                            //    }
+                            //}
+                            else if (document.SelectedDrawObjectList[0].GraphType == 4)
+                            {
+                                if (n == 1)
+                                {
+                                    document.SelectedDrawObjectList[0].MoveHandle(_hit, lastPoint, point);
+                                }
+                            }
+                            lastPoint.Offset(dx / tempDrawMultiFactor * tempDrawMultiFactor, dy / tempDrawMultiFactor * tempDrawMultiFactor);
                         }
-                        lastPoint.Offset(dx / tempDrawMultiFactor * tempDrawMultiFactor, dy / tempDrawMultiFactor * tempDrawMultiFactor);
-                    }
-                    if (1 == document.SelectedDrawObjectList.Count)
-                    {
-                        CheckAutoContact();
-                    }
-                    break;
-                case SelectObject.SelectNone:
-                    document.ChangeChooseSign(true, point);
-                    base.OnMouseMoveLeft(point);
-                    break;
+                        break;
+                    case SelectObject.SelectEle:
+                        tempDrawMultiFactor = document.SelectedDrawObjectList[0].DrawMultiFactor;
+                        if ((dx != 0 && dx / tempDrawMultiFactor != 0) || (dy != 0 && dy / tempDrawMultiFactor != 0))
+                        {
+                            for (int i = 0; i < n; i++)
+                            {
+                                if (1 == document.SelectedDrawObjectList[i].GraphType
+                                    || 2 == document.SelectedDrawObjectList[i].GraphType
+                                    || 3 == document.SelectedDrawObjectList[i].GraphType
+                                    || 5 == document.SelectedDrawObjectList[i].GraphType)
+                                {
+                                    //                      RailEleLine de = (RailEleLine)document.SelectedDrawObjectList[i];
+                                    document.SelectedDrawObjectList[i].Move(lastPoint, point);
+                                }
+             //                   else if (document.SelectedDrawObjectList[i].GraphType == 2)
+             //                   {
+             ////                       RailEleCurve de = (RailEleCurve)document.SelectedDrawObjectList[i];
+             //                       document.SelectedDrawObjectList[i].Move(lastPoint, point);
+             //                   }
+             //                   else if (document.SelectedDrawObjectList[i].GraphType == 3)
+             //                   {
+             ////                       RailEleCross de = (RailEleCross)document.SelectedDrawObjectList[i];
+             //                       document.SelectedDrawObjectList[i].Move(lastPoint, point);
+             //                   }
+                                //else if (document.SelectedDrawObjectList[i].GraphType == 4)
+                                //{
+                                //    RailLabal de = (RailLabal)document.SelectedDrawObjectList[i];
+                                //    document.SelectedDrawObjectList[i].Move(lastPoint, point);
+                                //}
+                            }
+                            lastPoint.Offset(dx / tempDrawMultiFactor * tempDrawMultiFactor, dy / tempDrawMultiFactor * tempDrawMultiFactor);
+                        }
+                        if (1 == document.SelectedDrawObjectList.Count)
+                        {
+                            CheckAutoContact();
+                        }
+                        break;
+                    case SelectObject.SelectNone:
+                        document.ChangeChooseSign(true, point);
+                        base.OnMouseMoveLeft(point);
+                        break;
+                }
             }
         }
 
-        public override Point DrapDrawRegion(Point point)
-        {
-            Point pt_offset = Point.Empty;
-            pt_offset.X = point.X - lastPoint.X;
-            pt_offset.Y = point.Y - lastPoint.Y;
-            base.DrapDrawRegion(point);
-            return pt_offset;
-        }
+        //public override Point DrapDrawRegion(Point point)
+        //{
+        //    Point pt_offset = Point.Empty;
+        //    pt_offset.X = point.X - lastPoint.X;
+        //    pt_offset.Y = point.Y - lastPoint.Y;
+        //    base.DrapDrawRegion(point);
+        //    return pt_offset;
+        //}
         public override void ChangePropertyValue()
         {
             int n = document.SelectedDrawObjectList.Count;
+            if (5 == document.SelectedDrawObjectList[n - 1].GraphType)
+            {
+                RailEleFoupDot dot = (RailEleFoupDot)document.SelectedDrawObjectList[n - 1];
+                if ( dot.CodingScratchDot!=dot.CodingScratchDotOri)
+                {
+                    int num = document.DrawObjectList.Count;
+                    int i;
+                    for (i = 0; i < num; i++)
+                    {
+                        if (1 == document.DrawObjectList[i].GraphType
+                            && ((RailEleLine)(document.DrawObjectList[i])).CodingBegin!=((RailEleLine)(document.DrawObjectList[i])).CodingEnd
+                            &&dot.CodingScratchDot>=((RailEleLine)(document.DrawObjectList[i])).CodingBegin
+                            && dot.CodingScratchDot <= ((RailEleLine)(document.DrawObjectList[i])).CodingEnd)
+                        {
+                            RailEleLine line = (RailEleLine)document.DrawObjectList[i];
+                            if (line.PointList[0].Y == line.PointList[1].Y)
+                            {
+                                Point pt = Point.Empty;
+                                if (line.PointList[0].X < line.PointList[1].X)
+                                    pt.X = line.PointList[0].X + (dot.CodingScratchDot - line.CodingBegin) * line.Lenght / (line.CodingEnd - line.CodingBegin);
+                                else if (line.PointList[0].X > line.PointList[1].X)
+                                    pt.X = line.PointList[0].X - (dot.CodingScratchDot - line.CodingBegin) * line.Lenght / (line.CodingEnd - line.CodingBegin);
+                                pt.Y = line.PointList[0].Y;
+                                dot.PtScratchDot = pt;
+                                dot.CodingScratchDotOri = dot.CodingScratchDot;
+                                pt.Offset(dot.PtOffset.X, dot.PtOffset.Y);
+                                dot.PtScratchDotIcon = pt;
+                            }
+                            else
+                            {
+                                Point pt = Point.Empty;
+                                if (line.PointList[0].Y < line.PointList[1].Y)
+                                    pt.Y = line.PointList[0].Y + (dot.CodingScratchDot - line.CodingBegin) * line.Lenght / (line.CodingEnd - line.CodingBegin);
+                                else if (line.PointList[0].Y > line.PointList[1].Y)
+                                    pt.Y = line.PointList[0].Y - (dot.CodingScratchDot - line.CodingBegin) * line.Lenght / (line.CodingEnd - line.CodingBegin);
+                                pt.X = line.PointList[0].X;
+                                dot.PtScratchDot = pt;
+                                dot.CodingScratchDotOri = dot.CodingScratchDot;
+                                pt.Offset(dot.PtOffset.X, dot.PtOffset.Y);
+                                dot.PtScratchDotIcon = pt;
+                            }
+                            break;
+                        }
+                    }
+                    if (i == num)
+                    {
+                        MessageBox.Show("please set line coding firstly");
+                        dot.CodingScratchDot = dot.CodingScratchDotOri;
+                    }
+                }
+            }
             document.SelectedDrawObjectList[n - 1].ChangePropertyValue();
         }
 
