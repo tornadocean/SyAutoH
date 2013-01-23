@@ -50,8 +50,10 @@
     <Compile Include="ObjectBaseEvents.cs" />
     <Compile Include="ObjectLabelOp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RailAuxiliaryDraw.cs" />
     <Compile Include="RailEleCross.cs" />
     <Compile Include="RailEleCurve.cs" />
+    <Compile Include="RailEleFoupDot.cs" />
     <Compile Include="RailEleLine.cs" />
     <Compile Include="RailLabel.cs" />
   </ItemGroup>
