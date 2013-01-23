@@ -28,6 +28,7 @@ namespace RailDraw
         private bool mouseRDown = false;
         private bool canvasMove = false;
         private bool mouseRMove = false;
+        private bool drawToolCreated = false;
         private string sProjectPath = "";
         private Size drawregOrigSize = new Size();
         private const Int16 CONST_MULTI_FACTOR = 1;
@@ -36,6 +37,8 @@ namespace RailDraw
         private Int16 lineNumber = 100;
         private Int16 curveNumber = 200;
         private Int16 crossNumber = 300;
+        private Int16 foupDotNumber = 400;
+        
         public bool DrapIsDown
         {
             get { return canvasMove; }
@@ -91,6 +94,7 @@ namespace RailDraw
                     break;
             }
             this.workRegion.picBoxCanvas.Invalidate();
+            Debug.WriteLine(string.Format("canvasMouseDown"));
         }
 
         public void CanvasMouseUp(object sender, MouseEventArgs e)
@@ -122,6 +126,7 @@ namespace RailDraw
             this.proPage.propertyGrid1.Refresh();
             this.workRegion.picBoxCanvas.Invalidate();
             this.workRegion.picBoxCanvas.Focus();
+            Debug.WriteLine(string.Format("canvasMouseUp"));
         }
 
         public void CanvasMouseMove(object sender, MouseEventArgs e)
@@ -164,6 +169,7 @@ namespace RailDraw
                 }
             }
             this.workRegion.Activate();
+            Debug.WriteLine(string.Format("canvasMouseClick"));
         }
         #endregion
 
@@ -251,6 +257,16 @@ namespace RailDraw
                 workRegion.Show();
             }
             workRegion.Activate();
+        }
+
+
+        private void drawToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!drawToolCreated)
+            {
+                InitDrawToolsComponent();
+                drawToolCreated = true;
+            }
         }
 
         private void FatherWindow_FormClosing(object sender, FormClosingEventArgs e)
@@ -362,7 +378,6 @@ namespace RailDraw
                 }
                 catch(Exception ex)
                 {
-                    //MessageBox.Show("save error");
                     Debug.WriteLine(string.Format("error is: {0}", ex));
                 }
             }
@@ -601,7 +616,16 @@ namespace RailDraw
                     proPage.propertyGrid1.Refresh();
                     break;
                 case "Device":
-                    MessageBox.Show("a");
+                    BaseRailElement.RailEleFoupDot dot = new BaseRailElement.RailEleFoupDot();
+                    str = "FoupDot";
+                    ++foupDotNumber;
+                    str += "_" + foupDotNumber.ToString();
+                    dot.CreateEle(mousePt, workRegionSize, multiFactor, str);
+                    AddElement(dot);
+                    drawDoc.SelectOne(dot);
+                    workRegion.picBoxCanvas.Invalidate();
+                    proPage.propertyGrid1.SelectedObject = dot;
+                    proPage.propertyGrid1.Refresh();
                     break;
                 default:
                     break;
@@ -622,21 +646,24 @@ namespace RailDraw
                 case "Line":
                     Mcs.RailSystem.Common.EleLine line = (Mcs.RailSystem.Common.EleLine)baseRailEle;
                     drawDoc.DrawObjectList.Add(line);
-             //       proRegion.AddElementNode(this.workRegion.Text, line.railText);
                     proRegion.AddElementNode("Line", line.railText);
                     break;
                 case "Curve":
                     Mcs.RailSystem.Common.EleCurve curve = (Mcs.RailSystem.Common.EleCurve)baseRailEle;
                     drawDoc.DrawObjectList.Add(curve);
-             //       proRegion.AddElementNode(this.workRegion.Text, curve.railText);
                     proRegion.AddElementNode("Curve", curve.railText);
                     break;
                 case "Cross":
                     Mcs.RailSystem.Common.EleCross cross = (Mcs.RailSystem.Common.EleCross)baseRailEle;
                     drawDoc.DrawObjectList.Add(cross);
-             //       proRegion.AddElementNode(this.workRegion.Text, cross.railText);
                     proRegion.AddElementNode("Cross", cross.railText);
                     break;
+                case "FoupDot":
+                    Mcs.RailSystem.Common.EleFoupDot dot = (Mcs.RailSystem.Common.EleFoupDot)baseRailEle;
+                    drawDoc.DrawObjectList.Add(dot);
+                    proRegion.AddElementNode("FoupDot", dot.railText);
+                    break;
+
             }
         }
 
@@ -691,7 +718,6 @@ namespace RailDraw
                     crossNumber++;
                     str += "_" + crossNumber.ToString();
                 }
-         //       this.proRegion.AddElementNode(this.workRegion.Text, str);
                 this.proRegion.AddElementNode(str.Substring(0,str.IndexOf('_')), str);
                 this.drawDoc.Paste(str);
                 this.workRegion.picBoxCanvas.Invalidate();
@@ -734,5 +760,116 @@ namespace RailDraw
             objectEvent.WorkRegionKeyDown(direction);
             this.workRegion.picBoxCanvas.Invalidate();
         }
+
+        private void InitDrawToolsComponent()
+        {
+            ToolStripButton toolStripBtnRectangle = new ToolStripButton();
+            ToolStripButton toolStripBtnEllipse = new ToolStripButton();
+            ToolStripButton toolStripBtnLine = new ToolStripButton();
+            ToolStripButton toolStripBtnCurve = new ToolStripButton();
+            ToolStripButton toolStripBtnCurSor = new ToolStripButton();
+            ToolStrip toolStripDraw = new ToolStrip();
+
+            toolStripBtnRectangle.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripBtnRectangle.Image = global::RailDraw.Properties.Resources.rectange;
+            toolStripBtnRectangle.ImageTransparentColor = Color.Magenta;
+            toolStripBtnRectangle.Name = "toolStripBtnRectangle";
+            toolStripBtnRectangle.Size = new System.Drawing.Size(23, 22);
+            toolStripBtnRectangle.Text = "rectangle";
+            toolStripBtnRectangle.Click += new System.EventHandler(toolStripDrawTool_Click);
+
+            toolStripBtnEllipse.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripBtnEllipse.Image = global::RailDraw.Properties.Resources.ellipse;
+            toolStripBtnEllipse.ImageTransparentColor = Color.Magenta;
+            toolStripBtnEllipse.Name = "toolStripBtnEllipse";
+            toolStripBtnEllipse.Size = new System.Drawing.Size(23, 22);
+            toolStripBtnEllipse.Text = "ellipse";
+            toolStripBtnEllipse.Click += new System.EventHandler(toolStripDrawTool_Click);
+
+            toolStripBtnLine.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripBtnLine.Image = global::RailDraw.Properties.Resources.drawLine;
+            toolStripBtnLine.ImageTransparentColor = Color.Magenta;
+            toolStripBtnLine.Name = "toolStripBtnLine";
+            toolStripBtnLine.Size = new System.Drawing.Size(23, 22);
+            toolStripBtnLine.Text = "line";
+            toolStripBtnLine.Click += new System.EventHandler(toolStripDrawTool_Click);
+
+            toolStripBtnCurve.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripBtnCurve.Image = global::RailDraw.Properties.Resources.drawCurve;
+            toolStripBtnCurve.ImageTransparentColor = Color.Magenta;
+            toolStripBtnCurve.Name = "toolStripBtnCurve";
+            toolStripBtnCurve.Size = new System.Drawing.Size(23, 22);
+            toolStripBtnCurve.Text = "curve";
+            toolStripBtnCurve.Click += new System.EventHandler(toolStripDrawTool_Click);
+
+            toolStripBtnCurSor.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripBtnCurSor.Image = global::RailDraw.Properties.Resources.arrow;
+            toolStripBtnCurSor.ImageTransparentColor = Color.Magenta;
+            toolStripBtnCurSor.Name = "toolStripBtnCurSor";
+            toolStripBtnCurSor.Size = new System.Drawing.Size(23, 22);
+            toolStripBtnCurSor.Text = "arrow";
+            toolStripBtnCurSor.Click += new System.EventHandler(toolStripDrawTool_Click);
+
+            toolStripDraw.Items.AddRange(new System.Windows.Forms.ToolStripItem[]{
+            toolStripBtnRectangle,
+            toolStripBtnEllipse,
+            toolStripBtnLine,
+            toolStripBtnCurve,
+            toolStripBtnCurSor});
+            toolStripDraw.TabIndex = 0;
+            toolStripDraw.Size = new System.Drawing.Size(140, 22);
+
+            Form drawForm = new Form();
+            drawForm.StartPosition = FormStartPosition.Manual;
+            drawForm.Owner = this.FindForm();
+            Point pt = Point.Empty;
+            pt.Offset(10, 10);
+            drawForm.Location = pt;
+            drawForm.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            drawForm.ClientSize = toolStripDraw.Size;
+            drawForm.Text = "Draw";
+            drawForm.FormClosing += new System.Windows.Forms.FormClosingEventHandler(DrawToolForm_Closing);
+            drawForm.Controls.Add(toolStripDraw);
+            toolStripDraw.ResumeLayout(false);
+            toolStripDraw.PerformLayout();
+            drawForm.ResumeLayout(false);
+            drawForm.PerformLayout();
+            drawForm.Show(this);
+
+
+        }
+
+        private void toolStripDrawTool_Click(object sender, EventArgs e)
+        {
+
+            ToolStripItem item = sender as ToolStripItem;
+            if (item != null)
+            {
+                switch (item.Text)
+                {
+                    case "rectangle":
+                        objectEvent.DrawToolType = 0;
+                        break;
+                    case "ellipse":
+                        objectEvent.DrawToolType = 1;
+                        break;
+                    case "line":
+                        objectEvent.DrawToolType = 2;
+                        break;
+                    case "curve":
+                        objectEvent.DrawToolType = 3;
+                        break;
+                    case "arrow":
+                        objectEvent.DrawToolType = 4;
+                        break;
+                }
+            }
+        }
+
+        private void DrawToolForm_Closing(object sender, FormClosingEventArgs e)
+        {
+            drawToolCreated = false;
+        }
+
     }
 }
