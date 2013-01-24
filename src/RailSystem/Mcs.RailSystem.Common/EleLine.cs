@@ -53,6 +53,7 @@ namespace Mcs.RailSystem.Common
             get;
             set;
         }
+        [Browsable(false)]
         public List<Point> PointList
         {
             get { return pointList; }

@@ -60,6 +60,7 @@ namespace Mcs.RailSystem.Common
         {
             get { return pointList; }
         }
+        [Browsable(false)]
         public DirectionCross DirectionOfCross
         {
             get { return directionOfCross; }

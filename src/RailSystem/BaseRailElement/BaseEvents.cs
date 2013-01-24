@@ -26,6 +26,12 @@ namespace BaseRailElement
         protected bool hasContact = false;
         protected Point contactStartDot = Point.Empty;
         protected Point contactEndDot = Point.Empty;
+        protected Int16 drawToolType = 4;
+        public Int16 DrawToolType
+        {
+            get { return drawToolType; }
+            set { drawToolType = value; }
+        }
 
         public virtual void OnLButtonDown(Point point)
         {
@@ -50,11 +56,11 @@ namespace BaseRailElement
             lastPoint = point;
         }
 
-        public virtual Point DrapDrawRegion(Point point)
-        {
-            lastPoint = point;
-            return point;
-        }
+        //public virtual Point DrapDrawRegion(Point point)
+        //{
+        //    lastPoint = point;
+        //    return point;
+        //}
 
         public virtual void ChangePropertyValue()
         {

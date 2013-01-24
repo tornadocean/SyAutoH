@@ -33,6 +33,7 @@ namespace RailDraw
             toolImageList.Images.Add("line", Properties.Resources.line);
             toolImageList.Images.Add("curve", Properties.Resources.curve);
             toolImageList.Images.Add("cross", Properties.Resources.cross);
+            toolImageList.Images.Add("foupWay", Properties.Resources.foupWay);
             toolImageList.Images.Add("device", Properties.Resources.devicebig);
             eleBtn_Click(sender, e);
         }
@@ -128,9 +129,14 @@ namespace RailDraw
             listView1.Clear();
 
             ListViewItem item3 = new ListViewItem();
-            item3.Text = "Device";
-            item3.ImageKey = "device";
+            item3.Text = "FoupWay";
+            item3.ImageKey = "foupWay";
             listView1.Items.Add(item3);
+
+            ListViewItem item4 = new ListViewItem();
+            item4.Text = "Device";
+            item4.ImageKey = "device";
+            listView1.Items.Add(item4);
         }
 
         EventHandlerList toolsEventList = new EventHandlerList();
