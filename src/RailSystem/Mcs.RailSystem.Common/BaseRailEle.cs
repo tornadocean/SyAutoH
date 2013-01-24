@@ -26,6 +26,7 @@ namespace Mcs.RailSystem.Common
         protected Point dotEndFork = Point.Empty;
         public string railText = "";
         private Color trackerColor = Color.Blue;
+        private Int16 railAuxiliaryDrawType = 4;
 
         [Browsable(false)]
         public int GraphType
@@ -120,10 +121,17 @@ namespace Mcs.RailSystem.Common
             get { return dotEndFork; }
             set { dotEndFork = value; }
         }
+        [Browsable(false)]
         public Color TrackerColor
         {
             get { return trackerColor; }
             set { trackerColor = value; }
+        }
+        [Browsable(false)]
+        public Int16 RailAuxiliaryDrawType
+        {
+            get { return railAuxiliaryDrawType; }
+            set { railAuxiliaryDrawType = value; }
         }
 
         public virtual void Draw(Graphics canvas) { }

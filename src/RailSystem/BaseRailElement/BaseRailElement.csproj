@@ -45,13 +45,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseEvents.cs" />
-    <Compile Include="Device.cs" />
+    <Compile Include="RailEleDevice.cs" />
     <Compile Include="DrawDocOp.cs" />
     <Compile Include="ObjectBaseEvents.cs" />
     <Compile Include="ObjectLabelOp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RailAuxiliaryDraw.cs" />
     <Compile Include="RailEleCross.cs" />
     <Compile Include="RailEleCurve.cs" />
+    <Compile Include="RailEleFoupDot.cs" />
     <Compile Include="RailEleLine.cs" />
     <Compile Include="RailLabel.cs" />
   </ItemGroup>
