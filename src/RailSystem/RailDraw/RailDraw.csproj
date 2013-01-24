@@ -48,6 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonFunction.cs" />
+    <Compile Include="DeviceFoupWayInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeviceFoupWayInfo.Designer.cs">
+      <DependentUpon>DeviceFoupWayInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="FatherWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +92,9 @@
     <Compile Include="WorkRegion.Designer.cs">
       <DependentUpon>WorkRegion.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="DeviceFoupWayInfo.resx">
+      <DependentUpon>DeviceFoupWayInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FatherWindow.resx">
       <DependentUpon>FatherWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -211,6 +220,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ellipse.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\drawLine.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\drawCurve.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\foupWay.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

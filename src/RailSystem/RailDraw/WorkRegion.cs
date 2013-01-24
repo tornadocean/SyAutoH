@@ -52,7 +52,7 @@ namespace RailDraw
             
             this.Cursor = System.Windows.Forms.Cursors.Default;
             Point pt = e.Location;
-            Rectangle rc = this.ClientRectangle;
+            Rectangle rc = this.picBoxCanvas.ClientRectangle;
             if (((FatherWindow)this.ParentForm).tools.PicLine && rc.Contains(pt))
             {
                 ((FatherWindow)this.ParentForm).CreateElement(e.Location, this.picBoxCanvas.ClientSize);
@@ -92,7 +92,7 @@ namespace RailDraw
             ((FatherWindow)this.ParentForm).CanvasMouseClick(sender, e);
         }
 
-        public void contextmenustrip_Click(object sender, EventArgs e)
+        private void contextmenustrip_Click(object sender, EventArgs e)
         {
             if (sender is System.Windows.Forms.ToolStripMenuItem)
             {
@@ -118,6 +118,76 @@ namespace RailDraw
             }
         }
 
+        private void ContextMenuStripProperty_Click(object sender, EventArgs e)
+        {
+            if (sender is System.Windows.Forms.ToolStripMenuItem)
+            {
+                DeviceFoupWayInfo formFoupWayInfo = new DeviceFoupWayInfo();
+                int num = -1;
+                string str = "";
+                switch (formFoupWayInfo.ShowDialog(this.ParentForm))
+                { 
+                    case DialogResult.OK:
+                        str = "FoupWay_" + formFoupWayInfo.FoupWayName.Text;
+                        Mcs.RailSystem.Common.EleDevice deviceOk = (Mcs.RailSystem.Common.EleDevice)(((FatherWindow)(this.ParentForm)).drawDoc.LastHitedObject);
+                        if (deviceOk.ListFoupDot != null)
+                        {
+                            num = deviceOk.ListFoupDot.Count;
+                            for (int i = 0; i < num; i++)
+                            {
+                                if (deviceOk.ListFoupDot[i].railText == str)
+                                {
+                                    MessageBox.Show("there is a same one in system,please check again");
+                                    return;
+                                }
+                            }
+                        }
+                        num = ((FatherWindow)(this.ParentForm)).drawDoc.DrawObjectList.Count;
+                        for (int i = 0; i < num; i++)
+                        {
+                            if (((FatherWindow)(this.ParentForm)).drawDoc.DrawObjectList[i].railText == str)
+                            {
+                                Mcs.RailSystem.Common.EleFoupDot dot = ((Mcs.RailSystem.Common.EleFoupDot)((FatherWindow)(this.ParentForm)).drawDoc.DrawObjectList[i]);
+                                if (dot.DeviceNum != 0)
+                                {
+                                    MessageBox.Show("this one belongs another device");
+                                    return;
+                                }
+                                deviceOk.ListFoupDot.Add(dot);
+                                dot.DeviceNum = deviceOk.DeviecID;
+                                if (1 == deviceOk.ListFoupDot.Count)
+                                    deviceOk.FoupDotFirst = dot;
+                                return;
+                            }
+                        }
+                        MessageBox.Show("there is a one in system,please check again");
+                        break;
+                    case DialogResult.Cancel:
+                        if (formFoupWayInfo.FoupWayName.Text == "")
+                            return;
+                        str = "FoupWay_" + formFoupWayInfo.FoupWayName.Text;
+                        Mcs.RailSystem.Common.EleDevice deviceDel = (Mcs.RailSystem.Common.EleDevice)(((FatherWindow)(this.ParentForm)).drawDoc.LastHitedObject);
+                        if (deviceDel.ListFoupDot != null)
+                        {
+                            num = deviceDel.ListFoupDot.Count;
+                            for (int i = 0; i < num; i++)
+                            {
+                                if (deviceDel.ListFoupDot[i].railText == str)
+                                {
+                                    deviceDel.ListFoupDot[i].DeviceNum = 0;
+                                    deviceDel.ListFoupDot.RemoveAt(i);
+                                    return;
+                                }
+                            }
+                            MessageBox.Show("there is no one in list");
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
         public void DeleteElement()
         {
             ((FatherWindow)this.ParentForm).DeleteElement();
@@ -126,34 +196,47 @@ namespace RailDraw
         public void ContextMenuStripCreate(bool var)
         {
             contextMenuStripWorkReg.Items.Clear();
-            contextMenuStripWorkReg.Items.Add("cut", global::RailDraw.Properties.Resources.cut);
-            contextMenuStripWorkReg.Items.Add("copy", global::RailDraw.Properties.Resources.Copy);
-            contextMenuStripWorkReg.Items.Add("paste", global::RailDraw.Properties.Resources.Paste);
-            contextMenuStripWorkReg.Items.Add("delete", global::RailDraw.Properties.Resources.delete);
-            for (Int16 i = 0; i < contextMenuStripWorkReg.Items.Count; i++)
+            Int16 type=0;
+            Mcs.RailSystem.Common.BaseRailEle obj = ((FatherWindow)(this.ParentForm)).drawDoc.LastHitedObject;
+            if (obj != null)
+                type = (Int16)(((FatherWindow)(this.ParentForm)).drawDoc.LastHitedObject.GraphType);
+            if (6!=type)
             {
-                contextMenuStripWorkReg.Items[i].Click += new EventHandler(contextmenustrip_Click);
-            }
-            contextMenuStripWorkReg.Show(Cursor.Position);
-            if (var)
-            {
-                contextMenuStripWorkReg.Items[2].Enabled = false;
-            }
-            else
-            {
-                if (((FatherWindow)this.ParentForm).drawDoc.CutAndCopyObjectList.Count > 0)
+                contextMenuStripWorkReg.Items.Add("cut", global::RailDraw.Properties.Resources.cut);
+                contextMenuStripWorkReg.Items.Add("copy", global::RailDraw.Properties.Resources.Copy);
+                contextMenuStripWorkReg.Items.Add("paste", global::RailDraw.Properties.Resources.Paste);
+                contextMenuStripWorkReg.Items.Add("delete", global::RailDraw.Properties.Resources.delete);
+                for (Int16 i = 0; i < contextMenuStripWorkReg.Items.Count; i++)
                 {
-                    contextMenuStripWorkReg.Items[0].Enabled = false;
-                    contextMenuStripWorkReg.Items[1].Enabled = false;
-                    contextMenuStripWorkReg.Items[3].Enabled = false;
+                    contextMenuStripWorkReg.Items[i].Click += new EventHandler(contextmenustrip_Click);
+                }
+                contextMenuStripWorkReg.Show(Cursor.Position);
+                if (var)
+                {
+                    contextMenuStripWorkReg.Items[2].Enabled = false;
                 }
                 else
                 {
-                    contextMenuStripWorkReg.Items[0].Enabled = false;
-                    contextMenuStripWorkReg.Items[1].Enabled = false;
-                    contextMenuStripWorkReg.Items[2].Enabled = false;
-                    contextMenuStripWorkReg.Items[3].Enabled = false;
+                    if (((FatherWindow)this.ParentForm).drawDoc.CutAndCopyObjectList.Count > 0)
+                    {
+                        contextMenuStripWorkReg.Items[0].Enabled = false;
+                        contextMenuStripWorkReg.Items[1].Enabled = false;
+                        contextMenuStripWorkReg.Items[3].Enabled = false;
+                    }
+                    else
+                    {
+                        contextMenuStripWorkReg.Items[0].Enabled = false;
+                        contextMenuStripWorkReg.Items[1].Enabled = false;
+                        contextMenuStripWorkReg.Items[2].Enabled = false;
+                        contextMenuStripWorkReg.Items[3].Enabled = false;
+                    }
                 }
+            }
+            else if (6 == type)
+            {
+                contextMenuStripWorkReg.Items.Add("set device foupWay");
+                contextMenuStripWorkReg.Items[0].Click += new EventHandler(ContextMenuStripProperty_Click);
+                contextMenuStripWorkReg.Show(Cursor.Position);
             }
         }
 

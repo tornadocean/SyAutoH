@@ -96,6 +96,7 @@ namespace RailDraw
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
+            this.drawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -176,35 +177,35 @@ namespace RailDraw
             // 
             this.menuCut.Enabled = false;
             this.menuCut.Name = "menuCut";
-            this.menuCut.Size = new System.Drawing.Size(113, 22);
+            this.menuCut.Size = new System.Drawing.Size(152, 22);
             this.menuCut.Text = "Cut";
             this.menuCut.Click += new System.EventHandler(this.cut_Click);
             // 
             // menuCopy
             // 
             this.menuCopy.Name = "menuCopy";
-            this.menuCopy.Size = new System.Drawing.Size(113, 22);
+            this.menuCopy.Size = new System.Drawing.Size(152, 22);
             this.menuCopy.Text = "Copy";
             this.menuCopy.Click += new System.EventHandler(this.copy_Click);
             // 
             // menuPaste
             // 
             this.menuPaste.Name = "menuPaste";
-            this.menuPaste.Size = new System.Drawing.Size(113, 22);
+            this.menuPaste.Size = new System.Drawing.Size(152, 22);
             this.menuPaste.Text = "Paste";
             this.menuPaste.Click += new System.EventHandler(this.paste_Click);
             // 
             // menuDelete
             // 
             this.menuDelete.Name = "menuDelete";
-            this.menuDelete.Size = new System.Drawing.Size(113, 22);
+            this.menuDelete.Size = new System.Drawing.Size(152, 22);
             this.menuDelete.Text = "Delete";
             this.menuDelete.Click += new System.EventHandler(this.delete_Click);
             // 
             // menuChooseAll
             // 
             this.menuChooseAll.Name = "menuChooseAll";
-            this.menuChooseAll.Size = new System.Drawing.Size(113, 22);
+            this.menuChooseAll.Size = new System.Drawing.Size(152, 22);
             this.menuChooseAll.Text = "All";
             this.menuChooseAll.Click += new System.EventHandler(this.menuChooseAll_Click);
             // 
@@ -215,7 +216,8 @@ namespace RailDraw
             this.programRegionToolStripMenuItem,
             this.propertyPageToolStripMenuItem,
             this.toolsToolStripMenuItem,
-            this.workRegionToolStripMenuItem});
+            this.workRegionToolStripMenuItem,
+            this.drawToolStripMenuItem});
             this.menuView.Name = "menuView";
             this.menuView.Size = new System.Drawing.Size(47, 21);
             this.menuView.Text = "View";
@@ -591,6 +593,13 @@ namespace RailDraw
             this.dockPanel1.Skin = dockPanelSkin1;
             this.dockPanel1.TabIndex = 8;
             // 
+            // drawToolStripMenuItem
+            // 
+            this.drawToolStripMenuItem.Name = "drawToolStripMenuItem";
+            this.drawToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.drawToolStripMenuItem.Text = "Draw";
+            this.drawToolStripMenuItem.Click += new System.EventHandler(this.drawToolStripMenuItem_Click);
+            // 
             // FatherWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -667,6 +676,7 @@ namespace RailDraw
         private ToolStripMenuItem toolsToolStripMenuItem;
         private ToolStripMenuItem workRegionToolStripMenuItem;
         public WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel1;
+        private ToolStripMenuItem drawToolStripMenuItem;
     }
 }
 

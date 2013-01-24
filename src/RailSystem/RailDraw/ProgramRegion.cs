@@ -25,6 +25,11 @@ namespace RailDraw
         {
             TreeNode rootNode = new TreeNode(((FatherWindow)this.ParentForm).workRegion.Text);
             this.treeView1.Nodes.Add(rootNode);
+            rootNode.Nodes.Add("Line");
+            rootNode.Nodes.Add("Curve");
+            rootNode.Nodes.Add("Cross");
+            rootNode.Nodes.Add("FoupWay");
+            rootNode.Nodes.Add("Device");
         }
 
         private void ProgramRegion_Shown(object sender, EventArgs e)
@@ -43,8 +48,8 @@ namespace RailDraw
         {
             if (this.treeView1.SelectedNode != null)
             {
-                    Int16 index = Convert.ToInt16(treeNodeList.IndexOf(treeView1.SelectedNode));
-                    ((FatherWindow)this.ParentForm).SelectedElement(index);
+                Int16 index = Convert.ToInt16(treeNodeList.IndexOf(treeView1.SelectedNode));
+                ((FatherWindow)this.ParentForm).SelectedElement(index);
             }
         }
 
@@ -63,7 +68,10 @@ namespace RailDraw
         {
             TreeView tempTree = sender as TreeView;
             TreeNode node = tempTree.SelectedNode;
-            if (node != null && MouseButtons.Right == e.Button && node.Text != ((FatherWindow)this.ParentForm).workRegion.Text)
+            if (node != null
+                && MouseButtons.Right == e.Button 
+                && node.Text != ((FatherWindow)this.ParentForm).workRegion.Text
+                && 2 == node.Level)
             {
                 string str = node.Text;
                 int lenght = str.IndexOf('_');
@@ -95,15 +103,15 @@ namespace RailDraw
             ((FatherWindow)this.ParentForm).DeleteElement();
         }
 
-        public void AddElementNode(string fatherRoot, string str)
+        public void AddElementNode(string fatherName, string str)
         {
             TreeNode tempTreeNode;
             tempTreeNode = new TreeNode(str);
             tempTreeNode.Name = str + nodeNum.ToString();
             treeNodeList.Add(tempTreeNode);
-            foreach (TreeNode node in treeView1.Nodes)
+            foreach (TreeNode node in treeView1.Nodes[0].Nodes)
             {
-                if (node.Text == fatherRoot)
+                if (node.Text == fatherName)
                 {
                     node.Nodes.Add(tempTreeNode);
                     tempTreeNode.Parent.ExpandAll();
@@ -112,14 +120,14 @@ namespace RailDraw
             this.treeView1.SelectedNode = tempTreeNode;
         }
 
-        public void DeleteElementNode(string fatherRoot, Int16 index)
+        public void DeleteElementNode(string fatherName, Int16 index)
         {
             TreeNode tempTreeNode;
             tempTreeNode = treeNodeList[index];
             treeNodeList.RemoveAt(index);
-            foreach (TreeNode node in treeView1.Nodes)
+            foreach (TreeNode node in treeView1.Nodes[0].Nodes)
             {
-                if (node.Text == fatherRoot)
+                if (node.Text == fatherName)
                 {
                     node.Nodes.Remove(tempTreeNode);
                 }
