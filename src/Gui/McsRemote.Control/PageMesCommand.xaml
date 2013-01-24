@@ -7,18 +7,26 @@
 	Title="PageMesCommand" Unloaded="pageMesCmd_Unloaded" Loaded="pageMesCmd_Loaded">
 
     <Grid Width="785" HorizontalAlignment="Left">
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Foups in MCS:" VerticalAlignment="Top" />
-        <DataGrid x:Name="dgFoup" Margin="10,31,0,5" Width="202" HorizontalAlignment="Left"/>
-        <TextBlock HorizontalAlignment="Left" Margin="217,10,0,0" TextWrapping="Wrap" Text="Locations in MCS:" VerticalAlignment="Top"/>
-        <DataGrid x:Name="dgLocation" HorizontalAlignment="Left" Margin="217,31,0,5" Width="189"/>
-        <Rectangle HorizontalAlignment="Left" Height="127" Margin="411,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="177" Fill="#FFDCDCFF"/>
-        <TextBlock HorizontalAlignment="Left" Margin="424,10,0,0" TextWrapping="Wrap" Text="Foup Selected" VerticalAlignment="Top"/>
-        <Rectangle Fill="#FFE3FDDA" HorizontalAlignment="Left" Height="127" Margin="593,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="177"/>
-        <TextBlock HorizontalAlignment="Left" Margin="605,10,0,0" TextWrapping="Wrap" Text="Location Selected" VerticalAlignment="Top"/>
-        <Button x:Name="bnGo" Content="Go" HorizontalAlignment="Left" Margin="497,259,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="bnPause" Content="Pause" HorizontalAlignment="Left" Margin="446,299,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="bnContinue" Content="Continue" HorizontalAlignment="Left" Margin="547,299,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="bnStop" Content="Stop" HorizontalAlignment="Left" Margin="497,338,0,0" VerticalAlignment="Top" Width="75"/>
+        <DataGrid x:Name="dgFoup" ItemsSource="{Binding}" 
+                  Margin="10,31,0,5" Width="357" HorizontalAlignment="Left" 
+                  IsReadOnly="True" 
+                  SelectionUnit="FullRow" SelectionMode="Single"
+                  AlternatingRowBackground="LightBlue" AlternationCount="2"/>
+        <DataGrid x:Name="dgLocation"  ItemsSource="{Binding}" 
+                  HorizontalAlignment="Left" Margin="372,31,0,5" 
+                  Width="221" IsReadOnly="True" 
+                   SelectionUnit="FullRow" SelectionMode="Single"
+                  AlternatingRowBackground="LightBlue" AlternationCount="2"/>
+        <Rectangle HorizontalAlignment="Left" Height="127" Margin="598,4,0,0" Stroke="Black" VerticalAlignment="Top" Width="177" Fill="#FFDCDCFF"/>
+        <TextBlock HorizontalAlignment="Left" Margin="605,4,0,0" TextWrapping="Wrap" Text="Foup Selected" VerticalAlignment="Top"/>
+        <Rectangle Fill="#FFE3FDDA" HorizontalAlignment="Left" Height="112" Margin="598,136,0,0" Stroke="Black" VerticalAlignment="Top" Width="177"/>
+        <TextBlock HorizontalAlignment="Left" Margin="605,136,0,0" TextWrapping="Wrap" Text="Location Selected" VerticalAlignment="Top"/>
+        <Button x:Name="bnGo" Content="Go" HorizontalAlignment="Left" Margin="660,253,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="bnPause" Content="Pause" HorizontalAlignment="Left" Margin="620,299,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="bnContinue" Content="Continue" HorizontalAlignment="Left" Margin="700,299,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="bnStop" Content="Stop" HorizontalAlignment="Left" Margin="660,347,0,0" Width="75" Height="22" VerticalAlignment="Top"/>
+        <Button x:Name="bnGetFoup" Content="Foups in MCS" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Width="357" BorderBrush="{x:Null}" Background="{x:Null}" Click="bnGetFoup_Click"/>
+        <Button x:Name="bnGetLocation" Content="Locations in MCS" HorizontalAlignment="Left" Margin="372,4,0,0" VerticalAlignment="Top" Width="221" Background="{x:Null}" BorderBrush="{x:Null}" Click="bnGetLocation_Click"/>
 
     </Grid>
 </Page>

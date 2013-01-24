@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data;
+using MCS.GuiHub;
 
 namespace McsRemote.Control
 {
@@ -25,13 +26,14 @@ namespace McsRemote.Control
             InitializeComponent();
         }
 
-        public PageMesCommand(GuiAccess.DataHubCli dc)
+        public PageMesCommand(GuiAccess.DataHubCli dhCli)
         {
             InitializeComponent();
-            m_dataHub = dc;
+            m_dataHub = dhCli;
         }
 
         protected GuiAccess.DataHubCli m_dataHub = null;
+       
         public GuiAccess.DataHubCli DataHub
         {
             set
@@ -55,7 +57,26 @@ namespace McsRemote.Control
             {
                 m_dataHub.Async_SetCallBack();
             }
-         
+
+            dgFoup.DataContext = m_dataHub.DataSource.Tables["MesFoup"];
+            dgLocation.DataContext = m_dataHub.DataSource.Tables["MesPos"];
+            m_dataHub.DataUpdater += m_dataHub_DataUpdater;
+        }
+
+        void m_dataHub_DataUpdater(long lTime, MCS.GuiDataItem item)
+        {
+            dgFoup.Dispatcher.BeginInvoke(new Action(() => dgFoup.Items.Refresh()));
+            dgLocation.Dispatcher.BeginInvoke(new Action(() => dgLocation.Items.Refresh()));
+        }
+
+        private void bnGetFoup_Click(object sender, RoutedEventArgs e)
+        {
+            m_dataHub.Async_WriteData(GuiCommand.MesGetFoupTable, "");
+        }
+
+        private void bnGetLocation_Click(object sender, RoutedEventArgs e)
+        {
+            m_dataHub.Async_WriteData(GuiCommand.MesGetPosTable, "");
         }
     }
 }

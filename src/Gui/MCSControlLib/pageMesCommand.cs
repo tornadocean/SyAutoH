@@ -152,7 +152,9 @@ namespace MCSControlLib.Page
             InitFoupTable();
 
             dataGridViewKeyPos.DataSource = m_tableKeyPos;
-            dataGridViewFoup.DataSource = m_tableFoup;
+            //dataGridViewFoup.DataSource = m_tableFoup;
+            DataTable tabFoup = m_dataHub.DataSource.Tables["MesFoup"];
+            dataGridViewFoup.DataSource = tabFoup;
         }
 
         private void dataGridViewKeyPos_CellClick(object sender, DataGridViewCellEventArgs e)

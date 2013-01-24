@@ -1,0 +1,173 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
+using System.Text;
+using System.Data;
+using MCS;
+using MCS.GuiHub;
+
+namespace GuiAccess
+{
+    class GuiDataProcesser
+    {
+        private const string TKeyP_Pos = "Position";
+        private const string TKeyP_Name = "Name";
+        private const string TKeyP_Type = "Type";
+        private const string TKeyP_Speed = "Speed";
+        private DataSet m_ds = new DataSet();
+
+        public DataSet DataSource
+        {
+            get { return m_ds; }
+        }
+
+        public GuiDataProcesser()
+        {
+            InitDataSet();
+            InitProcessDictionary();
+        }
+
+        protected delegate void ProcessHandler(ArrayList item);
+        protected Dictionary<PushData, ProcessHandler> m_dictProcess = new Dictionary<PushData, ProcessHandler>();
+
+        private void InitProcessDictionary()
+        {
+            m_dictProcess.Add(PushData.upMesPosTable, ProcessPosTable);
+            m_dictProcess.Add(PushData.upMesFoupTable, ProcessFoupTable);
+        }
+
+        private void InitDataSet()
+        {
+            InitTableMesFoup();
+            InitTableMesPos();
+        }
+
+        private void InitTableMesFoup()
+        {
+            DataTable table = m_ds.Tables["MesFoup"];
+            if (null == table)
+            {
+                table = new DataTable("MesFoup");
+                table.Columns.Add("BarCode", typeof(System.UInt32));
+                table.Columns["BarCode"].AllowDBNull = false;
+                table.PrimaryKey = new DataColumn[] { table.Columns["BarCode"] };
+                table.Columns.Add("Lot", typeof(System.UInt32));
+                table.Columns.Add("Carrier", typeof(System.UInt32));
+                table.Columns.Add("Port", typeof(System.UInt32));
+                table.Columns.Add("Location", typeof(System.Int32));
+                table.Columns.Add("LocType", typeof(System.UInt32));
+                table.Columns.Add("Status", typeof(System.UInt32));
+
+                table.AcceptChanges();
+                m_ds.Tables.Add(table);
+            }
+        }
+
+        private void InitTableMesPos()
+        {
+            DataTable table = m_ds.Tables["MesPos"];
+            if (null == table)
+            {
+                table = new DataTable("MesPos");
+                table.Columns.Add(TKeyP_Pos, typeof(System.UInt32));
+                table.Columns[TKeyP_Pos].AllowDBNull = false;
+                table.PrimaryKey = new DataColumn[] { table.Columns[TKeyP_Pos] };
+                table.Columns.Add(TKeyP_Name, typeof(System.String));
+                table.Columns.Add(TKeyP_Type, typeof(System.Byte));
+                table.Columns.Add(TKeyP_Speed, typeof(System.Byte));
+                table.AcceptChanges();
+                m_ds.Tables.Add(table);
+                m_ds.AcceptChanges();
+            }
+        }
+
+        public void ProcessData(GuiDataItem guiData)
+        {
+            ProcessHandler handler = null;
+            bool bGet = m_dictProcess.TryGetValue(guiData.enumTag, out handler);
+            if (true == bGet)
+            {
+                ArrayList alDatas = GuiAccess.DataHubCli.ConvertToArrayList(guiData.sVal);
+                foreach (ArrayList item in alDatas)
+                {
+                    handler(item);
+                }
+            }
+        }
+
+        private void ProcessFoupTable(ArrayList item)
+        {
+            if (7 == item.Count)
+            {
+                DataTable table = m_ds.Tables["MesFoup"];
+                if (null == table)
+                {
+                    return;
+                }
+
+                UInt32 uBarCode = UInt32.Parse(item[0].ToString());
+                UInt32 uLot = UInt32.Parse(item[1].ToString());
+                UInt32 uCarrier = UInt32.Parse(item[2].ToString());
+                uint uPort = UInt32.Parse(item[3].ToString());
+                int nLocation = Int32.Parse(item[4].ToString());
+                uint uLocType = UInt32.Parse(item[5].ToString());
+                uint uStatus = UInt32.Parse(item[6].ToString());
+                DataRow row = table.Rows.Find(uBarCode);
+                if (null != row)
+                {
+                    row[1] = uLot;
+                    row[2] = uCarrier;
+                    row[3] = uPort;
+                    row[4] = nLocation;
+                    row[5] = uLocType;
+                    row[6] = uStatus;
+                    row.AcceptChanges();
+                }
+                else
+                {
+                    row = table.NewRow();
+                    row[0] = uBarCode;
+                    row[1] = uLot;
+                    row[2] = uCarrier;
+                    row[3] = uPort;
+                    row[4] = nLocation;
+                    row[5] = uLocType;
+                    row[6] = uStatus;
+                    table.Rows.Add(row);
+                    table.AcceptChanges();
+                }
+            }
+        }
+
+        private void ProcessPosTable(ArrayList item)
+        {
+            if (4 == item.Count)
+            {
+                DataTable table = m_ds.Tables["MesPos"];
+                UInt32 uPos = UInt32.Parse(item[1].ToString());
+                Byte uType = Byte.Parse(item[2].ToString());
+                Byte uSpeed = Byte.Parse(item[3].ToString());
+                DataRow row = table.Rows.Find(uPos);
+                if (null != row)
+                {
+                    row[TKeyP_Name] = item[0].ToString();
+                    row[TKeyP_Type] = uType;
+                    row[TKeyP_Speed] = uSpeed;
+                    row.AcceptChanges();
+                }
+                else
+                {
+                    row = table.NewRow();
+                    row[TKeyP_Pos] = uPos;
+                    row[TKeyP_Name] = item[0].ToString();
+                    row[TKeyP_Type] = uType;
+                    row[TKeyP_Speed] = uSpeed;
+                    table.Rows.Add(row);
+                    table.AcceptChanges();
+                }
+                m_ds.AcceptChanges();
+            }
+        }
+    }
+}

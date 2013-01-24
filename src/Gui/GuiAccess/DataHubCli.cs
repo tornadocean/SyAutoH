@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Text;
+using System.Data;
 using MCS;
 
 namespace GuiAccess
@@ -10,11 +11,21 @@ namespace GuiAccess
     public delegate void DataUpdaterHander(long lTime, GuiDataItem item);
     public class DataHubCli : IceNet
     {
+      
+
         private GuiDataHubPrx remote = null;
         private int m_nSession = 0;
         private GuiDataUpdaterPrx dataCallback = null;
         private DataHubCallbackI dataHubCB = null;
         private DateTime m_updateTime = DateTime.Now;
+        private DataSet m_ds = null;
+        private GuiDataProcesser m_guiDataProcesser = new GuiDataProcesser();
+
+        public DataSet DataSource
+        {
+            get { return m_ds; }
+        }
+
         public System.DateTime UpdateTime
         {
             get { return m_updateTime; }
@@ -29,6 +40,7 @@ namespace GuiAccess
         public DataHubCli()
         {
             ProxyKey = "DataHub";
+            m_ds = m_guiDataProcesser.DataSource;
         }
 
         public override void Disconnect()
@@ -53,6 +65,7 @@ namespace GuiAccess
 
         public void CallBack(long lTime, GuiDataItem item)
         {
+            m_guiDataProcesser.ProcessData(item);
             if (null != this.DataUpdater)
             {
                 m_updateTime = DateTime.Now;
@@ -60,7 +73,10 @@ namespace GuiAccess
                 //m_updateTime = m_updateTime.AddSeconds(lTime);
              
                 this.DataUpdater(lTime, item);
+
+                
             }
+            
         }
 
         public void Async_WriteData(MCS.GuiHub.GuiCommand nCmd, string sVal, int nSession)
@@ -181,6 +197,8 @@ namespace GuiAccess
 
             }
         }
+
+       
 
         static public ArrayList ConvertToArrayList(string strVal)
         {

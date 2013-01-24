@@ -58,6 +58,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="DataHubCallbackI.cs" />
     <Compile Include="DataHubCli.cs" />
+    <Compile Include="GuiDataProcesser.cs" />
     <Compile Include="IceNet.cs" />
     <Compile Include="MESLink.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
