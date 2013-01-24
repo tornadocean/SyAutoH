@@ -28,10 +28,52 @@ namespace McsRemotePad
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            this.Hide();
-            Login wLogin = new Login();
-            wLogin.ShowDialog();
-            this.Close();
+            try
+            {
+                this.Hide();
+                GuiAccess.UserCli userLink = new GuiAccess.UserCli();
+                userLink.ConnectServer();
+                bool bNeedLogin = true;
+                while (true == bNeedLogin)
+                {
+                    LoginWindow login = new LoginWindow();
+                    login.UserManagement = userLink;
+                    login.ShowDialog();
+                    if (login.IsLogin == false)
+                    {
+                        this.Close();
+                        bNeedLogin = false;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            MainPad mainPad = new MainPad();
+                            mainPad.UserName = login.UserName;
+                            mainPad.Session = login.Session;
+                            mainPad.ShowDialog();
+                            userLink.Logout(mainPad.Session);
+                            bNeedLogin = mainPad.NeedLogin;
+                        }
+                        catch (System.Exception ex)
+                        {
+                            string strEx;
+                            strEx = ex.Message;
+                            strEx += "\r\n";
+                            strEx += ex.StackTrace;
+                            MessageBox.Show(strEx);
+                            MessageBox.Show("System will be restarted.");
+                        }
+                    }
+                }
+
+                userLink.Disconnect();
+                this.Close();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

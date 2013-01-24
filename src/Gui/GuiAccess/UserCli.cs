@@ -27,9 +27,10 @@ namespace GuiAccess
             { 
                 nRet = remote.Login(sName, sHash);
             }
-            catch (System.Exception /*ex*/)
+            catch (System.Exception ex)
             {
-            	
+                string str = ex.Message;
+                str = "";
             }
            
             return nRet;
