@@ -4,10 +4,21 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d"
-	Title="PageMesCommand" Width="546.269" Height="325.746" Unloaded="pageMesCmd_Unloaded" Loaded="pageMesCmd_Loaded">
+	Title="PageMesCommand" Unloaded="pageMesCmd_Unloaded" Loaded="pageMesCmd_Loaded">
 
-    <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="138,93,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="52" Width="151"><Run Language="zh-cn" Text="MES COMMAND"/></TextBlock>
+    <Grid Width="785" HorizontalAlignment="Left">
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Foups in MCS:" VerticalAlignment="Top" />
+        <DataGrid x:Name="dgFoup" Margin="10,31,0,5" Width="202" HorizontalAlignment="Left"/>
+        <TextBlock HorizontalAlignment="Left" Margin="217,10,0,0" TextWrapping="Wrap" Text="Locations in MCS:" VerticalAlignment="Top"/>
+        <DataGrid x:Name="dgLocation" HorizontalAlignment="Left" Margin="217,31,0,5" Width="189"/>
+        <Rectangle HorizontalAlignment="Left" Height="127" Margin="411,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="177" Fill="#FFDCDCFF"/>
+        <TextBlock HorizontalAlignment="Left" Margin="424,10,0,0" TextWrapping="Wrap" Text="Foup Selected" VerticalAlignment="Top"/>
+        <Rectangle Fill="#FFE3FDDA" HorizontalAlignment="Left" Height="127" Margin="593,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="177"/>
+        <TextBlock HorizontalAlignment="Left" Margin="605,10,0,0" TextWrapping="Wrap" Text="Location Selected" VerticalAlignment="Top"/>
+        <Button x:Name="bnGo" Content="Go" HorizontalAlignment="Left" Margin="497,259,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="bnPause" Content="Pause" HorizontalAlignment="Left" Margin="446,299,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="bnContinue" Content="Continue" HorizontalAlignment="Left" Margin="547,299,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="bnStop" Content="Stop" HorizontalAlignment="Left" Margin="497,338,0,0" VerticalAlignment="Top" Width="75"/>
 
     </Grid>
 </Page>

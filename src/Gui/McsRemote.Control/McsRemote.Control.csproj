@@ -48,9 +48,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UCFoupTable.xaml.cs">
-      <DependentUpon>UCFoupTable.xaml</DependentUpon>
-    </Compile>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -72,10 +69,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PageStockerInfo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UCFoupTable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

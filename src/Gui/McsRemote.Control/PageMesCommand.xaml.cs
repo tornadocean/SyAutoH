@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data;
 
 namespace McsRemote.Control
 {
@@ -22,6 +23,12 @@ namespace McsRemote.Control
         public PageMesCommand()
         {
             InitializeComponent();
+        }
+
+        public PageMesCommand(GuiAccess.DataHubCli dc)
+        {
+            InitializeComponent();
+            m_dataHub = dc;
         }
 
         protected GuiAccess.DataHubCli m_dataHub = null;
