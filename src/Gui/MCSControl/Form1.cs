@@ -27,7 +27,7 @@ namespace MCSControl
                 bool bNeedLogin = true;
                 while (true == bNeedLogin)
                 {
-                    Login login = new Login();
+                    LoginWindow login = new LoginWindow();
                     login.UserManagement = userLink;
                     login.ShowDialog();
                     if (login.IsLogin == false)
