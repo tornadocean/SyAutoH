@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseEvents.cs" />
-    <Compile Include="Device.cs" />
+    <Compile Include="RailEleDevice.cs" />
     <Compile Include="DrawDocOp.cs" />
     <Compile Include="ObjectBaseEvents.cs" />
     <Compile Include="ObjectLabelOp.cs" />

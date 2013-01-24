@@ -179,6 +179,13 @@ namespace RailDraw.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap foupWay {
+            get {
+                object obj = ResourceManager.GetObject("foupWay", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap line {
             get {
                 object obj = ResourceManager.GetObject("line", resourceCulture);
