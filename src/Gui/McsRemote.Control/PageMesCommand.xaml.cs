@@ -46,6 +46,9 @@ namespace McsRemote.Control
             }
         }
 
+        private string strFoupSelected = "";
+        private string strLocationSelected = "";
+
         private void pageMesCmd_Unloaded(object sender, RoutedEventArgs e)
         {
             //MessageBox.Show("Mes Command unloaded.");
@@ -61,6 +64,9 @@ namespace McsRemote.Control
             dgFoup.DataContext = m_dataHub.DataSource.Tables["MesFoup"];
             dgLocation.DataContext = m_dataHub.DataSource.Tables["MesPos"];
             m_dataHub.DataSetUpdate += m_dataHub_DataSetUpdate;
+
+            m_dataHub.Async_WriteData(GuiCommand.MesGetFoupTable, "");
+            m_dataHub.Async_WriteData(GuiCommand.MesGetPosTable, "");
         }
 
         void m_dataHub_DataSetUpdate()
@@ -77,6 +83,49 @@ namespace McsRemote.Control
         private void bnGetLocation_Click(object sender, RoutedEventArgs e)
         {
             m_dataHub.Async_WriteData(GuiCommand.MesGetPosTable, "");
+        }
+
+        private void dgFoup_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (DataRowView it in e.AddedItems)
+            {
+                strFoupSelected = it.Row[0].ToString();
+                tbSelFoup.Text = strFoupSelected;
+                break;
+            }
+           
+        }
+
+        private void dgLocation_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (DataRowView it in e.AddedItems)
+            {
+                strLocationSelected = it.Row[0].ToString();
+                if (strLocationSelected.Length > 0)
+                {
+                    tbSelLocation.Text = strLocationSelected;
+                }
+             
+                break;
+            }
+        }
+
+        private void bnGo_Click(object sender, RoutedEventArgs e)
+        {
+            if (strFoupSelected.Length <= 0)
+            {
+                MessageBox.Show("No Foup Selected.");
+                return;
+            }
+
+            if (strLocationSelected.Length <= 0)
+            {
+                MessageBox.Show("No Location Selected.");
+                return;
+            }
+
+            string strFoupMove = string.Format("<{0},{1}>", strFoupSelected, strLocationSelected);
+            m_dataHub.Async_WriteData(GuiCommand.MesFoupTransfer, strFoupMove);
         }
     }
 }
