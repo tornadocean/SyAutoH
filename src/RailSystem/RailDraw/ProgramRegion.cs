@@ -28,7 +28,8 @@ namespace RailDraw
             rootNode.Nodes.Add("Line");
             rootNode.Nodes.Add("Curve");
             rootNode.Nodes.Add("Cross");
-            rootNode.Nodes.Add("FoupDot");
+            rootNode.Nodes.Add("FoupWay");
+            rootNode.Nodes.Add("Device");
         }
 
         private void ProgramRegion_Shown(object sender, EventArgs e)

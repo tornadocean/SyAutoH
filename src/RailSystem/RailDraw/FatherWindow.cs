@@ -38,6 +38,7 @@ namespace RailDraw
         private Int16 curveNumber = 200;
         private Int16 crossNumber = 300;
         private Int16 foupDotNumber = 400;
+        private Int16 deviceNumber = 500;
         
         public bool DrapIsDown
         {
@@ -615,9 +616,8 @@ namespace RailDraw
                     proPage.propertyGrid1.SelectedObject = cross;
                     proPage.propertyGrid1.Refresh();
                     break;
-                case "Device":
+                case "FoupWay":
                     BaseRailElement.RailEleFoupDot dot = new BaseRailElement.RailEleFoupDot();
-                    str = "FoupDot";
                     ++foupDotNumber;
                     str += "_" + foupDotNumber.ToString();
                     dot.CreateEle(mousePt, workRegionSize, multiFactor, str);
@@ -625,6 +625,17 @@ namespace RailDraw
                     drawDoc.SelectOne(dot);
                     workRegion.picBoxCanvas.Invalidate();
                     proPage.propertyGrid1.SelectedObject = dot;
+                    proPage.propertyGrid1.Refresh();
+                    break;
+                case "Device":
+                    BaseRailElement.RailEleDevice device = new BaseRailElement.RailEleDevice();
+                    ++deviceNumber;
+                    str += "_" + deviceNumber.ToString();
+                    device.CreateEle(mousePt, workRegionSize, multiFactor, str);
+                    AddElement(device);
+                    drawDoc.SelectOne(device);
+                    workRegion.picBoxCanvas.Invalidate();
+                    proPage.propertyGrid1.SelectedObject = device;
                     proPage.propertyGrid1.Refresh();
                     break;
                 default:
@@ -658,10 +669,15 @@ namespace RailDraw
                     drawDoc.DrawObjectList.Add(cross);
                     proRegion.AddElementNode("Cross", cross.railText);
                     break;
-                case "FoupDot":
+                case "FoupWay":
                     Mcs.RailSystem.Common.EleFoupDot dot = (Mcs.RailSystem.Common.EleFoupDot)baseRailEle;
                     drawDoc.DrawObjectList.Add(dot);
-                    proRegion.AddElementNode("FoupDot", dot.railText);
+                    proRegion.AddElementNode("FoupWay", dot.railText);
+                    break;
+                case "Device":
+                    Mcs.RailSystem.Common.EleDevice device = (Mcs.RailSystem.Common.EleDevice)baseRailEle;
+                    drawDoc.DrawObjectList.Add(device);
+                    proRegion.AddElementNode("Device", device.railText);
                     break;
 
             }

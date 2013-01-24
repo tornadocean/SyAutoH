@@ -17,7 +17,7 @@ namespace Mcs.RailSystem.Common
         protected Int32 iconHeight = 10;
         protected Int32 codingScratchDot = -2;
         protected Int32 codingScratchDotOri = -2;
-        protected Int16 deviceNum = -1;
+        protected Int16 deviceNum = 0;
         protected Image imageFoupWayIcon;
         protected Rectangle rcFoupDot;
         protected bool lockDotIcon = true;
