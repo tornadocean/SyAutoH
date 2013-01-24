@@ -47,10 +47,13 @@ namespace BaseRailElement
             {
                 throw new Exception("there is no element");
             }
-            rcFoupDot.X = ptScratchDot.X;
-            rcFoupDot.Y = ptScratchDot.Y;
-            canvas.DrawImage(imageFoupWayIcon, ptScratchDotIcon.X, ptScratchDotIcon.Y, iconWidth, iconHeight);
-            canvas.DrawRectangle(pen, rcFoupDot);
+            Rectangle rc = new Rectangle(ptScratchDotIcon.X * DrawMultiFactor, ptScratchDotIcon.Y * DrawMultiFactor, iconWidth * DrawMultiFactor, iconHeight * DrawMultiFactor);
+            canvas.DrawImage(imageFoupWayIcon, rc);
+            rc.X = ptScratchDot.X * DrawMultiFactor;
+            rc.Y = ptScratchDot.Y * DrawMultiFactor;
+            rc.Width = rcFoupDot.Width * DrawMultiFactor;
+            rc.Height = rcFoupDot.Height * DrawMultiFactor;
+            canvas.DrawRectangle(pen, rc);
         }
 
         public override void DrawTracker(System.Drawing.Graphics canvas)
@@ -76,7 +79,8 @@ namespace BaseRailElement
                 if (handleHit > 0)
                     return handleHit;
             }
-            Rectangle rc = new Rectangle(ptScratchDotIcon.X, ptScratchDotIcon.Y, iconWidth, iconHeight);
+            Rectangle rc =
+                new Rectangle(ptScratchDotIcon.X * DrawMultiFactor, ptScratchDotIcon.Y * DrawMultiFactor, iconWidth * DrawMultiFactor, iconHeight * DrawMultiFactor);
             GraphicsPath path = new GraphicsPath();
             path.AddRectangle(rc);
             Region region = new Region(path);
@@ -89,7 +93,9 @@ namespace BaseRailElement
         private int HandleHitTest(Point point)
         {
             Point pt = ptScratchDotIcon;
-            pt.Offset(iconWidth, iconHeight);
+            pt.X *= DrawMultiFactor;
+            pt.Y *= DrawMultiFactor;
+            pt.Offset(iconWidth * DrawMultiFactor, iconHeight * DrawMultiFactor);
             Rectangle rc = new Rectangle(pt.X - 4, pt.Y - 4, 8, 8);
             if (rc.Contains(point))
                 return 1;
