@@ -9,6 +9,7 @@ using MCS;
 namespace GuiAccess
 {
     public delegate void DataUpdaterHander(long lTime, GuiDataItem item);
+    public delegate void DataSetUpdaterHander();
     public class DataHubCli : IceNet
     {
       
@@ -37,6 +38,7 @@ namespace GuiAccess
         }
 
         public event DataUpdaterHander DataUpdater;
+        public event DataSetUpdaterHander DataSetUpdate;
         public DataHubCli()
         {
             ProxyKey = "DataHub";
@@ -66,6 +68,11 @@ namespace GuiAccess
         public void CallBack(long lTime, GuiDataItem item)
         {
             m_guiDataProcesser.ProcessData(item);
+            if (null != this.DataSetUpdate)
+            {
+                this.DataSetUpdate();
+            }
+
             if (null != this.DataUpdater)
             {
                 m_updateTime = DateTime.Now;
@@ -73,10 +80,7 @@ namespace GuiAccess
                 //m_updateTime = m_updateTime.AddSeconds(lTime);
              
                 this.DataUpdater(lTime, item);
-
-                
             }
-            
         }
 
         public void Async_WriteData(MCS.GuiHub.GuiCommand nCmd, string sVal, int nSession)

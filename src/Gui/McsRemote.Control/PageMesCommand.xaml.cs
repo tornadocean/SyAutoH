@@ -60,10 +60,10 @@ namespace McsRemote.Control
 
             dgFoup.DataContext = m_dataHub.DataSource.Tables["MesFoup"];
             dgLocation.DataContext = m_dataHub.DataSource.Tables["MesPos"];
-            m_dataHub.DataUpdater += m_dataHub_DataUpdater;
+            m_dataHub.DataSetUpdate += m_dataHub_DataSetUpdate;
         }
 
-        void m_dataHub_DataUpdater(long lTime, MCS.GuiDataItem item)
+        void m_dataHub_DataSetUpdate()
         {
             dgFoup.Dispatcher.BeginInvoke(new Action(() => dgFoup.Items.Refresh()));
             dgLocation.Dispatcher.BeginInvoke(new Action(() => dgLocation.Items.Refresh()));
