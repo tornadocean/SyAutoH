@@ -107,30 +107,17 @@ namespace BaseRailElement
                         tempDrawMultiFactor = document.SelectedDrawObjectList[0].DrawMultiFactor;
                         if ((dx != 0 && dx / tempDrawMultiFactor != 0) || (dy != 0 && dy / tempDrawMultiFactor != 0))
                         {
-                            if (1==document.SelectedDrawObjectList[0].GraphType
-                                || 2==document.SelectedDrawObjectList[0].GraphType 
-                                || 3==document.SelectedDrawObjectList[0].GraphType 
-                                || 5==document.SelectedDrawObjectList[0].GraphType )
+                            if (1 == document.SelectedDrawObjectList[0].GraphType
+                                || 2 == document.SelectedDrawObjectList[0].GraphType
+                                || 3 == document.SelectedDrawObjectList[0].GraphType
+                                || 5 == document.SelectedDrawObjectList[0].GraphType
+                                || 6 == document.SelectedDrawObjectList[0].GraphType)
                             {
                                 if (n == 1)
                                 {
                                     document.SelectedDrawObjectList[0].MoveHandle(_hit, lastPoint, point);
                                 }
                             }
-                            //else if (document.SelectedDrawObjectList[0].GraphType == 2)
-                            //{
-                            //    if (n == 1)
-                            //    {
-                            //        document.SelectedDrawObjectList[0].MoveHandle(_hit, lastPoint, point);
-                            //    }
-                            //}
-                            //else if (document.SelectedDrawObjectList[0].GraphType == 3)
-                            //{
-                            //    if (n == 1)
-                            //    {
-                            //        document.SelectedDrawObjectList[0].MoveHandle(_hit, lastPoint, point);
-                            //    }
-                            //}
                             else if (document.SelectedDrawObjectList[0].GraphType == 4)
                             {
                                 if (n == 1)
@@ -150,26 +137,11 @@ namespace BaseRailElement
                                 if (1 == document.SelectedDrawObjectList[i].GraphType
                                     || 2 == document.SelectedDrawObjectList[i].GraphType
                                     || 3 == document.SelectedDrawObjectList[i].GraphType
-                                    || 5 == document.SelectedDrawObjectList[i].GraphType)
+                                    || 5 == document.SelectedDrawObjectList[i].GraphType
+                                    || 6 == document.SelectedDrawObjectList[i].GraphType)
                                 {
-                                    //                      RailEleLine de = (RailEleLine)document.SelectedDrawObjectList[i];
                                     document.SelectedDrawObjectList[i].Move(lastPoint, point);
                                 }
-             //                   else if (document.SelectedDrawObjectList[i].GraphType == 2)
-             //                   {
-             ////                       RailEleCurve de = (RailEleCurve)document.SelectedDrawObjectList[i];
-             //                       document.SelectedDrawObjectList[i].Move(lastPoint, point);
-             //                   }
-             //                   else if (document.SelectedDrawObjectList[i].GraphType == 3)
-             //                   {
-             ////                       RailEleCross de = (RailEleCross)document.SelectedDrawObjectList[i];
-             //                       document.SelectedDrawObjectList[i].Move(lastPoint, point);
-             //                   }
-                                //else if (document.SelectedDrawObjectList[i].GraphType == 4)
-                                //{
-                                //    RailLabal de = (RailLabal)document.SelectedDrawObjectList[i];
-                                //    document.SelectedDrawObjectList[i].Move(lastPoint, point);
-                                //}
                             }
                             lastPoint.Offset(dx / tempDrawMultiFactor * tempDrawMultiFactor, dy / tempDrawMultiFactor * tempDrawMultiFactor);
                         }
@@ -186,14 +158,6 @@ namespace BaseRailElement
             }
         }
 
-        //public override Point DrapDrawRegion(Point point)
-        //{
-        //    Point pt_offset = Point.Empty;
-        //    pt_offset.X = point.X - lastPoint.X;
-        //    pt_offset.Y = point.Y - lastPoint.Y;
-        //    base.DrapDrawRegion(point);
-        //    return pt_offset;
-        //}
         public override void ChangePropertyValue()
         {
             int n = document.SelectedDrawObjectList.Count;
