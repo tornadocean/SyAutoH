@@ -17,21 +17,38 @@ namespace McsRemote.Control
     /// <summary>
     /// PageMesCommand.xaml 的交互逻辑
     /// </summary>
-    public partial class PageMesCommand : Page
+    public partial class PageMesCommand : Page, IPageGuiAccess
     {
         public PageMesCommand()
         {
             InitializeComponent();
         }
 
+        protected GuiAccess.DataHubCli m_dataHub = null;
+        public GuiAccess.DataHubCli DataHub
+        {
+            set
+            {
+                m_dataHub = value;
+            }
+            get
+            {
+                return m_dataHub;
+            }
+        }
+
         private void pageMesCmd_Unloaded(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Mes Command unloaded.");
+            //MessageBox.Show("Mes Command unloaded.");
         }
 
         private void pageMesCmd_Loaded(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Mes Command Loaded.");
+            if (null != m_dataHub)
+            {
+                m_dataHub.Async_SetCallBack();
+            }
+         
         }
     }
 }

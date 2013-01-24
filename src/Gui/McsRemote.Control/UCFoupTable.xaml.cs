@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace McsRemote.Control
 {
     /// <summary>
-    /// PageOHTInfo.xaml 的交互逻辑
+    /// UCFoupTable.xaml 的交互逻辑
     /// </summary>
-    public partial class PageOHTInfo : Page
+    public partial class UCFoupTable : UserControl
     {
-        public PageOHTInfo()
+        public UCFoupTable()
         {
             InitializeComponent();
         }
