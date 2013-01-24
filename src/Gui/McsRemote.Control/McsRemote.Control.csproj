@@ -52,19 +52,46 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="baseControlPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="baseControlPage.xaml.cs">
-      <DependentUpon>baseControlPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Page Include="PageBase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageForkInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageMesCommand.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageOHTInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageStockerInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PageBase.xaml.cs">
+      <DependentUpon>PageBase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageForkInfo.xaml.cs">
+      <DependentUpon>PageForkInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageMesCommand.xaml.cs">
+      <DependentUpon>PageMesCommand.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageOHTInfo.xaml.cs">
+      <DependentUpon>PageOHTInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageStockerInfo.xaml.cs">
+      <DependentUpon>PageStockerInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

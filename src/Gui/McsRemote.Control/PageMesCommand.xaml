@@ -1,0 +1,13 @@
+﻿<Page x:Name="pageMesCmd" x:Class="McsRemote.Control.PageMesCommand"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d"
+	Title="PageMesCommand" Width="546.269" Height="325.746" Unloaded="pageMesCmd_Unloaded" Loaded="pageMesCmd_Loaded">
+
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="138,93,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="52" Width="151"><Run Language="zh-cn" Text="MES COMMAND"/></TextBlock>
+
+    </Grid>
+</Page>

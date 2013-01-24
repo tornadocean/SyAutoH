@@ -57,5 +57,32 @@ namespace McsRemotePad
             this.Close();
         }
 
+        private void tvCommand_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            TreeViewItem secItem = e.NewValue as TreeViewItem;
+            string strHead = secItem.Name;
+            Uri uriPage = null;
+            if(strHead.CompareTo("tviMESCommand") == 0)
+            {
+                uriPage = new Uri("pack://application:,,,/McsRemote.Control;component/PageMesCommand.xaml");
+            }
+            else if (strHead.CompareTo("tviOHTInfo") == 0)
+            {
+                uriPage = new Uri("pack://application:,,,/McsRemote.Control;component/PageOHTInfo.xaml");
+            }
+            else if (strHead.CompareTo("tviStockerInfo") == 0)
+            {
+                uriPage = new Uri("pack://application:,,,/McsRemote.Control;component/PageStockerInfo.xaml");
+            }
+            else if (strHead.CompareTo("tviForkInfo") == 0)
+            {
+                uriPage = new Uri("pack://application:,,,/McsRemote.Control;component/PageForkInfo.xaml");
+            }
+
+            if(null != uriPage)
+            {
+                framePage.Navigate(uriPage);
+            }
+        }
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,11 +15,11 @@ using System.Windows.Shapes;
 namespace McsRemote.Control
 {
     /// <summary>
-    /// UserControl1.xaml 的交互逻辑
+    /// PageOHTInfo.xaml 的交互逻辑
     /// </summary>
-    public partial class baseControlPage : UserControl
+    public partial class PageOHTInfo : Page, PageBase
     {
-        public baseControlPage()
+        public PageOHTInfo()
         {
             InitializeComponent();
         }
