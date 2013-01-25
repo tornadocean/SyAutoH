@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TFoup.h" />
+    <ClInclude Include="TFoupDevice.h" />
     <ClInclude Include="TKeyPoints.h" />
     <ClInclude Include="TLane.h" />
     <ClInclude Include="TLinkSession.h" />
@@ -100,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DBFoup.cpp" />
+    <ClCompile Include="DBFoupDevice.cpp" />
     <ClCompile Include="DBKeyPoints.cpp" />
     <ClCompile Include="DBLane.cpp" />
     <ClCompile Include="DBSession.cpp" />

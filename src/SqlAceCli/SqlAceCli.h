@@ -20,13 +20,6 @@
 
 using namespace std;
 
-class SQLACECLI_API DBCommonBase
-{
-public:
-	DBCommonBase();
-	virtual ~DBCommonBase();
-};
-
 typedef struct  
 {
 	int nID;
@@ -35,7 +28,7 @@ typedef struct
 } UserData;
 
 typedef list<UserData> UserDataList;
-class SQLACECLI_API DBUserAce : public DBCommonBase
+class SQLACECLI_API DBUserAce
 {
 public:
 	DBUserAce(void);
@@ -71,7 +64,7 @@ typedef struct
 } FoupItem;
 typedef std::vector<FoupItem> VEC_FOUP;
 
-class SQLACECLI_API DBFoup : public DBCommonBase
+class SQLACECLI_API DBFoup
 {
 public:
 	DBFoup(void);
@@ -87,7 +80,7 @@ public:
 };
 
 typedef map<int, int> Map_Int;
-class SQLACECLI_API DBSession : public DBCommonBase
+class SQLACECLI_API DBSession
 {
 public:
 	DBSession(void);
@@ -105,6 +98,7 @@ public:
 
 typedef struct 
 {
+	int nID;
 	wstring strName;
 	UINT uPosition;
 	int uType;//,[Type]
@@ -116,13 +110,15 @@ typedef struct
 	UINT uNext;//,[Next]
 } KeyPointItem;
 typedef std::vector<KeyPointItem> VEC_KEYPOINT;
-class SQLACECLI_API DBKeyPoints : public DBCommonBase
+class SQLACECLI_API DBKeyPoints
 {
 public:
 	DBKeyPoints(void);
 	virtual ~DBKeyPoints(void);
 	int SetKeyPointbyOHTTeach(int nOHT_ID, int nPOS, int nType, int nSpeedRate);
 	VEC_KEYPOINT GetKeyPointsTable(vector<int> nTypes);
+	KeyPointItem GetKeyPointByID(int nID);
+	KeyPointItem GetKeyPointByPos(int uPos);
 };
 
 typedef struct  
@@ -138,7 +134,7 @@ typedef struct
 	bool bEnable;
 }ItemLane;
 typedef std::vector<ItemLane> VEC_LANE;
-class SQLACECLI_API DBLane : public DBCommonBase
+class SQLACECLI_API DBLane
 {
 public:
 	DBLane(void);
@@ -157,7 +153,7 @@ typedef struct
 typedef std::vector<ItemTrans> VEC_TRANS;
 typedef std::map<int, ItemTrans> MAP_TRANS;
 
-class SQLACECLI_API DBTransfer : public DBCommonBase
+class SQLACECLI_API DBTransfer
 {
 public:
 	DBTransfer(void);
@@ -168,4 +164,20 @@ public:
 	VEC_TRANS GetTransferNoFinished(void);
 	VEC_TRANS GetTransfer(const std::string& strStatus, bool bInclude = true);
 	int SetTransferStatus(int nID, const std::string& sStatus);
+};
+
+typedef struct
+{
+	int nID;
+	int nDevID;
+	int nDevType;
+	int nDevPortID;
+	int nDevPortKP;
+}ItemFoupDevie;
+class SQLACECLI_API DBFoupDevice
+{
+public:
+	DBFoupDevice(void);
+	~DBFoupDevice(void);
+	ItemFoupDevie GetItem(int nType, int nDevID, int nPort);
 };

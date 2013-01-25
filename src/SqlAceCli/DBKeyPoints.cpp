@@ -12,6 +12,86 @@ DBKeyPoints::~DBKeyPoints(void)
 {
 }
 
+KeyPointItem DBKeyPoints::GetKeyPointByID(int nID)
+{
+	KeyPointItem item;
+	item.nID = 0;
+	
+	HRESULT hr;
+	CTableKeyPoints table;
+
+	hr = table.OpenDataSource();
+	if (FAILED(hr))
+	{
+		return item;
+	}
+
+	CString strSQL = _T("");
+	strSQL.Format(_T("Select * from dbo.KeyPoints where Id = %d"), nID);
+	hr = table.Open(table.m_session, strSQL);
+	if (FAILED(hr))
+	{
+		return item;
+	}
+
+	while(table.MoveNext() != DB_S_ENDOFROWSET)
+	{
+		item.nID = table.m_Id;
+		item.uPosition = table.m_Position;
+		item.uType = table.m_Type;
+		item.uSpeedRate = table.m_SpeedRate;
+		item.uTeachMode = table.m_TeachMode;
+		item.uOHT_ID = table.m_OHT_ID;
+		item.uLane_ID = table.m_Lane_ID;
+		item.uPrev = table.m_Prev;
+		item.uNext = table.m_Next;
+		item.strName = table.m_Name;
+	}
+	table.CloseAll();
+
+	return item;
+}
+
+KeyPointItem DBKeyPoints::GetKeyPointByPos(int uPos)
+{
+	KeyPointItem item;
+	item.nID = 0;
+	
+	HRESULT hr;
+	CTableKeyPoints table;
+
+	hr = table.OpenDataSource();
+	if (FAILED(hr))
+	{
+		return item;
+	}
+
+	CString strSQL = _T("");
+	strSQL.Format(_T("Select * from dbo.KeyPoints where Position = %d"), uPos);
+	hr = table.Open(table.m_session, strSQL);
+	if (FAILED(hr))
+	{
+		return item;
+	}
+
+	while(table.MoveNext() != DB_S_ENDOFROWSET)
+	{
+		item.nID = table.m_Id;
+		item.uPosition = table.m_Position;
+		item.uType = table.m_Type;
+		item.uSpeedRate = table.m_SpeedRate;
+		item.uTeachMode = table.m_TeachMode;
+		item.uOHT_ID = table.m_OHT_ID;
+		item.uLane_ID = table.m_Lane_ID;
+		item.uPrev = table.m_Prev;
+		item.uNext = table.m_Next;
+		item.strName = table.m_Name;
+	}
+	table.CloseAll();
+
+	return item;
+}
+
 VEC_KEYPOINT DBKeyPoints::GetKeyPointsTable(vector<int> nTypes)
 {
 	VEC_KEYPOINT keyPTList;
@@ -60,6 +140,7 @@ VEC_KEYPOINT DBKeyPoints::GetKeyPointsTable(vector<int> nTypes)
 	while(table.MoveNext() != DB_S_ENDOFROWSET)
 	{
 		KeyPointItem item;
+		item.nID = table.m_Id;
 		item.uPosition = table.m_Position;
 		item.uType = table.m_Type;
 		item.uSpeedRate = table.m_SpeedRate;
