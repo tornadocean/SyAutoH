@@ -95,6 +95,11 @@ namespace McsRemotePad
             m_dataHub.Session = m_nSession;
 
             InitDictoryPage();
+
+            TreeViewItem newItem = new TreeViewItem();
+            newItem.Name = "tvSockerOperation";
+            newItem.Header = "Socker 100";
+            tviStockerInfo.Items.Add(newItem);
         }
     }
 }
