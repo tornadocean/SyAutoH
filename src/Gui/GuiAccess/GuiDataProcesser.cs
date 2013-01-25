@@ -9,6 +9,46 @@ using MCS.GuiHub;
 
 namespace GuiAccess
 {
+    public partial class OhtInfoData
+    {
+        private int nID;
+        public int ID
+        {
+            get { return nID; }
+            set { nID = value; }
+        }
+        private long nPosition;
+        public long Position
+        {
+            get { return nPosition; }
+            set { nPosition = value; }
+        }
+        private int nHand;
+        public int Hand
+        {
+            get { return nHand; }
+            set { nHand = value; }
+        }
+        private int nStatus;
+        public int Status
+        {
+            get { return nStatus; }
+            set { nStatus = value; }
+        }
+        private int nAlarm;
+        public int Alarm
+        {
+            get { return nAlarm; }
+            set { nAlarm = value; }
+        }
+        private string strTcpInfo;
+        public string TcpInfo
+        {
+            get { return strTcpInfo; }
+            set { strTcpInfo = value; }
+        }
+    }
+
     class GuiDataProcesser
     {
         private const string TKeyP_Pos = "Position";
@@ -35,13 +75,37 @@ namespace GuiAccess
         {
             m_dictProcess.Add(PushData.upMesPosTable, ProcessPosTable);
             m_dictProcess.Add(PushData.upMesFoupTable, ProcessFoupTable);
+
+            m_dictProcess.Add(PushData.upOhtInfo, ProcessOHTInfo);
+            m_dictProcess.Add(PushData.upOhtPos, ProcessOHTPos);
+            m_dictProcess.Add(PushData.upOhtPosTable, ProcessOHTPosTable);
         }
 
         private void InitDataSet()
         {
             InitTableMesFoup();
             InitTableMesPos();
+
+            InitTableOHTInfo();
+            InitTableOHTKeyPos();
         }
+       
+
+        public void ProcessData(GuiDataItem guiData)
+        {
+            ProcessHandler handler = null;
+            bool bGet = m_dictProcess.TryGetValue(guiData.enumTag, out handler);
+            if (true == bGet)
+            {
+                ArrayList alDatas = GuiAccess.DataHubCli.ConvertToArrayList(guiData.sVal);
+                foreach (ArrayList item in alDatas)
+                {
+                    handler(item);
+                }
+            }
+        }
+
+        #region MES
 
         private void InitTableMesFoup()
         {
@@ -79,20 +143,6 @@ namespace GuiAccess
                 table.AcceptChanges();
                 m_ds.Tables.Add(table);
                 m_ds.AcceptChanges();
-            }
-        }
-
-        public void ProcessData(GuiDataItem guiData)
-        {
-            ProcessHandler handler = null;
-            bool bGet = m_dictProcess.TryGetValue(guiData.enumTag, out handler);
-            if (true == bGet)
-            {
-                ArrayList alDatas = GuiAccess.DataHubCli.ConvertToArrayList(guiData.sVal);
-                foreach (ArrayList item in alDatas)
-                {
-                    handler(item);
-                }
             }
         }
 
@@ -169,5 +219,143 @@ namespace GuiAccess
                 m_ds.AcceptChanges();
             }
         }
+
+        #endregion
+
+        #region OHT
+
+        private void InitTableOHTKeyPos()
+        {
+            DataTable table = m_ds.Tables["OHTKeyPos"];
+            if (null == table)
+            {
+                table = new DataTable("OHTKeyPos");
+                table.Columns.Add(TKeyP_Pos, typeof(System.UInt32));
+                table.Columns[TKeyP_Pos].AllowDBNull = false;
+                table.PrimaryKey = new DataColumn[] { table.Columns[TKeyP_Pos] };
+                table.Columns.Add(TKeyP_Name, typeof(System.String));
+                table.Columns.Add(TKeyP_Type, typeof(System.Int32));
+                table.Columns.Add(TKeyP_Speed, typeof(System.Byte));
+
+                table.AcceptChanges();
+                m_ds.Tables.Add(table);
+                m_ds.AcceptChanges();
+            }
+        }
+
+        private void InitTableOHTInfo()
+        {
+            DataTable table = m_ds.Tables["OHTInfo"];
+            if (null == table)
+            {
+                table = new DataTable("OHTInfo");
+                table.Columns.Add("ID", typeof(System.Byte));
+                table.Columns["ID"].AllowDBNull = false;
+                table.PrimaryKey = new DataColumn[] { table.Columns["ID"] };
+                table.Columns.Add("Position", typeof(System.Int32));
+                table.Columns.Add("Hand", typeof(System.Byte));
+                table.Columns.Add("Status", typeof(System.Byte));
+                table.Columns.Add("Alarm", typeof(System.Byte));
+                table.Columns.Add("TcpInfo", typeof(System.String));
+
+                table.AcceptChanges();
+                m_ds.Tables.Add(table);
+                m_ds.AcceptChanges();
+            }
+        }
+
+        private void ProcessOHTPosTable(ArrayList item)
+        {
+            DataTable table = m_ds.Tables["OHTKeyPos"];
+            if (4 == item.Count)
+            {
+                UInt32 uPos = UInt32.Parse(item[1].ToString());
+                int nType = Int32.Parse(item[2].ToString());
+                Byte uSpeed =  Byte.Parse(item[3].ToString());
+                DataRow row = table.Rows.Find(uPos);
+                if (null != row)
+                {
+                    row[TKeyP_Name] = item[0].ToString();
+                    row[TKeyP_Type] = nType;
+                    row[TKeyP_Speed] = uSpeed;
+                    row.AcceptChanges();
+                }
+                else
+                {
+                    row = table.NewRow();
+                    row[TKeyP_Pos] = uPos;
+                    row[TKeyP_Name] = item[0].ToString();
+                    row[TKeyP_Type] = nType;
+                    row[TKeyP_Speed] = uSpeed;
+                    table.Rows.Add(row);
+                    table.AcceptChanges();
+                }
+            }
+        }
+
+        private void ProcessOHTInfo(ArrayList item)
+        {
+            if (3 == item.Count)
+            {
+                OhtInfoData info = new OhtInfoData();
+                string strTCP = item[1] + ":" + item[2];
+                int nID = Convert.ToInt16(item[0]);
+
+                info.ID = nID;
+                info.TcpInfo = strTCP;
+
+                UpdateOhtInfo(info);
+
+            }
+        }
+
+        private void ProcessOHTPos(ArrayList item)
+        {
+            if (4 == item.Count)
+            {
+                OhtInfoData info = new OhtInfoData();
+                int nID = Convert.ToInt16(item[0]);
+                long nPosition = Convert.ToInt64(item[1]);
+                int nHand = Convert.ToInt16(item[2]);
+                int nStatus = Convert.ToByte(item[3].ToString());
+
+                info.ID = nID;
+                info.Position = nPosition;
+                info.Hand = nHand;
+                info.Status = nStatus;
+
+                UpdateOhtInfo(info);
+            }
+        }
+
+        private void UpdateOhtInfo(OhtInfoData info)
+        {
+            DataTable table = m_ds.Tables["OHTInfo"];
+            DataRow row = table.Rows.Find(info.ID);
+            if (null != row)
+            {
+                SetRowOHTInfoData(row, info);
+                row.AcceptChanges();
+            }
+            else
+            {
+                row = table.NewRow();
+                row["ID"] = info.ID;
+                SetRowOHTInfoData(row, info);
+                table.Rows.Add(row);
+                table.AcceptChanges();
+            }
+        }
+
+        private void SetRowOHTInfoData(DataRow row, OhtInfoData info)
+        {
+            row["Position"] = info.Position;
+            row["Hand"] = info.Hand;
+            row["Status"] = info.Status;
+            row["Alarm"] = info.Alarm;
+            row["TcpInfo"] = info.TcpInfo;
+        }
+
+        #endregion
     }
 }

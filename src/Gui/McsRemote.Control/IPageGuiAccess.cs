@@ -14,5 +14,7 @@ namespace McsRemote.Control
             set;
             get;
         }
+
+        void ProcessGuiData();
     }
 }

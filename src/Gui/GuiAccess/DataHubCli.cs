@@ -9,7 +9,7 @@ using MCS;
 namespace GuiAccess
 {
     public delegate void DataUpdaterHander(long lTime, GuiDataItem item);
-    public delegate void DataSetUpdaterHander();
+    public delegate void DataSetUpdaterHander(MCS.GuiHub.PushData enumPush);
     public class DataHubCli : IceNet
     {
       
@@ -70,7 +70,7 @@ namespace GuiAccess
             m_guiDataProcesser.ProcessData(item);
             if (null != this.DataSetUpdate)
             {
-                this.DataSetUpdate();
+                this.DataSetUpdate(item.enumTag);
             }
 
             if (null != this.DataUpdater)

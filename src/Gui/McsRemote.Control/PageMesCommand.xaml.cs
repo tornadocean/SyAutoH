@@ -26,12 +26,6 @@ namespace McsRemote.Control
             InitializeComponent();
         }
 
-        public PageMesCommand(GuiAccess.DataHubCli dhCli)
-        {
-            InitializeComponent();
-            m_dataHub = dhCli;
-        }
-
         protected GuiAccess.DataHubCli m_dataHub = null;
        
         public GuiAccess.DataHubCli DataHub
@@ -54,6 +48,10 @@ namespace McsRemote.Control
             //MessageBox.Show("Mes Command unloaded.");
         }
 
+        public void ProcessGuiData()
+        {
+        }
+
         private void pageMesCmd_Loaded(object sender, RoutedEventArgs e)
         {
             if (null != m_dataHub)
@@ -69,10 +67,17 @@ namespace McsRemote.Control
             m_dataHub.Async_WriteData(GuiCommand.MesGetPosTable, "");
         }
 
-        void m_dataHub_DataSetUpdate()
+        void m_dataHub_DataSetUpdate(PushData enumPush)
         {
-            dgFoup.Dispatcher.BeginInvoke(new Action(() => dgFoup.Items.Refresh()));
-            dgLocation.Dispatcher.BeginInvoke(new Action(() => dgLocation.Items.Refresh()));
+            switch (enumPush)
+            {
+                case PushData.upMesFoupTable:
+                    dgFoup.Dispatcher.BeginInvoke(new Action(() => dgFoup.Items.Refresh()));
+                    break;
+                case PushData.upMesPosTable:
+                    dgLocation.Dispatcher.BeginInvoke(new Action(() => dgLocation.Items.Refresh()));
+                    break;
+            }
         }
 
         private void bnGetFoup_Click(object sender, RoutedEventArgs e)

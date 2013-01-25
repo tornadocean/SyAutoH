@@ -51,7 +51,7 @@ namespace McsRemotePad
 
         private void InitDictoryPage()
         {
-            m_dyPage.Add("tviMESCommand", new PageMesCommand(m_dataHub) );
+            m_dyPage.Add("tviMESCommand", new PageMesCommand() );
             m_dyPage.Add("tviOHTInfo", new PageOHTInfo() );
             m_dyPage.Add("tviStockerInfo", new PageStockerInfo() );
             m_dyPage.Add("tviForkInfo", new PageForkInfo() );
@@ -69,6 +69,24 @@ namespace McsRemotePad
             this.Close();
         }
 
+        private System.Timers.Timer m_timer = new System.Timers.Timer();
+
+        private IPageGuiAccess pga = null;
+        private void NavigateToPage(string strPageID)
+        {
+            Page page = null;
+            bool bGet = m_dyPage.TryGetValue(strPageID, out page);
+            if (null != page)
+            {
+                pga = page as IPageGuiAccess;
+                if (null != pga)
+                {
+                    pga.DataHub = m_dataHub;
+                }
+                framePage.Navigate(page); 
+            }
+        }
+
         private void tvCommand_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             if (e.NewValue != null)
@@ -76,12 +94,7 @@ namespace McsRemotePad
                 TreeViewItem secItem = e.NewValue as TreeViewItem; 
                 string strName = secItem.Name;
 
-                Page page = null;
-                bool bGet = m_dyPage.TryGetValue(strName, out page);
-                if (null != page)
-                {
-                    framePage.Navigate(page);
-                }
+                NavigateToPage(strName);
             }
            
         }
@@ -96,17 +109,24 @@ namespace McsRemotePad
 
             InitDictoryPage();
 
-            Page page = null;
-            bool bGet = m_dyPage.TryGetValue("tviOHTInfo", out page);
-            if (null != page)
-            {
-                framePage.Navigate(page);
-            }
+            NavigateToPage("tviOHTInfo");
 
             TreeViewItem newItem = new TreeViewItem();
             newItem.Name = "tvSockerOperation";
             newItem.Header = "Socker 100";
             tviStockerInfo.Items.Add(newItem);
+
+            m_timer.Interval = 500;
+            m_timer.Elapsed += m_timer_Elapsed;
+            m_timer.Enabled = true;
+        }
+
+        void m_timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (null != pga)
+            {
+                pga.ProcessGuiData();
+            }
         }
     }
 }
