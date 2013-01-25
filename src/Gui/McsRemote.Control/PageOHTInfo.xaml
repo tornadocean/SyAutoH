@@ -3,12 +3,56 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
-	Title="PageOHTInfo">
+      mc:Ignorable="d"
+	Title="PageOHTInfo" Width="757">
 
     <Grid>
-        <Label Content="OHTInfo" HorizontalAlignment="Left" Margin="86,102,0,0" VerticalAlignment="Top" Width="118"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,10,0,0"><Run Language="zh-cn" Text="OHT List:"/></TextBlock>
+        <DataGrid HorizontalAlignment="Left" Height="266" Margin="10,31,0,0" VerticalAlignment="Top" Width="332"/>
+        <GroupBox Header="Back Time Setting" HorizontalAlignment="Left" Height="96" Margin="10,302,0,0" VerticalAlignment="Top" Width="239">
+            <Grid Margin="0,0,0,0">
+                <TextBlock HorizontalAlignment="Left" Margin="10,14,0,0" TextWrapping="Wrap" Text="Position" VerticalAlignment="Top"/>
+                <TextBox x:Name="tbBackTimePos" HorizontalAlignment="Left" Height="23" Margin="61,10,0,0" TextWrapping="Wrap" Text="30" VerticalAlignment="Top" Width="71"/>
+                <Button x:Name="bnSetBackTimePos" Content="Set" HorizontalAlignment="Left" Margin="137,11,0,0" VerticalAlignment="Top" Width="75"/>
+                <TextBlock HorizontalAlignment="Left" Margin="10,42,0,0" TextWrapping="Wrap" Text="Status" VerticalAlignment="Top"/>
+                <TextBox x:Name="tbBackTimeStatus" HorizontalAlignment="Left" Height="23" Margin="61,38,0,0" TextWrapping="Wrap" Text="30" VerticalAlignment="Top" Width="71"/>
+                <Button x:Name="bnSetBackTimeStatus" Content="Set" HorizontalAlignment="Left" Margin="137,39,0,0" VerticalAlignment="Top" Width="75"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Move" HorizontalAlignment="Left" Margin="254,302,0,0" VerticalAlignment="Top" Width="88" Height="161">
+            <Grid >
+                <Button Content="Move" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="56"/>
+                <Button Content="Pause" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" Width="56"/>
+                <Button Content="Stop" HorizontalAlignment="Left" Margin="10,107,0,0" VerticalAlignment="Top" Width="56"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Foup Handling" HorizontalAlignment="Left" Margin="10,403,0,0" VerticalAlignment="Top" Width="239" Height="60">
+            <Grid>
+                <TextBlock HorizontalAlignment="Left" Margin="10,13,0,0" TextWrapping="Wrap" Text="Buff ID" VerticalAlignment="Top"/>
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="54,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="55"/>
+                <Button Content="Pick" HorizontalAlignment="Left" Margin="114,10,0,0" VerticalAlignment="Top" Width="48"/>
+                <Button Content="Place" HorizontalAlignment="Left" Margin="167,10,0,0" VerticalAlignment="Top" Width="50"/>
+            </Grid>
+        </GroupBox>
+        <CheckBox Content="All OHTs" HorizontalAlignment="Left" Margin="358,10,0,0" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="358,34,0,0" TextWrapping="Wrap" Text="OHT Id:" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="22" Margin="407,31,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="58"/>
+        <GroupBox Header="Path" HorizontalAlignment="Left" Margin="347,58,0,0" VerticalAlignment="Top" Width="118" Height="405">
+            <Grid>
+                <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="From" VerticalAlignment="Top"/>
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="10,31,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="86"/>
+                <TextBlock HorizontalAlignment="Left" Margin="10,59,0,0" TextWrapping="Wrap" Text="To" VerticalAlignment="Top"/>
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="10,80,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="86"/>
+                <DataGrid HorizontalAlignment="Left" Margin="10,108,0,0" VerticalAlignment="Top" Height="216" Width="86"/>
+                <Button Content="Set Path" HorizontalAlignment="Left" Margin="10,351,0,0" VerticalAlignment="Top" Width="86"/>
+                <CheckBox Content="Cached" HorizontalAlignment="Left" Margin="10,329,0,0" VerticalAlignment="Top"/>
+            </Grid>
+        </GroupBox>
+        <TextBlock HorizontalAlignment="Left" Margin="470,10,0,0" TextWrapping="Wrap" Text="Locations &amp;&amp; Key Points" VerticalAlignment="Top"/>
+        <DataGrid HorizontalAlignment="Left" Margin="470,58,0,0" VerticalAlignment="Top" Height="405" Width="277"/>
+        <Button x:Name="bnSetFrom" Content="Set From" HorizontalAlignment="Left" Margin="470,31,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="bnSetTo" Content="Set To" HorizontalAlignment="Left" Margin="550,31,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="bnGetLoc" Content="Refresh" HorizontalAlignment="Left" Margin="672,31,0,0" VerticalAlignment="Top" Width="75"/>
 
     </Grid>
 </Page>

@@ -1,7 +1,7 @@
 ﻿<Window x:Name="winMainPad" x:Class="McsRemotePad.MainPad"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MCS Remote Utility" Height="502" Width="955" WindowStartupLocation="CenterScreen" Loaded="winMainPad_Loaded" FontSize="14" Icon="image/agonizer.ico">
+        Title="MCS Remote Utility" Height="571" Width="955" WindowStartupLocation="CenterScreen" Loaded="winMainPad_Loaded" FontSize="14" Icon="image/agonizer.ico">
     <Grid>
         <Menu HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="253">
             <Menu.Background>
@@ -42,7 +42,7 @@
                     </LinearGradientBrush>
                 </GridSplitter.Background>
             </GridSplitter>
-            <Frame x:Name="framePage" Content="OHT Info" Grid.Column="2" Source="pack://application:,,,/McsRemote.Control;component/PageOHTInfo.xaml">
+            <Frame x:Name="framePage" Content="OHT Info" Grid.Column="2" NavigationUIVisibility="Visible" >
                 <Frame.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFFFFEFE" Offset="1"/>

@@ -96,6 +96,13 @@ namespace McsRemotePad
 
             InitDictoryPage();
 
+            Page page = null;
+            bool bGet = m_dyPage.TryGetValue("tviOHTInfo", out page);
+            if (null != page)
+            {
+                framePage.Navigate(page);
+            }
+
             TreeViewItem newItem = new TreeViewItem();
             newItem.Name = "tvSockerOperation";
             newItem.Header = "Socker 100";
