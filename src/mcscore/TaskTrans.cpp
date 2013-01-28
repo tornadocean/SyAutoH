@@ -9,6 +9,9 @@ CTaskTrans::CTaskTrans(int nID, int nFoupBarCode, int nTarget)
 	: m_nID(nID)
 	, m_nFoupBarCode(nFoupBarCode)
 	, m_nTarget(nTarget)
+	, m_amhsDrive(NULL)
+	, m_nFoupKeyPoint(0)
+	, m_locFoupSource()
 {
 }
 
@@ -25,34 +28,79 @@ void CTaskTrans::Run(void)
 
 	sLog.outDebug("Make Commands.");
 	
-	// find FOUP Location
-	DBFoup dbFoup;
-	int nFoupID = dbFoup.FindFoup(m_nFoupBarCode);
-	FoupLocation locFoup = {0};
-	if (nFoupID > 0)
+	_findFoupSource();
+
+	_prepareFoup(); // stocker output
+	
+	_findFoupPos();
+
+	_ohtMoveToFoupSource();
+
+	_ohtPickFoup();
+
+	_ohtMoveToTarget();
+
+	_ohtPlaceFoup();
+
+	_targetOperate(); // stocker input
+	
+
+	// output command list
+	for(auto it = m_cmdList.cbegin();
+		it != m_cmdList.cend(); ++it)
 	{
-		dbFoup.GetFoupLocation(nFoupID, locFoup);
+		sLog.outBasic("Cmd: %s, DevType: %d, Dev: %d, From: %d, To: %d, Pos: %d",
+			it->m_strCommand.c_str(), it->nDevType, 
+			it->nDevID, it->nFrom, it->nTo, it->nPosition);
 	}
 
-	if(locFoup.nLocType == dbcli::loctypeStocker)
+	sLog.outDebug("Check Commands.");
+	
+	// run commands
+	sLog.outDebug("Run Commands.");
+	Sleep(2000);
+
+}
+
+
+void CTaskTrans::_findFoupSource(void)
+{
+	DBFoup dbFoup;
+	int nFoupID = dbFoup.FindFoup(m_nFoupBarCode);
+	if (nFoupID > 0)
+	{
+		dbFoup.GetFoupLocation(nFoupID, m_locFoupSource);
+	}
+}
+
+
+void CTaskTrans::_prepareFoup(void)
+{
+	if(m_locFoupSource.nLocType == dbcli::loctypeStocker)
 	{
 		TranCommand tran;
 		tran.m_strCommand = "Place";
 		tran.nDevType = dbcli::loctypeStocker;
-		tran.nDevID = locFoup.nCarrier;
-		tran.nPort = locFoup.nPort;
+		tran.nDevID = m_locFoupSource.nCarrier;
+		tran.nPort = m_locFoupSource.nPort;
 		m_cmdList.push_back(tran);
 	}
 	else 
 	{
 		//TODO: other device
 	}
-	
-	// find FOUP keypoints
+}
+
+
+void CTaskTrans::_findFoupPos(void)
+{
 	DBFoupDevice dbFoupDevice;
 	ItemFoupDevie itemFoupDev;
 	int posFoup = 0;
-	itemFoupDev = dbFoupDevice.GetItem(locFoup.nLocType, locFoup.nCarrier, locFoup.nPort);
+	itemFoupDev = dbFoupDevice.GetItem(
+		m_locFoupSource.nLocType, 
+		m_locFoupSource.nCarrier, 
+		m_locFoupSource.nPort);
 	if(itemFoupDev.nID > 0)
 	{
 		DBKeyPoints dbKP;
@@ -60,38 +108,46 @@ void CTaskTrans::Run(void)
 		kpoint = dbKP.GetKeyPointByID(itemFoupDev.nDevPortKP);
 		if(kpoint.nID > 0)
 		{
-			posFoup = kpoint.uPosition;
-			// TODO: OHT Move to posFoup
-			{
-				TranCommand tranCmd;
-				tranCmd.m_strCommand = "Move";
-				tranCmd.nDevType = dbcli::loctypeOHT;
-				tranCmd.nTo = posFoup;
-				m_cmdList.push_back(tranCmd);
-			}
-
-			// TODO: OHT Pick Foup
-			{
-				TranCommand tranCmd;
-				tranCmd.m_strCommand = "Pick";
-				tranCmd.nDevType = dbcli::loctypeOHT;
-				tranCmd.nPosition = posFoup;
-				m_cmdList.push_back(tranCmd);
-			}
+			m_nFoupKeyPoint = kpoint.uPosition;
 		}
 	}
+}
 
-	//TODO: OHT Move to Target
-	{
+
+void CTaskTrans::_ohtMoveToFoupSource(void)
+{
+	TranCommand tranCmd;
+	tranCmd.m_strCommand = "Move";
+	tranCmd.nDevType = dbcli::loctypeOHT;
+	tranCmd.nTo = m_nFoupKeyPoint;
+	m_cmdList.push_back(tranCmd);
+}
+
+
+void CTaskTrans::_ohtPickFoup(void)
+{
+	TranCommand tranCmd;
+	tranCmd.m_strCommand = "Pick";
+	tranCmd.nDevType = dbcli::loctypeOHT;
+	tranCmd.nPosition = m_nFoupKeyPoint;
+	m_cmdList.push_back(tranCmd);
+}
+
+
+void CTaskTrans::_ohtMoveToTarget(void)
+{
 		TranCommand tranCmd;
 		tranCmd.m_strCommand = "Move";
 		tranCmd.nDevType = dbcli::loctypeOHT;
-		tranCmd.nFrom = posFoup;
+		tranCmd.nFrom = m_nFoupKeyPoint;
 		tranCmd.nTo = m_nTarget;
+		tranCmd.nPosition = m_nFoupKeyPoint;
 		m_cmdList.push_back(tranCmd);
-	}
+}
 
-	// TODO: Target Type
+
+void CTaskTrans::_ohtPlaceFoup(void)
+{
 	DBKeyPoints kptDB;
 	KeyPointItem target = 
 		kptDB.GetKeyPointByPos(m_nTarget);
@@ -116,13 +172,15 @@ void CTaskTrans::Run(void)
 		TranCommand tranCmd;
 		tranCmd.m_strCommand = "Place";
 		tranCmd.nDevType = dbcli::loctypeOHT;
-		tranCmd.nTo = m_nTarget;
+		tranCmd.nPosition = m_nTarget;
 		m_cmdList.push_back(tranCmd);
 	}
+}
 
-	// TODO: Target Operation
-	{
-		DBKeyPoints kptDB;
+
+void CTaskTrans::_targetOperate(void)
+{
+	DBKeyPoints kptDB;
 		KeyPointItem target = 
 			kptDB.GetKeyPointByPos(m_nTarget);
 		if(target.nID > 0)
@@ -155,22 +213,4 @@ void CTaskTrans::Run(void)
 				break;
 			}
 		}
-	}
-	
-
-	// output command list
-	for(auto it = m_cmdList.cbegin();
-		it != m_cmdList.cend(); ++it)
-	{
-		sLog.outBasic("Cmd: %s, DevType: %d, Dev: %d, From: %d, To: %d, Pos: %d",
-			it->m_strCommand.c_str(), it->nDevType, 
-			it->nDevID, it->nFrom, it->nTo, it->nPosition);
-	}
-
-	sLog.outDebug("Check Commands.");
-	
-	// run commands
-	sLog.outDebug("Run Commands.");
-	Sleep(2000);
-
 }

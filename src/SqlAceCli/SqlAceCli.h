@@ -48,13 +48,21 @@ public:
 	UserData GetUserDatabyID(int nUserID);
 };
 
-typedef struct
+struct FoupLocation
 {
 	int nLocation;
 	int nLocType;
 	int nCarrier;
 	int nPort;
-}FoupLocation;
+
+	FoupLocation()
+		: nLocation(0)
+		, nLocType(0)
+		, nCarrier(0)
+		, nPort(0)
+	{
+	}
+};
 typedef struct 
 {
 	int nBarCode;

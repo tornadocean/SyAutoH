@@ -32,7 +32,7 @@ int MaterialController::Init(void)
 	m_MesReciver.hookEvent(&m_MesSource);
 	m_GuiHub.StartServer(&m_amhsDrive);
 	m_amhsDrive.Init();
-	m_core.Init();
+	m_core.Init(&m_amhsDrive);
 
 	return 0;
 }

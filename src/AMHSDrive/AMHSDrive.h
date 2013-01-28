@@ -8,6 +8,7 @@
 #define AMHSDRIVE_API __declspec(dllexport)
 #else
 #define AMHSDRIVE_API __declspec(dllimport)
+#pragma comment(lib, "amhsdrive.lib")
 #endif
 
 #pragma  once

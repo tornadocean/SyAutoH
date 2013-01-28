@@ -4,6 +4,7 @@
 #include "../SqlAceCli/SqlAceCli.h"
 #include "boost/threadpool.hpp"
 #include "../shared/ThreadLock.h"
+#include "../AMHSDrive/AMHSDrive.h"
 
 const int Max_Run_Trans = 1;
 class CScheduler;
@@ -16,6 +17,11 @@ public:
 	int Run(void);
 	int Stop(void);
 
+	void SetDrive(CAMHSDrive* pDrive)
+	{
+		m_amhsDrive = pDrive;
+	}
+
 private:
 	VEC_TRANS m_listTrans;
 	rwmutex m_rwmxMapTrans;
@@ -23,6 +29,7 @@ private:
 	boost::threadpool::pool m_tpTask;
 	int m_nTransRunCount;
 	DBTransfer m_dbTransfer;
+	CAMHSDrive* m_amhsDrive;
 
 private:
 	int GetNewTrans(void);

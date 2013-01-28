@@ -6,6 +6,7 @@ initialiseSingleton(CScheduler);
 CScheduler::CScheduler(void)
 	: m_tpTask(10)
 	, m_nTransRunCount(0)
+	, m_amhsDrive(NULL)
 {
 }
 
@@ -119,6 +120,7 @@ void CScheduler::_taskRunTrans(int nID, int nBarCode, int nTarget)
 {
 	m_nTransRunCount++;
 	CTaskTrans trans(nID, nBarCode, nTarget);
+	trans.SetDrive(m_amhsDrive);
 	trans.Run();
 	m_nTransRunCount--;
 }

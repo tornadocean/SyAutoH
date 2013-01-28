@@ -19,12 +19,13 @@ CMCSCore::~CMCSCore()
 	delete sScheduler.getSingletonPtr();
 }
 
-int CMCSCore::Init()
+int CMCSCore::Init(CAMHSDrive* pDrive)
 {
 	new CPathProductor;
 	new CScheduler;
 
 	sScheduler.Init();
+	sScheduler.SetDrive(pDrive);
 
 	cout<< "Path Productor test: " << endl;
 	sPathProductor.GetLaneData();

@@ -57,12 +57,21 @@ namespace McsRemote.Control
             PushData[] cmds = new PushData[] { PushData.upOhtInfo, PushData.upOhtPos };
             m_dataHub.Async_SetPushCmdList(cmds);
 
+            m_timer.Interval = 500;
+            m_timer.Elapsed += m_timer_Elapsed;
+            m_timer.Enabled = true;
             
+        }
+
+        void m_timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            //throw new NotImplementedException();
+            addData();
         }
 
         public void ProcessGuiData()
         {
-            addData();
+           // addData();
         }
 
         void m_dataHub_DataSetUpdate(PushData enumPush)

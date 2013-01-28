@@ -16,6 +16,7 @@
 typedef std::vector<int> INT_LIST;
 
 // 此类是从 mcscore.dll 导出的
+class CAMHSDrive;
 class MCSCORE_API CMCSCore {
 public:
 	CMCSCore(void);
@@ -23,7 +24,7 @@ public:
 	// TODO: 在此添加您的方法。
 
 public:
-	int Init(void);
+	int Init(CAMHSDrive* pDrive);
 	INT_LIST GetPath(int nFrom, int nTo);
 	int Run(void);
 	int Stop(void);
