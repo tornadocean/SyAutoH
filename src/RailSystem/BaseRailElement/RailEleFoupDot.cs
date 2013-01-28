@@ -27,9 +27,10 @@ namespace BaseRailElement
             ptScratchDotIcon = pt;
             ptOffset.X = ptScratchDotIcon.X - ptScratchDot.X;
             ptOffset.Y = ptScratchDotIcon.Y - ptScratchDot.Y;
-            string strPath = Application.StartupPath;
-            strPath = strPath.Substring(0, strPath.IndexOf("bin\\")) + @"src\RailSystem\Mcs.RailSystem.Common\Resources\foupWay.bmp";
-            imageFoupWayIcon = Image.FromFile(strPath);
+            string path = Application.StartupPath;
+            path = path.Substring(0, path.IndexOf("bin\\")) + @"src\RailSystem\Mcs.RailSystem.Common\Resources\foupWay.bmp";
+            strPath = path;
+            imageFoupWayIcon = Image.FromFile(path);
             rcFoupDot = new Rectangle(ptScratchDot.X, ptScratchDot.Y, 2, 2);
             iconWidth = 10;
             iconHeight = 10;
@@ -192,6 +193,31 @@ namespace BaseRailElement
                 return true;
             else 
                 return false;
+        }
+
+        public object Clone(string str)
+        {
+            RailEleFoupDot cl = new RailEleFoupDot();
+            Point pt = new Point();
+            cl.CodingScratchDot = codingScratchDot;
+            cl.CodingScratchDotOri = codingScratchDotOri;
+            cl.DrawMultiFactor = DrawMultiFactor;
+            cl.GraphType = GraphType;
+            cl.iconHeight = iconHeight;
+            cl.iconWidth = iconWidth;
+            cl.imageFoupWayIcon = imageFoupWayIcon;
+            cl.locationLock = locationLock;
+            cl.lockDotIcon = lockDotIcon;
+            cl.pen = pen;
+            cl.ptOffset = ptOffset;
+            cl.ptScratchDot = ptScratchDot;
+            cl.ptScratchDotIcon = ptScratchDotIcon;
+            cl.railText = str;
+            cl.rcFoupDot = rcFoupDot;
+            cl.Selectable = Selectable;
+            cl.sizeLock = sizeLock;
+            cl.strPath = strPath;
+            return cl;
         }
 
 
