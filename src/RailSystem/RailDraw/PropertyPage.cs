@@ -33,7 +33,10 @@ namespace RailDraw
 
         private void propertyGrid1_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            ((FatherWindow)this.ParentForm).ChangePropertyValue();
+            FatherWindow father = (FatherWindow)this.ParentForm;
+            father.objectEvent.ChangePropertyValue();
+            father.workRegion.picBoxCanvas.Invalidate();
+            this.propertyGrid1.Refresh();
         }
     }
 }
