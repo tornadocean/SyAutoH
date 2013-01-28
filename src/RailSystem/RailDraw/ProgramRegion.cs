@@ -12,9 +12,8 @@ namespace RailDraw
 {
     public partial class ProgramRegion : DockContent
     {
-        public List<TreeNode> treeNodeList = new List<TreeNode>();
+        private List<TreeNode> listTreeNode = new List<TreeNode>();
         public bool winShown = false;
-        static Int16 nodeNum = 0;
 
         public ProgramRegion()
         {
@@ -25,6 +24,11 @@ namespace RailDraw
         {
             TreeNode rootNode = new TreeNode(((FatherWindow)this.ParentForm).workRegion.Text);
             this.treeView1.Nodes.Add(rootNode);
+            InitTreeView(rootNode);
+        }
+
+        public void InitTreeView(TreeNode rootNode)
+        {
             rootNode.Nodes.Add("Line");
             rootNode.Nodes.Add("Curve");
             rootNode.Nodes.Add("Cross");
@@ -48,8 +52,8 @@ namespace RailDraw
         {
             if (this.treeView1.SelectedNode != null)
             {
-                Int16 index = Convert.ToInt16(treeNodeList.IndexOf(treeView1.SelectedNode));
-                ((FatherWindow)this.ParentForm).SelectedElement(index);
+                Int16 index = Convert.ToInt16(listTreeNode.IndexOf(treeView1.SelectedNode));
+                SelectedElement(index);
             }
         }
 
@@ -59,8 +63,8 @@ namespace RailDraw
             this.treeView1.SelectedNode = info.Node;
             if (this.treeView1.SelectedNode != null)
             {
-                Int16 index = Convert.ToInt16(treeNodeList.IndexOf(this.treeView1.SelectedNode));
-                ((FatherWindow)this.ParentForm).SelectedElement(index);
+                Int16 index = Convert.ToInt16(listTreeNode.IndexOf(this.treeView1.SelectedNode));
+                SelectedElement(index);
             }
         }
 
@@ -84,6 +88,8 @@ namespace RailDraw
                     case "Line":
                     case "Curve":
                     case "Cross":
+                    case "FoupWay":
+                    case "Device":
                         contextMenuStrip1.Items.Clear();
                         contextMenuStrip1.Items.Add("delete");
                         for (Int16 i = 0; i < contextMenuStrip1.Items.Count; i++)
@@ -100,39 +106,65 @@ namespace RailDraw
 
         private void contextmenu_Click(object sender, EventArgs e)
         {
-            ((FatherWindow)this.ParentForm).DeleteElement();
+            ((FatherWindow)this.ParentForm).workRegion.DeleteElement();
         }
 
-        public void AddElementNode(string fatherName, string str)
+        public void SelectedElement(Int16 index)
         {
-            TreeNode tempTreeNode;
-            tempTreeNode = new TreeNode(str);
-            tempTreeNode.Name = str + nodeNum.ToString();
-            treeNodeList.Add(tempTreeNode);
-            foreach (TreeNode node in treeView1.Nodes[0].Nodes)
+            FatherWindow father = (FatherWindow)this.ParentForm;
+            father.drawDoc.SelectedDrawObjectList.Clear();
+            if (index >= 0)
             {
-                if (node.Text == fatherName)
-                {
-                    node.Nodes.Add(tempTreeNode);
-                    tempTreeNode.Parent.ExpandAll();
-                }
+                father.drawDoc.SelectedDrawObjectList.Add(father.drawDoc.DrawObjectList[index]);
+                this.treeView1.SelectedNode = this.listTreeNode[index];
+                father.proPage.propertyGrid1.SelectedObject=father.drawDoc.SelectedDrawObjectList[0];
             }
-            this.treeView1.SelectedNode = tempTreeNode;
+            else
+            {
+                father.proPage.propertyGrid1.SelectedObject = null;
+            }
+            father.workRegion.picBoxCanvas.Invalidate();
         }
 
-        public void DeleteElementNode(string fatherName, Int16 index)
+        public void RefreshTreeView()
         {
-            TreeNode tempTreeNode;
-            tempTreeNode = treeNodeList[index];
-            treeNodeList.RemoveAt(index);
             foreach (TreeNode node in treeView1.Nodes[0].Nodes)
             {
-                if (node.Text == fatherName)
+                for (int i = node.Nodes.Count - 1; i > -1; i--)
                 {
-                    node.Nodes.Remove(tempTreeNode);
+                    node.Nodes.RemoveAt(i);
                 }
             }
-            this.treeView1.SelectedNode = null;
+            listTreeNode.Clear();
+            listTreeNode.AddRange(((FatherWindow)this.ParentForm).drawDoc.ListTreeNode);
+            foreach (TreeNode node in listTreeNode)
+            {
+                string str = node.Text.Substring(0, node.Text.IndexOf('_'));
+                foreach (TreeNode root in treeView1.Nodes[0].Nodes)
+                {
+                    if (root.Text == str)
+                    {
+                        root.Nodes.Add(node);
+                    }
+                }
+            }
+            treeView1.Nodes[0].ExpandAll();
+            SetSelectedNode();
         }
+
+        public void SetSelectedNode()
+        {
+            for (int i = 0; i < listTreeNode.Count; i++)
+            {
+                if (listTreeNode[i].Text == ((FatherWindow)this.ParentForm).drawDoc.NodeSelected.Text)
+                {
+                    treeView1.SelectedNode = listTreeNode[i];
+                    break;
+                }
+            }
+        }
+
+
+
     }
 }
