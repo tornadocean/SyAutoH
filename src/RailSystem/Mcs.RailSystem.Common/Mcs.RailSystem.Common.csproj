@@ -52,6 +52,7 @@
     <Compile Include="EleDevice.cs" />
     <Compile Include="EleFoupDot.cs" />
     <Compile Include="EleLine.cs" />
+    <Compile Include="EleUserDef.cs" />
     <Compile Include="PenStyle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
