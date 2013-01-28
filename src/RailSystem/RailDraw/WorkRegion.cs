@@ -26,6 +26,7 @@ namespace RailDraw
         private Int16 crossNumber = 300;
         private Int16 foupDotNumber = 400;
         private Int16 deviceNumber = 500;
+        private Int16 userDefNumber = 600;
         private Int16 multiFactor = 1;
 
         public Int16 LineNumber
@@ -52,6 +53,11 @@ namespace RailDraw
         {
             get { return deviceNumber; }
             set { deviceNumber = value; }
+        }
+        public Int16 UserDefinedNumber
+        {
+            get { return userDefNumber; }
+            set { userDefNumber = value; }
         }
 
         public bool MouseLMove
@@ -103,7 +109,7 @@ namespace RailDraw
             Rectangle rc = this.picBoxCanvas.ClientRectangle;
             if (((FatherWindow)this.ParentForm).tools.PicLine && rc.Contains(pt))
             {
-                CreateElement(e.Location, this.picBoxCanvas.ClientSize);
+                CreateBaseElement(e.Location, this.picBoxCanvas.ClientSize);
                 this.Activate();
             }            
 
@@ -392,7 +398,7 @@ namespace RailDraw
             }
         }
 
-        private void CreateElement(Point mousePt, Size workRegionSize)
+        private void CreateBaseElement(Point mousePt, Size workRegionSize)
         {
             FatherWindow father = (FatherWindow)this.ParentForm;
             string str = father.tools.itemSelected.Text;
@@ -500,6 +506,12 @@ namespace RailDraw
                     father.objectEvent.ProRegionAddNode(device.railText);
                     father.proRegion.RefreshTreeView();
                     break;
+                case "UserDef":
+                    Mcs.RailSystem.Common.EleUserDef userDef = (Mcs.RailSystem.Common.EleUserDef)baseRailEle;
+                    father.drawDoc.DrawObjectList.Add(userDef);
+
+                    break;
+                    
             }
         }
 
@@ -575,6 +587,25 @@ namespace RailDraw
                 father.proRegion.RefreshTreeView();
                 this.picBoxCanvas.Invalidate();
             }
+        }
+
+        public void CreateUserDefinedEle(Point offset,Size workRegionSize,Image image)
+        {
+            FatherWindow father = (FatherWindow)this.ParentForm;
+            BaseRailElement.RailEleUserDef userDef = new RailEleUserDef();
+            ++userDefNumber;
+            string str = "UserDef";
+            str += "_" + userDefNumber.ToString();
+            userDef.CreateEle(offset, workRegionSize, father.drawDoc.DrawMultiFactor, str, image);
+            AddElement(userDef);
+            father.drawDoc.SelectOne(userDef);
+            this.picBoxCanvas.Invalidate();
+            //cross.CreateEle(mousePt, workRegionSize, father.drawDoc.DrawMultiFactor, str);
+            //AddElement(cross);
+            //father.drawDoc.SelectOne(cross);
+            //this.picBoxCanvas.Invalidate();
+            //father.proPage.propertyGrid1.SelectedObject = cross;
+            //father.proPage.propertyGrid1.Refresh();
         }
 
 
