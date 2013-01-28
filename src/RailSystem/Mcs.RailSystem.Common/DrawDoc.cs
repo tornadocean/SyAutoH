@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace Mcs.RailSystem.Common
 {
@@ -54,6 +55,19 @@ namespace Mcs.RailSystem.Common
         {
             get { return lastHitedObject; }
             set { lastHitedObject = value; }
+        }
+
+        protected List<TreeNode> listTreeNode = new List<TreeNode>();
+        public List<TreeNode> ListTreeNode
+        {
+            get { return listTreeNode; }
+            set { listTreeNode = value; }
+        }
+        protected TreeNode nodeSelected = new TreeNode();
+        public TreeNode NodeSelected
+        {
+            get { return nodeSelected; }
+            set { nodeSelected = value; }
         }
 
         public enum CutOrCopy
@@ -139,6 +153,28 @@ namespace Mcs.RailSystem.Common
             dtEle.Columns.Add("Color", typeof(string));
             dtEle.Columns.Add("DashStyle", typeof(DashStyle));
             dtEle.Columns.Add("PenWidth", typeof(float));
+
+            dtEle.Columns.Add("ptScratchDotIcon", typeof(string));
+            dtEle.Columns.Add("ptScratchDot", typeof(string));
+            dtEle.Columns.Add("ptOffset", typeof(string));
+            dtEle.Columns.Add("iconWidth", typeof(Int32));
+            dtEle.Columns.Add("iconHeight", typeof(Int32));
+            dtEle.Columns.Add("codingScratchDot", typeof(Int32));
+            dtEle.Columns.Add("codingScratchDotOri", typeof(Int32));
+            dtEle.Columns.Add("deviceNum", typeof(Int16));
+            dtEle.Columns.Add("rcFoupDot", typeof(string));
+            dtEle.Columns.Add("lockDotIcon", typeof(bool));
+            dtEle.Columns.Add("strPath", typeof(string));
+
+            dtEle.Columns.Add("deviceID", typeof(Int16));
+            dtEle.Columns.Add("ptDevice", typeof(string));
+            dtEle.Columns.Add("foupDotName", typeof(string));
+            dtEle.Columns.Add("isStocker", typeof(bool));
+            dtEle.Columns.Add("room", typeof(Int16));
+            dtEle.Columns.Add("rcStockerRoom", typeof(string));
+            dtEle.Columns.Add("widthIcon", typeof(Int32));
+            dtEle.Columns.Add("heightIcon", typeof(Int32));
+            dtEle.Columns.Add("listDotVol", typeof(Int16));
         }
 
         protected void InitDTEleCoding()
@@ -259,6 +295,59 @@ namespace Mcs.RailSystem.Common
 
                     dtEle.Rows.Add(dr);
                     break;
+                case 5:
+                    EleFoupDot foupDot=(EleFoupDot)obj;
+                    dr["GraphType"] = foupDot.GraphType;
+                    dr["railText"] = foupDot.railText;
+                    dr["LocationLock"] = foupDot.LocationLock;
+                    dr["SizeLock"] = foupDot.SizeLock;
+                    dr["Selectable"] = foupDot.Selectable;
+                    dr["ptScratchDotIcon"] = foupDot.PtScratchDotIcon.ToString();
+                    dr["ptScratchDot"] = foupDot.PtScratchDot.ToString();
+                    dr["ptOffset"] = foupDot.PtOffset.ToString();
+                    dr["iconWidth"] = foupDot.IconWidth;
+                    dr["iconHeight"] = foupDot.IconHeight;
+                    dr["codingScratchDot"] = foupDot.CodingScratchDot;
+                    dr["codingScratchDotOri"] = foupDot.CodingScratchDotOri;
+                    dr["deviceNum"] = foupDot.DeviceNum;
+                    dr["rcFoupDot"] = foupDot.RcFoupDot.ToString();
+                    dr["lockDotIcon"] = foupDot.LockDotIcon;
+                    dr["strPath"] = foupDot.StrPath;
+                    dr["Color"] = ColorTranslator.ToHtml(foupDot.PenFoupDot.Color);
+                    dr["DashStyle"] = foupDot.PenFoupDot.DashStyle;
+                    dr["PenWidth"] = foupDot.PenFoupDot.Width;
+
+                    dtEle.Rows.Add(dr);
+                    break;
+                case 6:
+                    EleDevice device = (EleDevice)obj;
+                    dr["GraphType"] = device.GraphType;
+                    dr["railText"] = device.railText;
+                    dr["LocationLock"] = device.LocationLock;
+                    dr["SizeLock"] = device.SizeLock;
+                    dr["Selectable"] = device.Selectable;
+                    dr["deviceID"] = device.DeviecID;
+                    dr["ptDevice"] = device.PtDevice.ToString();
+                    dr["ptOffset"] = device.PtOffset.ToString();
+                    dr["foupDotName"] = device.FoupDotFirst.railText;
+                    dr["isStocker"] = device.Stocker;
+                    dr["room"] = device.Room;
+                    dr["rcStockerRoom"] = device.RcStockerRoom.ToString();
+                    dr["widthIcon"] = device.WidthIcon;
+                    dr["heightIcon"] = device.HeightIcon;
+                    dr["strPath"] = device.StrPath;
+                    dr["listDotVol"] = device.ListFoupDot.Count;
+                    for (int i = 0; i < device.ListFoupDot.Count; i++)
+                    {
+                        if (!dtEle.Columns.Contains(device.ListFoupDot[i].railText))
+                        {
+                            dtEle.Columns.Add(device.ListFoupDot[i].railText, typeof(string));
+                        }
+                        dr[device.ListFoupDot[i].railText] = device.ListFoupDot[i].railText;
+                    }
+
+                    dtEle.Rows.Add(dr);
+                    break;
             }
         }
 
@@ -327,6 +416,9 @@ namespace Mcs.RailSystem.Common
                             case "GraphType":
                                 line.GraphType = Convert.ToInt32(dtEle.Rows[row][j]);
                                 break;
+                            case "railText":
+                                line.railText = dtEle.Rows[row][j].ToString();
+                                break;
                             case "Speed":
                                 line.Speed = Convert.ToSingle(dtEle.Rows[row][j]);
                                 break;
@@ -363,9 +455,6 @@ namespace Mcs.RailSystem.Common
                                 strPointArray = str.Split(',');
                                 ptTemp = new Point() { X = int.Parse(strPointArray[0].Substring(2)), Y = int.Parse(strPointArray[1].Substring(2)) };
                                 line.DotEnd = ptTemp;
-                                break;
-                            case "railText":
-                                line.railText = dtEle.Rows[row][j].ToString();
                                 break;
                             case "rotateAngle":
                                 line.RotateAngle = Convert.ToInt32(dtEle.Rows[row][j]);
@@ -405,6 +494,9 @@ namespace Mcs.RailSystem.Common
                         {
                             case "GraphType":
                                 curve.GraphType = Convert.ToInt32(dtEle.Rows[row][j]);
+                                break;
+                            case "railText":
+                                curve.railText = dtEle.Rows[row][j].ToString();
                                 break;
                             case "Speed":
                                 curve.Speed = Convert.ToSingle(dtEle.Rows[row][j]);
@@ -468,9 +560,6 @@ namespace Mcs.RailSystem.Common
                             case "CodingPrev":
                                 curve.CodingPrev = Convert.ToInt32(dtEle.Rows[row][j]);
                                 break;
-                            case "railText":
-                                curve.railText = dtEle.Rows[row][j].ToString();
-                                break;
                             case "rotateAngle":
                                 curve.RotateAngle = Convert.ToInt32(dtEle.Rows[row][j]);
                                 break;
@@ -522,6 +611,9 @@ namespace Mcs.RailSystem.Common
                         {
                             case "GraphType":
                                 cross.GraphType = Convert.ToInt32(dtEle.Rows[row][j]);
+                                break;
+                            case "railText":
+                                cross.railText = dtEle.Rows[row][j].ToString();
                                 break;
                             case "Speed":
                                 cross.Speed = Convert.ToSingle(dtEle.Rows[row][j]);
@@ -591,9 +683,6 @@ namespace Mcs.RailSystem.Common
                             case "CodingNextF":
                                 cross.CodingNextFork = Convert.ToInt32(dtEle.Rows[row][j]);
                                 break;
-                            case "railText":
-                                cross.railText = dtEle.Rows[row][j].ToString();
-                                break;
                             case "lenght":
                                 cross.Lenght = Convert.ToInt32(dtEle.Rows[row][j]);
                                 break;
@@ -608,6 +697,187 @@ namespace Mcs.RailSystem.Common
                                 break;
                             case "PenWidth":
                                 cross.PenWidth = Convert.ToSingle(dtEle.Rows[row][j]);
+                                break;
+                        }
+                    }
+                    break;
+                case 5:
+                    EleFoupDot foupDot = (EleFoupDot)obj;
+                    string strfoup = "";
+                    string[] strPointArrayFoup = { };
+                    Point ptfoup = Point.Empty;
+                    for (int j = 0; j < dtEle.Columns.Count; j++)
+                    {
+                        switch (dtEle.Columns[j].ColumnName)
+                        {
+                            case "GraphType":
+                                foupDot.GraphType = Convert.ToInt32(dtEle.Rows[row][j]);
+                                break;
+                            case "railText":
+                                foupDot.railText = dtEle.Rows[row][j].ToString();
+                                break;
+                            case "LocationLock":
+                                foupDot.LocationLock = Convert.ToBoolean(dtEle.Rows[row][j]);
+                                break;
+                            case "SizeLock":
+                                foupDot.SizeLock = Convert.ToBoolean(dtEle.Rows[row][j]);
+                                break;
+                            case "Selectable":
+                                foupDot.Selectable = Convert.ToBoolean(dtEle.Rows[row][j]);
+                                break;
+                            case "ptScratchDotIcon":
+                                strfoup = dtEle.Rows[row][j].ToString();
+                                strfoup = strfoup.Substring(1, strfoup.Length - 2);
+                                strPointArrayFoup = strfoup.Split(',');
+                                ptfoup = new Point() { X = int.Parse(strPointArrayFoup[0].Substring(2)), Y = int.Parse(strPointArrayFoup[1].Substring(2)) };
+                                foupDot.PtScratchDotIcon = ptfoup;
+                                break;
+                            case "ptScratchDot":
+                                strfoup = dtEle.Rows[row][j].ToString();
+                                strfoup = strfoup.Substring(1, strfoup.Length - 2);
+                                strPointArrayFoup = strfoup.Split(',');
+                                ptfoup = new Point() { X = int.Parse(strPointArrayFoup[0].Substring(2)), Y = int.Parse(strPointArrayFoup[1].Substring(2)) };
+                                foupDot.PtScratchDot = ptfoup;
+                                break;
+                            case "ptOffset":
+                                strfoup = dtEle.Rows[row][j].ToString();
+                                strfoup = strfoup.Substring(1, strfoup.Length - 2);
+                                strPointArrayFoup = strfoup.Split(',');
+                                ptfoup = new Point() { X = int.Parse(strPointArrayFoup[0].Substring(2)), Y = int.Parse(strPointArrayFoup[1].Substring(2)) };
+                                foupDot.PtOffset = ptfoup;
+                                break;
+                            case "iconWidth":
+                                foupDot.IconWidth = Convert.ToInt32(dtEle.Rows[row][j]);
+                                break;
+                            case "iconHeight":
+                                foupDot.IconHeight = Convert.ToInt32(dtEle.Rows[row][j]);
+                                break;
+                            case "codingScratchDot":
+                                foupDot.CodingScratchDot = Convert.ToInt32(dtEle.Rows[row][j]);
+                                break;
+                            case "codingScratchDotOri":
+                                foupDot.CodingScratchDotOri = Convert.ToInt32(dtEle.Rows[row][j]);
+                                break;
+                            case "deviceNum":
+                                foupDot.DeviceNum = Convert.ToInt16(dtEle.Rows[row][j]);
+                                break;
+                            case "rcFoupDot":
+                                strfoup = dtEle.Rows[row][j].ToString();
+                                strfoup = strfoup.Substring(1, strfoup.Length - 2);
+                                strPointArrayFoup = strfoup.Split(',');
+                                Rectangle rcFoup = new Rectangle()
+                                {
+                                    X = int.Parse(strPointArrayFoup[0].Substring(2)),
+                                    Y = int.Parse(strPointArrayFoup[1].Substring(2)),
+                                    Width = int.Parse(strPointArrayFoup[2].Substring(6)),
+                                    Height = int.Parse(strPointArrayFoup[3].Substring(7))
+                                };
+                                foupDot.RcFoupDot = rcFoup;
+                                break;
+                            case "lockDotIcon":
+                                foupDot.LockDotIcon = Convert.ToBoolean(dtEle.Rows[row][j]);
+                                break;
+                            case "strPath":
+                                foupDot.StrPath = dtEle.Rows[row][j].ToString();
+                                foupDot.ImageFoupWayIcon = Image.FromFile(foupDot.StrPath);
+                                break;
+                            case "Color":
+                                foupDot.PenColor = ColorTranslator.FromHtml(dtEle.Rows[row][j].ToString());
+                                break;
+                            case "DashStyle":
+                                foupDot.PenDashStyle = (System.Drawing.Drawing2D.DashStyle)(Convert.ToInt32(dtEle.Rows[row][j]));
+                                break;
+                            case "PenWidth":
+                                foupDot.PenWidth = Convert.ToSingle(dtEle.Rows[row][j]);
+                                break;
+                        }
+                    }
+                    break;
+                case 6:
+                    EleDevice device = (EleDevice)obj;
+                    string strdevice = "";
+                    string[] strPointArrayDevice = { };
+                    Point ptdevice = Point.Empty;
+                    Int16 listDotVol = 0;
+                    for(int j=0;j<dtEle.Columns.Count;j++)
+                    {
+                        switch (dtEle.Columns[j].ColumnName)
+                        {
+                            case "GraphType":
+                                device.GraphType = Convert.ToInt32(dtEle.Rows[row][j]);
+                                break;
+                            case "railText":
+                                device.railText = dtEle.Rows[row][j].ToString();
+                                break;
+                            case "LocationLock":
+                                device.LocationLock = Convert.ToBoolean(dtEle.Rows[row][j]);
+                                break;
+                            case "SizeLock":
+                                device.SizeLock = Convert.ToBoolean(dtEle.Rows[row][j]);
+                                break;
+                            case "Selectable":
+                                device.Selectable = Convert.ToBoolean(dtEle.Rows[row][j]);
+                                break;
+                            case "deviceID":
+                                device.DeviecID = Convert.ToInt16(dtEle.Rows[row][j]);
+                                break;
+                            case "ptDevice":
+                                strdevice = dtEle.Rows[row][j].ToString();
+                                strdevice = strdevice.Substring(1, strdevice.Length - 2);
+                                strPointArrayDevice = strdevice.Split(',');
+                                ptdevice = new Point()
+                                {
+                                    X = int.Parse(strPointArrayDevice[0].Substring(2)),
+                                    Y = int.Parse(strPointArrayDevice[1].Substring(2))
+                                };
+                                device.PtDevice = ptdevice;
+                                break;
+                            case "ptOffset":
+                                strdevice = dtEle.Rows[row][j].ToString();
+                                strdevice = strdevice.Substring(1, strdevice.Length - 2);
+                                strPointArrayDevice = strdevice.Split(',');
+                                ptdevice = new Point()
+                                {
+                                    X = int.Parse(strPointArrayDevice[0].Substring(2)),
+                                    Y = int.Parse(strPointArrayDevice[1].Substring(2))
+                                };
+                                device.PtOffset = ptdevice;
+                                break;
+                            case "foupDotName":
+                                device.FoupDotFirst = new EleFoupDot();
+                                device.FoupDotFirst.railText = dtEle.Rows[row][j].ToString();
+                                break;
+                            case "isStocker":
+                                device.Stocker = Convert.ToBoolean(dtEle.Rows[row][j]);
+                                break;
+                            case "room":
+                                device.Room = Convert.ToInt16(dtEle.Rows[row][j]);
+                                break;
+                            case "rcStockerRoom":
+                                strdevice = dtEle.Rows[row][j].ToString();
+                                strdevice = strdevice.Substring(1, strdevice.Length - 2);
+                                strPointArrayDevice = strdevice.Split(',');
+                                Rectangle rcDevice = new Rectangle()
+                                {
+                                    X = int.Parse(strPointArrayDevice[0].Substring(2)),
+                                    Y = int.Parse(strPointArrayDevice[1].Substring(2)),
+                                    Width = int.Parse(strPointArrayDevice[2].Substring(6)),
+                                    Height = int.Parse(strPointArrayDevice[3].Substring(7))
+                                };
+                                device.RcStockerRoom = rcDevice;
+                                break;
+                            case "widthIcon":
+                                device.WidthIcon = Convert.ToInt32(dtEle.Rows[row][j]);
+                                break;
+                            case "heightIcon":
+                                device.HeightIcon = Convert.ToInt32(dtEle.Rows[row][j]);
+                                break;
+                            case "strPath":
+                                device.StrPath = dtEle.Rows[row][j].ToString();
+                                device.ImageDevice = Image.FromFile(device.StrPath);
+                                break;
+                            case "listDotVol":
+                                listDotVol = Convert.ToInt16(dtEle.Rows[row][j]);
                                 break;
                         }
                     }
