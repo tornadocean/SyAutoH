@@ -612,5 +612,32 @@ namespace RailDraw
             this.proRegion.RefreshTreeView();
         }
 
+        private void importPictureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Image imageExPic;
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Filter = "picture film(*.jpg,*.gif,*.bmp)|*.jpg;*.gif;*.bmp";
+            openFile.InitialDirectory = "";
+            openFile.Title = "open pic file";
+            openFile.FileName = "";
+            if (openFile.ShowDialog() == DialogResult.OK)
+            {
+                string openPath = openFile.FileName;
+                try
+                {
+                    imageExPic = Image.FromFile(openPath);
+                }
+                catch
+                {
+                    MessageBox.Show("import picture failed");
+                    return;
+                }
+                //Point pt = this.workRegion.picBoxCanvas.Location;
+                //pt.Offset(5, 5);
+                Point pt=Point.Empty;
+                this.workRegion.CreateUserDefinedEle(pt, this.workRegion.picBoxCanvas.Size, imageExPic);
+            }
+        }
+
     }
 }
