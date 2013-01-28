@@ -21,6 +21,7 @@ namespace Mcs.RailSystem.Common
         protected Image imageFoupWayIcon;
         protected Rectangle rcFoupDot;
         protected bool lockDotIcon = true;
+        protected string strPath = "";
         private PenStyle foupDotPen = new PenStyle();
         protected Pen pen = new Pen(Color.Black, 3);
 
@@ -57,12 +58,25 @@ namespace Mcs.RailSystem.Common
             get { return codingScratchDotOri; }
             set { codingScratchDotOri = value; }
         }
+        [ReadOnly(true)]
         public Int16 DeviceNum
         {
             get { return deviceNum; }
             set { deviceNum = value; }
         }
-        [ Category("外观")]
+        [Browsable(false)]
+        public Image ImageFoupWayIcon
+        {
+            get { return imageFoupWayIcon; }
+            set { imageFoupWayIcon = value; }
+        }
+        [Browsable(false)]
+        public Rectangle RcFoupDot
+        {
+            get { return rcFoupDot; }
+            set { rcFoupDot = value; }
+        }
+        [Category("外观")]
         public Int32 IconWidth
         {
             get { return iconWidth; }
@@ -79,6 +93,12 @@ namespace Mcs.RailSystem.Common
         {
             get { return lockDotIcon; }
             set { lockDotIcon = value; }
+        }
+        [Browsable(false)]
+        public string StrPath
+        {
+            get { return strPath; }
+            set { strPath = value; }
         }
 
         [Browsable(false)]
@@ -131,6 +151,12 @@ namespace Mcs.RailSystem.Common
         }
         [Browsable(false)]
         public new Point DotEndFork
+        {
+            get;
+            set;
+        }
+        [Browsable(false)]
+        public new float Speed
         {
             get;
             set;
