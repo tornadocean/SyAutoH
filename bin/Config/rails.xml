@@ -12,8 +12,8 @@
     <CodingEnd>6400</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
     <StartAngle>0</StartAngle>
     <rotateAngle>90</rotateAngle>
     <Lenght>360</Lenght>
@@ -36,8 +36,8 @@
     <CodingEnd>6700</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
     <StartAngle>0</StartAngle>
     <SweepAngle>90</SweepAngle>
     <rotateAngle>90</rotateAngle>
@@ -66,8 +66,8 @@
     <CodingEnd>5100</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
     <StartAngle>90</StartAngle>
     <SweepAngle>90</SweepAngle>
     <rotateAngle>90</rotateAngle>
@@ -96,8 +96,8 @@
     <CodingEnd>5400</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
     <StartAngle>180</StartAngle>
     <SweepAngle>90</SweepAngle>
     <rotateAngle>90</rotateAngle>
@@ -126,8 +126,8 @@
     <CodingEnd>6400</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
     <StartAngle>-90</StartAngle>
     <SweepAngle>90</SweepAngle>
     <rotateAngle>-90</rotateAngle>
@@ -156,8 +156,8 @@
     <CodingEnd>6700</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
     <StartAngle>90</StartAngle>
     <rotateAngle>90</rotateAngle>
     <Lenght>30</Lenght>
@@ -180,8 +180,8 @@
     <CodingEnd>5400</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
     <StartAngle>90</StartAngle>
     <rotateAngle>-90</rotateAngle>
     <Lenght>30</Lenght>
@@ -204,8 +204,8 @@
     <CodingEnd>-1</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
     <StartAngle>180</StartAngle>
     <rotateAngle>90</rotateAngle>
     <Lenght>290</Lenght>
@@ -228,8 +228,8 @@
     <CodingEnd>2300</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
     <StartAngle>90</StartAngle>
     <rotateAngle>90</rotateAngle>
     <Lenght>300</Lenght>
@@ -252,8 +252,8 @@
     <CodingEnd>5100</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
     <StartAngle>90</StartAngle>
     <rotateAngle>-90</rotateAngle>
     <Lenght>300</Lenght>
@@ -276,8 +276,8 @@
     <CodingEnd>2800</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
     <StartAngle>180</StartAngle>
     <rotateAngle>90</rotateAngle>
     <Lenght>18</Lenght>
@@ -300,8 +300,8 @@
     <CodingEnd>-1</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
     <StartAngle>0</StartAngle>
     <SweepAngle>90</SweepAngle>
     <rotateAngle>90</rotateAngle>
@@ -330,8 +330,8 @@
     <CodingEnd>-1</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
     <StartAngle>90</StartAngle>
     <SweepAngle>90</SweepAngle>
     <rotateAngle>90</rotateAngle>
@@ -362,8 +362,9 @@
     <CodingNext>-1</CodingNext>
     <CodingNextF>-1</CodingNextF>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
+    <DotEndFork>{X=0,Y=0}</DotEndFork>
     <StartAngle>180</StartAngle>
     <rotateAngle>90</rotateAngle>
     <PointListVol>3</PointListVol>
@@ -390,8 +391,8 @@
     <CodingEnd>-1</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
     <StartAngle>180</StartAngle>
     <rotateAngle>90</rotateAngle>
     <Lenght>10</Lenght>
@@ -416,8 +417,9 @@
     <CodingNext>-1</CodingNext>
     <CodingNextF>-1</CodingNextF>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
+    <DotEndFork>{X=0,Y=0}</DotEndFork>
     <StartAngle>180</StartAngle>
     <rotateAngle>90</rotateAngle>
     <PointListVol>3</PointListVol>
@@ -446,8 +448,9 @@
     <CodingNext>-1</CodingNext>
     <CodingNextF>-1</CodingNextF>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
+    <DotEndFork>{X=0,Y=0}</DotEndFork>
     <StartAngle>270</StartAngle>
     <rotateAngle>90</rotateAngle>
     <PointListVol>3</PointListVol>
@@ -476,8 +479,9 @@
     <CodingNext>-1</CodingNext>
     <CodingNextF>-1</CodingNextF>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
+    <DotEndFork>{X=0,Y=0}</DotEndFork>
     <StartAngle>270</StartAngle>
     <rotateAngle>90</rotateAngle>
     <PointListVol>3</PointListVol>
@@ -504,8 +508,8 @@
     <CodingEnd>-1</CodingEnd>
     <CodingNext>-1</CodingNext>
     <CodingPrev>-1</CodingPrev>
-    <startPoint>{X=0,Y=0}</startPoint>
-    <endPoint>{X=0,Y=0}</endPoint>
+    <DotStart>{X=0,Y=0}</DotStart>
+    <DotEnd>{X=0,Y=0}</DotEnd>
     <StartAngle>180</StartAngle>
     <rotateAngle>90</rotateAngle>
     <Lenght>40</Lenght>
@@ -515,5 +519,45 @@
     <Color>Black</Color>
     <DashStyle>0</DashStyle>
     <PenWidth>3</PenWidth>
+  </RailEleTable>
+  <RailEleTable>
+    <GraphType>5</GraphType>
+    <LocationLock>false</LocationLock>
+    <SizeLock>false</SizeLock>
+    <Selectable>true</Selectable>
+    <railText>FoupWay_401</railText>
+    <Color>Black</Color>
+    <DashStyle>0</DashStyle>
+    <PenWidth>3</PenWidth>
+    <ptScratchDotIcon>{X=364,Y=217}</ptScratchDotIcon>
+    <ptScratchDot>{X=358,Y=220}</ptScratchDot>
+    <ptOffset>{X=6,Y=-3}</ptOffset>
+    <iconWidth>10</iconWidth>
+    <iconHeight>10</iconHeight>
+    <codingScratchDot>200</codingScratchDot>
+    <codingScratchDotOri>200</codingScratchDotOri>
+    <deviceNum>501</deviceNum>
+    <rcFoupDot>{X=556,Y=60,Width=2,Height=2}</rcFoupDot>
+    <lockDotIcon>true</lockDotIcon>
+    <strPath>D:\work\mcs\program\SyAutoH\src\RailSystem\Mcs.RailSystem.Common\Resources\foupWay.bmp</strPath>
+  </RailEleTable>
+  <RailEleTable>
+    <GraphType>6</GraphType>
+    <LocationLock>true</LocationLock>
+    <SizeLock>false</SizeLock>
+    <Selectable>true</Selectable>
+    <railText>Device_501</railText>
+    <ptOffset>{X=21,Y=-9}</ptOffset>
+    <strPath>D:\work\mcs\program\SyAutoH\src\RailSystem\Mcs.RailSystem.Common\Resources\devicesmall.bmp</strPath>
+    <deviceID>501</deviceID>
+    <ptDevice>{X=379,Y=211}</ptDevice>
+    <foupDotName>FoupWay_401</foupDotName>
+    <isStocker>false</isStocker>
+    <room>0</room>
+    <rcStockerRoom>{X=334,Y=75,Width=16,Height=5}</rcStockerRoom>
+    <widthIcon>32</widthIcon>
+    <heightIcon>32</heightIcon>
+    <listDotVol>1</listDotVol>
+    <FoupWay_401>FoupWay_401</FoupWay_401>
   </RailEleTable>
 </NewDataSet>
