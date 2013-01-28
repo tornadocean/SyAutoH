@@ -111,7 +111,8 @@ namespace BaseRailElement
                                 || 2 == document.SelectedDrawObjectList[0].GraphType
                                 || 3 == document.SelectedDrawObjectList[0].GraphType
                                 || 5 == document.SelectedDrawObjectList[0].GraphType
-                                || 6 == document.SelectedDrawObjectList[0].GraphType)
+                                || 6 == document.SelectedDrawObjectList[0].GraphType
+                                || 7 == document.SelectedDrawObjectList[0].GraphType)
                             {
                                 if (n == 1)
                                 {
@@ -138,7 +139,8 @@ namespace BaseRailElement
                                     || 2 == document.SelectedDrawObjectList[i].GraphType
                                     || 3 == document.SelectedDrawObjectList[i].GraphType
                                     || 5 == document.SelectedDrawObjectList[i].GraphType
-                                    || 6 == document.SelectedDrawObjectList[i].GraphType)
+                                    || 6 == document.SelectedDrawObjectList[i].GraphType
+                                    || 7 == document.SelectedDrawObjectList[0].GraphType)
                                 {
                                     document.SelectedDrawObjectList[i].Move(lastPoint, point);
                                 }

@@ -12,7 +12,13 @@ namespace Mcs.RailSystem.Common
         protected string strSavePath = "";
         protected Rectangle rcUserDef = new Rectangle();
         protected Image imageUserDef;
+        protected UserDefType typeUserDef=UserDefType.none;
 
+        public enum UserDefType
+        { 
+            line,cuvre,rectangle,ellipse,picture,none
+        }
+        
         [Browsable(false)]
         public string StrSavePath
         {
@@ -30,6 +36,12 @@ namespace Mcs.RailSystem.Common
         {
             get { return imageUserDef; }
             set { imageUserDef = value; }
+        }
+        [Browsable(false)]
+        public UserDefType TypeUserDef
+        {
+            get { return typeUserDef; }
+            set { typeUserDef = value; }
         }
 
         [Browsable(false)]

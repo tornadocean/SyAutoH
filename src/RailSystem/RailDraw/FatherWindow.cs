@@ -616,7 +616,7 @@ namespace RailDraw
         {
             Image imageExPic;
             OpenFileDialog openFile = new OpenFileDialog();
-            openFile.Filter = "picture film(*.jpg,*.gif,*.bmp)|*.jpg;*.gif;*.bmp";
+            openFile.Filter = "picture film(*.jpg,*.gif,*.bmp,*.png)|*.jpg;*.gif;*.bmp;*.png";
             openFile.InitialDirectory = "";
             openFile.Title = "open pic file";
             openFile.FileName = "";

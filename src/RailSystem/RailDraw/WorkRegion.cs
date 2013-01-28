@@ -54,7 +54,7 @@ namespace RailDraw
             get { return deviceNumber; }
             set { deviceNumber = value; }
         }
-        public Int16 UserDefinedNumber
+        public Int16 UserDefNumber
         {
             get { return userDefNumber; }
             set { userDefNumber = value; }
@@ -509,6 +509,8 @@ namespace RailDraw
                 case "UserDef":
                     Mcs.RailSystem.Common.EleUserDef userDef = (Mcs.RailSystem.Common.EleUserDef)baseRailEle;
                     father.drawDoc.DrawObjectList.Add(userDef);
+                    father.objectEvent.ProRegionAddNode(userDef.railText);
+                    father.proRegion.RefreshTreeView();
 
                     break;
                     
@@ -584,28 +586,46 @@ namespace RailDraw
                 Int16 num = Convert.ToInt16(father.drawDoc.DrawObjectList.IndexOf(father.drawDoc.SelectedDrawObjectList[0]));
                 string str = father.drawDoc.SelectedDrawObjectList[i].railText;
                 father.drawDoc.Delete(num);
-                father.proRegion.RefreshTreeView();
-                this.picBoxCanvas.Invalidate();
+                
             }
+            foreach (Mcs.RailSystem.Common.BaseRailEle obj in father.drawDoc.DrawObjectList)
+            {
+                if (7 == obj.GraphType)
+                {
+                    father.proRegion.RefreshTreeView();
+                    this.picBoxCanvas.Invalidate();
+                    return;
+                }
+            }
+
+            foreach(TreeNode nd in father.proRegion.treeView1.Nodes[0].Nodes)
+            {
+                if (nd.Text == "UserDef")
+                {
+                    father.proRegion.treeView1.Nodes[0].Nodes.Remove(nd);
+                    userDefNumber = 600;
+                    break;
+                }
+            }
+            this.picBoxCanvas.Invalidate();
         }
 
         public void CreateUserDefinedEle(Point offset,Size workRegionSize,Image image)
         {
             FatherWindow father = (FatherWindow)this.ParentForm;
             BaseRailElement.RailEleUserDef userDef = new RailEleUserDef();
+            Mcs.RailSystem.Common.EleUserDef.UserDefType type = Mcs.RailSystem.Common.EleUserDef.UserDefType.picture;
+            if (600 == userDefNumber)
+            {
+                father.proRegion.treeView1.Nodes[0].Nodes.Add("UserDef");
+            }
             ++userDefNumber;
             string str = "UserDef";
             str += "_" + userDefNumber.ToString();
-            userDef.CreateEle(offset, workRegionSize, father.drawDoc.DrawMultiFactor, str, image);
+            userDef.CreateEle(type, offset, workRegionSize, father.drawDoc.DrawMultiFactor, str, image);
             AddElement(userDef);
             father.drawDoc.SelectOne(userDef);
             this.picBoxCanvas.Invalidate();
-            //cross.CreateEle(mousePt, workRegionSize, father.drawDoc.DrawMultiFactor, str);
-            //AddElement(cross);
-            //father.drawDoc.SelectOne(cross);
-            //this.picBoxCanvas.Invalidate();
-            //father.proPage.propertyGrid1.SelectedObject = cross;
-            //father.proPage.propertyGrid1.Refresh();
         }
 
 

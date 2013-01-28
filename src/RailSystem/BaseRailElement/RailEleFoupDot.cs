@@ -198,7 +198,6 @@ namespace BaseRailElement
         public object Clone(string str)
         {
             RailEleFoupDot cl = new RailEleFoupDot();
-            Point pt = new Point();
             cl.CodingScratchDot = codingScratchDot;
             cl.CodingScratchDotOri = codingScratchDotOri;
             cl.DrawMultiFactor = DrawMultiFactor;
