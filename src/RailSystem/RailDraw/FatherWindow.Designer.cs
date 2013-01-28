@@ -59,6 +59,8 @@ namespace RailDraw
             this.menuPaste = new System.Windows.Forms.ToolStripMenuItem();
             this.menuDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.menuChooseAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.operationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importDotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuView = new System.Windows.Forms.ToolStripMenuItem();
             this.menuScale = new System.Windows.Forms.ToolStripMenuItem();
             this.menupercentone = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,6 +71,7 @@ namespace RailDraw
             this.propertyPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.workRegionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.drawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.new_btn = new System.Windows.Forms.ToolStripButton();
@@ -96,7 +99,7 @@ namespace RailDraw
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
-            this.drawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importPictureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -106,6 +109,7 @@ namespace RailDraw
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuFile,
             this.menuEdit,
+            this.operationToolStripMenuItem,
             this.menuView,
             this.menuHelp});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -177,37 +181,53 @@ namespace RailDraw
             // 
             this.menuCut.Enabled = false;
             this.menuCut.Name = "menuCut";
-            this.menuCut.Size = new System.Drawing.Size(152, 22);
+            this.menuCut.Size = new System.Drawing.Size(113, 22);
             this.menuCut.Text = "Cut";
             this.menuCut.Click += new System.EventHandler(this.cut_Click);
             // 
             // menuCopy
             // 
             this.menuCopy.Name = "menuCopy";
-            this.menuCopy.Size = new System.Drawing.Size(152, 22);
+            this.menuCopy.Size = new System.Drawing.Size(113, 22);
             this.menuCopy.Text = "Copy";
             this.menuCopy.Click += new System.EventHandler(this.copy_Click);
             // 
             // menuPaste
             // 
             this.menuPaste.Name = "menuPaste";
-            this.menuPaste.Size = new System.Drawing.Size(152, 22);
+            this.menuPaste.Size = new System.Drawing.Size(113, 22);
             this.menuPaste.Text = "Paste";
             this.menuPaste.Click += new System.EventHandler(this.paste_Click);
             // 
             // menuDelete
             // 
             this.menuDelete.Name = "menuDelete";
-            this.menuDelete.Size = new System.Drawing.Size(152, 22);
+            this.menuDelete.Size = new System.Drawing.Size(113, 22);
             this.menuDelete.Text = "Delete";
             this.menuDelete.Click += new System.EventHandler(this.delete_Click);
             // 
             // menuChooseAll
             // 
             this.menuChooseAll.Name = "menuChooseAll";
-            this.menuChooseAll.Size = new System.Drawing.Size(152, 22);
+            this.menuChooseAll.Size = new System.Drawing.Size(113, 22);
             this.menuChooseAll.Text = "All";
             this.menuChooseAll.Click += new System.EventHandler(this.menuChooseAll_Click);
+            // 
+            // operationToolStripMenuItem
+            // 
+            this.operationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.importDotToolStripMenuItem,
+            this.importPictureToolStripMenuItem});
+            this.operationToolStripMenuItem.Name = "operationToolStripMenuItem";
+            this.operationToolStripMenuItem.Size = new System.Drawing.Size(79, 21);
+            this.operationToolStripMenuItem.Text = "Operation";
+            // 
+            // importDotToolStripMenuItem
+            // 
+            this.importDotToolStripMenuItem.Name = "importDotToolStripMenuItem";
+            this.importDotToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.importDotToolStripMenuItem.Text = "Import Dot";
+            this.importDotToolStripMenuItem.Click += new System.EventHandler(this.importDotToolStripMenuItem_Click);
             // 
             // menuView
             // 
@@ -288,6 +308,13 @@ namespace RailDraw
             this.workRegionToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.workRegionToolStripMenuItem.Text = "WorkRegion";
             this.workRegionToolStripMenuItem.Click += new System.EventHandler(this.workRegionToolStripMenuItem_Click);
+            // 
+            // drawToolStripMenuItem
+            // 
+            this.drawToolStripMenuItem.Name = "drawToolStripMenuItem";
+            this.drawToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.drawToolStripMenuItem.Text = "Draw";
+            this.drawToolStripMenuItem.Click += new System.EventHandler(this.drawToolStripMenuItem_Click);
             // 
             // menuHelp
             // 
@@ -593,12 +620,12 @@ namespace RailDraw
             this.dockPanel1.Skin = dockPanelSkin1;
             this.dockPanel1.TabIndex = 8;
             // 
-            // drawToolStripMenuItem
+            // importPictureToolStripMenuItem
             // 
-            this.drawToolStripMenuItem.Name = "drawToolStripMenuItem";
-            this.drawToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.drawToolStripMenuItem.Text = "Draw";
-            this.drawToolStripMenuItem.Click += new System.EventHandler(this.drawToolStripMenuItem_Click);
+            this.importPictureToolStripMenuItem.Name = "importPictureToolStripMenuItem";
+            this.importPictureToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.importPictureToolStripMenuItem.Text = "Import Picture";
+            this.importPictureToolStripMenuItem.Click += new System.EventHandler(this.importPictureToolStripMenuItem_Click);
             // 
             // FatherWindow
             // 
@@ -677,6 +704,9 @@ namespace RailDraw
         private ToolStripMenuItem workRegionToolStripMenuItem;
         public WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel1;
         private ToolStripMenuItem drawToolStripMenuItem;
+        private ToolStripMenuItem operationToolStripMenuItem;
+        private ToolStripMenuItem importDotToolStripMenuItem;
+        private ToolStripMenuItem importPictureToolStripMenuItem;
     }
 }
 

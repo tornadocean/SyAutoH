@@ -14,6 +14,7 @@ namespace BaseRailElement
         public RailEleDevice()
         {
             GraphType = 6;
+            foupDotFirst = new Mcs.RailSystem.Common.EleFoupDot();
         }
 
         public RailEleDevice CreateEle(Point pt, Size size, Int16 multiFactor, string text)
@@ -21,9 +22,10 @@ namespace BaseRailElement
             DrawMultiFactor = multiFactor;
             pt.Offset(pt.X / DrawMultiFactor - pt.X, pt.Y / DrawMultiFactor - pt.Y);
             ptDevice = pt;
-            string strPath = Application.StartupPath;
-            strPath = strPath.Substring(0, strPath.IndexOf("bin\\")) + @"src\RailSystem\Mcs.RailSystem.Common\Resources\devicesmall.bmp";
-            imageDevice = Image.FromFile(strPath);
+            string path = Application.StartupPath;
+            path = path.Substring(0, path.IndexOf("bin\\")) + @"src\RailSystem\Mcs.RailSystem.Common\Resources\devicesmall.bmp";
+            strPath = path;
+            imageDevice = Image.FromFile(path);
             widthIcon = imageDevice.Width;
             heightIcon = imageDevice.Height;
             rcStockerRoom.X = ptDevice.X;
@@ -194,6 +196,36 @@ namespace BaseRailElement
                 return true;
             else
                 return false;
+        }
+
+        public object Clone(string str)
+        {
+            RailEleDevice cl = new RailEleDevice();
+            try
+            {
+                cl.deviceID = Convert.ToInt16(str.Substring(str.IndexOf('_') + 1));
+            }
+            catch
+            {
+                MessageBox.Show("There is an error when copy Device");
+                return cl;
+            }
+            cl.DrawMultiFactor = DrawMultiFactor;
+            cl.GraphType = GraphType;
+            cl.widthIcon = widthIcon;
+            cl.heightIcon = heightIcon;
+            cl.imageDevice = imageDevice;
+            cl.isStocker = isStocker;
+            cl.locationLock = locationLock;
+            cl.ptDevice = ptDevice;
+            cl.ptOffset = ptOffset;
+            cl.railText = str;
+            cl.rcStockerRoom = rcStockerRoom;
+            cl.room = room;
+            cl.sizeLock = sizeLock;
+            cl.strPath = strPath;
+            
+            return cl;
         }
     }
 }

@@ -12,7 +12,6 @@ namespace Mcs.RailSystem.Common
         protected Int16 deviceID = 0;
         protected Point ptDevice = Point.Empty;
         protected List<EleFoupDot> listFoupDot=new List<EleFoupDot>();
-        protected Point ptFirstDot = Point.Empty;
         protected Point ptOffset = Point.Empty;
         protected EleFoupDot foupDotFirst;
         protected bool isStocker = false;
@@ -21,6 +20,7 @@ namespace Mcs.RailSystem.Common
         protected Image imageDevice;
         protected Int32 widthIcon = 16;
         protected Int32 heightIcon = 16;
+        protected string strPath = "";
 
         [Browsable(false)]
         public Int16 DeviecID
@@ -41,12 +41,6 @@ namespace Mcs.RailSystem.Common
             set { listFoupDot = value; }
         }
         [Browsable(false)]
-        public Point PtFirstDot
-        {
-            get { return ptFirstDot; }
-            set { ptFirstDot = value; }
-        }
-        [Browsable(false)]
         public Point PtOffset
         {
             get { return ptOffset; }
@@ -58,6 +52,7 @@ namespace Mcs.RailSystem.Common
             get { return foupDotFirst; }
             set { foupDotFirst = value; }
         }
+        [Description("设备类型"),Category("设备类型")]
         public bool Stocker
         {
             get { return isStocker; }
@@ -90,6 +85,12 @@ namespace Mcs.RailSystem.Common
         {
             get { return heightIcon; }
             set { heightIcon = value; }
+        }
+        [Browsable(false)]
+        public string StrPath
+        {
+            get { return strPath; }
+            set { strPath = value; }
         }
 
         [Browsable(false)]

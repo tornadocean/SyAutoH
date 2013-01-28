@@ -7,8 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
 using BaseRailElement;
 using System.Runtime.InteropServices;
 using System.Reflection;
@@ -24,26 +22,12 @@ namespace RailDraw
         public Tools tools = new Tools();
         public BaseRailElement.DrawDocOp drawDoc = new BaseRailElement.DrawDocOp();
         public BaseRailElement.ObjectBaseEvents objectEvent = new BaseRailElement.ObjectBaseEvents();
-        private bool mouseLDown = false;
-        private bool mouseRDown = false;
-        private bool canvasMove = false;
-        private bool mouseRMove = false;
         private bool drawToolCreated = false;
         private string sProjectPath = "";
         private Size drawregOrigSize = new Size();
         private const Int16 CONST_MULTI_FACTOR = 1;
         private Int16 multiFactor = 1;
         private Point workSize = Point.Empty;
-        private Int16 lineNumber = 100;
-        private Int16 curveNumber = 200;
-        private Int16 crossNumber = 300;
-        private Int16 foupDotNumber = 400;
-        private Int16 deviceNumber = 500;
-        
-        public bool DrapIsDown
-        {
-            get { return canvasMove; }
-        }
 
         public FatherWindow()
         {
@@ -75,110 +59,6 @@ namespace RailDraw
 
             drawregOrigSize.Width = this.workRegion.picBoxCanvas.Width;
             drawregOrigSize.Height = this.workRegion.picBoxCanvas.Height;
-        }
-
-        #region  workRegion Operation
-
-        public void CanvasMouseDown(object sender, MouseEventArgs e)
-        {
-            switch (e.Button)
-            {
-                case MouseButtons.Left:
-                    objectEvent.OnLButtonDown(e.Location);
-                    mouseLDown = true;
-                    if (canvasMove)
-                        this.Cursor = CommonFunction.CreatCursor("draw");
-                    break;
-                case MouseButtons.Right:
-                    objectEvent.OnRButtonDown(e.Location);
-                    mouseRDown = true;
-                    break;
-            }
-            this.workRegion.picBoxCanvas.Invalidate();
-            Debug.WriteLine(string.Format("canvasMouseDown"));
-        }
-
-        public void CanvasMouseUp(object sender, MouseEventArgs e)
-        {
-            switch (e.Button)
-            {
-                case MouseButtons.Left:
-                    if (canvasMove && mouseLDown && !mouseRDown)
-                    {
-                        canvasMove = true;
-                        this.Cursor = Cursors.Default;
-                    }
-                    if (mouseLDown)
-                    {
-                        mouseLDown = false;
-                    }
-                    objectEvent.OnLButtonUp(e.Location);
-                    break;
-                case MouseButtons.Right:
-                    if (!mouseRMove && !mouseLDown && mouseRDown)
-                    {
-                        this.workRegion.ContextMenuStripCreate(objectEvent.OnRButtonDown(e.Location));
-                    }
-                    mouseRDown = false;
-                    mouseRMove = false;
-                    this.Cursor = Cursors.Default;
-                    break;
-            }
-            this.proPage.propertyGrid1.Refresh();
-            this.workRegion.picBoxCanvas.Invalidate();
-            this.workRegion.picBoxCanvas.Focus();
-            Debug.WriteLine(string.Format("canvasMouseUp"));
-        }
-
-        public void CanvasMouseMove(object sender, MouseEventArgs e)
-        {
-            if (mouseLDown && !canvasMove)
-            {
-                objectEvent.OnMouseMoveLeft(e.Location);
-                this.workRegion.picBoxCanvas.Invalidate();
-            }
-            else if (mouseLDown && canvasMove)
-            {
-                this.workRegion.picBoxCanvas.Left += (e.X - BaseEvents.LastPoint.X);
-                this.workRegion.picBoxCanvas.Top += (e.Y - BaseEvents.LastPoint.Y);
-            }
-            else if (mouseRDown && (e.Location!=BaseEvents.LastPoint))
-            {
-                mouseRMove = true;
-                this.Cursor = CommonFunction.CreatCursor("draw");
-                this.workRegion.picBoxCanvas.Left += (e.X - BaseEvents.LastPoint.X);
-                this.workRegion.picBoxCanvas.Top += (e.Y - BaseEvents.LastPoint.Y);
-                this.workRegion.picBoxCanvas.Invalidate();
-            }
-        }
-
-        public void CanvasMouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                if (drawDoc.SelectedDrawObjectList.Count == 1)
-                {
-                    Mcs.RailSystem.Common.BaseRailEle baseEle = drawDoc.SelectedDrawObjectList[0];
-                    Int16 i = Convert.ToInt16(drawDoc.DrawObjectList.IndexOf(drawDoc.SelectedDrawObjectList[0]));
-                    SelectedElement(i);
-                }
-                else
-                {
-                    this.proPage.propertyGrid1.SelectedObject = null;
-                    this.proRegion.treeView1.SelectedNode = null;
-                    this.proPage.propertyGrid1.Refresh();
-                }
-            }
-            this.workRegion.Activate();
-            Debug.WriteLine(string.Format("canvasMouseClick"));
-        }
-        #endregion
-
-        public void ChangePropertyValue()
-        {
-            objectEvent.ChangePropertyValue();
-            this.workRegion.picBoxCanvas.Invalidate();
-            this.proPage.propertyGrid1.Refresh();
         }
 
         #region 菜单操作
@@ -295,7 +175,7 @@ namespace RailDraw
                         UpdateFormTitle();
                         drawDoc.DrawObjectList.Clear();
                         drawDoc.SelectedDrawObjectList.Clear();
-                        proRegion.treeNodeList.Clear();
+                        drawDoc.ListTreeNode.Clear();
                         proRegion.treeView1.Nodes[0].Nodes.Clear();
                         this.workRegion.picBoxCanvas.Invalidate();
                         this.proRegion.Invalidate();
@@ -303,7 +183,7 @@ namespace RailDraw
                     case DialogResult.No:
                         drawDoc.DrawObjectList.Clear();
                         drawDoc.SelectedDrawObjectList.Clear();
-                        proRegion.treeNodeList.Clear();
+                        drawDoc.ListTreeNode.Clear();
                         proRegion.treeView1.Nodes[0].Nodes.Clear();
                         this.workRegion.picBoxCanvas.Invalidate();
                         this.proRegion.Invalidate();
@@ -328,14 +208,15 @@ namespace RailDraw
             {
                 string projectpath = openFile.FileName;
                 drawDoc.DrawObjectList.Clear();
+                drawDoc.ListTreeNode.Clear();
                 drawDoc.SelectedDrawObjectList.Clear();
-                proRegion.treeNodeList.Clear();
                 proRegion.treeView1.Nodes[0].Nodes.Clear();
+                this.proRegion.InitTreeView(proRegion.treeView1.Nodes[0]);
                 this.workRegion.picBoxCanvas.Top = 0;
                 this.workRegion.picBoxCanvas.Left = 0;
                 this.workRegion.picBoxCanvas.Width = drawregOrigSize.Width;
                 this.workRegion.picBoxCanvas.Height = drawregOrigSize.Height;
-                canvasMove = false;
+                this.workRegion.MouseLMove = false;
                 this.Cursor = System.Windows.Forms.Cursors.Default;
                 try
                 {
@@ -386,23 +267,22 @@ namespace RailDraw
 
         private void cut_Click(object sender, EventArgs e)
         {
-            this.drawDoc.Cut();
-            this.workRegion.picBoxCanvas.Invalidate();
+            this.workRegion.CutElement();
         }
 
         private void copy_Click(object sender, EventArgs e)
         {
-            CopyElement();
+            this.workRegion.CopyElement();
         }
 
         private void paste_Click(object sender, EventArgs e)
         {
-            PasteElement();
+            this.workRegion.PasteElement();
         }
 
         private void delete_Click(object sender, EventArgs e)
         {
-            DeleteElement();
+            this.workRegion.DeleteElement();
         }
 
         private void enlarge_Click(object sender, EventArgs e)
@@ -412,6 +292,7 @@ namespace RailDraw
                 this.workRegion.picBoxCanvas.Width += (drawregOrigSize.Width * CONST_MULTI_FACTOR);
                 this.workRegion.picBoxCanvas.Height += (drawregOrigSize.Height * CONST_MULTI_FACTOR);
                 multiFactor = Convert.ToInt16(this.workRegion.picBoxCanvas.Width / drawregOrigSize.Width);
+                this.workRegion.MultiFactor = Convert.ToInt16(this.workRegion.picBoxCanvas.Width / drawregOrigSize.Width);
                 this.drawDoc.DrawMultiFactor = multiFactor;
                 int n = this.drawDoc.DrawObjectList.Count;
                 for (int i = 0; i < n; i++)
@@ -430,6 +311,7 @@ namespace RailDraw
                 this.workRegion.picBoxCanvas.Width -= (drawregOrigSize.Width * CONST_MULTI_FACTOR);
                 this.workRegion.picBoxCanvas.Height -= (drawregOrigSize.Height * CONST_MULTI_FACTOR);
                 multiFactor = Convert.ToInt16(this.workRegion.picBoxCanvas.Width / drawregOrigSize.Width);
+                this.workRegion.MultiFactor = Convert.ToInt16(this.workRegion.picBoxCanvas.Width / drawregOrigSize.Width);
                 this.drawDoc.DrawMultiFactor = multiFactor;
                 int n = this.drawDoc.DrawObjectList.Count;
                 for (int i = 0; i < n; i++)
@@ -461,13 +343,13 @@ namespace RailDraw
 
         private void drap_Click(object sender, EventArgs e)
         {
-            canvasMove = true;
+            this.workRegion.MouseLMove = true;
             this.drawCanvas.BackColor = SystemColors.ControlDark;
         }
 
         private void mouse_Click(object sender, EventArgs e)
         {
-            canvasMove = false;
+            this.workRegion.MouseLMove = false;
             this.drawCanvas.Enabled = true;
             this.drawCanvas.BackColor = SystemColors.Control;
             this.Cursor = System.Windows.Forms.Cursors.Default;
@@ -485,9 +367,9 @@ namespace RailDraw
         private void addtext_Click(object sender, EventArgs e)
         {
     //        BaseRailElement.RailLabal railLalal = new BaseRailElement.RailLabal();
-    ////        railLalal.CreatEle(multiFactor, this.tools.itemSelected.Text);
-    ////        railLalal.CreatEle(multiFactor, null);
-    ////        this.drawDoc.DrawObjectList.Add(railLalal.CreatEle(multiFactor, this.tools.itemSelected.Text));
+    //        railLalal.CreatEle(multiFactor, this.tools.itemSelected.Text);
+    //        railLalal.CreatEle(multiFactor, null);
+    //        this.drawDoc.DrawObjectList.Add(railLalal.CreatEle(multiFactor, this.tools.itemSelected.Text));
     //        this.drawDoc.DrawObjectList.Add(railLalal.CreatEle(multiFactor, null));
     //        drawDoc.SelectOne(railLalal);
     //        proRegion.AddElementNode(this.workRegion.Text, railLalal.railText);
@@ -533,18 +415,53 @@ namespace RailDraw
                         case 1:
                             RailEleLine line = new RailEleLine();
                             doc.ReadDataFromRow(i, line);
-                            AddElement(line);
+                            this.workRegion.AddElement(line);
+                            this.workRegion.LineNumber++;
                             break;
                         case 2:
                             RailEleCurve curve = new RailEleCurve();
                             doc.ReadDataFromRow(i, curve);
-                            AddElement(curve);
+                            this.workRegion.AddElement(curve);
+                            this.workRegion.CurveNumber++;
                             break;
                         case 3:
                             RailEleCross cross = new RailEleCross();
                             doc.ReadDataFromRow(i, cross);
-                            AddElement(cross);
+                            this.workRegion.AddElement(cross);
+                            this.workRegion.CrossNumber++;
                             break;
+                        case 5:
+                            RailEleFoupDot foupDot = new RailEleFoupDot();
+                            doc.ReadDataFromRow(i, foupDot);
+                            this.workRegion.AddElement(foupDot);
+                            this.workRegion.FoupDotNumber++;
+                            break;
+                        case 6:
+                            RailEleDevice device = new RailEleDevice();
+                            doc.ReadDataFromRow(i, device);
+                            this.workRegion.AddElement(device);
+                            this.workRegion.DeviceNumber++;
+                            break;
+                    }
+                }
+                
+                foreach (Mcs.RailSystem.Common.BaseRailEle obj in drawDoc.DrawObjectList)
+                {
+                    if (5 == obj.GraphType)
+                    {
+                        RailEleFoupDot dot = (RailEleFoupDot)obj;
+                        foreach (Mcs.RailSystem.Common.BaseRailEle objchild in drawDoc.DrawObjectList)
+                        {
+                            if (6 == objchild.GraphType && ((RailEleDevice)objchild).DeviecID == dot.DeviceNum)
+                            {
+                                ((RailEleDevice)objchild).ListFoupDot.Add(dot);
+                                if (((RailEleDevice)objchild).FoupDotFirst.railText == dot.railText)
+                                {
+                                    ((RailEleDevice)objchild).FoupDotFirst = dot;
+                                }
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -561,6 +478,7 @@ namespace RailDraw
             int n = this.drawDoc.DrawObjectList.Count;
             for (int i = 0; i < n; i++)
                 this.drawDoc.DrawObjectList[i].DrawMultiFactor = drawMulti;
+            this.workRegion.MultiFactor = drawMulti;
             this.workRegion.picBoxCanvas.Invalidate();
             ChangeDrawRegionLoction();
         }
@@ -576,205 +494,6 @@ namespace RailDraw
             int dy = centerWorkRegSize.Y - centerDrawRegion.Y;
             drawRegionLoc.Offset(dx, dy);
             this.workRegion.picBoxCanvas.Location = drawRegionLoc;
-        }
-
-        public void CreateElement(Point mousePt, Size workRegionSize)
-        {
-            string str = this.tools.itemSelected.Text;
-            switch (this.tools.itemSelected.Text)
-            {
-                case "Line":
-                    BaseRailElement.RailEleLine line = new BaseRailElement.RailEleLine();
-                    ++lineNumber;
-                    str += "_" + lineNumber.ToString();
-                    line.CreateEle(mousePt, workRegionSize, multiFactor, str);
-                    AddElement(line);
-                    drawDoc.SelectOne(line);
-                    workRegion.picBoxCanvas.Invalidate();
-                    proPage.propertyGrid1.SelectedObject = line;
-                    proPage.propertyGrid1.Refresh();
-                    break;
-                case "Curve":
-                    BaseRailElement.RailEleCurve curve = new BaseRailElement.RailEleCurve();
-                    ++curveNumber;
-                    str += "_" + curveNumber.ToString();
-                    curve.CreateEle(mousePt, workRegionSize, multiFactor, str);
-                    AddElement(curve);
-                    drawDoc.SelectOne(curve);
-                    workRegion.picBoxCanvas.Invalidate();
-                    proPage.propertyGrid1.SelectedObject = curve;
-                    proPage.propertyGrid1.Refresh();
-                    break;
-                case "Cross":
-                    BaseRailElement.RailEleCross cross = new BaseRailElement.RailEleCross();
-                    ++crossNumber;
-                    str += "_" + crossNumber.ToString();
-                    cross.CreateEle(mousePt, workRegionSize, multiFactor, str);
-                    AddElement(cross);
-                    drawDoc.SelectOne(cross);
-                    workRegion.picBoxCanvas.Invalidate();
-                    proPage.propertyGrid1.SelectedObject = cross;
-                    proPage.propertyGrid1.Refresh();
-                    break;
-                case "FoupWay":
-                    BaseRailElement.RailEleFoupDot dot = new BaseRailElement.RailEleFoupDot();
-                    ++foupDotNumber;
-                    str += "_" + foupDotNumber.ToString();
-                    dot.CreateEle(mousePt, workRegionSize, multiFactor, str);
-                    AddElement(dot);
-                    drawDoc.SelectOne(dot);
-                    workRegion.picBoxCanvas.Invalidate();
-                    proPage.propertyGrid1.SelectedObject = dot;
-                    proPage.propertyGrid1.Refresh();
-                    break;
-                case "Device":
-                    BaseRailElement.RailEleDevice device = new BaseRailElement.RailEleDevice();
-                    ++deviceNumber;
-                    str += "_" + deviceNumber.ToString();
-                    device.CreateEle(mousePt, workRegionSize, multiFactor, str);
-                    AddElement(device);
-                    drawDoc.SelectOne(device);
-                    workRegion.picBoxCanvas.Invalidate();
-                    proPage.propertyGrid1.SelectedObject = device;
-                    proPage.propertyGrid1.Refresh();
-                    break;
-                default:
-                    break;
-            }
-            this.tools.itemSelected = null;
-        }
-
-        private void AddElement(Mcs.RailSystem.Common.BaseRailEle baseRailEle)
-        {
-            string str = baseRailEle.railText;
-            int lenght = str.IndexOf('_');
-            if (-1 != lenght)
-            {
-                str = str.Substring(0, lenght);
-            }
-            switch (str)
-            {
-                case "Line":
-                    Mcs.RailSystem.Common.EleLine line = (Mcs.RailSystem.Common.EleLine)baseRailEle;
-                    drawDoc.DrawObjectList.Add(line);
-                    proRegion.AddElementNode("Line", line.railText);
-                    break;
-                case "Curve":
-                    Mcs.RailSystem.Common.EleCurve curve = (Mcs.RailSystem.Common.EleCurve)baseRailEle;
-                    drawDoc.DrawObjectList.Add(curve);
-                    proRegion.AddElementNode("Curve", curve.railText);
-                    break;
-                case "Cross":
-                    Mcs.RailSystem.Common.EleCross cross = (Mcs.RailSystem.Common.EleCross)baseRailEle;
-                    drawDoc.DrawObjectList.Add(cross);
-                    proRegion.AddElementNode("Cross", cross.railText);
-                    break;
-                case "FoupWay":
-                    Mcs.RailSystem.Common.EleFoupDot dot = (Mcs.RailSystem.Common.EleFoupDot)baseRailEle;
-                    drawDoc.DrawObjectList.Add(dot);
-                    proRegion.AddElementNode("FoupWay", dot.railText);
-                    break;
-                case "Device":
-                    Mcs.RailSystem.Common.EleDevice device = (Mcs.RailSystem.Common.EleDevice)baseRailEle;
-                    drawDoc.DrawObjectList.Add(device);
-                    proRegion.AddElementNode("Device", device.railText);
-                    break;
-
-            }
-        }
-
-        public void SelectedElement(Int16 index)
-        {
-            drawDoc.SelectedDrawObjectList.Clear();
-            if (index >= 0)
-            {
-                drawDoc.SelectedDrawObjectList.Add(drawDoc.DrawObjectList[index]);
-                this.proRegion.treeView1.SelectedNode = this.proRegion.treeNodeList[index];
-                this.proPage.propertyGrid1.SelectedObject = drawDoc.SelectedDrawObjectList[0];
-            }
-            else
-            {
-                this.proPage.propertyGrid1.SelectedObject = null;
-            }
-            this.proPage.propertyGrid1.Refresh();
-            this.workRegion.picBoxCanvas.Invalidate();
-        }
-
-        public void CutElement()
-        {
-        }
-
-        public void CopyElement()
-        {
-            this.drawDoc.Copy();
-        }
-
-        public void PasteElement()
-        {
-            for (Int16 i = 0; i < drawDoc.CutAndCopyObjectList.Count; )
-            {
-                string str = drawDoc.CutAndCopyObjectList[0].railText;
-                int lenght = str.IndexOf('_');
-                if (-1 != lenght)
-                {
-                    str = str.Substring(0, lenght);
-                }
-                if (str == "Line")
-                {
-                    lineNumber++;
-                    str += "_" + lineNumber.ToString();
-                }
-                else if (str == "Curve")
-                {
-                    curveNumber++;
-                    str += "_" + curveNumber.ToString();
-                }
-                else if (str == "Cross")
-                {
-                    crossNumber++;
-                    str += "_" + crossNumber.ToString();
-                }
-                this.proRegion.AddElementNode(str.Substring(0,str.IndexOf('_')), str);
-                this.drawDoc.Paste(str);
-                this.workRegion.picBoxCanvas.Invalidate();
-                this.proPage.propertyGrid1.SelectedObject = drawDoc.SelectedDrawObjectList[0];
-            }
-        }
-
-        public void DeleteElement()
-        {
-            for (Int16 i = 0; i < drawDoc.SelectedDrawObjectList.Count; )
-            {
-                Int16 num = Convert.ToInt16(drawDoc.DrawObjectList.IndexOf(drawDoc.SelectedDrawObjectList[0]));
-                string str = drawDoc.SelectedDrawObjectList[i].railText;
-                this.proRegion.DeleteElementNode(str.Substring(0, str.IndexOf('_')), num);
-                this.drawDoc.Delete(num);
-                this.workRegion.picBoxCanvas.Invalidate();
-            }
-        }
-
-        public void WorkRegionKeyMove(Keys key)
-        {
-            BaseRailElement.ObjectBaseEvents.Direction direction = BaseRailElement.ObjectBaseEvents.Direction.Null;
-            switch (key)
-            {
-                case Keys.Up:
-                    direction = BaseRailElement.ObjectBaseEvents.Direction.up;
-                    break;
-                case Keys.Down:
-                    direction = BaseRailElement.ObjectBaseEvents.Direction.down;
-                    break;
-                case Keys.Left:
-                    direction = BaseRailElement.ObjectBaseEvents.Direction.left;
-                    break;
-                case Keys.Right:
-                    direction = BaseRailElement.ObjectBaseEvents.Direction.right;
-                    break;
-                default:
-                    break;
-            }
-            objectEvent.WorkRegionKeyDown(direction);
-            this.workRegion.picBoxCanvas.Invalidate();
         }
 
         private void InitDrawToolsComponent()
@@ -885,6 +604,39 @@ namespace RailDraw
         private void DrawToolForm_Closing(object sender, FormClosingEventArgs e)
         {
             drawToolCreated = false;
+        }
+
+        private void importDotToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            objectEvent.ImportKeyDotFromDB();
+            this.proRegion.RefreshTreeView();
+        }
+
+        private void importPictureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Image imageExPic;
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Filter = "picture film(*.jpg,*.gif,*.bmp,*.png)|*.jpg;*.gif;*.bmp;*.png";
+            openFile.InitialDirectory = "";
+            openFile.Title = "open pic file";
+            openFile.FileName = "";
+            if (openFile.ShowDialog() == DialogResult.OK)
+            {
+                string openPath = openFile.FileName;
+                try
+                {
+                    imageExPic = Image.FromFile(openPath);
+                }
+                catch
+                {
+                    MessageBox.Show("import picture failed");
+                    return;
+                }
+                //Point pt = this.workRegion.picBoxCanvas.Location;
+                //pt.Offset(5, 5);
+                Point pt=Point.Empty;
+                this.workRegion.CreateUserDefinedEle(pt, this.workRegion.picBoxCanvas.Size, imageExPic);
+            }
         }
 
     }

@@ -60,6 +60,16 @@ namespace WinFormElement
                             doc.ReadDataFromRow(i, cross);
                             railInfoEleList.Add(cross);
                             break;
+                        case 5:
+                            FoupDot foupDot = new FoupDot();
+                            doc.ReadDataFromRow(i, foupDot);
+                            railInfoEleList.Add(foupDot);
+                            break;
+                        case 6:
+                            Device device = new Device();
+                            doc.ReadDataFromRow(i, device);
+                            railInfoEleList.Add(device);
+                            break;
                     }
                 }
             }
@@ -111,6 +121,39 @@ namespace WinFormElement
                         pen.DashStyle = DashStyle.Dot;
                         canvas.DrawLine(pen, pts[0], pts[1]);
                         pen.DashStyle = DashStyle.Solid;
+                        break;
+                    case 5:
+                        FoupDot dotTemp = (FoupDot)obj;
+                        Rectangle rcDot = new Rectangle()
+                        {
+                            X = dotTemp.PtScratchDotIcon.X,
+                            Y = dotTemp.PtScratchDotIcon.Y,
+                            Width = dotTemp.IconWidth,
+                            Height = dotTemp.IconHeight
+                        };
+                        canvas.DrawImage(dotTemp.ImageFoupWayIcon, rcDot);
+                        rcDot.X = dotTemp.PtScratchDot.X;
+                        rcDot.Y = dotTemp.PtScratchDot.Y;
+                        rcDot.Width = dotTemp.RcFoupDot.Width;
+                        rcDot.Height = dotTemp.RcFoupDot.Height;
+                        pen.Width = dotTemp.PenWidth;
+                        canvas.DrawRectangle(pen, rcDot);
+                        break;
+                    case 6:
+                        Device deviceTemp = (Device)obj;
+                        Rectangle rcDevice = new Rectangle()
+                        {
+                            X = deviceTemp.PtDevice.X,
+                            Y = deviceTemp.PtDevice.Y,
+                            Width = deviceTemp.WidthIcon,
+                            Height = deviceTemp.HeightIcon
+                        };
+                        canvas.DrawImage(deviceTemp.ImageDevice, rcDevice);
+                        if (deviceTemp.Stocker)
+                        {
+                            pen.Width = 1;
+                            canvas.DrawRectangle(pen, deviceTemp.RcStockerRoom);
+                        }
                         break;
                     default:
                         break;
@@ -435,4 +478,13 @@ namespace WinFormElement
         public CrossEle() { GraphType = 3; }
     }
 
+    public class FoupDot : Mcs.RailSystem.Common.EleFoupDot
+    {
+        public FoupDot() { GraphType = 5; }
+    }
+
+    public class Device : Mcs.RailSystem.Common.EleDevice 
+    {
+        public Device() { GraphType = 6; }
+    }
 }

@@ -60,13 +60,13 @@ namespace Mcs.RailSystem.Common
             get { return center; }
             set { oldCenter = center; center = value; }
         }
-        [Category("轨道坐标")]
+        [Browsable(false)]
         public Point FirstDot
         {
             get { return firstDot; }
             set { oldFirstDot = firstDot; firstDot = value; }
         }
-        [Category("轨道坐标")]
+        [Browsable(false)]
         public Point SecDot
         {
             get { return secDot; }
