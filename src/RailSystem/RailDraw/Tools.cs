@@ -62,13 +62,15 @@ namespace RailDraw
             if (e.Button == MouseButtons.Left)
             {
                 itemSelected = listView1.GetItemAt(e.X, e.Y);
-                if (itemSelected != null && e.Button == MouseButtons.Left && !((FatherWindow)this.ParentForm).DrapIsDown)
+                if (itemSelected != null
+                    && e.Button == MouseButtons.Left 
+                    && !((FatherWindow)this.ParentForm).workRegion.MouseLMove)
                 {
                     this.Cursor = CommonFunction.CreatCursor("draw");
                     picLine = true;
                     this.listView1.MouseLeave += new EventHandler(listView1_MouseLeave);
                 }
-                else if (((FatherWindow)this.ParentForm).DrapIsDown)
+                else if (((FatherWindow)this.ParentForm).workRegion.MouseLMove)
                 {
                     this.Cursor = Cursors.No;
                 }
@@ -138,12 +140,6 @@ namespace RailDraw
             item4.ImageKey = "device";
             listView1.Items.Add(item4);
         }
-
-        EventHandlerList toolsEventList = new EventHandlerList();
-        public void AddEvent(Control control, string eventname, EventHandler eventhandler)
-        { }
-        public void DelEvent(Control control, string eventname)
-        { }
 
         
 

@@ -36,15 +36,10 @@ namespace BaseRailElement
             int n = drawObjectList.Count;
             for (int i = 0; i < n; i++)
             {
-                if (this.DrawMultiFactor != -1)
-                {
-                    drawObjectList[i].DrawEnlargeOrShrink(DrawMultiFactor);
-                }
                 drawObjectList[i].Draw(canvas);
                 if (selectedDrawObjectList.Contains(drawObjectList[i]))
                     drawObjectList[i].DrawTracker(canvas);
             }
-            this.DrawMultiFactor = -1;
             if (chooseObject)
             {
                 ChooseObject(canvas);
@@ -170,6 +165,22 @@ namespace BaseRailElement
                     //    drawObjectList.Add(n);
                     //    SelectOne(n);
                     //}
+                    else if (5 == o.GraphType)
+                    {
+                        RailEleFoupDot cl = (RailEleFoupDot)o;
+                        RailEleFoupDot n = (RailEleFoupDot)cl.Clone(str);
+                        drawObjectList.Add(n);
+                        SelectOne(n);
+                    }
+                    else if (6 == o.GraphType)
+                    {
+                        RailEleDevice cl = (RailEleDevice)o;
+                        RailEleDevice n = (RailEleDevice)cl.Clone(str);
+                        drawObjectList.Add(n);
+                        SelectOne(n);
+                    }
+                        
+                    
                     CutAndCopyObjectList.RemoveAt(0);
                 }
             }
@@ -178,6 +189,7 @@ namespace BaseRailElement
         public void Delete(Int16 index)
         {
             drawObjectList.RemoveAt(index);
+            listTreeNode.RemoveAt(index);
             selectedDrawObjectList.RemoveAt(0);
         }
 

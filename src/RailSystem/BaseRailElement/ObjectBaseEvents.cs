@@ -111,7 +111,8 @@ namespace BaseRailElement
                                 || 2 == document.SelectedDrawObjectList[0].GraphType
                                 || 3 == document.SelectedDrawObjectList[0].GraphType
                                 || 5 == document.SelectedDrawObjectList[0].GraphType
-                                || 6 == document.SelectedDrawObjectList[0].GraphType)
+                                || 6 == document.SelectedDrawObjectList[0].GraphType
+                                || 7 == document.SelectedDrawObjectList[0].GraphType)
                             {
                                 if (n == 1)
                                 {
@@ -138,7 +139,8 @@ namespace BaseRailElement
                                     || 2 == document.SelectedDrawObjectList[i].GraphType
                                     || 3 == document.SelectedDrawObjectList[i].GraphType
                                     || 5 == document.SelectedDrawObjectList[i].GraphType
-                                    || 6 == document.SelectedDrawObjectList[i].GraphType)
+                                    || 6 == document.SelectedDrawObjectList[i].GraphType
+                                    || 7 == document.SelectedDrawObjectList[0].GraphType)
                                 {
                                     document.SelectedDrawObjectList[i].Move(lastPoint, point);
                                 }
@@ -166,49 +168,9 @@ namespace BaseRailElement
                 RailEleFoupDot dot = (RailEleFoupDot)document.SelectedDrawObjectList[n - 1];
                 if ( dot.CodingScratchDot!=dot.CodingScratchDotOri)
                 {
-                    int num = document.DrawObjectList.Count;
-                    int i;
-                    for (i = 0; i < num; i++)
-                    {
-                        if (1 == document.DrawObjectList[i].GraphType
-                            && ((RailEleLine)(document.DrawObjectList[i])).CodingBegin!=((RailEleLine)(document.DrawObjectList[i])).CodingEnd
-                            &&dot.CodingScratchDot>=((RailEleLine)(document.DrawObjectList[i])).CodingBegin
-                            && dot.CodingScratchDot <= ((RailEleLine)(document.DrawObjectList[i])).CodingEnd)
-                        {
-                            RailEleLine line = (RailEleLine)document.DrawObjectList[i];
-                            if (line.PointList[0].Y == line.PointList[1].Y)
-                            {
-                                Point pt = Point.Empty;
-                                if (line.PointList[0].X < line.PointList[1].X)
-                                    pt.X = line.PointList[0].X + (dot.CodingScratchDot - line.CodingBegin) * line.Lenght / (line.CodingEnd - line.CodingBegin);
-                                else if (line.PointList[0].X > line.PointList[1].X)
-                                    pt.X = line.PointList[0].X - (dot.CodingScratchDot - line.CodingBegin) * line.Lenght / (line.CodingEnd - line.CodingBegin);
-                                pt.Y = line.PointList[0].Y;
-                                dot.PtScratchDot = pt;
-                                dot.CodingScratchDotOri = dot.CodingScratchDot;
-                                pt.Offset(dot.PtOffset.X, dot.PtOffset.Y);
-                                dot.PtScratchDotIcon = pt;
-                            }
-                            else
-                            {
-                                Point pt = Point.Empty;
-                                if (line.PointList[0].Y < line.PointList[1].Y)
-                                    pt.Y = line.PointList[0].Y + (dot.CodingScratchDot - line.CodingBegin) * line.Lenght / (line.CodingEnd - line.CodingBegin);
-                                else if (line.PointList[0].Y > line.PointList[1].Y)
-                                    pt.Y = line.PointList[0].Y - (dot.CodingScratchDot - line.CodingBegin) * line.Lenght / (line.CodingEnd - line.CodingBegin);
-                                pt.X = line.PointList[0].X;
-                                dot.PtScratchDot = pt;
-                                dot.CodingScratchDotOri = dot.CodingScratchDot;
-                                pt.Offset(dot.PtOffset.X, dot.PtOffset.Y);
-                                dot.PtScratchDotIcon = pt;
-                            }
-                            break;
-                        }
-                    }
-                    if (i == num)
+                    if (!ComputeFoupDotPoint(dot))
                     {
                         MessageBox.Show("please set line coding firstly");
-                        dot.CodingScratchDot = dot.CodingScratchDotOri;
                     }
                 }
             }
@@ -302,6 +264,99 @@ namespace BaseRailElement
                 }
             }
         }
+
+        public void ImportKeyDotFromDB()
+        {
+            int dotnum = document.DrawObjectList.Count;
+            for (int i = 0; i < dotnum; i++)
+            {
+                if (6 == document.DrawObjectList[i].GraphType)
+                {
+                    Mcs.RailSystem.Common.EleDevice device = (Mcs.RailSystem.Common.EleDevice)document.DrawObjectList[i];
+                    device.FoupDotFirst = null;
+                    device.ListFoupDot.Clear();
+                }
+            }
+            for (int i = dotnum - 1; i > -1; i--)
+            {
+                if (5 == document.DrawObjectList[i].GraphType)
+                {
+                    document.DrawObjectList.RemoveAt(i);
+                }
+            }
+
+            //添加读取
+            /***************************************************
+             * ***********************************************
+             * *********************************************/
+            Mcs.RailSystem.Common.EleFoupDot dot = new Mcs.RailSystem.Common.EleFoupDot();
+        //    dot.CodingScratchDot
+            if (!ComputeFoupDotPoint(dot))
+            {
+                MessageBox.Show("import data false,please set line coding firstly");
+            }
+
+        }
+
+        private bool ComputeFoupDotPoint(Mcs.RailSystem.Common.EleFoupDot dot)
+        {
+            int num = document.DrawObjectList.Count;
+            int i;
+            for (i = 0; i < num; i++)
+            {
+                if (1 == document.DrawObjectList[i].GraphType
+                    && ((RailEleLine)(document.DrawObjectList[i])).CodingBegin != ((RailEleLine)(document.DrawObjectList[i])).CodingEnd
+                    && dot.CodingScratchDot >= ((RailEleLine)(document.DrawObjectList[i])).CodingBegin
+                    && dot.CodingScratchDot <= ((RailEleLine)(document.DrawObjectList[i])).CodingEnd)
+                {
+                    RailEleLine line = (RailEleLine)document.DrawObjectList[i];
+                    if (line.PointList[0].Y == line.PointList[1].Y)
+                    {
+                        Point pt = Point.Empty;
+                        if (line.PointList[0].X < line.PointList[1].X)
+                            pt.X = line.PointList[0].X + (dot.CodingScratchDot - line.CodingBegin) * line.Lenght / (line.CodingEnd - line.CodingBegin);
+                        else if (line.PointList[0].X > line.PointList[1].X)
+                            pt.X = line.PointList[0].X - (dot.CodingScratchDot - line.CodingBegin) * line.Lenght / (line.CodingEnd - line.CodingBegin);
+                        pt.Y = line.PointList[0].Y;
+                        dot.PtScratchDot = pt;
+                        dot.CodingScratchDotOri = dot.CodingScratchDot;
+                        pt.Offset(dot.PtOffset.X, dot.PtOffset.Y);
+                        dot.PtScratchDotIcon = pt;
+                    }
+                    else
+                    {
+                        Point pt = Point.Empty;
+                        if (line.PointList[0].Y < line.PointList[1].Y)
+                            pt.Y = line.PointList[0].Y + (dot.CodingScratchDot - line.CodingBegin) * line.Lenght / (line.CodingEnd - line.CodingBegin);
+                        else if (line.PointList[0].Y > line.PointList[1].Y)
+                            pt.Y = line.PointList[0].Y - (dot.CodingScratchDot - line.CodingBegin) * line.Lenght / (line.CodingEnd - line.CodingBegin);
+                        pt.X = line.PointList[0].X;
+                        dot.PtScratchDot = pt;
+                        dot.CodingScratchDotOri = dot.CodingScratchDot;
+                        pt.Offset(dot.PtOffset.X, dot.PtOffset.Y);
+                        dot.PtScratchDotIcon = pt;
+                    }
+                    break;
+                }
+            }
+            if (i == num)
+            {
+                dot.CodingScratchDot = dot.CodingScratchDotOri;
+                return false;
+            }
+            return true;
+        }
+
+        public void ProRegionAddNode(string str)
+        {
+            TreeNode tempTN;
+            tempTN = new TreeNode(str);
+            tempTN.Name = str;
+            document.ListTreeNode.Add(tempTN);
+            document.NodeSelected = tempTN;
+        }
+
+        
 
 
 
