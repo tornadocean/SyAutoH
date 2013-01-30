@@ -51,12 +51,11 @@ namespace BaseRailElement
                     selectObject = SelectObject.SelectNone;
                 document.ChangeChooseSign(true, point);
             }
-            else if (0 == drawToolType
-                || 1 == drawToolType
-                || 2 == drawToolType)
+            else if (4 != drawToolType)
             {
                 BaseRailElement.RailAuxiliaryDraw auxDraw = new RailAuxiliaryDraw();
                 auxDraw.CreateEle(drawToolType, document.DrawMultiFactor, point);
+                document.ListAuxiliaryDraw.Add(auxDraw);
                 document.LastHitedObject = auxDraw;
             }
         }
@@ -64,17 +63,33 @@ namespace BaseRailElement
         public override bool OnRButtonDown(Point point)
         {
             base.OnRButtonDown(point);
+            if (4 == drawToolType)
+            {
             int hit = document.HitTest(point, false);
             if (hit >= 0)
                 return true;
             else
                 return false;
+            }
+            else if (3 == drawToolType &&bMouseLDown && downPoint == lastPoint)
+            {
+                BaseRailElement.RailAuxiliaryDraw obj = (BaseRailElement.RailAuxiliaryDraw)document.LastHitedObject;
+                if (obj.PtsCurve[0] != lastPoint && obj.PtsCurve[0] == obj.PtsCurve[1])
+                {
+                    obj.PtsCurve[1] = point;
+                }
+                else if (obj.PtsCurve[0] != lastPoint && obj.PtsCurve[0] == obj.PtsCurve[2])
+                {
+                    obj.PtsCurve[2] = point;
+                }
+            }
+            return false;
         }
 
         public override void OnLButtonUp(Point point)
         {
             base.OnLButtonUp(point);
-            if (drawToolType == 4)
+            if (4 == drawToolType)
             {
                 if (selectObject == SelectObject.SelectEle && hasContact)
                 {
@@ -84,13 +99,29 @@ namespace BaseRailElement
                 }
                 document.ChangeChooseSign(false, point);
             }
-            else if (0 == drawToolType
-                || 1 == drawToolType
-                || 2 == drawToolType)
+            else if ((0 == drawToolType ||1 == drawToolType)
+                && !((BaseRailElement.RailAuxiliaryDraw)document.LastHitedObject).BFinish)
             {
                 document.LastHitedObject.DotEnd = point;
-                document.DrawObjectList.Add(document.LastHitedObject);
+                ((BaseRailElement.RailAuxiliaryDraw)document.LastHitedObject).BFinish = true;
+                document.SelectedDrawObjectList.Clear();
+                document.SelectedDrawObjectList.Add((BaseRailElement.RailAuxiliaryDraw)document.LastHitedObject);
             }
+            else if (2 == drawToolType && !((BaseRailElement.RailAuxiliaryDraw)document.LastHitedObject).BFinish)
+            {
+                document.LastHitedObject.DotEnd = point;
+                ((BaseRailElement.RailAuxiliaryDraw)document.LastHitedObject).BFinish = true;
+                document.SelectedDrawObjectList.Clear();
+                document.SelectedDrawObjectList.Add((BaseRailElement.RailAuxiliaryDraw)document.LastHitedObject);
+            }
+            else if (3 == drawToolType && !((BaseRailElement.RailAuxiliaryDraw)document.LastHitedObject).BFinish)
+            {
+                ((BaseRailElement.RailAuxiliaryDraw)document.LastHitedObject).BFinish = true;
+                document.SelectedDrawObjectList.Clear();
+                document.SelectedDrawObjectList.Add((BaseRailElement.RailAuxiliaryDraw)document.LastHitedObject);
+            }
+
+
         }
 
         public override void OnMouseMoveLeft(Point point)
@@ -110,6 +141,7 @@ namespace BaseRailElement
                             if (1 == document.SelectedDrawObjectList[0].GraphType
                                 || 2 == document.SelectedDrawObjectList[0].GraphType
                                 || 3 == document.SelectedDrawObjectList[0].GraphType
+                                || 4 == document.SelectedDrawObjectList[0].GraphType
                                 || 5 == document.SelectedDrawObjectList[0].GraphType
                                 || 6 == document.SelectedDrawObjectList[0].GraphType
                                 || 7 == document.SelectedDrawObjectList[0].GraphType)
@@ -138,6 +170,7 @@ namespace BaseRailElement
                                 if (1 == document.SelectedDrawObjectList[i].GraphType
                                     || 2 == document.SelectedDrawObjectList[i].GraphType
                                     || 3 == document.SelectedDrawObjectList[i].GraphType
+                                    || 4 == document.SelectedDrawObjectList[0].GraphType
                                     || 5 == document.SelectedDrawObjectList[i].GraphType
                                     || 6 == document.SelectedDrawObjectList[i].GraphType
                                     || 7 == document.SelectedDrawObjectList[0].GraphType)
@@ -157,6 +190,11 @@ namespace BaseRailElement
                         base.OnMouseMoveLeft(point);
                         break;
                 }
+            }
+            else if (4 != drawToolType)
+            {
+                document.LastHitedObject.DotEnd = point;
+                base.OnMouseMoveLeft(point);
             }
         }
 
