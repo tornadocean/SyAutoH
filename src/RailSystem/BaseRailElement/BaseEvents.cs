@@ -33,16 +33,21 @@ namespace BaseRailElement
             set { drawToolType = value; }
         }
 
+        protected bool bMouseLDown = false;
+        protected bool bMouseRDown = false;
+
         public virtual void OnLButtonDown(Point point)
         {
             downPoint = point;
             lastPoint = point;
+            bMouseLDown = true;
         }
 
         public virtual bool OnRButtonDown(Point point)
         {
             downPoint = point;
             lastPoint = point;
+            bMouseRDown = true;
             return false;
         }
 
@@ -54,6 +59,12 @@ namespace BaseRailElement
         public virtual void OnLButtonUp(Point point)
         {
             lastPoint = point;
+            bMouseLDown = false;
+        }
+
+        public virtual void OnRButtonUp(Point point)
+        {
+            bMouseRDown = false;
         }
 
         public virtual void ChangePropertyValue()
