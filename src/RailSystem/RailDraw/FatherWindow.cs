@@ -598,7 +598,10 @@ namespace RailDraw
                         objectEvent.DrawToolType = 4;
                         break;
                 }
+                this.drawDoc.SelectedDrawObjectList.Clear();
+                this.drawDoc.LastHitedObject = null;
             }
+            this.workRegion.picBoxCanvas.Invalidate();
         }
 
         private void DrawToolForm_Closing(object sender, FormClosingEventArgs e)
