@@ -50,6 +50,13 @@ namespace Mcs.RailSystem.Common
         {
             get { return cutAndCopyObjectList; }
         }
+
+        protected List<BaseRailEle> listAuxiliaryDraw = new List<BaseRailEle>();
+        public List<BaseRailEle> ListAuxiliaryDraw
+        {
+            get { return listAuxiliaryDraw; }
+        }
+
         protected BaseRailEle lastHitedObject = null;
         public BaseRailEle LastHitedObject
         {
