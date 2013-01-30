@@ -204,7 +204,12 @@ namespace RailDraw
                 {
                     Mcs.RailSystem.Common.BaseRailEle baseEle =father.drawDoc.SelectedDrawObjectList[0];
                     Int16 i = Convert.ToInt16(father.drawDoc.DrawObjectList.IndexOf(father.drawDoc.SelectedDrawObjectList[0]));
-                    father.proRegion.SelectedElement(i);
+                    if (i >= 0)
+                        father.proRegion.SelectedElement(i);
+                    //else if (-1 == i)
+                    //{
+                    //    i = Convert.ToInt16(father.drawDoc.ListAuxiliaryDraw.IndexOf(father.drawDoc.SelectedDrawObjectList[0]));
+                    //}
                 }
                 else
                 {
@@ -584,7 +589,14 @@ namespace RailDraw
                     return;
                 }
                 Int16 num = Convert.ToInt16(father.drawDoc.DrawObjectList.IndexOf(father.drawDoc.SelectedDrawObjectList[0]));
-                string str = father.drawDoc.SelectedDrawObjectList[i].railText;
+                if (-1 == num)
+                {
+                    num = Convert.ToInt16(father.drawDoc.ListAuxiliaryDraw.IndexOf(father.drawDoc.SelectedDrawObjectList[0]));
+                    if (-1 != num)
+                    {
+                        num += 10000;
+                    }
+                }
                 father.drawDoc.Delete(num);
                 
             }

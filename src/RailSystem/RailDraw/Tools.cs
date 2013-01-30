@@ -63,14 +63,16 @@ namespace RailDraw
             {
                 itemSelected = listView1.GetItemAt(e.X, e.Y);
                 if (itemSelected != null
-                    && e.Button == MouseButtons.Left 
-                    && !((FatherWindow)this.ParentForm).workRegion.MouseLMove)
+                    && e.Button == MouseButtons.Left
+                    && !((FatherWindow)this.ParentForm).workRegion.MouseLMove
+                    && 4 == ((FatherWindow)this.ParentForm).objectEvent.DrawToolType)
                 {
                     this.Cursor = CommonFunction.CreatCursor("draw");
                     picLine = true;
                     this.listView1.MouseLeave += new EventHandler(listView1_MouseLeave);
                 }
-                else if (((FatherWindow)this.ParentForm).workRegion.MouseLMove)
+                else if (((FatherWindow)this.ParentForm).workRegion.MouseLMove
+                    || 4 != ((FatherWindow)this.ParentForm).objectEvent.DrawToolType)
                 {
                     this.Cursor = Cursors.No;
                 }
