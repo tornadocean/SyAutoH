@@ -22,7 +22,7 @@ namespace RailDraw
 
         private void ProgramRegion_Load(object sender, EventArgs e)
         {
-            TreeNode rootNode = new TreeNode(((FatherWindow)this.ParentForm).workRegion.Text);
+            TreeNode rootNode = new TreeNode(((FatherWindow)this.DockPanel.Parent).workRegion.Text);
             this.treeView1.Nodes.Add(rootNode);
             InitTreeView(rootNode);
         }
@@ -74,7 +74,7 @@ namespace RailDraw
             TreeNode node = tempTree.SelectedNode;
             if (node != null
                 && MouseButtons.Right == e.Button 
-                && node.Text != ((FatherWindow)this.ParentForm).workRegion.Text
+                && node.Text != ((FatherWindow)this.DockPanel.Parent).workRegion.Text
                 && 2 == node.Level)
             {
                 string str = node.Text;
@@ -106,18 +106,18 @@ namespace RailDraw
 
         private void contextmenu_Click(object sender, EventArgs e)
         {
-            ((FatherWindow)this.ParentForm).workRegion.DeleteElement();
+            ((FatherWindow)this.DockPanel.Parent).workRegion.DeleteElement();
         }
 
         public void SelectedElement(Int16 index)
         {
-            FatherWindow father = (FatherWindow)this.ParentForm;
-            father.drawDoc.SelectedDrawObjectList.Clear();
+            FatherWindow father = (FatherWindow)this.DockPanel.Parent;
+            father.drawDocOp.SelectedDrawObjectList.Clear();
             if (index >= 0)
             {
-                father.drawDoc.SelectedDrawObjectList.Add(father.drawDoc.DrawObjectList[index]);
+                father.drawDocOp.SelectedDrawObjectList.Add(father.drawDocOp.DrawObjectList[index]);
                 this.treeView1.SelectedNode = this.listTreeNode[index];
-                father.proPage.propertyGrid1.SelectedObject=father.drawDoc.SelectedDrawObjectList[0];
+                father.proPage.propertyGrid1.SelectedObject=father.drawDocOp.SelectedDrawObjectList[0];
             }
             else
             {
@@ -136,7 +136,7 @@ namespace RailDraw
                 }
             }
             listTreeNode.Clear();
-            listTreeNode.AddRange(((FatherWindow)this.ParentForm).drawDoc.ListTreeNode);
+            listTreeNode.AddRange(BaseRailElement.ObjectBaseEvents.DocumentOp.ListTreeNode);
             foreach (TreeNode node in listTreeNode)
             {
                 string str = node.Text.Substring(0, node.Text.IndexOf('_'));
@@ -156,7 +156,7 @@ namespace RailDraw
         {
             for (int i = 0; i < listTreeNode.Count; i++)
             {
-                if (listTreeNode[i].Text == ((FatherWindow)this.ParentForm).drawDoc.NodeSelected.Text)
+                if (listTreeNode[i].Text == ((FatherWindow)this.DockPanel.Parent).drawDocOp.NodeSelected.Text)
                 {
                     treeView1.SelectedNode = listTreeNode[i];
                     break;
