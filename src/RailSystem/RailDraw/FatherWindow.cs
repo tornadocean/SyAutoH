@@ -10,6 +10,7 @@ using System.IO;
 using BaseRailElement;
 using System.Runtime.InteropServices;
 using System.Reflection;
+using WeifenLuo.WinFormsUI.Docking;
 using System.Diagnostics;
 
 namespace RailDraw
@@ -20,7 +21,7 @@ namespace RailDraw
         public PropertyPage proPage = new PropertyPage();
         public WorkRegion workRegion = new WorkRegion();
         public Tools tools = new Tools();
-        public BaseRailElement.DrawDocOp drawDoc = new BaseRailElement.DrawDocOp();
+        public BaseRailElement.DrawDocOp drawDocOp = new BaseRailElement.DrawDocOp();
         public BaseRailElement.ObjectBaseEvents objectEvent = new BaseRailElement.ObjectBaseEvents();
         private bool drawToolCreated = false;
         private string sProjectPath = "";
@@ -28,6 +29,8 @@ namespace RailDraw
         private const Int16 CONST_MULTI_FACTOR = 1;
         private Int16 multiFactor = 1;
         private Point workSize = Point.Empty;
+        public DockContentHandler activeWindowHandler = null;
+        
 
         public FatherWindow()
         {
@@ -36,7 +39,7 @@ namespace RailDraw
 
         private void FatherWindow_Load(object sender, EventArgs e)
         {
-            BaseRailElement.ObjectBaseEvents.Document = drawDoc;
+            BaseRailElement.ObjectBaseEvents.DocumentOp = drawDocOp;
             Rectangle screen = Screen.PrimaryScreen.WorkingArea;
             this.Size = (Size)new Point(screen.Width, screen.Height);
             
@@ -62,15 +65,38 @@ namespace RailDraw
         }
 
         #region 菜单操作
+
+        private void userDefinedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WorkRegUserDef workRegUserDef = new WorkRegUserDef();
+            workRegUserDef.Size = (Size)new Point(workSize.X / 6 * 4, workSize.Y);
+            workRegUserDef.Show(this.dockPanel1);
+            workRegUserDef.DockTo(this.dockPanel1, DockStyle.None);
+        }
+
         private void menuSaveAs_Click(object sender, EventArgs e)
         {
             sProjectPath = "";
             SaveFileDialog saveFile = new SaveFileDialog();
-            saveFile.Filter = "configuration (*.xml)|*.xml";
-            saveFile.InitialDirectory = "";
-            saveFile.Title = "另存为文件";
-            saveFile.FileName = "";
-            SaveFile(saveFile);
+            if (this.activeWindowHandler == workRegion.DockHandler)
+            {
+                saveFile.Filter = "configuration (*.xml)|*.xml";
+                saveFile.InitialDirectory = "";
+                saveFile.Title = "另存为文件";
+                saveFile.FileName = "";
+                SaveFile(saveFile);
+            }
+            else
+            {
+                try
+                {
+                    ((WorkRegUserDef)this.activeWindowHandler.Form).SavePicFromUserDef(saveFile);
+                }
+                catch
+                {
+                    MessageBox.Show("there is an error");
+                }
+            }
             UpdateFormTitle();
         }
 
@@ -81,11 +107,11 @@ namespace RailDraw
 
         private void menuChooseAll_Click(object sender, EventArgs e)
         {
-            this.drawDoc.SelectedDrawObjectList.Clear();
-            if (this.drawDoc.DrawObjectList.Count > 0)
+            this.drawDocOp.SelectedDrawObjectList.Clear();
+            if (this.drawDocOp.DrawObjectList.Count > 0)
             {
-                foreach (BaseRailElement.RailEleLine o in this.drawDoc.DrawObjectList)
-                    this.drawDoc.SelectedDrawObjectList.Add(o);
+                foreach (BaseRailElement.RailEleLine o in this.drawDocOp.DrawObjectList)
+                    this.drawDocOp.SelectedDrawObjectList.Add(o);
             }
             this.workRegion.picBoxCanvas.Invalidate();
         }
@@ -159,7 +185,7 @@ namespace RailDraw
         #region 工具栏操作
         private void new_btn_Click(object sender, EventArgs e)
         {
-            if (drawDoc.DrawObjectList.Count > 0)
+            if (drawDocOp.DrawObjectList.Count > 0)
             {
                 SaveOfNew save_form = new SaveOfNew();
                 save_form.StartPosition = FormStartPosition.CenterParent;
@@ -173,17 +199,17 @@ namespace RailDraw
                         saveFile.FileName = "";
                         SaveFile(saveFile);
                         UpdateFormTitle();
-                        drawDoc.DrawObjectList.Clear();
-                        drawDoc.SelectedDrawObjectList.Clear();
-                        drawDoc.ListTreeNode.Clear();
+                        drawDocOp.DrawObjectList.Clear();
+                        drawDocOp.SelectedDrawObjectList.Clear();
+                        drawDocOp.ListTreeNode.Clear();
                         proRegion.treeView1.Nodes[0].Nodes.Clear();
                         this.workRegion.picBoxCanvas.Invalidate();
                         this.proRegion.Invalidate();
                         break;
                     case DialogResult.No:
-                        drawDoc.DrawObjectList.Clear();
-                        drawDoc.SelectedDrawObjectList.Clear();
-                        drawDoc.ListTreeNode.Clear();
+                        drawDocOp.DrawObjectList.Clear();
+                        drawDocOp.SelectedDrawObjectList.Clear();
+                        drawDocOp.ListTreeNode.Clear();
                         proRegion.treeView1.Nodes[0].Nodes.Clear();
                         this.workRegion.picBoxCanvas.Invalidate();
                         this.proRegion.Invalidate();
@@ -207,23 +233,23 @@ namespace RailDraw
             if (openFile.ShowDialog() == DialogResult.OK)
             {
                 string projectpath = openFile.FileName;
-                drawDoc.DrawObjectList.Clear();
-                drawDoc.ListTreeNode.Clear();
-                drawDoc.SelectedDrawObjectList.Clear();
+                drawDocOp.DrawObjectList.Clear();
+                drawDocOp.ListTreeNode.Clear();
+                drawDocOp.SelectedDrawObjectList.Clear();
                 proRegion.treeView1.Nodes[0].Nodes.Clear();
                 this.proRegion.InitTreeView(proRegion.treeView1.Nodes[0]);
                 this.workRegion.picBoxCanvas.Top = 0;
                 this.workRegion.picBoxCanvas.Left = 0;
                 this.workRegion.picBoxCanvas.Width = drawregOrigSize.Width;
                 this.workRegion.picBoxCanvas.Height = drawregOrigSize.Height;
-                this.workRegion.MouseLMove = false;
+                this.objectEvent.MouseLMove = false;
                 this.Cursor = System.Windows.Forms.Cursors.Default;
                 try
                 {
                     DataSet ds = new DataSet();
                     ds.ReadXml(projectpath);
                     if (OpenXmlFile(ds))
-                        BaseRailElement.ObjectBaseEvents.Document = drawDoc;
+                        BaseRailElement.ObjectBaseEvents.DocumentOp = drawDocOp;
                     sProjectPath = projectpath;
                     UpdateFormTitle();
                 }
@@ -242,21 +268,39 @@ namespace RailDraw
             if (sProjectPath == "")
             {
                 SaveFileDialog saveFile = new SaveFileDialog();
-                saveFile.Filter = "configuration (*.xml)|*.xml";
-                saveFile.InitialDirectory = "";
-                saveFile.Title = "存储文件";
-                saveFile.FileName = "";
-                SaveFile(saveFile);
+                if (this.activeWindowHandler == workRegion.DockHandler)
+                {
+                    saveFile.Filter = "configuration (*.xml)|*.xml";
+                    saveFile.InitialDirectory = "";
+                    saveFile.Title = "存储文件";
+                    saveFile.FileName = "";
+                    SaveFile(saveFile);
+                }
+                else 
+                {
+                    try
+                    {
+                        ((WorkRegUserDef)this.activeWindowHandler.Form).SavePicFromUserDef(saveFile);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("there is an error");
+                    }
+                }
             }
             else
             {
                 try
                 {
                     string projectpath = sProjectPath;
-                    string projectcodingpath = projectpath.Substring(0, projectpath.Length - 4) + "_coding.xml";
-                    drawDoc.DataXmlSave();
-                    drawDoc.DsEle.WriteXml(projectpath);
-                    drawDoc.DsEleCoding.WriteXml(projectcodingpath);
+                    string projectcodingpath = "";
+                    if (this.activeWindowHandler == workRegion.DockHandler)
+                    {
+                        projectcodingpath = projectpath.Substring(0, projectpath.Length - 4) + "_coding.xml";
+                        drawDocOp.DataXmlSave();
+                        drawDocOp.DsEle.WriteXml(projectpath);
+                        drawDocOp.DsEleCoding.WriteXml(projectcodingpath);
+                    }
                 }
                 catch(Exception ex)
                 {
@@ -282,7 +326,14 @@ namespace RailDraw
 
         private void delete_Click(object sender, EventArgs e)
         {
-            this.workRegion.DeleteElement();
+            try
+            {
+                ((WorkRegion)this.activeWindowHandler.Form).DeleteElement();
+            }
+            catch
+            {
+                ((WorkRegUserDef)this.activeWindowHandler.Form).DeleteElement();
+            }
         }
 
         private void enlarge_Click(object sender, EventArgs e)
@@ -292,12 +343,11 @@ namespace RailDraw
                 this.workRegion.picBoxCanvas.Width += (drawregOrigSize.Width * CONST_MULTI_FACTOR);
                 this.workRegion.picBoxCanvas.Height += (drawregOrigSize.Height * CONST_MULTI_FACTOR);
                 multiFactor = Convert.ToInt16(this.workRegion.picBoxCanvas.Width / drawregOrigSize.Width);
-                this.workRegion.MultiFactor = Convert.ToInt16(this.workRegion.picBoxCanvas.Width / drawregOrigSize.Width);
-                this.drawDoc.DrawMultiFactor = multiFactor;
-                int n = this.drawDoc.DrawObjectList.Count;
+                this.drawDocOp.DrawMultiFactor = multiFactor;
+                int n = this.drawDocOp.DrawObjectList.Count;
                 for (int i = 0; i < n; i++)
                 {
-                    this.drawDoc.DrawObjectList[i].DrawMultiFactor = multiFactor;
+                    this.drawDocOp.DrawObjectList[i].DrawMultiFactor = multiFactor;
                 }
                 ChangeDrawRegionLoction();
                 this.workRegion.picBoxCanvas.Invalidate();
@@ -311,11 +361,10 @@ namespace RailDraw
                 this.workRegion.picBoxCanvas.Width -= (drawregOrigSize.Width * CONST_MULTI_FACTOR);
                 this.workRegion.picBoxCanvas.Height -= (drawregOrigSize.Height * CONST_MULTI_FACTOR);
                 multiFactor = Convert.ToInt16(this.workRegion.picBoxCanvas.Width / drawregOrigSize.Width);
-                this.workRegion.MultiFactor = Convert.ToInt16(this.workRegion.picBoxCanvas.Width / drawregOrigSize.Width);
-                this.drawDoc.DrawMultiFactor = multiFactor;
-                int n = this.drawDoc.DrawObjectList.Count;
+                this.drawDocOp.DrawMultiFactor = multiFactor;
+                int n = this.drawDocOp.DrawObjectList.Count;
                 for (int i = 0; i < n; i++)
-                    this.drawDoc.DrawObjectList[i].DrawMultiFactor = multiFactor;
+                    this.drawDocOp.DrawObjectList[i].DrawMultiFactor = multiFactor;
                 this.workRegion.picBoxCanvas.Invalidate();
                 ChangeDrawRegionLoction();
             }
@@ -323,9 +372,9 @@ namespace RailDraw
 
         private void counter_clw_Click(object sender, EventArgs e)
         {
-            if (this.drawDoc.SelectedDrawObjectList.Count > 0)
+            if (this.drawDocOp.SelectedDrawObjectList.Count > 0)
             {
-                this.drawDoc.SelectedDrawObjectList[0].RotateCounterClw();
+                this.drawDocOp.SelectedDrawObjectList[0].RotateCounterClw();
                 this.workRegion.picBoxCanvas.Invalidate();
                 this.proPage.propertyGrid1.Refresh();
             }   
@@ -333,9 +382,9 @@ namespace RailDraw
 
         private void clw_Click(object sender, EventArgs e)
         {
-            if (this.drawDoc.SelectedDrawObjectList.Count > 0)
+            if (this.drawDocOp.SelectedDrawObjectList.Count > 0)
             {
-                this.drawDoc.SelectedDrawObjectList[0].RotateClw();
+                this.drawDocOp.SelectedDrawObjectList[0].RotateClw();
                 this.workRegion.picBoxCanvas.Invalidate();
                 this.proPage.propertyGrid1.Refresh();
             }
@@ -343,13 +392,13 @@ namespace RailDraw
 
         private void drap_Click(object sender, EventArgs e)
         {
-            this.workRegion.MouseLMove = true;
+            this.objectEvent.MouseLMove = true;
             this.drawCanvas.BackColor = SystemColors.ControlDark;
         }
 
         private void mouse_Click(object sender, EventArgs e)
         {
-            this.workRegion.MouseLMove = false;
+            this.objectEvent.MouseLMove = false;
             this.drawCanvas.Enabled = true;
             this.drawCanvas.BackColor = SystemColors.Control;
             this.Cursor = System.Windows.Forms.Cursors.Default;
@@ -357,9 +406,9 @@ namespace RailDraw
 
         private void mirror_Click(object sender, EventArgs e)
         {
-            if (this.drawDoc.SelectedDrawObjectList.Count > 0)
+            if (this.drawDocOp.SelectedDrawObjectList.Count > 0)
             {
-                this.drawDoc.SelectedDrawObjectList[0].ObjectMirror();
+                this.drawDocOp.SelectedDrawObjectList[0].ObjectMirror();
                 this.workRegion.picBoxCanvas.Invalidate();
             }
         }
@@ -386,10 +435,11 @@ namespace RailDraw
                 try
                 {
                     string projectpath = sFile.FileName;
-                    string projectcodingpath = projectpath.Substring(0, projectpath.Length - 4) + "_coding.xml";
-                    drawDoc.DataXmlSave();
-                    drawDoc.DsEle.WriteXml(projectpath);
-                    drawDoc.DsEleCoding.WriteXml(projectcodingpath);
+                    string projectcodingpath = "";
+                    projectcodingpath = projectpath.Substring(0, projectpath.Length - 4) + "_coding.xml";
+                    drawDocOp.DataXmlSave();
+                    drawDocOp.DsEle.WriteXml(projectpath);
+                    drawDocOp.DsEleCoding.WriteXml(projectcodingpath);
                     sProjectPath = projectpath;
                     UpdateFormTitle();
                 }
@@ -398,6 +448,10 @@ namespace RailDraw
                     MessageBox.Show("save error");
                 }
             }
+        }
+
+        private void SavePic(SaveFileDialog sFile)
+        { 
         }
 
         private bool OpenXmlFile(DataSet ds)
@@ -445,12 +499,12 @@ namespace RailDraw
                     }
                 }
                 
-                foreach (Mcs.RailSystem.Common.BaseRailEle obj in drawDoc.DrawObjectList)
+                foreach (Mcs.RailSystem.Common.BaseRailEle obj in drawDocOp.DrawObjectList)
                 {
                     if (5 == obj.GraphType)
                     {
                         RailEleFoupDot dot = (RailEleFoupDot)obj;
-                        foreach (Mcs.RailSystem.Common.BaseRailEle objchild in drawDoc.DrawObjectList)
+                        foreach (Mcs.RailSystem.Common.BaseRailEle objchild in drawDocOp.DrawObjectList)
                         {
                             if (6 == objchild.GraphType && ((RailEleDevice)objchild).DeviecID == dot.DeviceNum)
                             {
@@ -475,10 +529,9 @@ namespace RailDraw
 
         private void EnlargeAndShortenCanvas(Int16 drawMulti)
         {
-            int n = this.drawDoc.DrawObjectList.Count;
+            int n = this.drawDocOp.DrawObjectList.Count;
             for (int i = 0; i < n; i++)
-                this.drawDoc.DrawObjectList[i].DrawMultiFactor = drawMulti;
-            this.workRegion.MultiFactor = drawMulti;
+                this.drawDocOp.DrawObjectList[i].DrawMultiFactor = drawMulti;
             this.workRegion.picBoxCanvas.Invalidate();
             ChangeDrawRegionLoction();
         }
@@ -598,8 +651,8 @@ namespace RailDraw
                         objectEvent.DrawToolType = 4;
                         break;
                 }
-                this.drawDoc.SelectedDrawObjectList.Clear();
-                this.drawDoc.LastHitedObject = null;
+                this.drawDocOp.SelectedDrawObjectList.Clear();
+                this.drawDocOp.LastHitedObject = null;
             }
             this.workRegion.picBoxCanvas.Invalidate();
         }
@@ -607,6 +660,7 @@ namespace RailDraw
         private void DrawToolForm_Closing(object sender, FormClosingEventArgs e)
         {
             drawToolCreated = false;
+            objectEvent.DrawToolType = 4;
         }
 
         private void importDotToolStripMenuItem_Click(object sender, EventArgs e)
@@ -635,12 +689,31 @@ namespace RailDraw
                     MessageBox.Show("import picture failed");
                     return;
                 }
-                //Point pt = this.workRegion.picBoxCanvas.Location;
-                //pt.Offset(5, 5);
                 Point pt=Point.Empty;
-                this.workRegion.CreateUserDefinedEle(pt, this.workRegion.picBoxCanvas.Size, imageExPic);
+                try
+                {
+                    ((WorkRegion)this.activeWindowHandler.Form).CreateUserDefinedEle(pt, this.workRegion.picBoxCanvas.Size, imageExPic);
+                }
+                catch
+                {
+                    ((WorkRegUserDef)this.activeWindowHandler.Form).CreateUserDefinedEle(pt, this.workRegion.picBoxCanvas.Size, imageExPic);
+                }
             }
         }
+
+        public void EnbleMenuItems(bool bEnble)
+        {
+            this.menuNew.Enabled = bEnble;
+            this.menuCopy.Enabled = bEnble;
+            this.menuPaste.Enabled = bEnble;
+            this.menuOpen.Enabled = bEnble;
+            this.new_btn.Enabled = bEnble;
+            this.open.Enabled = bEnble;
+            this.importDotToolStripMenuItem.Enabled = bEnble;
+            this.menuScale.Enabled = bEnble;
+
+        }
+
 
     }
 }
