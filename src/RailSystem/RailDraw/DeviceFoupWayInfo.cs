@@ -36,7 +36,7 @@ namespace RailDraw
             m_tabelFoupWay.PrimaryKey = new DataColumn[] { m_tabelFoupWay.Columns[Key_Name] };
             m_tabelFoupWay.Columns.Add(Key_Coding, typeof(Int32));
             m_tabelFoupWay.Columns.Add(Key_Point, typeof(Point));
-            Mcs.RailSystem.Common.EleDevice device = (Mcs.RailSystem.Common.EleDevice)(((FatherWindow)(this.Owner)).drawDoc.LastHitedObject);
+            Mcs.RailSystem.Common.EleDevice device = (Mcs.RailSystem.Common.EleDevice)(((FatherWindow)(this.Owner)).drawDocOp.LastHitedObject);
             listFoupWay.AddRange(device.ListFoupDot);
             DataRow row;
             foreach(Mcs.RailSystem.Common.EleFoupDot obj in listFoupWay)
