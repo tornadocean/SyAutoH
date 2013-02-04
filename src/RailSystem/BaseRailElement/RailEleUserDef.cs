@@ -27,8 +27,8 @@ namespace BaseRailElement
             DrawMultiFactor = multiFactor;
             rcUserDef.X = 0;
             rcUserDef.Y = 0;
-            rcUserDef.Width = imageUserDef.Width < size.Width ? imageUserDef.Width : size.Width;
-            rcUserDef.Height = imageUserDef.Height < size.Height ? imageUserDef.Height : size.Height;
+            rcUserDef.Width = imageUserDef.Width < size.Width ? imageUserDef.Width : (size.Width-20);
+            rcUserDef.Height = imageUserDef.Height < size.Height ? imageUserDef.Height : (size.Height-20);
             return this;
         }
 
