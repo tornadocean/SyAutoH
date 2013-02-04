@@ -92,6 +92,9 @@
     <Compile Include="WorkRegion.Designer.cs">
       <DependentUpon>WorkRegion.cs</DependentUpon>
     </Compile>
+    <Compile Include="WorkRegUserDef.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="DeviceFoupWayInfo.resx">
       <DependentUpon>DeviceFoupWayInfo.cs</DependentUpon>
     </EmbeddedResource>
@@ -122,6 +125,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WorkRegion.resx">
       <DependentUpon>WorkRegion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WorkRegUserDef.resx">
+      <DependentUpon>WorkRegUserDef.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">

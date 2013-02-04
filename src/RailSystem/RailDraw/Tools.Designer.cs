@@ -33,6 +33,7 @@
             this.toolImageList = new System.Windows.Forms.ImageList(this.components);
             this.eleBtn = new System.Windows.Forms.Button();
             this.others = new System.Windows.Forms.Button();
+            this.contextMenuStripTool = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.SuspendLayout();
             // 
             // listView1
@@ -77,6 +78,11 @@
             this.others.UseVisualStyleBackColor = true;
             this.others.Click += new System.EventHandler(this.others_Click);
             // 
+            // contextMenuStripTool
+            // 
+            this.contextMenuStripTool.Name = "contextMenuStripTool";
+            this.contextMenuStripTool.Size = new System.Drawing.Size(153, 26);
+            // 
             // Tools
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -104,6 +110,7 @@
         private System.Windows.Forms.Button eleBtn;
         private System.Windows.Forms.Button others;
         private System.Windows.Forms.ImageList toolImageList;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripTool;
 
     }
 }

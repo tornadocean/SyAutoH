@@ -55,7 +55,7 @@
     <Compile Include="RailEleCurve.cs" />
     <Compile Include="RailEleFoupDot.cs" />
     <Compile Include="RailEleLine.cs" />
-    <Compile Include="RailEleUserDefined.cs" />
+    <Compile Include="RailEleUserDef.cs" />
     <Compile Include="RailLabel.cs" />
   </ItemGroup>
   <ItemGroup>
