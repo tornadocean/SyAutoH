@@ -19,13 +19,44 @@ namespace BaseRailElement
 
         public RailEleDevice CreateEle(Point pt, Size size, Int16 multiFactor, string text)
         {
+            //DrawMultiFactor = multiFactor;
+            //pt.Offset(pt.X / DrawMultiFactor - pt.X, pt.Y / DrawMultiFactor - pt.Y);
+            //ptDevice = pt;
+            //string path = Application.StartupPath;
+            //path = path.Substring(0, path.IndexOf("bin\\")) + @"src\RailSystem\Mcs.RailSystem.Common\Resources\devicesmall.bmp";
+            //strPath = path;
+            //imageDevice = Image.FromFile(path);
+            //widthIcon = imageDevice.Width;
+            //heightIcon = imageDevice.Height;
+            //rcStockerRoom.X = ptDevice.X;
+            //rcStockerRoom.Y = ptDevice.Y + heightIcon + 5;
+            //rcStockerRoom.Width = widthIcon;
+            //rcStockerRoom.Height = 5;
+            //this.railText = text;
+            //string strID = text.Substring(text.IndexOf('_') + 1);
+            //deviceID = Convert.ToInt16(strID);
+            string path = Application.StartupPath;
+            path = path.Substring(0, path.IndexOf("bin\\")) + @"src\RailSystem\Mcs.RailSystem.Common\Resources\devicesmall.bmp";
+            CreateEle(pt, size, multiFactor, text, path);
+
+            return this;
+        }
+
+        public RailEleDevice CreateEle(Point pt, Size size, Int16 multiFactor, string text, string picPath)
+        {
             DrawMultiFactor = multiFactor;
             pt.Offset(pt.X / DrawMultiFactor - pt.X, pt.Y / DrawMultiFactor - pt.Y);
             ptDevice = pt;
-            string path = Application.StartupPath;
-            path = path.Substring(0, path.IndexOf("bin\\")) + @"src\RailSystem\Mcs.RailSystem.Common\Resources\devicesmall.bmp";
+            string path = picPath;
             strPath = path;
-            imageDevice = Image.FromFile(path);
+            try
+            {
+                imageDevice = Image.FromFile(path);
+            }
+            catch
+            {
+                MessageBox.Show("there is an error when creating device pic");
+            }
             widthIcon = imageDevice.Width;
             heightIcon = imageDevice.Height;
             rcStockerRoom.X = ptDevice.X;
@@ -183,16 +214,16 @@ namespace BaseRailElement
 
         public override bool ChosedInRegion(Rectangle rect)
         {
+            Point[] pts = new Point[2];
             Point pt = ptDevice;
             pt.X = pt.X * DrawMultiFactor;
             pt.Y = pt.Y * DrawMultiFactor;
             int widthTemp = widthIcon * DrawMultiFactor;
             int heightTemp = heightIcon * DrawMultiFactor;
-            GraphicsPath path = new GraphicsPath();
-            path.AddRectangle(rect);
-            Region region = new Region(path);
-            Rectangle rc = new Rectangle(pt.X, pt.Y, widthTemp, heightTemp);
-            if (region.IsVisible(rc))
+            pts[0] = pt;
+            pts[1].X = pts[0].X + widthTemp;
+            pts[1].Y = pts[0].Y + heightTemp;
+            if (rect.Contains(pts[0]) && rect.Contains(pts[1]))
                 return true;
             else
                 return false;
