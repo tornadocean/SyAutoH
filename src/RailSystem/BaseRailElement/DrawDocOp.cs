@@ -26,6 +26,21 @@ namespace BaseRailElement
             get { return new DrawDocOp(); }
         }
 
+        public void RefreshLastUserDefAdd()
+        {
+            listUserDefAdd.Clear();
+            string strPath = System.Windows.Forms.Application.StartupPath;
+            strPath = strPath.Substring(0, strPath.IndexOf("bin\\")) + @"src\RailSystem\Mcs.RailSystem.Common\Resources\userdef";
+            string[] files = System.IO.Directory.GetFiles(strPath);
+            foreach (string str in files)
+            {
+                if (-1 != str.IndexOf(".bmp"))
+                {
+                    listUserDefAdd.Add(str);
+                }
+            }
+        }
+
         public override void Draw(Graphics canvas)
         {
             // setting smoothing mode
