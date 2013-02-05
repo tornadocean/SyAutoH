@@ -26,6 +26,21 @@ namespace BaseRailElement
             get { return new DrawDocOp(); }
         }
 
+        public void RefreshLastUserDefAdd()
+        {
+            listUserDefAdd.Clear();
+            string strPath = System.Windows.Forms.Application.StartupPath;
+            strPath = strPath.Substring(0, strPath.IndexOf("bin\\")) + @"src\RailSystem\Mcs.RailSystem.Common\Resources\userdef";
+            string[] files = System.IO.Directory.GetFiles(strPath);
+            foreach (string str in files)
+            {
+                if (-1 != str.IndexOf(".bmp"))
+                {
+                    listUserDefAdd.Add(str);
+                }
+            }
+        }
+
         public override void Draw(Graphics canvas)
         {
             // setting smoothing mode
@@ -40,6 +55,14 @@ namespace BaseRailElement
                 if (selectedDrawObjectList.Contains(drawObjectList[i]))
                     drawObjectList[i].DrawTracker(canvas);
             }
+            n = listAuxiliaryDraw.Count;
+            for (int i = 0; i < n; i++)
+            {
+                listAuxiliaryDraw[i].Draw(canvas);
+                if (selectedDrawObjectList.Contains(listAuxiliaryDraw[i]))
+                    listAuxiliaryDraw[i].DrawTracker(canvas);
+            }
+
             if (chooseObject)
             {
                 ChooseObject(canvas);
@@ -77,6 +100,22 @@ namespace BaseRailElement
                     break;
                 }
             }
+            n = listAuxiliaryDraw.Count;
+            for (int i = n - 1; i >= 0; i--)
+            {
+                hit = listAuxiliaryDraw[i].HitTest(point, false);
+                if (hit >= 0)
+                {
+                    lastHitedObject = listAuxiliaryDraw[i];
+                    if (listAuxiliaryDraw[i].Selectable)
+                    {
+                        SelectOne(listAuxiliaryDraw[i]);
+                        return hit;
+                    }
+                    break;
+                }
+            }
+
             if (hit == -1)
                 lastHitedObject = null;
             selectedDrawObjectList.Clear();
@@ -188,9 +227,20 @@ namespace BaseRailElement
 
         public void Delete(Int16 index)
         {
-            drawObjectList.RemoveAt(index);
-            listTreeNode.RemoveAt(index);
-            selectedDrawObjectList.RemoveAt(0);
+            if (-1 != index)
+            {
+                if (index < 10000)
+                {
+                    drawObjectList.RemoveAt(index);
+                    listTreeNode.RemoveAt(index);
+                }
+                else if (index >= 10000)
+                {
+                    index -= 10000;
+                    listAuxiliaryDraw.RemoveAt(index);
+                }
+                selectedDrawObjectList.RemoveAt(0);
+            }
         }
 
         public void ChooseObject(Graphics gp)
@@ -223,6 +273,14 @@ namespace BaseRailElement
                     if (drawObjectList[i].ChosedInRegion(rc))
                     {
                         SelectMore(drawObjectList[i]);
+                    }
+                }
+                num = listAuxiliaryDraw.Count;
+                for (int i = 0; i < num;i++ )
+                {
+                    if (listAuxiliaryDraw[i].ChosedInRegion(rc))
+                    {
+                        SelectMore(listAuxiliaryDraw[i]);
                     }
                 }
                 chooseObject = false;

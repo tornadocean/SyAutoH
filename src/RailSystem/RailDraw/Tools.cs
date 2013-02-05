@@ -21,7 +21,6 @@ namespace RailDraw
         {
             get { return picLine; }
         }
-        
 
         public Tools()
         {
@@ -30,11 +29,14 @@ namespace RailDraw
 
         private void Tools_Load(object sender, EventArgs e)
         {
-            toolImageList.Images.Add("line", Properties.Resources.line);
-            toolImageList.Images.Add("curve", Properties.Resources.curve);
-            toolImageList.Images.Add("cross", Properties.Resources.cross);
-            toolImageList.Images.Add("foupWay", Properties.Resources.foupWay);
-            toolImageList.Images.Add("device", Properties.Resources.devicebig);
+            RefreshToolImageList();
+            InitTools(sender, e);
+        }
+
+        public void InitTools(object sender, EventArgs e)
+        {
+            eleBtn.Show();
+            others.Show();
             eleBtn_Click(sender, e);
         }
 
@@ -59,18 +61,21 @@ namespace RailDraw
 
         private void listView1_MouseDown(object sender, MouseEventArgs e)
         {
+            FatherWindow father = (FatherWindow)this.DockPanel.Parent;
             if (e.Button == MouseButtons.Left)
             {
                 itemSelected = listView1.GetItemAt(e.X, e.Y);
                 if (itemSelected != null
-                    && e.Button == MouseButtons.Left 
-                    && !((FatherWindow)this.ParentForm).workRegion.MouseLMove)
+                    && e.Button == MouseButtons.Left
+                    && !father.objectEvent.MouseLMove
+                    && 4 == father.objectEvent.DrawToolType)
                 {
                     this.Cursor = CommonFunction.CreatCursor("draw");
                     picLine = true;
                     this.listView1.MouseLeave += new EventHandler(listView1_MouseLeave);
                 }
-                else if (((FatherWindow)this.ParentForm).workRegion.MouseLMove)
+                else if (father.objectEvent.MouseLMove
+                    || 4 != father.objectEvent.DrawToolType)
                 {
                     this.Cursor = Cursors.No;
                 }
@@ -85,15 +90,32 @@ namespace RailDraw
                 this.Cursor = System.Windows.Forms.Cursors.Default;
                 picLine = false;
             }
+            else if (e.Button == MouseButtons.Right)
+            {
+                contextMenuStripTool.Items.Clear();
+                contextMenuStripTool.Items.Add("refresh");
+                for (Int16 i = 0; i < contextMenuStripTool.Items.Count; i++)
+                {
+                    contextMenuStripTool.Items[i].Click += new EventHandler(RefreshToolItems);
+                }
+                contextMenuStripTool.Show(Cursor.Position);
+            }
+        }
+
+        private void RefreshToolItems(object sender, EventArgs e)
+        {
+            RefreshToolImageList();
+            eleBtn_Click(sender, e);
         }
 
         private void listView1_MouseLeave(object sender, EventArgs e)
         {
+            FatherWindow father = (FatherWindow)this.DockPanel.Parent;
             this.listView1.MouseLeave -= new EventHandler(listView1_MouseLeave);
             ReleaseCapture();
-            SetCapture(((FatherWindow)(this.ParentForm)).workRegion.picBoxCanvas.Handle);
-            ((FatherWindow)this.ParentForm).workRegion.picBoxCanvas.MouseUp +=
-                new MouseEventHandler(((FatherWindow)this.ParentForm).workRegion.ElementDraw_MouseUp);
+            SetCapture(father.workRegion.picBoxCanvas.Handle);
+            father.workRegion.picBoxCanvas.MouseUp +=
+                new MouseEventHandler(father.workRegion.ElementDraw_MouseUp);
         }
 
         private void eleBtn_Click(object sender, EventArgs e)
@@ -129,6 +151,7 @@ namespace RailDraw
             listView1.BringToFront();
             listView1.Dock = DockStyle.Fill;
             listView1.Clear();
+            int num = toolImageList.Images.Count;
 
             ListViewItem item3 = new ListViewItem();
             item3.Text = "FoupWay";
@@ -139,6 +162,41 @@ namespace RailDraw
             item4.Text = "Device";
             item4.ImageKey = "device";
             listView1.Items.Add(item4);
+            
+            for (int i = 5; i < num; i++)
+            {
+                ListViewItem item = new ListViewItem();
+                item.Text = toolImageList.Images.Keys[i];
+                item.ImageIndex = i;
+                listView1.Items.Add(item);
+            }
+        }
+
+        public void ClearTool()
+        {
+            listView1.Dock = DockStyle.None;
+            eleBtn.Hide();
+            others.Hide();
+            listView1.Dock = DockStyle.Fill;
+            listView1.Clear();
+        }
+
+        public void RefreshToolImageList()
+        {
+            FatherWindow father = (FatherWindow)this.DockPanel.Parent;
+            father.drawDocOp.RefreshLastUserDefAdd();
+            toolImageList.Images.Clear();
+            toolImageList.Images.Add("line", Properties.Resources.line);
+            toolImageList.Images.Add("curve", Properties.Resources.curve);
+            toolImageList.Images.Add("cross", Properties.Resources.cross);
+            toolImageList.Images.Add("foupWay", Properties.Resources.foupWay);
+            toolImageList.Images.Add("device", Properties.Resources.devicebig);
+            foreach (string str in father.drawDocOp.ListUserDefAdd)
+            {
+                string strTemp = str.Substring(str.IndexOf("userdef\\") + 8);
+                strTemp = strTemp.Substring(0, strTemp.IndexOf(".bmp"));
+                toolImageList.Images.Add(strTemp, Properties.Resources.devicebig);
+            }
         }
 
         

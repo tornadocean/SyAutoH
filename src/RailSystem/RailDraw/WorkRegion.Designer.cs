@@ -79,6 +79,7 @@
             this.Name = "WorkRegion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "WorkRegion";
+            this.Activated += new System.EventHandler(this.WorkRegion_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WorkRegion_FormClosing);
             this.Load += new System.EventHandler(this.WorkRegion_Load);
             this.Shown += new System.EventHandler(this.WorkRegion_Shown);

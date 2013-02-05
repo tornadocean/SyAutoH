@@ -50,6 +50,18 @@ namespace Mcs.RailSystem.Common
         {
             get { return cutAndCopyObjectList; }
         }
+
+        protected List<BaseRailEle> listAuxiliaryDraw = new List<BaseRailEle>();
+        public List<BaseRailEle> ListAuxiliaryDraw
+        {
+            get { return listAuxiliaryDraw; }
+        }
+        protected List<string> listUserDefAdd = new List<string>();
+        public List<string> ListUserDefAdd
+        {
+            get { return listUserDefAdd; }
+        }
+
         protected BaseRailEle lastHitedObject = null;
         public BaseRailEle LastHitedObject
         {
@@ -96,7 +108,7 @@ namespace Mcs.RailSystem.Common
         public Point LastPoint
         {
             get { return lastPoint; }
-            set { downPoint = value; }
+            set { lastPoint = value; }
         }
 
         public DrawDoc()
