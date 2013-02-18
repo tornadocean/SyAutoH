@@ -40,7 +40,6 @@ namespace McsRemote.Control
         }
 
         DataTable m_tabOhtInfo = null;
-        System.Timers.Timer m_timer = new System.Timers.Timer();
         private void pgOHTInfo_Loaded(object sender, RoutedEventArgs e)
         {
             if (null != m_dataHub)
@@ -56,28 +55,6 @@ namespace McsRemote.Control
 
             PushData[] cmds = new PushData[] { PushData.upOhtInfo, PushData.upOhtPos };
             m_dataHub.Async_SetPushCmdList(cmds);
-
-            m_timer.Interval = 500;
-            m_timer.Elapsed += m_timer_Elapsed;
-            m_timer.Enabled = true;
-
-            //dgOHT.Items.Refresh();
-           // addData();
-            
-        }
-
-        void m_timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            //throw new NotImplementedException();
-            //addData();
-            //dgOHT.Dispatcher.BeginInvoke(new Action(() => dgOHT.Items.Refresh()));
-            //dgOHT.Dispatcher.BeginInvoke(new Action(() => addData()));
-            //dgOHT.Items.Refresh();
-        }
-
-        public void ProcessGuiData()
-        {
-           // addData();
         }
 
         void m_dataHub_DataSetUpdate(PushData enumPush)
@@ -94,7 +71,11 @@ namespace McsRemote.Control
                     dgPos.Dispatcher.BeginInvoke(new Action(() => dgPos.Items.Refresh()));
                     break;
             }
-           //addData();
+        }
+
+        public void ProcessGuiData()
+        {
+
         }
 
         private void Process_upOhtInfo()
@@ -126,44 +107,6 @@ namespace McsRemote.Control
             }
         }
 
-        private void addData()
-        {
-            lock (this)
-            {
-                if (m_tabOhtInfo.Rows.Count > 0)
-                {
-                    DataRow row = m_tabOhtInfo.Rows[0];
-                    uint nP = UInt32.Parse(row[1].ToString());
-                    nP++;
-                    row[1] = nP;
-                    if (nP % 20 == 1)
-                    {
-                        row = m_tabOhtInfo.NewRow();
-                        row[0] = nP;
-                        row[1] = 1;
-                        m_tabOhtInfo.Rows.Add(row);
-                    }
-                    //row.AcceptChanges();
-                }
-                else
-                {
-                    DataRow row = m_tabOhtInfo.NewRow();
-                    row[0] = 255;
-                    row[1] = 1;
-                    m_tabOhtInfo.Rows.Add(row);
-
-                    row = m_tabOhtInfo.NewRow();
-                    row[0] = 254;
-                    row[1] = 1;
-                    m_tabOhtInfo.Rows.Add(row);
-                    m_tabOhtInfo.AcceptChanges();
-                }
-                
-            }
-        }
-
-     
-
         private void pgOHTInfo_Unloaded(object sender, RoutedEventArgs e)
         {
 
@@ -171,9 +114,67 @@ namespace McsRemote.Control
 
         private void bnGetLoc_Click(object sender, RoutedEventArgs e)
         {
+            m_dataHub.Async_WriteData(GuiCommand.OhtGetPosTable, "");
+        }
 
-           // addData();
-            dgOHT.Items.Refresh();
+        private void tbOHTID_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tbOHTID.Text != "254")
+            {
+                cbAllOHT.IsChecked = false;
+            }
+            else
+            {
+                cbAllOHT.IsChecked = true;
+            }
+        }
+
+        private void bnSetFrom_Click(object sender, RoutedEventArgs e)
+        {
+            int nSel = dgPos.SelectedIndex;
+            if ((nSel < dgPos.Items.Count) && (nSel >= 0))
+            {
+                string strPos = GetDataGridText(nSel, 0);
+                tbFrom.Text = strPos;
+            }
+            else
+            {
+                MessageBox.Show("Select the position for FROM.");
+            }
+
+        }
+
+        private string GetDataGridText(int nIndex, int Col)
+        {
+            DataRowView obItem = dgPos.Items.GetItemAt(nIndex) as DataRowView;
+            if (null != obItem)
+            {
+                string str = obItem[Col].ToString();
+                return str;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private void bnSetTo_Click(object sender, RoutedEventArgs e)
+        {
+            int nSel = dgPos.SelectedIndex;
+            if ((nSel < dgPos.Items.Count) && (nSel >= 0))
+            {
+                string strPos = GetDataGridText(nSel, 0);
+                tbTo.Text = strPos;
+            }
+            else
+            {
+                MessageBox.Show("Select the position for TO.");
+            }
+        }
+
+        private void cbAllOHT_Checked(object sender, RoutedEventArgs e)
+        {
+            tbOHTID.Text = "254";
         }
     }
 }

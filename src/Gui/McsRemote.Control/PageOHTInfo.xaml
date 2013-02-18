@@ -44,15 +44,19 @@
                 <Button Content="Place" HorizontalAlignment="Left" Margin="167,10,0,0" VerticalAlignment="Top" Width="50"/>
             </Grid>
         </GroupBox>
-        <CheckBox Content="All OHTs" HorizontalAlignment="Left" Margin="358,10,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="cbAllOHT" Content="All OHTs" HorizontalAlignment="Left" Margin="358,10,0,0" VerticalAlignment="Top" Checked="cbAllOHT_Checked"/>
         <TextBlock HorizontalAlignment="Left" Margin="358,34,0,0" TextWrapping="Wrap" Text="OHT Id:" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="22" Margin="407,31,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="58"/>
+        <TextBox x:Name="tbOHTID" HorizontalAlignment="Left" Height="22" Margin="407,31,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="58" TextChanged="tbOHTID_TextChanged"/>
         <GroupBox Header="Path" HorizontalAlignment="Left" Margin="347,58,0,0" VerticalAlignment="Top" Width="118" Height="405">
             <Grid>
                 <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="From" VerticalAlignment="Top"/>
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="10,31,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="86"/>
+                <TextBox x:Name="tbFrom" HorizontalAlignment="Left" Height="23" Margin="10,31,0,0" 
+                         IsReadOnly="True"
+                         TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="86"/>
                 <TextBlock HorizontalAlignment="Left" Margin="10,59,0,0" TextWrapping="Wrap" Text="To" VerticalAlignment="Top"/>
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="10,80,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="86"/>
+                <TextBox x:Name="tbTo" HorizontalAlignment="Left" Height="23" Margin="10,80,0,0" 
+                          IsReadOnly="True"
+                         TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="86"/>
                 <DataGrid x:Name="dgPath" HorizontalAlignment="Left"  ItemsSource="{Binding}" 
                            SelectionUnit="FullRow" SelectionMode="Single"
                   AlternatingRowBackground="#FFBAE9FB" AlternationCount="2"
@@ -80,8 +84,8 @@
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveCaptionColorKey}}"/>
             </DataGrid.HorizontalGridLinesBrush>
         </DataGrid>
-        <Button x:Name="bnSetFrom" Content="Set From" HorizontalAlignment="Left" Margin="470,31,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="bnSetTo" Content="Set To" HorizontalAlignment="Left" Margin="550,31,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="bnSetFrom" Content="Set From" HorizontalAlignment="Left" Margin="470,31,0,0" VerticalAlignment="Top" Width="75" Click="bnSetFrom_Click"/>
+        <Button x:Name="bnSetTo" Content="Set To" HorizontalAlignment="Left" Margin="550,31,0,0" VerticalAlignment="Top" Width="75" Click="bnSetTo_Click"/>
         <Button x:Name="bnGetLoc" Content="Refresh" HorizontalAlignment="Left" Margin="672,31,0,0" VerticalAlignment="Top" Width="75" Click="bnGetLoc_Click"/>
 
     </Grid>
