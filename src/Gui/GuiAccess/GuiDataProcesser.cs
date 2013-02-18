@@ -304,7 +304,7 @@ namespace GuiAccess
                 info.ID = nID;
                 info.TcpInfo = strTCP;
 
-                UpdateOhtInfo(info);
+                UpdateOhtInfo(info, true);
 
             }
         }
@@ -324,36 +324,43 @@ namespace GuiAccess
                 info.Hand = nHand;
                 info.Status = nStatus;
 
-                UpdateOhtInfo(info);
+                UpdateOhtInfo(info, false);
             }
         }
 
-        private void UpdateOhtInfo(OhtInfoData info)
+        private void UpdateOhtInfo(OhtInfoData info, bool bInfo)
         {
             DataTable table = m_ds.Tables["OHTInfo"];
             DataRow row = table.Rows.Find(info.ID);
             if (null != row)
             {
-                SetRowOHTInfoData(row, info);
+                SetRowOHTInfoData(row, info, bInfo);
                 row.AcceptChanges();
             }
             else
             {
                 row = table.NewRow();
                 row["ID"] = info.ID;
-                SetRowOHTInfoData(row, info);
+                SetRowOHTInfoData(row, info, bInfo);
                 table.Rows.Add(row);
                 table.AcceptChanges();
             }
         }
 
-        private void SetRowOHTInfoData(DataRow row, OhtInfoData info)
+        private void SetRowOHTInfoData(DataRow row, OhtInfoData info, bool bInfo)
         {
-            row["Position"] = info.Position;
-            row["Hand"] = info.Hand;
-            row["Status"] = info.Status;
-            row["Alarm"] = info.Alarm;
-            row["TcpInfo"] = info.TcpInfo;
+           
+            if (true == bInfo)
+            {
+                row["TcpInfo"] = info.TcpInfo;
+            }
+            else
+            {
+                row["Position"] = info.Position;
+                row["Hand"] = info.Hand;
+                row["Status"] = info.Status;
+                row["Alarm"] = info.Alarm;
+            }
         }
 
         #endregion

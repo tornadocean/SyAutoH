@@ -49,7 +49,7 @@ namespace McsRemote.Control
             }
 
             m_tabOhtInfo = m_dataHub.DataSource.Tables["OHTInfo"].Clone();
-            dgOHT.DataContext = m_tabOhtInfo;
+            dgOHT.ItemsSource = m_tabOhtInfo.DefaultView;
             dgPos.DataContext = m_dataHub.DataSource.Tables["OHTKeyPos"];
 
             m_dataHub.DataSetUpdate += m_dataHub_DataSetUpdate;
@@ -60,13 +60,19 @@ namespace McsRemote.Control
             m_timer.Interval = 500;
             m_timer.Elapsed += m_timer_Elapsed;
             m_timer.Enabled = true;
+
+            //dgOHT.Items.Refresh();
+           // addData();
             
         }
 
         void m_timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             //throw new NotImplementedException();
-            addData();
+            //addData();
+            //dgOHT.Dispatcher.BeginInvoke(new Action(() => dgOHT.Items.Refresh()));
+            //dgOHT.Dispatcher.BeginInvoke(new Action(() => addData()));
+            //dgOHT.Items.Refresh();
         }
 
         public void ProcessGuiData()
@@ -76,19 +82,48 @@ namespace McsRemote.Control
 
         void m_dataHub_DataSetUpdate(PushData enumPush)
         {
-            //switch (enumPush)
-            //{
-            //    case PushData.upOhtInfo:
-            //        dgOHT.Dispatcher.BeginInvoke(new Action(() => dgOHT.Items.Refresh()));
-            //        break;
-            //    case PushData.upOhtPos:
-            //        dgOHT.Dispatcher.BeginInvoke(new Action(() => dgOHT.Items.Refresh()));
-            //        break;
-            //    case PushData.upOhtPosTable:
-            //        dgPos.Dispatcher.BeginInvoke(new Action(() => dgPos.Items.Refresh()));
-            //        break;
-            //}
+            switch (enumPush)
+            {
+                case PushData.upOhtInfo:
+                    dgOHT.Dispatcher.BeginInvoke(new Action(() => Process_upOhtInfo()));
+                    break;
+                case PushData.upOhtPos:
+                    dgOHT.Dispatcher.BeginInvoke(new Action(() => Process_upOhtInfo()));
+                    break;
+                case PushData.upOhtPosTable:
+                    dgPos.Dispatcher.BeginInvoke(new Action(() => dgPos.Items.Refresh()));
+                    break;
+            }
            //addData();
+        }
+
+        private void Process_upOhtInfo()
+        {
+            DataTable dt = m_dataHub.DataSource.Tables["OHTInfo"];
+            foreach (DataRow row in dt.Rows)
+            {
+               uint nID = UInt32.Parse( row[0].ToString() );
+               DataRow rFind =  m_tabOhtInfo.Rows.Find(nID);
+               int nCount = dt.Columns.Count;
+               if (null != rFind)
+               {
+                   for (int i = 1; i < nCount; i++)
+                   {
+                       rFind[i] = row[i];
+                   }
+               }
+               else
+               {
+                   DataRow rNew = m_tabOhtInfo.NewRow();
+                   rNew[0] = row[0];
+                   for (int i = 1; i < nCount; i++)
+                   {
+                       rNew[i] = row[i];
+                   }
+                   m_tabOhtInfo.Rows.Add(rNew);
+                   m_tabOhtInfo.AcceptChanges();
+               }
+            }
         }
 
         private void addData()
@@ -101,7 +136,14 @@ namespace McsRemote.Control
                     uint nP = UInt32.Parse(row[1].ToString());
                     nP++;
                     row[1] = nP;
-                    row.AcceptChanges();
+                    if (nP % 20 == 1)
+                    {
+                        row = m_tabOhtInfo.NewRow();
+                        row[0] = nP;
+                        row[1] = 1;
+                        m_tabOhtInfo.Rows.Add(row);
+                    }
+                    //row.AcceptChanges();
                 }
                 else
                 {
@@ -116,6 +158,7 @@ namespace McsRemote.Control
                     m_tabOhtInfo.Rows.Add(row);
                     m_tabOhtInfo.AcceptChanges();
                 }
+                
             }
         }
 
@@ -129,7 +172,7 @@ namespace McsRemote.Control
         private void bnGetLoc_Click(object sender, RoutedEventArgs e)
         {
 
-            addData();
+           // addData();
             dgOHT.Items.Refresh();
         }
     }
